@@ -33,7 +33,7 @@ export class Login extends React.Component {
     return (
       <div className="Login">
         <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
+          <ControlLabel>Your Email</ControlLabel>
           <FormControl
             autoFocus
             type="email"
