@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 
 //Connexion à la base de donnée
 mongoose
-    .connect("mongodb://localhost/db")
+    .connect( process.env.MONGODB_URI || "mongodb://localhost/db")
     .then(() => {
         console.log("Connected to mongoDB");
     })
@@ -45,7 +45,7 @@ app.use("/user", router);
 require(__dirname + "/controllers/userController")(router);
 
 //Définition et mise en place du port d'écoute
-const port = 8800;
+const port = process.env.PORT || 8800;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 /*Adds the react production build to serve react requests*/
