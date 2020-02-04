@@ -1,0 +1,17 @@
+{
+    "name": "PORTFOLIO",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "start": "npm install && node server.js",
+        "heroku-postbuild": "cd client && npm install && npm run build"
+    },
+    "dependencies": {
+        "body-parser": "*",
+        "create-react-app": "^3.3.1",
+        "express": "*",
+        "jwt-simple": "*",
+        "mongoose": "*",
+        "password-hash": "*"
+    }
+}
