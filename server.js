@@ -1,10 +1,22 @@
-//Définition des modules
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const cors = require('cors');
+const errorHandler = require('errorhandler');
+const mongoose = require('mongoose');
+
+// IMPORT MODELS
+require('./models/Articles');
+require('./models/Letters');
+require('./models/Events');
+
+//On définit notre objet express nommé app
+const app = express();
 
 //Connexion à la base de donnée
+mongoose.Promise = global.Promise;
+mongoose.set('useFindAndModify', false);
 mongoose
     .connect( process.env.MONGODB_URI || "mongodb://localhost/db")
     .then(() => {
@@ -14,36 +26,19 @@ mongoose
         console.log("Error while DB connecting");
         console.log(e);
     });
+mongoose.set('debug', true);
 
-//On définit notre objet express nommé app
-const app = express();
-
-//Body Parser
-const urlencodedParser = bodyParser.urlencoded({
-    extended: true
-});
-app.use(urlencodedParser);
-app.use(bodyParser.json());
-
-//Définition des CORS
-app.use(function(req, res, next) {
-    res.setHeader(
-        "Access-Control-Allow-Headers",
-        "X-Requested-With,content-type"
-    );
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-    );
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    next();
-});
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(cors());
+app.use(require('morgan')('dev'));
+app.use(session({ secret: 'boutaleb', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 //Définition du routeur
 const router = express.Router();
 app.use("/user", router);
 require(__dirname + "/controllers/userController")(router);
+app.use(require('./routes'));
 
 //Définition et mise en place du port d'écoute
 const port = process.env.PORT || 8800;
@@ -53,6 +48,11 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 app.use(express.static(path.join(__dirname, "./client/build")));
 
 /*React root*/
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname + "./client/build/index.html"));
-});
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+  
+    const path = require('path');
+    app.get('*', (req,res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
