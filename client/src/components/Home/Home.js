@@ -28,7 +28,7 @@ class Home extends React.Component {
         this._handleMouseMove();
         const {onLoad} = this.props;
         const self = this;
-        axios('http://localhost:8000/api/articles')
+        axios('http://localhost:8800/api/articles')
         .then(function (response) {
             // handle success
             onLoad(response.data);
@@ -259,9 +259,9 @@ class Home extends React.Component {
         const { articles } = this.props;
         return (
             <FullPage>
-                <Slide>
+                {/* <Slide>
                     <Form />
-                </Slide>
+                </Slide> */}
                 <Slide>
                     <section className="active first_section">
                         <div className="wrapper left_part">

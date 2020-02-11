@@ -112,13 +112,13 @@ class AccountForm extends React.Component {
                         <div className="form-sm-holder">
                             <div className="row">
                                 <div className="col-2">
-                                    <button type="button" class="btn btn-light"><i className="fab fa-twitter"></i></button>
+                                    <button type="button" className="btn btn-light"><i className="fab fa-twitter"></i></button>
                                 </div>
                                 <div className="col-2">
-                                    <button type="button" class="btn btn-light"><i className="fab fa-facebook-f"></i></button>
+                                    <button type="button" className="btn btn-light"><i className="fab fa-facebook-f"></i></button>
                                 </div>
                                 <div className="col-8">
-                                    <button type="button" class="btn btn-light"><i className="fab fa-google"></i> Sign up with Google</button>
+                                    <button type="button" className="btn btn-light"><i className="fab fa-google"></i> Sign up with Google</button>
                                 </div>
                             </div>
                         </div>
@@ -216,13 +216,13 @@ class AccountForm extends React.Component {
                         <div className="form-sm-holder">
                             <div className="row">
                                 <div className="col-2">
-                                    <button type="button" class="btn btn-light"><i className="fab fa-twitter"></i></button>
+                                    <button type="button" className="btn btn-light"><i className="fab fa-twitter"></i></button>
                                 </div>
                                 <div className="col-2">
-                                    <button type="button" class="btn btn-light"><i className="fab fa-facebook-f"></i></button>
+                                    <button type="button" className="btn btn-light"><i className="fab fa-facebook-f"></i></button>
                                 </div>
                                 <div className="col-8">
-                                    <button type="button" class="btn btn-light"><i className="fab fa-google"></i> Sign in with Google</button>
+                                    <button type="button" className="btn btn-light"><i className="fab fa-google"></i> Sign in with Google</button>
                                 </div>
                             </div>
                         </div>

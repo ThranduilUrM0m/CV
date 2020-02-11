@@ -37,8 +37,8 @@ class Form extends React.Component {
             tag: [],
             tagInput: '',
             comment: [],
-            upvotes: 0,
-            downvotes: 0,
+            upvotes: {},
+            downvotes: {},
             view: [],
         };
         this.handleChangeField = this.handleChangeField.bind(this);
@@ -66,7 +66,7 @@ class Form extends React.Component {
         const { title, body, author, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
         const self = this;
         if(!articleToEdit) {
-            return axios.post('http://localhost:8000/api/articles', {
+            return axios.post('http://localhost:8800/api/articles', {
                 title,
                 body,
                 author,
@@ -93,7 +93,7 @@ class Form extends React.Component {
                     })
                 });
         } else {
-            return axios.patch(`http://localhost:8000/api/articles/${articleToEdit._id}`, {
+            return axios.patch(`http://localhost:8800/api/articles/${articleToEdit._id}`, {
                 title,
                 body,
                 author,

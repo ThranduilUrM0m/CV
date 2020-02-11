@@ -88,7 +88,7 @@ class Dashboard extends React.Component {
             const { _user } = self.state;
 
             /* CLASSROOMS */
-            axios('http://localhost:8000/api/classrooms')
+            axios('http://localhost:8800/api/classrooms')
             .then((res) => {
                 let obj = {
                     classrooms: _.filter(res.data.classrooms, {'_teacher': _user._id})
@@ -101,7 +101,7 @@ class Dashboard extends React.Component {
                 });
 
                 /* STUDENTS */
-                axios('http://localhost:8000/api/students')
+                axios('http://localhost:8800/api/students')
                 .then((res) => {
                     let obj_students = {
                         students: _.filter(res.data.students, (S) => {
@@ -126,7 +126,7 @@ class Dashboard extends React.Component {
                 });
 
                 /* SUBJECTS */
-                axios('http://localhost:8000/api/subjects')
+                axios('http://localhost:8800/api/subjects')
                 .then((res) => {
                     let obj_subjects = {
                         subjects: _.filter(res.data.subjects, (S) => {
@@ -136,7 +136,7 @@ class Dashboard extends React.Component {
                     onLoadSubject(obj_subjects)
 
                     /* MODULES */
-                    axios('http://localhost:8000/api/modules')
+                    axios('http://localhost:8800/api/modules')
                     .then((res) => {
                         let obj_modules = {
                             modules: _.filter(res.data.modules, (M) => {
@@ -151,7 +151,7 @@ class Dashboard extends React.Component {
                     });
 
                     /* COURSES */
-                    axios('http://localhost:8000/api/courses')
+                    axios('http://localhost:8800/api/courses')
                     .then((res) => {
                         let obj_courses = {
                             courses: _.filter(res.data.courses, (C) => {
@@ -175,7 +175,7 @@ class Dashboard extends React.Component {
                 console.log(error);
             });
 
-            axios('http://localhost:8000/api/events')
+            axios('http://localhost:8800/api/events')
             .then((res) => onLoadEvent(res.data))
             .then((res) => {
             })
@@ -404,7 +404,7 @@ class Dashboard extends React.Component {
             self.setState( prevState => ({
                 _user: data.user
             }), () => {
-                axios(`http://localhost:8000/api/schools/${data.user.school}`)
+                axios(`http://localhost:8800/api/schools/${data.user.school}`)
                 .then(function (response) {
                     // handle success
                     self.setState({
@@ -468,7 +468,7 @@ class Dashboard extends React.Component {
             const { _code, _name, _grade, _section, _school, _teacher, _subjects, _students } = this.state._classroom;
             const self = this;
             if(!classroomToEdit) {
-                return axios.post('http://localhost:8000/api/classrooms', {
+                return axios.post('http://localhost:8800/api/classrooms', {
                     _code,
                     _name,
                     _grade,
@@ -496,7 +496,7 @@ class Dashboard extends React.Component {
                         $('#_classroom_modal').modal('toggle');
                     });
             } else {
-                return axios.patch(`http://localhost:8000/api/classrooms/${classroomToEdit._id}`, {
+                return axios.patch(`http://localhost:8800/api/classrooms/${classroomToEdit._id}`, {
                     _code,
                     _name,
                     _grade,
@@ -528,7 +528,7 @@ class Dashboard extends React.Component {
     }
     handleDeleteClassroom(id) {
         const { onDeleteClassroom } = this.props;
-        return axios.delete(`http://localhost:8000/api/classrooms/${id}`)
+        return axios.delete(`http://localhost:8800/api/classrooms/${id}`)
             .then(() => onDeleteClassroom(id));
     }
     handleEditClassroom(classroom) {
@@ -552,7 +552,7 @@ class Dashboard extends React.Component {
             const { _registration_number, _first_name, _last_name, _classroom, _gender, _dateofbirth, _registration_date, _attendance, _first_parent, _second_parent, _guardian } = this.state._student;
             const self = this;
             if(!studentToEdit) {
-                return axios.post('http://localhost:8000/api/students', {
+                return axios.post('http://localhost:8800/api/students', {
                     _registration_number,
                     _first_name,
                     _last_name,
@@ -586,7 +586,7 @@ class Dashboard extends React.Component {
                         $('#_student_modal').modal('toggle');
                     });
             } else {
-                return axios.patch(`http://localhost:8000/api/students/${studentToEdit._id}`, {
+                return axios.patch(`http://localhost:8800/api/students/${studentToEdit._id}`, {
                     _registration_number,
                     _first_name,
                     _last_name,
@@ -624,7 +624,7 @@ class Dashboard extends React.Component {
     }
     handleDeleteStudent(id) {
         const { onDeleteStudent } = this.props;
-        return axios.delete(`http://localhost:8000/api/students/${id}`)
+        return axios.delete(`http://localhost:8800/api/students/${id}`)
             .then(() => onDeleteStudent(id));
     }
     handleEditStudent(student) {
@@ -648,7 +648,7 @@ class Dashboard extends React.Component {
                     const { _attendance } = self.state;
                     const { _registration_number, _first_name, _last_name, _classroom, _gender, _dateofbirth, _registration_date, _first_parent, _second_parent, _guardian } = student;
                     
-                    return axios.patch(`http://localhost:8000/api/students/${student._id}`, {
+                    return axios.patch(`http://localhost:8800/api/students/${student._id}`, {
                         _registration_number,
                         _first_name,
                         _last_name,
@@ -685,7 +685,7 @@ class Dashboard extends React.Component {
         const self = this;
 
         if(!subjectToEdit) {
-            return axios.post('http://localhost:8000/api/subjects', {
+            return axios.post('http://localhost:8800/api/subjects', {
                 _name,
                 _classroom,
             })
@@ -701,7 +701,7 @@ class Dashboard extends React.Component {
                     $('#_subject_modal').modal('toggle');
                 });
         } else {
-            return axios.patch(`http://localhost:8000/api/subjects/${subjectToEdit._id}`, {
+            return axios.patch(`http://localhost:8800/api/subjects/${subjectToEdit._id}`, {
                 _name,
                 _classroom,
             })
@@ -720,7 +720,7 @@ class Dashboard extends React.Component {
     }
     handleDeleteSubject(id) {
         const { onDeleteSubject } = this.props;
-        return axios.delete(`http://localhost:8000/api/subjects/${id}`)
+        return axios.delete(`http://localhost:8800/api/subjects/${id}`)
             .then(() => onDeleteSubject(id));
     }
     handleEditSubject(subject) {
@@ -735,7 +735,7 @@ class Dashboard extends React.Component {
 
         if(!moduleToEdit) {
             const { _name, _sessions, _subject } = this.state._module;
-            return axios.post('http://localhost:8000/api/modules', {
+            return axios.post('http://localhost:8800/api/modules', {
                 _name,
                 _sessions,
                 _subject,
@@ -761,7 +761,7 @@ class Dashboard extends React.Component {
                 }
             }), () => {
                 const { _name, _sessions, _subject } = this.state._module;
-                return axios.patch(`http://localhost:8000/api/modules/${moduleToEdit._id}`, {
+                return axios.patch(`http://localhost:8800/api/modules/${moduleToEdit._id}`, {
                     _name,
                     _sessions,
                     _subject,
@@ -788,7 +788,7 @@ class Dashboard extends React.Component {
     }
     handleDeleteModule(id) {
         const { onDeleteModule } = this.props;
-        return axios.delete(`http://localhost:8000/api/modules/${id}`)
+        return axios.delete(`http://localhost:8800/api/modules/${id}`)
             .then(() => onDeleteModule(id));
     }
     handleEditModule(module) {
@@ -812,7 +812,7 @@ class Dashboard extends React.Component {
         const self = this;
 
         if(!subjectToEdit) {
-            return axios.post('http://localhost:8000/api/subjects', {
+            return axios.post('http://localhost:8800/api/subjects', {
                 _name,
                 _abilities_inview,
                 _sessions,
@@ -832,7 +832,7 @@ class Dashboard extends React.Component {
                     $('#_course_modal').modal('toggle');
                 });
         } else {
-            return axios.patch(`http://localhost:8000/api/subjects/${courseToEdit._id}`, {
+            return axios.patch(`http://localhost:8800/api/subjects/${courseToEdit._id}`, {
                 _name,
                 _abilities_inview,
                 _sessions,
@@ -855,7 +855,7 @@ class Dashboard extends React.Component {
     }
     handleDeleteCourse(id) {
         const { onDeleteCourse } = this.props;
-        return axios.delete(`http://localhost:8000/api/courses/${id}`)
+        return axios.delete(`http://localhost:8800/api/courses/${id}`)
             .then(() => onDeleteCourse(id));
     }
     handleEditCourse(course) {
@@ -871,7 +871,7 @@ class Dashboard extends React.Component {
         const self = this;
 
         if(!eventToEdit) {
-            return axios.post('http://localhost:8000/api/events', {
+            return axios.post('http://localhost:8800/api/events', {
                 _name,
                 _date_start,
                 _days,
@@ -891,7 +891,7 @@ class Dashboard extends React.Component {
                     $('#_event_modal').modal('toggle');
                 });
         } else {
-            return axios.patch(`http://localhost:8000/api/events/${eventToEdit._id}`, {
+            return axios.patch(`http://localhost:8800/api/events/${eventToEdit._id}`, {
                 _name,
                 _date_start,
                 _days,
@@ -914,7 +914,7 @@ class Dashboard extends React.Component {
     }
     handleDeleteEvent(id) {
         const { onDeleteEvent } = this.props;
-        return axios.delete(`http://localhost:8000/api/events/${id}`)
+        return axios.delete(`http://localhost:8800/api/events/${id}`)
             .then(() => onDeleteEvent(id));
     }
     handleEditEvent(event) {

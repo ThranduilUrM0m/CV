@@ -6,6 +6,7 @@ router.post('/', (req, res, next) => {
   const { body } = req;
 
   if(!body.title) {
+    console.log("title");
     return res.status(422).json({
       errors: {
         title: 'is required',
@@ -14,7 +15,8 @@ router.post('/', (req, res, next) => {
   }
 
   if(!body.body) {
-    return res.status(422).json({
+    console.log("body");
+    return res.status(423).json({
       errors: {
         body: 'is required',
       },
@@ -22,6 +24,7 @@ router.post('/', (req, res, next) => {
   }
 
   if(!body.author) {
+    console.log("author");
     return res.status(422).json({
       errors: {
         author: 'is required',

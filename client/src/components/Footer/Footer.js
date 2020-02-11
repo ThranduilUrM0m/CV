@@ -21,7 +21,7 @@ class Footer extends React.Component {
     componentDidMount() {
         this._handleMouseMove();
         const {onLoad} = this.props;
-        axios('http://localhost:8000/api/articles')
+        axios('http://localhost:8800/api/articles')
             .then(function (response) {
                 // handle success
                 onLoad(response.data);
