@@ -269,6 +269,7 @@ class Home extends React.Component {
                                 <i className="fas fa-code"></i>
                             </div>
                         </div>
+                        {/* had zob f7alla makaynch css dialo */}
                         <div className="wrapper right_part">
                             <div id="slider">
                                 {
