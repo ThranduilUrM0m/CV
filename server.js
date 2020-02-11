@@ -18,7 +18,7 @@ const app = express();
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
 mongoose
-    .connect( process.env.MONGODB_URI || "mongodb://localhost/db")
+    .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/db")
     .then(() => {
         console.log("Connected to mongoDB");
     })

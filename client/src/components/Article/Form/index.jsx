@@ -1,9 +1,31 @@
-import React from 'react' 
-import axios from 'axios' 
-import { connect } from 'react-redux' 
-import Quill from 'quill'
+import React from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module';
+Quill.register('modules/ImageResize', ImageResize);
 
-var _ = require('lodash')
+var _ = require('lodash');
+const modules = {
+    ImageResize: {
+        displaySize: true
+    },
+    toolbar: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'font': [] }],
+        [{ size: [] }],
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'align': [] }],
+        ['blockquote', 'code-block'],
+        ['link', 'image', 'video'],                                        // image and link
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+        ['clean']
+    ],
+}
 
 class Form extends React.Component {
     constructor(props) {
@@ -20,39 +42,9 @@ class Form extends React.Component {
             view: [],
         };
         this.handleChangeField = this.handleChangeField.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputKeyDown = this.handleInputKeyDown.bind(this);
-    }
-    componentDidMount() {
-        var self = this 
-        var toolbarOptions = [
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            [{ 'font': [] }],
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'align': [] }],
-            ['blockquote', 'code-block'],
-            ['link', 'image'],                                        // image and link
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-            [{ 'direction': 'rtl' }],                         // text direction
-        ];
-        var quill = new Quill('#editor', {
-            debug: 'info',
-            placeholder: 'Compose an epic...',
-            modules: {
-                imageResize: {
-                    displaySize: true
-                },
-                toolbar: toolbarOptions
-            },
-            theme: 'snow'
-        });
-        // OnChange of editor
-        quill.on('text-change', function(delta, oldDelta, source) {
-            self.handleChangeField('body', JSON.stringify(quill.root.innerHTML));
-        });
     }
     componentWillReceiveProps(nextProps) {
         if(nextProps.articleToEdit) {
@@ -130,15 +122,14 @@ class Form extends React.Component {
         }
     }
     handleChangeField(key, event) {
-        if(key === "body"){
-            this.setState({
-                [key]: event,
-            });
-        }else{
-            this.setState({
-                [key]: event.target.value,
-            });
-        }
+        this.setState({
+            [key]: event.target.value,
+        });
+    }
+    handleChange(value) {
+        this.setState({
+            body: value,
+        });
     }
     handleInputKeyDown(key, event) {
         if ( event.keyCode === 32 || event.keyCode === 9 || event.keyCode === 13 ) {
@@ -169,7 +160,14 @@ class Form extends React.Component {
                 placeholder="Title"
                 />
 
-                <div id="editor"></div>
+                <ReactQuill id="editor"
+                            value={body}
+                            onChange={this.handleChange}
+                            debug='info'
+                            placeholder='Compose an epic...'
+                            theme='snow' 
+                            modules={modules}
+                            />
 
                 <ul className="tag_Container">
                     {
