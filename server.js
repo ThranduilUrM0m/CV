@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 require('./models/Articles');
 require('./models/Letters');
 require('./models/Events');
+require('./models/Projects');
 
 //On définit notre objet express nommé app
 const app = express();

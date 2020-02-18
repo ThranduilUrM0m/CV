@@ -92,18 +92,16 @@ class Home extends React.Component {
                         caption = FormatNumberLength(JSON.parse(caption), 2);
                         $(this).append('<p class="index_card">'+caption+'.</p>');
                     });
-
                     /* Controls */
-                    container.append('<div id="controls"><a href="#" id="next">next.</a><a href="" id="curr">curr.</a><a href="#" id="prev">prev.</a></div>');
-                    this.navNext = $('#next');
-                    this.navPrev = $('#prev');
-
+                    container.append('<div id="controls"><a id="next">next.</a><a id="curr">curr.</a><a id="prev">prev.</a></div>');
+                    this.navNext = container.find('#next');
+                    this.navPrev = container.find('#prev');
                     /* Navigation */
-                    container.after('<ol class="nav carousel-indicators"></ol>');
-                    var nav = $(".nav");
+                    container.after('<ol class="nav carousel-indicators'+container.attr('id')+'"></ol>');
+                    var nav = $(".nav.carousel-indicators"+container.attr('id'));
                     this.imgs.each(function(){
                         var caption = $(this).find('img').attr('title');
-                        nav.append('<li href="#">'+ caption +'</li>');
+                        nav.append('<li></li>');
                     });
                     this.bullets = nav.find("li");
                     
@@ -127,19 +125,19 @@ class Home extends React.Component {
                             $(this).hide();
                         });
                         this.imgs.removeClass("current"); // Supprime classe current
-                        $('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
+                        container.find('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
 
                         //if the index one is the last one, u need to go to the first one again, sinn just +1
                         if(this.imgs.last().index() != index)
-                            $('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
+                            container.find('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
                         else
-                            $('#next').text(this.imgs.first().find('.shadow_title').text());
+                            container.find('#next').text(this.imgs.first().find('.shadow_title').text());
 
                         //if the index one is the first one, u need to go to the last one again, sinn just -1
                         if(index != 0) 
-                            $('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
+                            container.find('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
                         else
-                            $('#prev').text(this.imgs.last().find('.shadow_title').text());
+                            container.find('#prev').text(this.imgs.last().find('.shadow_title').text());
 
                         this.imgs.eq(index).css({ // Monte la suivante et attribut la classe current
                             "top": height + "px"
@@ -160,19 +158,19 @@ class Home extends React.Component {
                             block = false;
                         });
                         this.imgs.removeClass("current");
-                        $('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
+                        container.find('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
 
                         //if the index one is the last one, u need to go to the first one again, sinn just +1
                         if(this.imgs.last().index() != index)
-                            $('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
+                            container.find('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
                         else
-                            $('#next').text(this.imgs.first().find('.shadow_title').text());
+                            container.find('#next').text(this.imgs.first().find('.shadow_title').text());
 
                         //if the index one is the first one, u need to go to the last one again, sinn just -1
                         if(index != 0) 
-                            $('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
+                            container.find('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
                         else
-                            $('#prev').text(this.imgs.last().find('.shadow_title').text());
+                            container.find('#prev').text(this.imgs.last().find('.shadow_title').text());
                         this.imgs.eq(index).css({
                             "top": -height + "px"
                         }).show().stop().animate({
@@ -213,9 +211,9 @@ class Home extends React.Component {
                      */
                     this.init = function() {
                         this.imgs.hide().first().addClass('current').show();
-                        $('#curr').text(this.imgs.first().find('.shadow_title').text());
-                        $('#next').text(this.imgs.first().next().find('.shadow_title').text());
-                        $('#prev').text(this.imgs.last().find('.shadow_title').text());
+                        container.find('#curr').text(this.imgs.first().find('.shadow_title').text());
+                        container.find('#next').text(this.imgs.first().next().find('.shadow_title').text());
+                        container.find('#prev').text(this.imgs.last().find('.shadow_title').text());
                         this.bullets.first().addClass("current");
                     };
                 }; // End Slider Object
@@ -266,7 +264,11 @@ class Home extends React.Component {
             };
         })(jQuery);
         $("#slider").jooSlider({
-            auto: false,
+            auto: true,
+            speed: 4000
+        });
+        $('#slider_projects').jooSlider({
+            auto: true,
             speed: 4000
         });
     }
@@ -343,23 +345,39 @@ class Home extends React.Component {
                 </Slide>
                 <Slide>
                     <section className="second_section">
-                        <div className="shapes shapes1"></div>
-                        <div className="shapes shapes2"></div>
                         <div className="wrapper left_part">
                             <div className="some_text">
-                                <h1 className="display-4">Speak to the hearts of our future.</h1>
+                                <h1 className="display-4">WORKS.</h1>
                                 <p>Find kids with the same dream as your profession, and speak to their hearts, connect, and most importantly give them hope.</p>
                                 <hr className="my-4"></hr>
                             </div>
                         </div>
                         <div className="wrapper right_part">
-                            <div className="pull-left-second"></div>
-                            <div className="text-container">
-                                <div className="header-dash"></div>
-                                <h1>Reach. Inspire.</h1>
-                                <Link to='/letters' className="cta-btn"> Learn How + </Link>
+                            <div id="slider_projects">
+                                {
+                                    (_.orderBy(articles, ['view'], ['desc']).slice(0, 10)).map((article, index) => {
+                                        return (
+                                            <div className={"card card_" + index} data-title={article.title} data-index={index+1}>
+                                                <div className="shadow_title">{article.title}</div>
+                                                <div className="card-body">
+                                                    <Link to={`/blog/${article._id}`}>
+                                                        <button>
+                                                            <span>
+                                                                <span>
+                                                                    <span data-attr-span="Read More About it">
+                                                                        Read More About it
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </Link>
+                                                    <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
-                            <div className="bg-pattern"></div>
                         </div>
                     </section>
                 </Slide>
