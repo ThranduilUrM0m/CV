@@ -10,6 +10,7 @@ import {
   Link,
   Switch
 } from 'react-router-dom'
+import dev_prod from '../../dev_prod.svg';
 import tounarouz from '../../TOUNAROUZ.svg';
 import { Form } from '../Article';
 import 'whatwg-fetch';
@@ -66,7 +67,6 @@ class Home extends React.Component {
             }
             return r;
         }
-
         (function($) {
             $.fn.jooSlider = function(options) {
                 var opt = {
@@ -92,11 +92,12 @@ class Home extends React.Component {
                         caption = FormatNumberLength(JSON.parse(caption), 2);
                         $(this).append('<p class="index_card">'+caption+'.</p>');
                     });
-                    this.captions = container.find('.img-wrap').find('p');
+
                     /* Controls */
-                    container.append('<span id="controls"><a href="#" id="prev"><span id="prev_"></span>prev.</a><a href="#" id="next">next.<span id="next_"></span></a></span>');
+                    container.append('<div id="controls"><a href="#" id="next">next.</a><a href="" id="curr">curr.</a><a href="#" id="prev">prev.</a></div>');
                     this.navNext = $('#next');
                     this.navPrev = $('#prev');
+
                     /* Navigation */
                     container.after('<ol class="nav carousel-indicators"></ol>');
                     var nav = $(".nav");
@@ -105,6 +106,7 @@ class Home extends React.Component {
                         nav.append('<li href="#">'+ caption +'</li>');
                     });
                     this.bullets = nav.find("li");
+                    
                     //==========
                     // Méthodes
                     //==========
@@ -125,6 +127,20 @@ class Home extends React.Component {
                             $(this).hide();
                         });
                         this.imgs.removeClass("current"); // Supprime classe current
+                        $('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
+
+                        //if the index one is the last one, u need to go to the first one again, sinn just +1
+                        if(this.imgs.last().index() != index)
+                            $('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
+                        else
+                            $('#next').text(this.imgs.first().find('.shadow_title').text());
+
+                        //if the index one is the first one, u need to go to the last one again, sinn just -1
+                        if(index != 0) 
+                            $('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
+                        else
+                            $('#prev').text(this.imgs.last().find('.shadow_title').text());
+
                         this.imgs.eq(index).css({ // Monte la suivante et attribut la classe current
                             "top": height + "px"
                         }).show().stop().animate({
@@ -144,6 +160,19 @@ class Home extends React.Component {
                             block = false;
                         });
                         this.imgs.removeClass("current");
+                        $('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
+
+                        //if the index one is the last one, u need to go to the first one again, sinn just +1
+                        if(this.imgs.last().index() != index)
+                            $('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
+                        else
+                            $('#next').text(this.imgs.first().find('.shadow_title').text());
+
+                        //if the index one is the first one, u need to go to the last one again, sinn just -1
+                        if(index != 0) 
+                            $('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
+                        else
+                            $('#prev').text(this.imgs.last().find('.shadow_title').text());
                         this.imgs.eq(index).css({
                             "top": -height + "px"
                         }).show().stop().animate({
@@ -157,7 +186,7 @@ class Home extends React.Component {
                         var index = this.getCurrentIndex();
                         if (index < this.imgCount) {
                             if (block !== true) {
-                                this.goNext(index + 1); // Go next 
+                                this.goNext(index + 1); // Go next
                             }
                         } else {
                             if (block !== true) {
@@ -184,6 +213,9 @@ class Home extends React.Component {
                      */
                     this.init = function() {
                         this.imgs.hide().first().addClass('current').show();
+                        $('#curr').text(this.imgs.first().find('.shadow_title').text());
+                        $('#next').text(this.imgs.first().next().find('.shadow_title').text());
+                        $('#prev').text(this.imgs.last().find('.shadow_title').text());
                         this.bullets.first().addClass("current");
                     };
                 }; // End Slider Object
@@ -265,20 +297,29 @@ class Home extends React.Component {
                 <Slide>
                     <section className="active first_section">
                         <div className="wrapper left_part">
-                            <div className="code">
-                                <i className="fas fa-code"></i>
+                            <div id="social_media">
+                                <div className="icons_gatherer">
+                                    <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                    <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                    <a href="#" className="icon-button scroll">
+                                        <span className="scroll-icon">
+                                            <span className="scroll-icon__wheel-outer">
+                                                <span className="scroll-icon__wheel-inner"></span>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </div>
                             </div>
+                            <img className="dev_prod img-fluid" src={dev_prod} alt="dev_prod"/>
                         </div>
-                        {/* had zob f7alla makaynch css dialo a zzob */}
                         <div className="wrapper right_part">
                             <div id="slider">
                                 {
                                     (_.orderBy(articles, ['view'], ['desc']).slice(0, 10)).map((article, index) => {
                                         return (
                                             <div className={"card card_" + index} data-title={article.title} data-index={index+1}>
-                                                <div className="shadow_title">{_.head(_.words(article.title))}</div>
+                                                <div className="shadow_title">{article.title}</div>
                                                 <div className="card-body">
-                                                    <h2>{article.title}</h2>
                                                     <Link to={`/blog/${article._id}`}>
                                                         <button>
                                                             <span>
@@ -296,19 +337,6 @@ class Home extends React.Component {
                                         )
                                     })
                                 }
-                                <div id="social_media">
-                                    <div className="icons_gatherer">
-                                        <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                        <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-                                        <a href="#" className="icon-button scroll">
-                                            <span className="scroll-icon">
-                                                <span className="scroll-icon__wheel-outer">
-                                                    <span className="scroll-icon__wheel-inner"></span>
-                                                </span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </section>

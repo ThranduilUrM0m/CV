@@ -87,8 +87,8 @@ class Form extends React.Component {
                         tag: [],
                         tagInput: '',
                         comment: [],
-                        upvotes: 0,
-                        downvotes: 0,
+                        upvotes: {},
+                        downvotes: {},
                         view: [],
                     })
                 });
@@ -114,8 +114,8 @@ class Form extends React.Component {
                         tag: [],
                         tagInput: '',
                         comment: [],
-                        upvotes: 0,
-                        downvotes: 0,
+                        upvotes: {},
+                        downvotes: {},
                         view: [],
                     })
                 });
