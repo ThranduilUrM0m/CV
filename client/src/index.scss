@@ -1308,9 +1308,9 @@ body, html {
 							font-size: 2rem;
 							&::after{
 								width: 15rem;
-								height: 0.5rem;
+								height: 0.75rem;
 								bottom: 0.5rem;
-								background: $color1;
+								background: $main-color;
 								opacity: 0.8;
 								-ms-filter: none;
 								-webkit-filter: none;
@@ -1324,15 +1324,15 @@ body, html {
 							position: absolute;
 							width: 100%;
 							height: 100%;
-							background: rgba(black, 0.05);
+							background: rgba($main-color, 0.05);
 							clip-path: circle(10% at 150% 50%);
 							transition: clip-path .5s ease-in-out;
 						}
 						&::after{
 							content: '';
-							width: 10rem;
-							height: 0.25rem;
-							background: #292929;
+							width: 4rem;
+							height: 0.75rem;
+							background: $main-color;
 							display: block;
 							position: absolute;
 							bottom: 0.25rem;
@@ -7276,6 +7276,9 @@ body, html {
 							&:hover .fa-instagram{
 								color: $liteBg;
 							}
+							&:hover .fa-github{
+								color: $liteBg;
+							}
 							.scroll-icon {
 								height: 2rem;
 								width: 1.2rem;
@@ -7309,6 +7312,9 @@ body, html {
 						}
 						.facebook span {
 							background-color: #3B5998;
+						}
+						.github span {
+							background-color: #211F1F;
 						}
 					}
 					img{
@@ -8494,14 +8500,153 @@ body, html {
 				width: 50%;
 				height: 100%;
 				&.left_part{
+					width: 60%;
+					background-color: $main-color;
 					display: flex;
 					align-items: center;
 					justify-content: center;
+					#angle_to_angle {
+						position: absolute;
+						position: absolute;
+						height: 100%;
+						width: 100%;
+					}
 					.some_text{
 						width: 50%;
+						h1 {
+							font-weight: bold;
+						}
+					}
+					#social_media{
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						display: flex;
+						flex-direction: row;
+						width: 100%;
+						z-index: 0;
+						justify-content: center;
+						.icons_gatherer {
+							display: flex;
+							flex-direction: row;
+							position: relative;
+							&::before{
+								position: absolute;
+								content: "";
+								height: 0.1rem;
+								width: 10rem;
+								background: #000;
+								left: -100%;
+								top: 50%;
+								transform: translate(-0%, -50%);
+								cursor: default;
+							}
+						}
+						.icon-button {
+							font-family: FontAwesome;
+							font-weight: normal;
+							font-style: normal;
+							text-decoration: inherit;
+							-webkit-font-smoothing: antialiased;
+							border-radius: 2.6rem;
+							cursor: pointer;
+							display: inline-block;
+							font-size: 1.3rem;
+							height: 2.6rem;
+							line-height: 2.6rem;
+							margin: 0 5px;
+							position: relative;
+							text-align: center;
+							-webkit-user-select: none;
+							-moz-user-select: none;
+								-ms-user-select: none;
+									user-select: none;
+							width: 2.6rem;
+							i {
+								background: none;
+								color: black;
+								height: 2.6rem;
+								left: 0;
+								line-height: 2.6rem;
+								position: absolute;
+								top: 0;
+								-webkit-transition: all 0.3s;
+									-moz-transition: all 0.3s;
+									-o-transition: all 0.3s;
+										transition: all 0.3s;
+								width: 2.6rem;
+								z-index: 10;
+							}
+							span {
+								border-radius: 0;
+								display: block;
+								height: 0;
+								left: 50%;
+								margin: 0;
+								position: absolute;
+								top: 50%;
+								-webkit-transition: all 0.3s;
+									-moz-transition: all 0.3s;
+									-o-transition: all 0.3s;
+										transition: all 0.3s;
+								width: 0;
+							}
+							&:hover span:not(.scroll-icon):not(.scroll-icon__wheel-outer):not(.scroll-icon__wheel-inner) {
+								width: 2.6rem;
+								height: 2.6rem;
+								border-radius: 2.6rem;
+								margin: -1.3rem;
+							}
+							&:hover .icon-facebook{
+								color: $liteBg;
+							}
+							&:hover .fa-instagram{
+								color: $liteBg;
+							}
+							&:hover .fa-github{
+								color: $liteBg;
+							}
+							.scroll-icon {
+								height: 2rem;
+								width: 1.2rem;
+								border: .25rem solid black;
+								border-radius: 1rem;
+								transform: translate(-50%, -50%);
+								.scroll-icon__wheel-outer {
+									position: absolute;
+									left: calc(50% + .05rem);
+									top: .1rem;
+									transform: translate(-50%, 0.1rem);
+									height: .8rem;
+									width: 0.25rem;
+									border-radius: .4rem;
+									overflow: hidden;
+									.scroll-icon__wheel-inner {
+										display: block;
+										height: $dot-diameter;
+										width: $dot-diameter;
+										border-radius: inherit;
+										background: black;
+										animation: dot--a $duration infinite;
+										left: 50%;
+										transform: translateX(-50%);
+									}
+								}
+							}
+						}
+						.instagram span {
+							background-color: #e4405f;
+						}
+						.facebook span {
+							background-color: #3B5998;
+						}
+						.github span {
+							background-color: #211F1F;
+						}
 					}
 				}
 				&.right_part{
+					width: 40%;
 					#slider_projects{
 						margin:0 auto;
 						position:relative;

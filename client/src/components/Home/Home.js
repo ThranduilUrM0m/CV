@@ -10,6 +10,7 @@ import {
   Link,
   Switch
 } from 'react-router-dom'
+import SVG from 'svg.js';
 import dev_prod from '../../dev_prod.svg';
 import tounarouz from '../../TOUNAROUZ.svg';
 import { Form } from '../Article';
@@ -18,6 +19,7 @@ import $ from 'jquery';
 import jQuery from 'jquery';
 
 var _ = require('lodash');
+require('svg.pathmorphing.js');
 
 class Home extends React.Component {
     constructor(props) {
@@ -26,7 +28,6 @@ class Home extends React.Component {
         this._handleMouseMove = this._handleMouseMove.bind(this);
     }
     componentDidMount() {
-        this._handleMouseMove();
         const {onLoad} = this.props;
         const self = this;
         axios('http://localhost:8800/api/articles')
@@ -58,6 +59,29 @@ class Home extends React.Component {
         .then(function () {
             // always executed
         });
+
+        var draw = SVG('angle_to_angle').attr({ 'viewBox':"0 0 100 100", 'preserveAspectRatio':"none" });
+
+        var path = draw.path('M 0 100 L 0 50 C 40 40 60 80 100 70 L 100 100 Z');
+        path.fill('#6dd0de');
+        path.stroke({ color: '#6dd0de', width: 1, linecap: 'round', linejoin: 'round' });
+        path.animate(2000, '<>', 1000).plot('M 0 100 L 0 50 C 30 30 50 70 100 70 L 100 100 Z').loop(true, true);
+
+        var path_2 = draw.path('M 0 100 L 0 55 C 40 50 60 80 100 75 L 100 100 Z');
+        path_2.fill('#9de0e9');
+        path_2.stroke({ color: '#9de0e9', width: 1, linecap: 'round', linejoin: 'round' });
+        path_2.animate(2000, '<>', 1000).plot('M 0 100 L 0 55 C 50 60 50 70 100 75 L 100 100 Z').loop(true, true);
+
+        var path_3 = draw.path('M 0 100 L 0 65 C 40 65 60 80 100 80 L 100 100 Z');
+        path_3.fill('#fff');
+        path_3.stroke({ color: '#fff', width: 1, linecap: 'round', linejoin: 'round' });
+        path_3.animate(2000, '<>').plot('M 0 100 L 0 65 C 30 55 70 90 100 80 L 100 100 Z').loop(true, true);
+
+        /* var polygon = draw.polygon('0,0 0,100 100,100');
+        polygon.attr({fill: '#3dc1d3', 'fill-opacity': 0.5 });
+ */
+
+        this._handleMouseMove();
     }
     _handleSlider() {
         function FormatNumberLength(num, length) {
@@ -301,6 +325,7 @@ class Home extends React.Component {
                         <div className="wrapper left_part">
                             <div id="social_media">
                                 <div className="icons_gatherer">
+                                    <a href="#" className="icon-button github"><i className="fab fa-github"></i><span></span></a>
                                     <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
                                     <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
                                     <a href="#" className="icon-button scroll">
@@ -346,10 +371,19 @@ class Home extends React.Component {
                 <Slide>
                     <section className="second_section">
                         <div className="wrapper left_part">
+                            <div id="circle_yellow"></div>
+                            <div id="circle_green"></div>
+                            <div id="circle_blue"></div>
+                            <div id="angle_to_angle"></div>
                             <div className="some_text">
                                 <h1 className="display-4">WORKS.</h1>
-                                <p>Find kids with the same dream as your profession, and speak to their hearts, connect, and most importantly give them hope.</p>
-                                <hr className="my-4"></hr>
+                            </div>
+                            <div id="social_media">
+                                <div className="icons_gatherer">
+                                    <a href="#" className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                    <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                    <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                </div>
                             </div>
                         </div>
                         <div className="wrapper right_part">
