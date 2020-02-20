@@ -1461,6 +1461,9 @@ body, html {
 				margin-top: 0 !important;
 				margin-bottom: 0.5rem !important;
 			}
+			#editor {
+				overflow: hidden;
+			}
 			.ql-toolbar {
 				.ql-align{
 					.ql-picker-label{
@@ -1471,7 +1474,7 @@ body, html {
 				}
 			}
 			.ql-container {
-				height: unset;
+				height: 100%;
 				flex: 1;
 				overflow: hidden;
 				.ql-editor {
@@ -7189,6 +7192,14 @@ body, html {
 				height: 100%;
 				line-height: 0;
 				&.left_part{
+					&::before {
+						content: "";
+						position: absolute;
+						width: 100%;
+						height: 35%;
+						background-color: darken($color: $main-color, $amount: 10%);
+						bottom: 0;
+					}
 					width: 40%;
 					background: $main-color;
 					#social_media{
@@ -7326,6 +7337,14 @@ body, html {
 					}
 				}
 				&.right_part{
+					&::before {
+						content: "";
+						position: absolute;
+						width: 100%;
+						height: 35%;
+						background-color: lighten($color: $main-color, $amount: 30%);
+						bottom: 0;
+					}
 					width: 60%;
 					#slider{
 						margin:0 auto;
@@ -7337,8 +7356,9 @@ body, html {
 							opacity: 0.2;
 							font-size: 8rem;
 							position: absolute;
-							left: -2rem;
-							color: cadetblue;
+							color: lighten($color: $main-color, $amount: 10%);
+							bottom: 0;
+							left: 0;
 						}
 						.index_card{
 							opacity: 0.1;
@@ -7357,8 +7377,11 @@ body, html {
 							justify-content: center;
 							align-items: center;
 							.card{
+								position: absolute;
+								top: 50%;
+								left: 50%;
+								transform: translate(-50%, -50%);
 								width: 35vw;
-								height: fit-content;
 								border: 0;
 								-webkit-transition: all 0.3s;
 								-moz-transition: all 0.3s;
@@ -8677,7 +8700,7 @@ body, html {
 							justify-content: center;
 							align-items: center;
 							.card{
-								width: 35vw;
+								width: calc(100% - 9rem);
 								height: fit-content;
 								border: 0;
 								-webkit-transition: all 0.3s;
@@ -8927,7 +8950,7 @@ body, html {
 						flex-direction: column;
 						position: absolute;
 						top: 50%;
-						right: 2.5rem;
+						right: 3rem;
 						transform: translate(-50%, -50%);
 						li{
 							width: 1rem;

@@ -4,7 +4,7 @@ const Projects = mongoose.model('Projects');
 
 router.post('/', (req, res, next) => {
   const { body } = req;
-
+  console.log(body.title);
   if(!body.title) {
     return res.status(422).json({
       errors: {
@@ -12,7 +12,7 @@ router.post('/', (req, res, next) => {
       },
     });
   }
-
+  console.log(body.image);
   if(!body.image) {
     return res.status(422).json({
       errors: {
@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
       },
     });
   }
-
+  console.log(body.author);
   if(!body.author) {
     return res.status(422).json({
       errors: {

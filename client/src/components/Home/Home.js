@@ -14,6 +14,7 @@ import SVG from 'svg.js';
 import dev_prod from '../../dev_prod.svg';
 import tounarouz from '../../TOUNAROUZ.svg';
 import { Form } from '../Article';
+import { Form_Project } from '../Project';
 import 'whatwg-fetch';
 import $ from 'jquery';
 import jQuery from 'jquery';
@@ -26,14 +27,16 @@ class Home extends React.Component {
         super(props);
         this._handleSlider = this._handleSlider.bind(this);
         this._handleMouseMove = this._handleMouseMove.bind(this);
+		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
     }
     componentDidMount() {
-        const {onLoad} = this.props;
+        const { onLoad, onLoadProject } = this.props;
         const self = this;
         axios('http://localhost:8800/api/articles')
         .then(function (response) {
             // handle success
             onLoad(response.data);
+
             function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
                 //if one or more elements have been yielded by jquery
@@ -48,8 +51,39 @@ class Home extends React.Component {
             //this is an example place in your code where you would like to
             //start checking whether the target element exists
             //I have used a class below, but you can use any jQuery selector
-            runAfterElementExists(".card_"+(response.data.articles.length-1), function() {
-                self._handleSlider();
+            runAfterElementExists(".first_section .card_"+(response.data.articles.length-1), function() {
+                self._handleSlider('slider');
+            });
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+
+        axios('http://localhost:8800/api/projects')
+        .then(function (response) {
+            // handle success
+            onLoadProject(response.data);
+
+            function runAfterElementExists(jquery_selector, callback){
+                var checker = window.setInterval(function() {
+                //if one or more elements have been yielded by jquery
+                //using this selector
+                if ($(jquery_selector).length) {
+                    //stop checking for the existence of this element
+                    clearInterval(checker);
+                    //call the passed in function via the parameter above
+                    callback();
+                }}, 200); //I usually check 5 times per second
+            }
+            //this is an example place in your code where you would like to
+            //start checking whether the target element exists
+            //I have used a class below, but you can use any jQuery selector
+            runAfterElementExists(".second_section .card_"+(response.data.projects.length-1), function() {
+                self._handleSlider('slider_projects');
             });
         })
         .catch(function (error) {
@@ -77,13 +111,9 @@ class Home extends React.Component {
         path_3.stroke({ color: '#fff', width: 1, linecap: 'round', linejoin: 'round' });
         path_3.animate(2000, '<>').plot('M 0 100 L 0 65 C 30 55 70 90 100 80 L 100 100 Z').loop(true, true);
 
-        /* var polygon = draw.polygon('0,0 0,100 100,100');
-        polygon.attr({fill: '#3dc1d3', 'fill-opacity': 0.5 });
- */
-
         this._handleMouseMove();
     }
-    _handleSlider() {
+    _handleSlider(source) {
         function FormatNumberLength(num, length) {
             var r = "" + num;
             while (r.length < length) {
@@ -287,12 +317,8 @@ class Home extends React.Component {
                 return this;
             };
         })(jQuery);
-        $("#slider").jooSlider({
-            auto: true,
-            speed: 4000
-        });
-        $('#slider_projects').jooSlider({
-            auto: true,
+        $("#"+source).jooSlider({
+            auto: false,
             speed: 4000
         });
     }
@@ -313,12 +339,28 @@ class Home extends React.Component {
             $('.shapes2').css('marginTop', amountMovedY2);
         });
     }
+    handleJSONTOHTML(inputDelta) {
+		function runAfterElementExists(jquery_selector, callback){
+			var checker = window.setInterval(function() {
+			if (jquery_selector) {
+				clearInterval(checker);
+				callback();
+			}}, 200);
+		}
+		runAfterElementExists(inputDelta, function() {
+			const html = $.parseHTML(inputDelta);
+			$('.second_section .image').html(html);
+		});
+	}
     render() {
-        const { articles } = this.props;
+        const { articles, projects } = this.props;
         return (
             <FullPage>
                 {/* <Slide>
                     <Form />
+                </Slide> */}
+                {/* <Slide>
+                    <Form_Project />
                 </Slide> */}
                 <Slide>
                     <section className="active first_section">
@@ -389,12 +431,13 @@ class Home extends React.Component {
                         <div className="wrapper right_part">
                             <div id="slider_projects">
                                 {
-                                    (_.orderBy(articles, ['view'], ['desc']).slice(0, 10)).map((article, index) => {
+                                    (_.orderBy(projects, ['view'], ['desc']).slice(0, 10)).map((project, index) => {
                                         return (
-                                            <div className={"card card_" + index} data-title={article.title} data-index={index+1}>
-                                                <div className="shadow_title">{article.title}</div>
+                                            <div className={"card card_" + index} data-title={project.title} data-index={index+1}>
+                                                <div className="shadow_title">{project.title}</div>
                                                 <div className="card-body">
-                                                    <Link to={`/blog/${article._id}`}>
+                                                    <div className='image'>{ this.handleJSONTOHTML(project.image) }</div>
+                                                    <Link to={`/blog/${project._id}`}>
                                                         <button>
                                                             <span>
                                                                 <span>
@@ -405,7 +448,7 @@ class Home extends React.Component {
                                                             </span>
                                                         </button>
                                                     </Link>
-                                                    <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+                                                    <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
                                                 </div>
                                             </div>
                                         )
@@ -548,10 +591,12 @@ class Home extends React.Component {
 
 const mapStateToProps = state => ({
     articles: state.home.articles,
+    projects: state.home.projects,
 });
 
 const mapDispatchToProps = dispatch => ({
     onLoad: data => dispatch({ type: 'HOME_PAGE_LOADED', data }),
+    onLoadProject: data => dispatch({ type: 'PROJECT_PAGE_LOADED', data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
