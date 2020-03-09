@@ -33,6 +33,7 @@ class Form_Project extends React.Component {
         this.state = {
             title: '',
             image: '',
+            link_to: '',
             author: '',
             tag: [],
             tagInput: '',
@@ -51,6 +52,7 @@ class Form_Project extends React.Component {
             this.setState({
                 title: nextProps.projectToEdit.title,
                 image: nextProps.projectToEdit.image,
+                link_to: nextProps.projectToEdit.link_to,
                 author: nextProps.projectToEdit.author,
                 tag: nextProps.projectToEdit.tag,
                 tagInput: nextProps.projectToEdit.tagInput,
@@ -63,12 +65,13 @@ class Form_Project extends React.Component {
     }
     handleSubmit() {
         const { onSubmitProject, projectToEdit, onEditProject } = this.props;
-        const { title, image, author, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
+        const { title, image, link_to, author, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
         const self = this;
         if(!projectToEdit) {
             return axios.post('http://localhost:8800/api/projects', {
                 title,
                 image,
+                link_to,
                 author,
                 tag,
                 comment,
@@ -83,6 +86,7 @@ class Form_Project extends React.Component {
                     self.setState({ 
                         title: '',
                         image: '',
+                        link_to: '',
                         author: '',
                         tag: [],
                         tagInput: '',
@@ -96,6 +100,7 @@ class Form_Project extends React.Component {
             return axios.patch(`http://localhost:8800/api/projects/${projectToEdit._id}`, {
                 title,
                 image,
+                link_to,
                 author,
                 tag,
                 comment,
@@ -110,6 +115,7 @@ class Form_Project extends React.Component {
                     self.setState({ 
                         title: '',
                         image: '',
+                        link_to: '',
                         author: '',
                         tag: [],
                         tagInput: '',
@@ -148,7 +154,7 @@ class Form_Project extends React.Component {
     }
     render() {
         const { projectToEdit } = this.props;
-        const { title, image, author, tag, tagInput } = this.state;
+        const { title, image, link_to, author, tag, tagInput } = this.state;
     
         return (
             <div className="wrapper_form">
@@ -191,6 +197,13 @@ class Form_Project extends React.Component {
                 value={author}
                 className="form-control my-3 author_project"
                 placeholder="Author"
+                />
+
+                <input
+                onChange={(ev) => this.handleChangeField('link_to', ev)}
+                value={link_to}
+                className="form-control my-3 link_to_project"
+                placeholder="Link"
                 />
 
                 <button onClick={this.handleSubmit} className="btn btn-primary float-right submit_project">{projectToEdit ? 'Update' : 'Submit'}</button>

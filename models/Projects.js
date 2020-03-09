@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const ProjectsSchema = new Schema({
     title: String,
     image: String,
+    link_to: String,
     author: String,
     tag: [String],
     comment: [{
@@ -35,6 +36,7 @@ ProjectsSchema.methods.toJSON = function() {
         _id: this._id,
         title: this.title,
         image: this.image,
+        link_to: this.link_to,
         author: this.author,
         tag: this.tag,
         comment: this.comment,

@@ -11,8 +11,6 @@ import {
   Switch
 } from 'react-router-dom'
 import SVG from 'svg.js';
-import dev_prod from '../../dev_prod.svg';
-import tounarouz from '../../TOUNAROUZ.svg';
 import { Form } from '../Article';
 import { Form_Project } from '../Project';
 import 'whatwg-fetch';
@@ -94,24 +92,33 @@ class Home extends React.Component {
             // always executed
         });
 
-        var draw = SVG('angle_to_angle').attr({ 'viewBox':"0 0 100 100", 'preserveAspectRatio':"none" });
+        /* var draw = SVG('angle_to_angle').attr({ 'viewBox':"0 0 100 100", 'preserveAspectRatio':"none" });
 
-        var path = draw.path('M 0 100 L 0 50 C 40 40 60 80 100 70 L 100 100 Z');
+        var radial = draw.gradient('radial', function(stop) {
+            stop.at(0, '#6fd1de')
+            stop.at(1, '#3dc1d3')
+        });
+
+        var rect = draw.rect(70, 70).move(60, 60).rotate(30).radius(10).fill(radial); */
+
+        /* var path = draw.path('M 50 250 Q 80 160 170 160 Q 240 170 270 210 Q 270 310 190 310 Q 150 310 120 280 Q 90 240 50 250');
         path.fill('#6dd0de');
-        path.stroke({ color: '#6dd0de', width: 1, linecap: 'round', linejoin: 'round' });
-        path.animate(2000, '<>', 1000).plot('M 0 100 L 0 50 C 30 30 50 70 100 70 L 100 100 Z').loop(true, true);
+        path.stroke({ color: '#6dd0de', width: 1, linecap: 'round', linejoin: 'round' }); */
+        //path.animate(2000, '<>', 1000).plot('M 0 100 L 0 50 C 30 30 50 70 100 70 L 100 100 Z').loop(true, true);
 
-        var path_2 = draw.path('M 0 100 L 0 55 C 40 50 60 80 100 75 L 100 100 Z');
+        /* var path_2 = draw.path('M 50 250 Q 80 160 170 160 Q 240 170 270 210 Q 270 310 190 310 Q 150 310 120 280 Q 90 240 50 250');
         path_2.fill('#9de0e9');
-        path_2.stroke({ color: '#9de0e9', width: 1, linecap: 'round', linejoin: 'round' });
-        path_2.animate(2000, '<>', 1000).plot('M 0 100 L 0 55 C 50 60 50 70 100 75 L 100 100 Z').loop(true, true);
+        path_2.stroke({ color: '#9de0e9', width: 1, linecap: 'round', linejoin: 'round' }); */
+        //path_2.animate(2000, '<>', 1000).plot('M 0 100 L 0 55 C 50 60 50 70 100 75 L 100 100 Z').loop(true, true);
 
-        var path_3 = draw.path('M 0 100 L 0 65 C 40 65 60 80 100 80 L 100 100 Z');
+        /* var path_3 = draw.path('M 50 250 Q 80 160 170 160 Q 240 170 270 210 Q 270 310 190 310 Q 150 310 120 280 Q 90 240 50 250');
         path_3.fill('#fff');
-        path_3.stroke({ color: '#fff', width: 1, linecap: 'round', linejoin: 'round' });
-        path_3.animate(2000, '<>').plot('M 0 100 L 0 65 C 30 55 70 90 100 80 L 100 100 Z').loop(true, true);
+        path_3.stroke({ color: '#fff', width: 1, linecap: 'round', linejoin: 'round' }); */
+        //path_3.animate(2000, '<>').plot('M 0 100 L 0 65 C 30 55 70 90 100 80 L 100 100 Z').loop(true, true);
 
         this._handleMouseMove();
+
+
     }
     _handleSlider(source) {
         function FormatNumberLength(num, length) {
@@ -323,20 +330,14 @@ class Home extends React.Component {
         });
     }
     _handleMouseMove() {
-        $('.second_section').mousemove(function(e){
+        $('.first_section').mousemove(function(e){
             var width = $(this).width() / 2;
             var height = $(this).height() / 2;
             var amountMovedX = ((width - e.pageX) * -1 / 12);
             var amountMovedY = ((height - e.pageY) * -1 / 12);
         
-            var amountMovedX2 = ((width - e.pageX) / 8);
-            var amountMovedY2 = ((height - e.pageY) / 8);
-        
-            $('.shapes1').css('marginLeft', amountMovedX);
-            $('.shapes1').css('marginTop', amountMovedY);
-        
-            $('.shapes2').css('marginLeft', amountMovedX2);
-            $('.shapes2').css('marginTop', amountMovedY2);
+            $('.fa-moon').css('marginLeft', amountMovedX);
+            $('.fa-moon').css('marginTop', amountMovedY);
         });
     }
     handleJSONTOHTML(inputDelta) {
@@ -348,8 +349,9 @@ class Home extends React.Component {
 			}}, 200);
 		}
 		runAfterElementExists(inputDelta, function() {
-			const html = $.parseHTML(inputDelta);
-			$('.second_section .image').html(html);
+            const html = $.parseHTML(inputDelta);
+            $('.second_section .image').html(html);
+            $('.second_section .image').append("<div class='border_effect'></div>")
 		});
 	}
     render() {
@@ -379,9 +381,14 @@ class Home extends React.Component {
                                     </a>
                                 </div>
                             </div>
-                            <img className="dev_prod img-fluid" src={dev_prod} alt="dev_prod"/>
                         </div>
                         <div className="wrapper right_part">
+                            <i className="fas fa-moon"></i>
+                            <div className="pulsing_dots">
+                                <div className="p1"></div>
+                                <div className="p2"></div>
+                                <div className="p3"></div>
+                            </div>
                             <div id="slider">
                                 {
                                     (_.orderBy(articles, ['view'], ['desc']).slice(0, 10)).map((article, index) => {
@@ -413,19 +420,14 @@ class Home extends React.Component {
                 <Slide>
                     <section className="second_section">
                         <div className="wrapper left_part">
-                            <div id="circle_yellow"></div>
-                            <div id="circle_green"></div>
-                            <div id="circle_blue"></div>
-                            <div id="angle_to_angle"></div>
-                            <div className="some_text">
-                                <h1 className="display-4">WORKS.</h1>
+                            <div className="pulsing_dots">
+                                <div className="p1"></div>
+                                <div className="p2"></div>
+                                <div className="p3"></div>
                             </div>
-                            <div id="social_media">
-                                <div className="icons_gatherer">
-                                    <a href="#" className="icon-button github"><i className="fab fa-github"></i><span></span></a>
-                                    <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                    <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-                                </div>
+                            <div className="some_text">
+                                <h1 data-text="works." className="display-1">works.</h1>
+                                <p>Hi,<br/>I'm Boutaleb Zakariae. <br/>a Web <b className='web'>developer.</b></p>
                             </div>
                         </div>
                         <div className="wrapper right_part">
@@ -434,19 +436,11 @@ class Home extends React.Component {
                                     (_.orderBy(projects, ['view'], ['desc']).slice(0, 10)).map((project, index) => {
                                         return (
                                             <div className={"card card_" + index} data-title={project.title} data-index={index+1}>
-                                                <div className="shadow_title">{project.title}</div>
                                                 <div className="card-body">
-                                                    <div className='image'>{ this.handleJSONTOHTML(project.image) }</div>
-                                                    <Link to={`/blog/${project._id}`}>
-                                                        <button>
-                                                            <span>
-                                                                <span>
-                                                                    <span data-attr-span="Read More About it">
-                                                                        Read More About it
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </button>
+                                                    <Link to={`${project.link_to}`}>
+                                                        <div className='image'>
+                                                            { this.handleJSONTOHTML(project.image) }
+                                                        </div>
                                                     </Link>
                                                     <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
                                                 </div>
@@ -455,129 +449,83 @@ class Home extends React.Component {
                                     })
                                 }
                             </div>
+                            <button>
+                                <span>
+                                    <span>
+                                        <span data-attr-span="Hire Me.">
+                                            Hire Me.
+                                        </span>
+                                    </span>
+                                </span>
+                            </button>
                         </div>
                     </section>
                 </Slide>
                 <Slide>
                     <section className="third_section">
-                        <div className="wrapper_full">
-                            <div className="top_side">
-                                <div className="card some_text">
-                                    <div className="card-body">
-                                        <h1 className="display-2">Doodles</h1>
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-body">
-                                        <div className="some_text">
-                                            <h4>Schools</h4>
-                                            <p>This is a place where you get to motivate your students, <br/> bring out their creative part, <br/> where you don't need to worry about organizing or statistics again.</p>
+                        <div className="wrapper">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div className="column column_1">
+                                        <div className="head">
+                                            <i className="fas fa-file-code"></i>
+                                            <span>Front-end Developer</span>
                                         </div>
-                                        <div className="overlay__content">
-                                            <div className="overlay__content-inner">
-                                                <button className="cta-btn">Learn How +</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-body">
-                                        <div className="some_text">
-                                            <h4>The people</h4>
-                                            <p>This is a simple plateform, <br/> where you connect with who we may call the younger version of you, <br/> tell him what you want the younger version of you to hear.</p>
-                                        </div>
-                                        <div className="overlay__content">
-                                            <div className="overlay__content-inner">
-                                                <button className="cta-btn">Learn How +</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="bottom_side">
-                                <div className="card">
-                                    <div className="card-body">
-                                        
-                                        <blockquote className="blockquote text-right some_text">
-                                            <h5>Our Moto!</h5>
-                                            <p className="mb-0">“No one is born hating another person because of the color of his skin, or his background, or his religion. People must learn to hate, and if they can learn to hate, they can be taught to love, for love comes more naturally to the human heart than its opposite.”</p>
-                                            <footer className="blockquote-footer">Nelson Mandela, Long Walk to Freedom</footer>
-                                        </blockquote>
-
-                                        <div className="overlay__content">
-                                            <div className="overlay__content-inner">
-                                                {
-                                                    _.split('H-A-R-D-W-O-R-K-K-I-N-D-N-E-S-S-C-R-E-A-T-I-V-I-T-Y', '-', 26).map((letter, index) => {
-                                                        return (
-                                                            <p className={index < 8 ? "letter_hardwork" : index < 16 ? "letter_kindness" : "letter_creativity"}>{letter}</p>
-                                                        )
-                                                        
-                                                    })
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-body">
-
-                                        <blockquote className="blockquote text-right some_text">
-                                            <h5>Projects</h5>
-                                            <p className="mb-0">We not only connect kids around the world and from far, far away rural schools, we also help them build their legacy for the generations to follow</p>
-                                        </blockquote>
-
-                                        <div className="overlay__content">
-                                            <div className="overlay__content-inner">
-                                                <fieldset className="tasks-list">
-                                                    
-                                                </fieldset>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-body">
-                                        
-                                        <div className="overlay__content">
-                                            <div className="overlay__content-inner">
-                                                <blockquote className="blockquote text-right some_text">
-                                                    <h5>Stories</h5>
-                                                    <p className="mb-0">“WHEN GIVEN THE CHOICE BETWEEN BEING RIGHT OR BEING KIND, CHOOSE KIND.”</p>
-                                                    <footer className="blockquote-footer">R.J. Palacio, Wonder</footer>
-                                                </blockquote>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-body">
-                                        
-                                        <blockquote className="blockquote text-right some_text">
-                                            <h6>Great Speakers This Week!</h6>
-                                            <ul>
-                                                {
-                                                    (_.orderBy(articles, ['createdAt'], ['desc']).slice(0, 4)).map((article, index) => {
-                                                        return (
-                                                            <li>
-                                                                <span>{article.title}</span>
-                                                                <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
-                                                            </li>
-                                                        )
-                                                    })
-                                                }
+                                        <div className="content">
+                                            <h7>Languages i'm fluent at</h7>
+                                            <ul className="text-muted tags">
+                                                <li className="tag_item">_Lodash</li>
+                                                <li className="tag_item">JQuery</li>
+                                                <li className="tag_item">Sass</li>
+                                                <li className="tag_item">Css</li>
+                                                <li className="tag_item">HTML</li>
+                                                <li className="tag_item">ReactJS</li>
                                             </ul>
-                                        </blockquote>
-                                        <div className="overlay__content">
-                                            <div className="overlay__content-inner">
-                                                {/* put an image */}
-                                            </div>
+                                            <h7>Tools i use</h7>
+                                            <ul className="text-muted tags">
+                                                <li className="tag_item">Bootstrap</li>
+                                                <li className="tag_item">Css Grid</li>
+                                                <li className="tag_item">Illustrator</li>
+                                                <li className="tag_item">Photohsop</li>
+                                                <li className="tag_item">Pen & Paper</li>
+                                                <li className="tag_item">Visual Studio Code</li>
+                                            </ul>
                                         </div>
-
+                                    </div>
+                                    <div className="column column_2">
+                                        <div className="head">
+                                            <i className="fas fa-icons"></i>
+                                            <span>Design.</span>
+                                        </div>
+                                        <div className="content">
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <div className="column column_3">
+                                        <div className="head">
+                                            <i className="fab fa-js"></i>
+                                            <span>Back-end Developer</span>
+                                        </div>
+                                        <div className="content">
+                                            <h7>Languages i'm fluent at</h7>
+                                            <ul className="text-muted tags">
+                                                <li className="tag_item">JSON</li>
+                                                <li className="tag_item">NoSQL</li>
+                                                <li className="tag_item">JavaScript</li>
+                                                <li className="tag_item">NPM</li>
+                                                <li className="tag_item">Yarn</li>
+                                                <li className="tag_item">NodeJS</li>
+                                                <li className="tag_item">React Native</li>
+                                            </ul>
+                                            <h7>Tools i use</h7>
+                                            <ul className="text-muted tags">
+                                                <li className="tag_item">Git</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <h1 data-text="SKILLS." className="display-1">SKILLS.</h1>
                         </div>
                     </section>
                 </Slide>

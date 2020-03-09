@@ -358,26 +358,14 @@ class Header extends React.Component {
                         $('.nav-link').not('#'+index.id).removeClass('active');
                     }
                     break;
-                case "_letters_link":
-                    if(_url === '/letters'){
-                        $('#'+index.id).addClass('active');
-                        $('.nav-link').not('#'+index.id).removeClass('active');
-                    }
-                    break;
-                case "_projects_link":
-                    if(_url === '/projects'){
+                case "_about_link":
+                    if(_url === '/about'){
                         $('#'+index.id).addClass('active');
                         $('.nav-link').not('#'+index.id).removeClass('active');
                     }
                     break;
                 case "_coffee_link":
                     if(_url === '/coffee'){
-                        $('#'+index.id).addClass('active');
-                        $('.nav-link').not('#'+index.id).removeClass('active');
-                    }
-                    break;
-                case "_pencil_link":
-                    if(_url === '/pencil'){
                         $('#'+index.id).addClass('active');
                         $('.nav-link').not('#'+index.id).removeClass('active');
                     }
@@ -543,12 +531,11 @@ class Header extends React.Component {
                 </div>
                 <ul className="menu menu--is-closed">
                     <li><span className="item item-0"></span></li>
-                    <li><span className="item item-1"><Link to='/' className="nav-link" id="_home_link"> Home </Link></span></li>
-                    <li><span className="item item-2"><Link to='/blog' className="nav-link" id="_blog_link"> Blog </Link></span></li>
-                    <li><span className="item item-3"><Link to='/letters' className="nav-link" id="_letters_link"> Letters </Link></span></li>
-                    <li><span className="item item-4"><Link to='/coffee' className="nav-link" id="_coffee_link"> Coffee </Link></span></li>
-                    <li><span className="item item-5"><Link to='/education' className="nav-link" id="_pencil_link"> Education </Link></span></li>
-                    <li><span className="item item-6"><Link to='/faq' className="nav-link" id="_faq_link"> Ask Us </Link></span></li>
+                    <li><span className="item item-1"><Link to='/' className="nav-link" id="_home_link"> Home. </Link></span></li>
+                    <li><span className="item item-2"><Link to='/blog' className="nav-link" id="_blog_link"> Blog. </Link></span></li>
+                    <li><span className="item item-3"><Link to='/about' className="nav-link" id="_about_link"> About Me. </Link></span></li>
+                    <li><span className="item item-4"><Link to='/coffee' className="nav-link" id="_coffee_link"> Coffee. </Link></span></li>
+                    <li><span className="item item-5"><Link to='/faq' className="nav-link" id="_faq_link"> Ask Me. </Link></span></li>
                 </ul>
                 <div className="modal fade" id="signup_modal" tabIndex="-1" role="dialog" aria-labelledby="signup_modalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">

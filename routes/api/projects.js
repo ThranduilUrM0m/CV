@@ -4,7 +4,7 @@ const Projects = mongoose.model('Projects');
 
 router.post('/', (req, res, next) => {
   const { body } = req;
-  console.log(body.title);
+  
   if(!body.title) {
     return res.status(422).json({
       errors: {
@@ -12,7 +12,7 @@ router.post('/', (req, res, next) => {
       },
     });
   }
-  console.log(body.image);
+  
   if(!body.image) {
     return res.status(422).json({
       errors: {
@@ -20,7 +20,15 @@ router.post('/', (req, res, next) => {
       },
     });
   }
-  console.log(body.author);
+
+  if(!body.link_to) {
+    return res.status(422).json({
+      errors: {
+        link_to: 'is required',
+      },
+    });
+  }
+  
   if(!body.author) {
     return res.status(422).json({
       errors: {
@@ -68,6 +76,10 @@ router.patch('/:id', (req, res, next) => {
 
   if(typeof body.author !== 'undefined') {
     req.project.author = body.author;
+  }
+
+  if(typeof body.link_to !== 'undefined') {
+    req.project.link_to = body.link_to;
   }
 
   if(typeof body.image !== 'undefined') {

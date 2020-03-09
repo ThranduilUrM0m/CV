@@ -138,7 +138,7 @@ class Blog extends React.Component {
 			.then((res) => onLoad(res.data));
 
 		document.getElementById('articles_blog').parentElement.style.height = 'initial';
-		this._handleTimeLine();
+		//this._handleTimeLine();
 	}
 	handleDelete(id) {
 		const { onDelete } = this.props;
@@ -161,7 +161,7 @@ class Blog extends React.Component {
 			}}, 200);
 		}
 		runAfterElementExists(inputDelta, function() {
-			const html = JSON.parse(inputDelta);
+            const html = $.parseHTML(inputDelta);
 			$('h6.body_article').html(html);
 			$('h6.body_article').children('p').filter(':not(:first-of-type):not(:nth-child(2)):not(:nth-child(3))').hide();
 			$('.shadow_letter').map(function() {
