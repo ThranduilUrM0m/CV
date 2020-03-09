@@ -51,8 +51,6 @@
     "react-scripts": "*",
     "redux": "*",
     "serve": "*",
-    "svg.js": "*",
-    "svg.pathmorphing.js": "*",
     "swiper": "*",
     "underscore": "*"
   },

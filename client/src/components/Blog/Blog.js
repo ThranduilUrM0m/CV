@@ -69,7 +69,7 @@ class ArticleCard extends React.Component {
 				</div>
 				<div className="col card">
 					<div className="body_to_preview">
-						<img src={$($(JSON.parse(this.props.single_article.body)).find('img')[0]).attr('src')}/>
+						<img src={$($($.parseHTML(this.props.single_article.body)).find('img')[0]).attr('src')}/>
 						<span className="index_article">{this.props.FormatNumberLengthIndex}.</span>
 					</div>
 				</div>

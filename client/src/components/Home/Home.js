@@ -9,8 +9,7 @@ import {
   Route,
   Link,
   Switch
-} from 'react-router-dom'
-import SVG from 'svg.js';
+} from 'react-router-dom';
 import { Form } from '../Article';
 import { Form_Project } from '../Project';
 import 'whatwg-fetch';
@@ -18,7 +17,6 @@ import $ from 'jquery';
 import jQuery from 'jquery';
 
 var _ = require('lodash');
-require('svg.pathmorphing.js');
 
 class Home extends React.Component {
     constructor(props) {
@@ -92,33 +90,7 @@ class Home extends React.Component {
             // always executed
         });
 
-        /* var draw = SVG('angle_to_angle').attr({ 'viewBox':"0 0 100 100", 'preserveAspectRatio':"none" });
-
-        var radial = draw.gradient('radial', function(stop) {
-            stop.at(0, '#6fd1de')
-            stop.at(1, '#3dc1d3')
-        });
-
-        var rect = draw.rect(70, 70).move(60, 60).rotate(30).radius(10).fill(radial); */
-
-        /* var path = draw.path('M 50 250 Q 80 160 170 160 Q 240 170 270 210 Q 270 310 190 310 Q 150 310 120 280 Q 90 240 50 250');
-        path.fill('#6dd0de');
-        path.stroke({ color: '#6dd0de', width: 1, linecap: 'round', linejoin: 'round' }); */
-        //path.animate(2000, '<>', 1000).plot('M 0 100 L 0 50 C 30 30 50 70 100 70 L 100 100 Z').loop(true, true);
-
-        /* var path_2 = draw.path('M 50 250 Q 80 160 170 160 Q 240 170 270 210 Q 270 310 190 310 Q 150 310 120 280 Q 90 240 50 250');
-        path_2.fill('#9de0e9');
-        path_2.stroke({ color: '#9de0e9', width: 1, linecap: 'round', linejoin: 'round' }); */
-        //path_2.animate(2000, '<>', 1000).plot('M 0 100 L 0 55 C 50 60 50 70 100 75 L 100 100 Z').loop(true, true);
-
-        /* var path_3 = draw.path('M 50 250 Q 80 160 170 160 Q 240 170 270 210 Q 270 310 190 310 Q 150 310 120 280 Q 90 240 50 250');
-        path_3.fill('#fff');
-        path_3.stroke({ color: '#fff', width: 1, linecap: 'round', linejoin: 'round' }); */
-        //path_3.animate(2000, '<>').plot('M 0 100 L 0 65 C 30 55 70 90 100 80 L 100 100 Z').loop(true, true);
-
         this._handleMouseMove();
-
-
     }
     _handleSlider(source) {
         function FormatNumberLength(num, length) {
