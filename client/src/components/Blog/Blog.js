@@ -17,128 +17,61 @@ import jQuery from 'jquery';
 
 var _ = require('lodash');
 
-class ReadMoreLink extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	render() {
-		return (
-			<Link to={this.props.readmore_link}>
-				<button>
-					<span>
-						<span>
-							<span data-attr-span="Read More About it">Read More About it</span>
-						</span>
-					</span>
-				</button>
-			</Link>
-		)
-	}
-}
-class ArticleCard extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	render() {
-		return (
-			<li className="article_card article_anchor row" data-name={ moment(this.props.single_article.createdAt).format("YYYY Do MM") }>
-				<div className={"col card card_" + this.props.single_article.index} data-title={_.snakeCase(this.props.single_article.title)} data-index={_.add(this.props.single_article.index,1)}>
-					<div className="shadow_title">{_.head(_.words(this.props.single_article.title))}</div>
-					<div className="shadow_letter">{_.head(_.head(_.words(this.props.single_article.title)))}</div>
-					<div className="card-body">
-						<h2>{this.props.single_article.title}</h2>
-						<p className="text-muted author">by <b>{this.props.single_article.author}</b>, {moment(new Date(this.props.single_article.createdAt)).fromNow()}</p>
-						<ReadMoreLink readmore_link={`${this.props.url}/${this.props.single_article._id}`}/>
-						<br/>
-						<div className="comments_up_down">
-							<p className="text-muted views"><b>{_.size(this.props.single_article.view)}</b><i className="fas fa-eye"></i></p>
-							<p className="text-muted comments"><b>{_.size(this.props.single_article.comment)}</b> <i className="fas fa-comment-alt"></i></p>
-							<p className="text-muted upvotes"><b>{_.size(this.props.single_article.upvotes)}</b> <i className="fas fa-thumbs-up"></i></p>
-							<p className="text-muted downvotes"><b>{_.size(this.props.single_article.downvotes)}</b> <i className="fas fa-thumbs-down"></i></p>
-						</div>
-						<ul className="text-muted tags">
-							{
-								this.props.single_article.tag.map((t, i) => {
-									return (
-										<li className="tag_item">{t}</li>
-									)
-								})
-							}
-						</ul>
-					</div>
-				</div>
-				<div className="col card">
-					<div className="body_to_preview">
-						<img src={$($($.parseHTML(this.props.single_article.body)).find('img')[0]).attr('src')}/>
-						<span className="index_article">{this.props.FormatNumberLengthIndex}.</span>
-					</div>
-				</div>
-			</li>
-		)
-	}
-}
-class ArticleCards extends React.Component {
-	constructor(props) {
-		super(props);
-		this._FormatNumberLength = this._FormatNumberLength.bind(this);
-	}
-	componentDidMount() {
-		var swiper = new Swiper('.data-container', {
-			direction: 'vertical',
-			spaceBetween: 30,
-			effect: 'fade',
-			loop: true,
-			mousewheel: {
-				invert: false,
-			},
-			pagination: {
-				el: '#pagination-demo1',
-				clickable: true,
-			},
-		});
-	}
-	_FormatNumberLength(num, length) {
-		var r = "" + num;
-		while (r.length < length) {
-			r = "0" + r;
-		}
-		return r;
-	}
-	render () {
-		return (
-			<>
-				<div className="data-container">
-					<ul className="articles_list">
-						{
-							_.orderBy(this.props.articles_props, ['createdAt'], ['desc']).map((article, index) => {
-								return (
-									<ArticleCard url={this.props.url} single_article={article} FormatNumberLengthIndex={this._FormatNumberLength(index+1, 2)}/>
-								)
-							})
-						}
-					</ul>
-					<div id="pagination-demo1"></div>
-				</div>
-			</>
-		)
-	}
-}
-
 class Blog extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			currentCard: 0,
+			position: 0,
+			cardStyle: {
+			  	transform: 'translateX(0px)'
+			},
+			width: 0,
+		};
+
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
-		this._handleTimeLine = this._handleTimeLine.bind(this);
+		this._FormatNumberLength = this._FormatNumberLength.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+		this.setCard = this.setCard.bind(this);
 	}
 	componentDidMount() {
-        const {onLoad} = this.props;
-		axios('http://localhost:8800/api/articles')
-			.then((res) => onLoad(res.data));
+        const { onLoad } = this.props;
+		const self = this;
+        axios('http://localhost:8800/api/articles')
+        .then(function (response) {
+            // handle success
+			onLoad(response.data);
 
-		document.getElementById('articles_blog').parentElement.style.height = 'initial';
-		//this._handleTimeLine();
+			function runAfterElementExists(jquery_selector, callback){
+                var checker = window.setInterval(function() {
+                //if one or more elements have been yielded by jquery
+                //using this selector
+                if ($(jquery_selector).length) {
+                    //stop checking for the existence of this element
+                    clearInterval(checker);
+                    //call the passed in function via the parameter above
+                    callback();
+                }}, 200); //I usually check 5 times per second
+            }
+            //this is an example place in your code where you would like to
+            //start checking whether the target element exists
+            //I have used a class below, but you can use any jQuery selector
+            runAfterElementExists(".second_section_blog .article_card", function() {
+                let boxWidth = document.getElementById("article_card").clientWidth;
+    			self.setState({ width: boxWidth });
+			});
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+		});
+		$('.fixedHeaderContainer').addClass('blog_header');
 	}
 	handleDelete(id) {
 		const { onDelete } = this.props;
@@ -148,6 +81,13 @@ class Blog extends React.Component {
 	handleEdit(article) {
 		const { setEdit } = this.props;
 		setEdit(article);
+	}
+	_FormatNumberLength(num, length) {
+		var r = "" + num;
+		while (r.length < length) {
+			r = "0" + r;
+		}
+		return r;
 	}
 	handleJSONTOHTML(inputDelta) {
 		function randomIntFromInterval(min, max) { // min and max included 
@@ -172,171 +112,130 @@ class Blog extends React.Component {
 			});
 		});
 	}
-	_handleTimeLine() {
-		function sticky_relocate_left() {
-			var window_top = $(window).scrollTop();
-			var div_top = $('#articles_blog').offset().top;
-			if (window_top > div_top) {
-				$('#pagination-demo1').addClass('mobile-sticky');
-			} else {
-				$('#pagination-demo1').removeClass('mobile-sticky');
+	// func: click the slider buttons
+	handleClick(type) {
+		const { articles } = this.props;
+		// get the card's margin-right
+		let margin = window.getComputedStyle(document.getElementById("article_card")).marginRight;
+		margin = JSON.parse(margin.replace(/px/i, '')); 
+	
+		const cardWidth = this.state.width; // the card's width
+		const cardMargin = margin; // the card's margin
+		const cardNumber = articles.length; // the number of cards
+		let currentCard = this.state.currentCard; // the index of the current card
+		let position = this.state.position; // the position of the cards
+	
+		// slide cards
+		if(type === 'next' && currentCard < cardNumber-1) {
+			currentCard++;
+			position -= (cardWidth+cardMargin);
+		} else if(type === 'prev' && currentCard > 0) {
+			currentCard--;
+			position += (cardWidth+cardMargin);
+		}
+		this.setCard(currentCard, position);
+	}
+	setCard(currentCard, position) {
+		this.setState({
+			currentCard: currentCard,
+			position: position,
+			cardStyle: {
+				transform: `translateX(${position}px)`
 			}
-		}
-
-		function sumSection(){
-			return $(".timeline").height();
-		}
-
-		function setDimensionBar(){
-			let _height = ($('.timeline').height() * $('.article_anchor').height()) / $('.articles_list').height();
-			$(".bar").css({
-			  "height": _height + "px"
-			})
-		}
-		
-		function addBehaviours(){
-			let sections = $(".article_anchor");
-			$.each($(".node"), function(i, element){
-				$(element).on("click", function(e){
-					e.preventDefault();
-					let scroll = $(sections[i]).offsetRelative(".articles_list").top;
-					$('html, body').animate({
-						scrollTop: scroll
-					}, 500);
-				})
-			})
-		}
-		
-		(function($){
-			$.fn.offsetRelative = function(top){
-				var $this = $(this);
-				var $parent = $this.offsetParent();
-				var offset = $this.position();
-				if(!top) return offset; // Didn't pass a 'top' element 
-				else if($parent.get(0).tagName == "BODY") return offset; // Reached top of document
-				else if($(top,$parent).length) return offset; // Parent element contains the 'top' element we want the offset to be relative to 
-				else if($parent[0] == $(top)[0]) return offset; // Reached the 'top' element we want the offset to be relative to 
-				else { // Get parent's relative offset
-					var parent_offset = $parent.offsetRelative(top);
-					offset.top += parent_offset.top;
-					offset.left += parent_offset.left;
-					return offset;
-				}
-			};
-			$.fn.positionRelative = function(top){
-				return $(this).offsetRelative(top);
-			};
-		}(jQuery));
-
-		function arrangeNodes(){
-			//$(".node").remove();
-			$.each($(".article_anchor"), function(i, element){
-				let name = $(element).data("name");
-				let node = $("<li class='node'><span>"+name+"</span></li>");
-				$(".timeline").append(node);
-				let _top = ($(".timeline").height()/$(".articles_list").height()) * $(element).offsetRelative(".articles_list").top;
-				$(node).css({
-					"top": _top
-				})
-			})
-			addBehaviours();
-		}
-		
-		function runAfterElementExists(jquery_selector, callback){
-			var checker = window.setInterval(function() {
-			if (jquery_selector) {
-				clearInterval(checker);
-				callback();
-			}}, 200);
-		}
-
-		runAfterElementExists('.article_anchor', function() {
-			$(window).on("scroll", function(){
-				var window_top = $(window).scrollTop();
-				var div_top = $('#articles_blog').offset().top;
-				
-				if (window_top > div_top) {
-
-					let _top = window.scrollY - $('.first_section_blog').parent().height();
-					let _top_given = ($('.timeline').height() * _top) / $('.second_section_blog').height();
-
-					let _where_it_is = ($('#pagination-demo1').offset().top - $('.first_section_blog').parent().height());
-					let _where_to_stop = $('.second_section_blog').height() - $('.timeline').height();
-
-					if(_where_it_is < _where_to_stop) {
-						$(".timeline").css({
-							"top": ($('#pagination-demo1').offset().top - $('.first_section_blog').parent().height()) + "px"
-						});
-						$(".bar").css({
-							"top": _top_given + "px"
-						});
-					}
-
-				}
-			});
-			$(window).on("resize", function(){
-				arrangeNodes()
-				setDimensionBar()
-			});
-			$(window).scroll(sticky_relocate_left);
-			arrangeNodes();
-			setDimensionBar();
-			sticky_relocate_left();
-		});
+		})
 	}
 	render() {
 		const { articles } = this.props;
 		const { match } = this.props;
+		const { cardStyle } = this.state;
 		return (
-			<FullPage scrollMode={'normal'}>
+			<FullPage>
 				<Slide>
 					<section className="active first_section_blog">
-						<div className="wrapper_full">
-							<div id="box">
-								<h2>{_.get(_.head(_.orderBy(articles, ['upvotes'], ['desc'])), 'title')}</h2>
-								<p className="text-muted author">by <b>{_.get(_.head(_.orderBy(articles, ['upvotes'], ['desc'])), 'author')}</b>, {moment(new Date(_.get(_.head(_.orderBy(articles, ['createdAt'], ['desc'])), 'createdAt'))).fromNow()}</p>
-								<h6 className="text-muted body body_article">
-									{
-										this.handleJSONTOHTML((_.get(_.head(_.orderBy(articles, ['upvotes'], ['desc'])), 'body')))
-									}
-								</h6>
-								<div className="comments_up_down">
-									<p className="text-muted views"><b>{_.size(_.get(_.head(_.orderBy(articles, ['upvotes'], ['desc'])), 'view'))}</b><i className="fas fa-eye"></i></p>
-									<p className="text-muted comments"><b>{_.size(_.get(_.head(_.orderBy(articles, ['upvotes'], ['desc'])), 'comment'))}</b><i className="fas fa-comment-alt"></i></p>
-									<p className="text-muted upvotes"><b>{_.size(_.get(_.head(_.orderBy(articles, ['upvotes'], ['desc'])), 'upvotes'))}</b><i className="fas fa-thumbs-up"></i></p>
-									<p className="text-muted downvotes"><b>{_.size(_.get(_.head(_.orderBy(articles, ['upvotes'], ['desc'])), 'downvotes'))}</b><i className="fas fa-thumbs-down"></i></p>
-								</div>
-								<Link to={`${match.url}/${_.get(_.head(_.orderBy(articles, ['upvotes'], ['desc'])), '_id')}`}>
-									<div className="readmore">
-										<button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
-											<div className="line line-1"></div>
-											<div className="line line-2"></div>
-										</button>
-									</div>
-								</Link>
+						<div className="wrapper left_part">
+							<span className="name">Boutaleb<br/>Zakariae.</span>
+							<div className="caption">
+								<p><b>The teacher</b></p>
+								<p>My father was an educator, My grandfather was an educator, i was born to educate, and my sons will also educate.</p>
 							</div>
 							<div id="social_media">
-								<div className="icons_gatherer">
-									<a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-									<a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-									<a href="#" className="icon-button scroll">
-										<span className="scroll-icon">
-											<span className="scroll-icon__wheel-outer">
-												<span className="scroll-icon__wheel-inner"></span>
-											</span>
-										</span>
-									</a>
-								</div>
+                                <div className="icons_gatherer">
+                                    <a href="#" className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                    <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                    <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                    <a href="#" className="icon-button scroll">
+                                        <span className="scroll-icon">
+                                            <span className="scroll-icon__wheel-outer">
+                                                <span className="scroll-icon__wheel-inner"></span>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+						</div>
+						<div className="wrapper right_part">
+							<span className="name">Boutaleb<br/>Zakariae.</span>
+							<div className="caption">
+								<p><b>The Coder</b></p>
+								<p>Grew up next to a computer, learned to create at a young age, i was born to create to look from all sides and discover hidden meanings.</p>
 							</div>
 						</div>
 					</section>
 				</Slide>
 				<Slide>
-					<section id='articles_blog' className="second_section_blog">
-						<ul className="timeline">
-							<li className="bar"></li>
-						</ul>
-        				<ArticleCards url={match.url} articles_props={articles}/>
+					<section className="second_section_blog">
+						<div className="wrapper_full">
+							<div className="caption">Most Popular Talks.</div>
+							<div className="cards-slider">
+								<div className="slider-btns">
+									<button className="slider-btn btn-l" onClick={() => this.handleClick('prev')}><i className="fas fa-long-arrow-alt-left"></i></button>
+									<button className="slider-btn btn-r" onClick={() => this.handleClick('next')}><i className="fas fa-long-arrow-alt-right"></i></button>
+								</div>
+								<div className="data-container">
+									{
+										_.orderBy(articles, ['createdAt'], ['desc']).map((article, index) => {
+											return (
+												<div className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" style={cardStyle} key={index}>
+													<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
+														<div className="shadow_title">{_.head(_.words(article.title))}</div>
+														<div className="shadow_letter">{_.head(_.head(_.words(article.title)))}</div>
+														<div className="card-body">
+															<h2>{article.title}</h2>
+															<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+															<ul className="text-muted tags">
+																{
+																	article.tag.map((t, i) => {
+																		return (
+																			<li className="tag_item">{t}</li>
+																		)
+																	})
+																}
+															</ul>
+															<Link to={`${match.url}/${article._id}`}>
+																<div className="readmore">
+																	<button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
+																		<div className="line line-1"></div>
+																		<div className="line line-2"></div>
+																	</button>
+																</div>
+															</Link>
+															<br/>
+															<div className="comments_up_down">
+																<p className="text-muted views"><b>{_.size(article.view)}</b><i className="fas fa-eye"></i></p>
+																<p className="text-muted comments"><b>{_.size(article.comment)}</b> <i className="fas fa-comment-alt"></i></p>
+																<p className="text-muted upvotes"><b>{_.size(article.upvotes)}</b> <i className="fas fa-thumbs-up"></i></p>
+																<p className="text-muted downvotes"><b>{_.size(article.downvotes)}</b> <i className="fas fa-thumbs-down"></i></p>
+															</div>
+														</div>
+													</div>
+													<div className="card_shadower"></div>
+												</div>
+											)
+										})
+									}
+								</div>
+							</div>
+						</div>
 					</section>
 				</Slide>
 				<Slide>

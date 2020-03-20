@@ -91,6 +91,7 @@ class Home extends React.Component {
         });
 
         this._handleMouseMove();
+        $('.fixedHeaderContainer').removeClass('blog_header');
     }
     _handleSlider(source) {
         function FormatNumberLength(num, length) {
