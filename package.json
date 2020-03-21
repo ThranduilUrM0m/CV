@@ -24,7 +24,7 @@
         "nodemon": "*"
     },
     "engines": {
-        "node": "*"
+        "node": "13.x"
     },
     "resolutions": {
         "@babel/preset-env": "*"
