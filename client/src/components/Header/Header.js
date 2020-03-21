@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../logo.svg';
 import API from '../../utils/API';
-import $ from 'jquery';
+import * as $ from "jquery";
+import 'bootstrap';
 
 const _ = require('lodash');
 

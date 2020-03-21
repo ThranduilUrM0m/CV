@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
 import { Link } from 'react-router-dom';
 import 'whatwg-fetch';
-import { pagination } from 'paginationjs';
 import Fingerprint from 'fingerprintjs';
 import Footer from '../Footer/Footer';
-import $ from 'jquery';
+import * as $ from "jquery";
+import 'bootstrap';
 
 class Coffee extends React.Component {
     constructor(props){

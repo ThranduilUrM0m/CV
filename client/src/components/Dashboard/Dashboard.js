@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 import Fingerprint from 'fingerprintjs';
 import API from '../../utils/API';
 import Clock from 'react-live-clock';
-import $ from 'jquery';
+import * as $ from "jquery";
+import 'bootstrap';
 
 var _ = require('lodash');
 

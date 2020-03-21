@@ -13,8 +13,9 @@ import {
 import { Form } from '../Article';
 import { Form_Project } from '../Project';
 import 'whatwg-fetch';
-import $ from 'jquery';
+import * as $ from "jquery";
 import jQuery from 'jquery';
+import 'bootstrap';
 
 var _ = require('lodash');
 
@@ -366,8 +367,8 @@ class Home extends React.Component {
                                 {
                                     (_.orderBy(articles, ['view'], ['desc']).slice(0, 10)).map((article, index) => {
                                         return (
-                                            <div className={"card card_" + index} data-title={article.title} data-index={index+1}>
-                                                <div className="shadow_title">{article.title}</div>
+                                            <div className={"card card_" + index} data-title={_.head( article.title.split(" ") )} data-index={index+1}>
+                                                <div className="shadow_title">{_.head( article.title.split(" ") )}.</div>
                                                 <div className="card-body">
                                                     <Link to={`/blog/${article._id}`}>
                                                         <button>

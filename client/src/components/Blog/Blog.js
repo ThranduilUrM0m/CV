@@ -10,10 +10,9 @@ import {
   Switch
 } from 'react-router-dom';
 import 'whatwg-fetch';
-import Swiper from 'swiper';
 import Footer from '../Footer/Footer';
-import $ from 'jquery';
-import jQuery from 'jquery';
+import * as $ from "jquery";
+import 'bootstrap';
 
 var _ = require('lodash');
 

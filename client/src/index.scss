@@ -1604,6 +1604,9 @@ body, html {
 			}
 			#editor {
 				overflow: hidden;
+				flex: auto;
+				display: flex;
+				flex-direction: column;
 			}
 			.ql-toolbar {
 				.ql-align{
@@ -6742,8 +6745,6 @@ body, html {
 			margin: 0 auto;
 			display: flex;
 			flex-wrap: wrap;
-			border: 0.5rem solid $color1;
-			border-bottom: none;
 			.modal {
 				height: fit-content;
 				width: fit-content;
@@ -6853,127 +6854,6 @@ body, html {
 							margin-left: 0.5rem;
 							margin-bottom: 0;
 						}
-					}
-				}
-				#social_media {
-					position: absolute;
-					bottom: 0;
-					right: 0;
-					display: flex;
-					flex-direction: column;
-					height: 100%;
-					z-index: 0;
-					background: lighten($color: $liteBg_gray, $amount: 10);
-					justify-content: flex-end;
-					margin-bottom: 1px;
-					.icons_gatherer {
-						display: flex;
-						flex-direction: column;
-					}
-					.icons_gatherer::before{
-						position: absolute;
-						content: "";
-						width: 0.1rem;
-						height: 10rem;
-						background: #000;
-						left: 50%;
-    					transform: translate(-50%, -120%);
-						cursor: default;
-					}
-					.icon-button {
-						font-family: FontAwesome;
-						font-weight: normal;
-						font-style: normal;
-						text-decoration: inherit;
-						-webkit-font-smoothing: antialiased;
-						border-radius: 2.6rem;
-						cursor: pointer;
-						display: inline-block;
-						font-size: 1.3rem;
-						height: 2.6rem;
-						line-height: 2.6rem;
-						margin: 0 5px;
-						position: relative;
-						text-align: center;
-						-webkit-user-select: none;
-						-moz-user-select: none;
-							-ms-user-select: none;
-								user-select: none;
-						width: 2.6rem;
-						i {
-							background: none;
-							color: black;
-							height: 2.6rem;
-							left: 0;
-							line-height: 2.6rem;
-							position: absolute;
-							top: 0;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
-							width: 2.6rem;
-							z-index: 10;
-						}
-						.scroll-icon {
-							height: 2rem;
-							width: 1.2rem;
-							border: .25rem solid black;
-							border-radius: 1rem;
-							transform: translate(-50%, -50%);
-							.scroll-icon__wheel-outer {
-								position: absolute;
-								left: 50%;
-								top: .1rem;
-								transform: translate(-50%, .1rem);
-								height: .8rem;
-								width: .4em;
-								border-radius: .4rem;
-								overflow: hidden;
-								.scroll-icon__wheel-inner {
-									display: block;
-									height: $dot-diameter;
-									width: $dot-diameter;
-									border-radius: inherit;
-									background: black;
-									animation: dot--a $duration infinite;
-									left: 50%;
-									transform: translateX(-50%);
-								}
-							}
-						}
-						span {
-							border-radius: 0;
-							display: block;
-							height: 0;
-							left: 50%;
-							margin: 0;
-							position: absolute;
-							top: 50%;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
-							width: 0;
-						}
-						&:hover span:not(.scroll-icon):not(.scroll-icon__wheel-outer):not(.scroll-icon__wheel-inner) {
-							width: 2.6rem;
-							height: 2.6rem;
-							border-radius: 2.6rem;
-							margin: -1.3rem;
-						}
-						&:hover .icon-facebook{
-							color: $liteBg;
-						}
-						&:hover .fa-instagram{
-							color: $liteBg;
-						}
-					}
-					.instagram span {
-						background-color: #e4405f;
-					}
-					.facebook span {
-						background-color: #3B5998;
 					}
 				}
 			}
@@ -8300,7 +8180,7 @@ body, html {
 									.tags {
 										margin-bottom: 0 !important;
 										display: flex;
-										flex-direction: inherit;
+										flex-direction: initial;
 										align-items: flex-start;
 										margin-top: 0.5rem;
 										flex: auto;

@@ -18,12 +18,14 @@
     "sass-loader": "*",
     "style-loader": "*",
     "webpack": "*",
+    "jquery": "*",
     "webpack-cli": "*"
   },
   "dependencies": {
     "@testing-library/jest-dom": "*",
     "@testing-library/react": "*",
     "@testing-library/user-event": "*",
+    "@types/jquery": "*",
     "axios": "*",
     "babel-polyfill": "*",
     "bootstrap": "*",
@@ -34,6 +36,7 @@
     "moment": "*",
     "node-sass": "*",
     "paginationjs": "*",
+    "popper.js": "*",
     "prop-types": "*",
     "quill": "*",
     "quill-image-resize-module": "*",

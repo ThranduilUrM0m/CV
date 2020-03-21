@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
 import { Link } from 'react-router-dom';
 import 'whatwg-fetch';
-import { pagination } from 'paginationjs';
 import Fingerprint from 'fingerprintjs';
+import { Form } from '../Article';
 import Footer from '../Footer/Footer';
-import $ from 'jquery';
+import * as $ from "jquery";
+import 'bootstrap';
 
 var _ = require('lodash');
 
@@ -68,7 +69,6 @@ class Post extends React.Component {
 		this._FormatNumberLength = this._FormatNumberLength.bind(this);
         this._handleMouseMove = this._handleMouseMove.bind(this);
 	}
-
 	componentDidMount() {
         const { onLoad } = this.props;
 		const { match } = this.props;
@@ -84,8 +84,8 @@ class Post extends React.Component {
 		document.getElementById('articles_post').parentElement.style.height = 'initial';
 		document.getElementById('comments_post').parentElement.style.height = 'initial';
 		this._handleMouseMove();
+        $('.fixedHeaderContainer').removeClass('blog_header');
 	}
-
 	componentWillReceiveProps(nextProps) {
         if(nextProps.articleToEdit) {
             this.setState({
@@ -102,18 +102,15 @@ class Post extends React.Component {
             });
         }
 	}
-
 	handleDelete(id) {
 		const { onDelete } = this.props;
 		return axios.delete(`http://localhost:8800/api/articles/${id}`)
 			.then(() => onDelete(id));
 	}
-
 	handleEdit(article) {
 		const { setEdit } = this.props;
 		setEdit(article);
 	}
-	
 	componentDidUpdate () {
 		const { onEdit } = this.props;
 		const { _id, title, body, author, tag, comment, upvotes, downvotes, view } = this.state;
@@ -143,7 +140,6 @@ class Post extends React.Component {
 			}
 		}
 	}
-	
 	handleSubmitComment() {
         if( localStorage.getItem('email') ){
 			const { comment_body } = this.state;
@@ -156,7 +152,6 @@ class Post extends React.Component {
 			$('#exampleModal').modal('toggle');
 		}
 	}
-
 	handleSubmitupvotes() {
 		if( localStorage.getItem('email') ){
 			if( _.isUndefined(_.find(this.state.upvotes, {'upvoter': localStorage.getItem('email')})) ) {
@@ -191,7 +186,6 @@ class Post extends React.Component {
 			$('#exampleModal').modal('toggle');
 		}
 	}
-
 	handleSubmitdownvotes() {
 		if( localStorage.getItem('email') ){
 			if( _.isUndefined(_.find(this.state.downvotes, {'downvoter': localStorage.getItem('email')})) ) {
@@ -227,7 +221,6 @@ class Post extends React.Component {
 			$('#exampleModal').modal('toggle');
 		}
 	}
-
 	handleSubmitviews() {
 		var fingerprint = new Fingerprint().get();
 
@@ -254,14 +247,12 @@ class Post extends React.Component {
 			}
 		}
 	}
-
 	handleChangeField(key, event) {	
 		const val = event.target.value;
 		this.setState(state => ({
 			[key]: val,
 		}));
 	}
-
 	handleJSONTOHTML(inputDelta) {
 		function randomIntFromInterval(min, max) { // min and max included 
 			return Math.floor(Math.random() * (max - min + 1) + min);
@@ -274,11 +265,10 @@ class Post extends React.Component {
 			}}, 200);
 		}
 		runAfterElementExists(inputDelta, function() {
-			const html = JSON.parse(inputDelta);
+			const html = $.parseHTML(inputDelta);
 			$('h6.body_article').html(html);
 		});
 	}
-
 	_FormatNumberLength(num, length) {
 		var r = "" + num;
 		while (r.length < length) {
@@ -286,7 +276,6 @@ class Post extends React.Component {
 		}
 		return r;
 	}
-
 	_handleMouseMove() {
         $('.first_section_post').mousemove(function(e){
             var width = $(this).width() / 2;
@@ -298,14 +287,16 @@ class Post extends React.Component {
             $('.first_section_post .shadow_letter').css('top', amountMovedY);
         });
 	}
-
     render() {
-		const { articles, articleToEdit } = this.props;
+		const { articles } = this.props;
         const { match } = this.props;
 		const { title, body, author, tag, comment, comment_author, comment_body, upvotes, downvotes, view } = this.state;
 		
 		return (
             <FullPage scrollMode={'normal'}>
+				{/* <Slide>
+                    <Form />
+                </Slide> */}
 				<Slide>
 					<section id='articles_post' className="active first_section_post">
 						<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -337,19 +328,6 @@ class Post extends React.Component {
 									<p className="text-muted comments"><b>{_.size(_.get(_.find(articles, {'_id': match.params.postId}), 'comment'))}</b> <a href="#comments-modal"><i className="fas fa-comment-alt"></i></a> </p>
 									<p className="text-muted upvotes"><b>{_.size(_.get(_.find(articles, {'_id': match.params.postId}), 'upvotes'))}</b> <button onClick={this.handleSubmitupvotes}><i className="fas fa-thumbs-up"></i></button> </p>
 									<p className="text-muted downvotes"><b>{_.size(_.get(_.find(articles, {'_id': match.params.postId}), 'downvotes'))}</b> <button onClick={this.handleSubmitdownvotes}><i className="fas fa-thumbs-down"></i></button> </p>
-								</div>
-							</div>
-							<div id="social_media">
-								<div className="icons_gatherer">
-									<a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-									<a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-									<a href="#" className="icon-button scroll">
-										<span className="scroll-icon">
-											<span className="scroll-icon__wheel-outer">
-												<span className="scroll-icon__wheel-inner"></span>
-											</span>
-										</span>
-									</a>
 								</div>
 							</div>
 						</div>

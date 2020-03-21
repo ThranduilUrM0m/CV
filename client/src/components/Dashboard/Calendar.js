@@ -2,7 +2,8 @@ import React from "react";
 import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import $ from 'jquery';
+import * as $ from "jquery";
+import 'bootstrap';
 
 var _ = require('lodash');
 

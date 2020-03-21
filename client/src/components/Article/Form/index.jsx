@@ -37,8 +37,8 @@ class Form extends React.Component {
             tag: [],
             tagInput: '',
             comment: [],
-            upvotes: {},
-            downvotes: {},
+            upvotes: [],
+            downvotes: [],
             view: [],
         };
         this.handleChangeField = this.handleChangeField.bind(this);
@@ -87,8 +87,8 @@ class Form extends React.Component {
                         tag: [],
                         tagInput: '',
                         comment: [],
-                        upvotes: {},
-                        downvotes: {},
+                        upvotes: [],
+                        downvotes: [],
                         view: [],
                     })
                 });
@@ -114,8 +114,8 @@ class Form extends React.Component {
                         tag: [],
                         tagInput: '',
                         comment: [],
-                        upvotes: {},
-                        downvotes: {},
+                        upvotes: [],
+                        downvotes: [],
                         view: [],
                     })
                 });
@@ -201,6 +201,7 @@ class Form extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: data => dispatch({ type: 'SUBMIT_ARTICLE', data }),
+    onEdit: data => dispatch({ type: 'EDIT_ARTICLE', data }),
 	onLoad: data => dispatch({ type: 'HOME_PAGE_LOADED', data }),
 	onDelete: id => dispatch({ type: 'DELETE_ARTICLE', id }),
 	setEdit: article => dispatch({ type: 'SET_EDIT', article }),

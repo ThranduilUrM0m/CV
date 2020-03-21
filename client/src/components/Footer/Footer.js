@@ -9,7 +9,8 @@ import {
   Switch
 } from 'react-router-dom';
 import 'whatwg-fetch';
-import $ from 'jquery';
+import * as $ from "jquery";
+import 'bootstrap';
 import 'css-doodle';
 
 var _ = require('lodash');
