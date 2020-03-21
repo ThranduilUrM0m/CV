@@ -22,5 +22,8 @@
     "devDependencies": {
         "concurrently": "*",
         "nodemon": "*"
+    },
+    "engines": {
+        "node": "12.15.x"
     }
 }
