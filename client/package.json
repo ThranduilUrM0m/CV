@@ -79,7 +79,7 @@
     ]
   },
   "engines": {
-      "node": "12.15.x"
+      "node": "13.x"
   },
   "resolutions": {
       "@babel/preset-env": "7.5.5"
