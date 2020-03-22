@@ -20,6 +20,9 @@ export default {
     signup: function(send) {
         return axios.post(`${burl}/user/signup`, send, { headers: headers });
     },
+    send_mail: function(send) {
+        return axios.post(`${burl}/user/send_mail`, send, { headers: headers });
+    },
     update: function(send) {
         return axios.patch(
             `${burl}/user/update`, 

@@ -6784,13 +6784,40 @@ body, html {
 				position: relative;
 				width: 100%;
 				overflow-x: hidden;
+				nav {
+					position: absolute;
+					top: 50vh;
+					width: 80%;
+					height: fit-content;
+					left: 50%;
+					transform: translate(-50%, -100%);
+					background: none;
+					box-shadow: none;
+					.breadcrumb {
+						background: none;
+						font-size: 1rem;
+						margin: 0;
+						padding: 0 1rem;
+						a {
+							color: rgba($color: $main-color, $alpha: 0.8);
+							&:hover {
+								color: $main-color;
+							}
+						}
+						& >li+li:before {
+							padding: 0 1rem;
+							color: rgba($color: $purple, $alpha: 0.5);
+							content: "→";
+						}
+					}
+				}
 				.shadow_title {
 					opacity: 0.8;
 					font-size: 10rem;
 					position: absolute;
 					left: 50%;
-					top: 10rem;
-					transform: translateX(-50%);
+					top: 50vh;
+					transform: translate(-50%, -100%);
 					font-family: 'Abril Fatface', cursive;
 				}
 				.shadow_letter {
@@ -6803,7 +6830,7 @@ body, html {
 				#box {
 					width: 80vw;
 					border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
-					margin: 25% auto 5% auto;
+					margin: 50vh auto 5vh auto;
 					padding: 2.5rem;
 					display: flex;
 					flex-direction: column;
@@ -6819,6 +6846,7 @@ body, html {
 						font-size: xx-small;
 					}
 					.body{
+						width: 100%;
 						br{
 							display: none;
 						}
@@ -6856,6 +6884,54 @@ body, html {
 						i {
 							margin-left: 0.5rem;
 							margin-bottom: 0;
+						}
+					}
+				}
+				.beforeorafter {
+					position: absolute;
+					width: 80%;
+					height: 2rem;
+					bottom: 0;
+					left: 50%;
+					transform: translateX(-50%);
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					a {
+						z-index: 9999;
+						transition:.5s ease-in-out;
+						position: relative;
+						&:hover{
+							text-shadow: 0px 0px 1px rgba(0,0,0,1);
+						}
+						&.before_article{
+							font-size: 0.8rem;
+							color: $text-color;
+							cursor: pointer;
+							&::before {
+								position: absolute;
+								content: "";
+								background: $text-color;
+								width: 2rem;
+								height: 0.1rem;
+								top: 50%;
+								transform: translate(-200%, -50%);
+							}
+						}
+						&.after_article{
+							font-size: 0.8rem;
+							color: $text-color;
+							cursor: pointer;
+							&::after {
+								position: absolute;
+								content: "";
+								background: $text-color;
+								width: 2rem;
+								height: 0.1rem;
+								top: 50%;
+								transform: translate(100%, -50%);
+							}
 						}
 					}
 				}
@@ -9180,6 +9256,41 @@ body, html {
 			color: white;
 			overflow: hidden;
 			background: radial-gradient(circle at top left, $Gradient 0%, $Gradient 50%);
+			.modal {
+				height: fit-content;
+				width: fit-content;
+				padding-right: 0 !important;
+				top: 50%;
+				transform: translateY(-50%);
+				&-dialog {
+					margin: 0;
+				}
+				&-close {
+					color: #aaa;
+					font-size: 80%;
+					position: absolute;
+					right: 0;
+					top: 0;
+					text-align: center;
+					text-decoration: none;
+				}
+				h5 {
+					margin: 0 0 15px;
+				}
+				div:not(:last-of-type) {
+					margin-bottom: 15px;
+				}
+				small {
+					color: #aaa;
+				}
+				a {
+					text-decoration: underline;
+					cursor: pointer;
+				}
+				&.show {
+					opacity: 1;
+				}
+			}
 			a, a:hover {
 				color: black;
 				text-decoration: none;
@@ -9199,6 +9310,7 @@ body, html {
 					height: 40%;
 					display: flex;
 					justify-content: space-between;
+					z-index: 9999;
 					div {
 						position: relative;
 						width: 40vh;
@@ -9216,8 +9328,6 @@ body, html {
 							left: 1rem;
 							top: -0.1rem;
 						}
-					}
-					.first_box{
 						h6{
 							white-space: nowrap;
 							color: black;
@@ -9226,21 +9336,20 @@ body, html {
 							span{
 								font-size: 0.8rem;
 								color: black;
+								transition:.5s ease-in-out;
+								&:hover {
+									text-shadow: 0px 0px 1px rgba(0,0,0,1);
+								}
 							}
 							.author{
 								text-align: -webkit-right;
 								font-size: xx-small;
+								transition:.5s ease-in-out;
+								&:hover {
+									text-shadow: 0px 0px 1px rgba(0,0,0,1);
+								}
 							}
 						}
-					}
-					.second_box{
-
-					}
-					.third_box{
-
-					}
-					.fourth_box{
-
 					}
 				}
 				.mail-modal {

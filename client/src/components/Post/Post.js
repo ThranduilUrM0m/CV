@@ -364,6 +364,13 @@ class Post extends React.Component {
 							</div>
 						</div>
 						<div className="wrapper_full">
+							<nav aria-label="breadcrumb">
+								<ol className="breadcrumb">
+									<li className="breadcrumb-item"><a href="/">home</a></li>
+									<li className="breadcrumb-item"><a href="/blog">blog</a></li>
+									<li className="breadcrumb-item active" aria-current="page">{_.get(_.find(articles, {'_id': match.params.postId}), 'title')}</li>
+								</ol>
+							</nav>
 							<div className="shadow_title">{_.head(_.words(_.get(_.find(articles, {'_id': match.params.postId}), 'title')))}.</div>
 							<div className="shadow_letter">{this._FormatNumberLength(_.indexOf(_.orderBy(articles, ['createdAt'], ['asc']), _.find(articles, {'_id': match.params.postId}))+1, 2)}.</div>
 							<div id="box">
@@ -380,6 +387,18 @@ class Post extends React.Component {
 									<p className="text-muted upvotes"><b>{_.size(_.get(_.find(articles, {'_id': match.params.postId}), 'upvotes'))}</b> <button onClick={this.handleSubmitupvotes}><i className="fas fa-thumbs-up"></i></button> </p>
 									<p className="text-muted downvotes"><b>{_.size(_.get(_.find(articles, {'_id': match.params.postId}), 'downvotes'))}</b> <button onClick={this.handleSubmitdownvotes}><i className="fas fa-thumbs-down"></i></button> </p>
 								</div>
+							</div>
+							<div className="beforeorafter">
+								<a className="before_article">
+									{
+									_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))-1], 'title', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), 'title'))
+									}.
+								</a>
+								<a className="after_article">
+									{
+									_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))+1], 'title', _.get(_.head(_.orderBy(articles, ['view'], ['desc'])), 'title'))
+									}.
+								</a>
 							</div>
 						</div>
 					</section>

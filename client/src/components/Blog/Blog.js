@@ -184,7 +184,7 @@ class Blog extends React.Component {
 				<Slide>
 					<section className="second_section_blog">
 						<div className="wrapper_full">
-							<div className="caption">Most Popular Talks.</div>
+							<div className="caption">Latest Talks.</div>
 							<div className="cards-slider">
 								<div className="slider-btns">
 									<button className="slider-btn btn-l" onClick={() => this.handleClick('prev')}><i className="fas fa-long-arrow-alt-left"></i></button>

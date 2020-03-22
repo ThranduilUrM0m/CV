@@ -32,6 +32,27 @@ async function main(user_email) {
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
+async function main(mail_username, mail_location, mail_email, mail_phone, mail_content) {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail', // true for 465, false for other ports
+        auth: {
+            user: 'yassmineboutalebqlii@gmail.com', // generated ethereal user
+            pass: '[1234abcd]' // generated ethereal password
+        }
+    });
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+        from: mail_email, // sender address
+        to: 'zakariaeboutaleb@gmail.com', // list of receivers
+        subject: 'username : '+mail_username+' location : '+mail_location+' phone : '+mail_phone, // Subject line
+        text: mail_content, // plain text body
+    });
+    console.log('Message sent: %s', info.messageId);
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    // Preview only available when sending through an Ethereal account
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+}
 async function signup(req, res) {
     const { signup_username, signup_password, signup_email, firstname, lastname, activated, messages, whoami, school } = req.body;
     if (!signup_username || !signup_email || !signup_password) {
@@ -81,6 +102,20 @@ async function signup(req, res) {
             token: userObject.getToken()
         });
     } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error });
+    }
+}
+async function send_mail(req, res) {
+    const { mail_username, mail_location, mail_email, mail_phone, mail_content } = req.body;
+    if(!mail_username || !mail_email || !mail_content) {
+        return res.status(400).json({
+            text: "Requête invalide"
+        });
+    }
+    try {
+        main(mail_username, mail_location, mail_email, mail_phone, mail_content).catch(console.error);
+    }catch (error) {
         console.log(error);
         return res.status(500).json({ error });
     }
@@ -193,8 +228,8 @@ async function get_user(req, res) {
     }
 }
 
-//On exporte nos deux fonctions
 exports.get_user = get_user;
 exports.login = login;
 exports.signup = signup;
+exports.send_mail = send_mail;
 exports.update = update;

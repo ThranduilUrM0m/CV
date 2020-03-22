@@ -9,6 +9,7 @@ import {
   Switch
 } from 'react-router-dom';
 import 'whatwg-fetch';
+import API from '../../utils/API';
 import * as $ from "jquery";
 import 'bootstrap';
 import 'css-doodle';
@@ -18,8 +19,17 @@ var _ = require('lodash');
 class Footer extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            mail_username : '',
+            mail_location: '',
+            mail_email: '',
+            mail_phone: '',
+            mail_content: '',
+        }
         this._handleMouseMove = this._handleMouseMove.bind(this);
         this._handleAlphabet = this._handleAlphabet.bind(this);
+        this.send_mail = this.send_mail.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
     componentDidMount() {
         this._handleMouseMove();
@@ -174,10 +184,50 @@ class Footer extends React.Component {
             window.addEventListener('resize', _.debounce(onResize, 100));
         })();
     }
+    async send_mail() {
+        const { mail_username, mail_location, mail_email, mail_phone, mail_content } = this.state;
+        if (!mail_username || mail_username.length === 0) return;
+        if (!mail_email || mail_email.length === 0) return;
+        if (!mail_content || mail_content.length === 0) return;
+        try {
+            const { data } = await API.send_mail({ mail_username, mail_location, mail_email, mail_phone, mail_content });
+            $('#mailSentModal').modal('toggle');
+            $('#mailSentModal .modal-close').click(() => {
+                this.setState({
+                    mail_username : '',
+                    mail_location: '',
+                    mail_email: '',
+                    mail_phone: '',
+                    mail_content: '',
+                });
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    handleChange(event) {
+        this.setState({
+            [event.target.id]: event.target.value
+        });
+    }
     render() {
         const { articles } = this.props;
         return (
             <div className="footer">
+                <div className="modal fade" id="mailSentModal" tabIndex="-1" role="dialog" aria-labelledby="mailSentModalLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                <a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                <h5 className="modal-title" id="mailSentModalLabel">Voilà!</h5>
+                                <div>Your mail was sent, we thank you for trusting us, we'll reach out to you before you even know it.</div>
+                                <div>How about you joins us, not only you can give a feedback to the post you're reading, but you can discover much more about out community.</div>
+                                <div><small>Here</small></div>
+                                <a className="togglebtn">👉 Sign In If you don't have an Account</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="letter-grid"></div>
                 <div className="wrapper">
                     <div className="top_shelf">
@@ -199,13 +249,55 @@ class Footer extends React.Component {
                             </ul>
                         </div>
                         <div className="second_box">
-                            .
+                            <h6>Most viewed Articles!</h6>
+                            <ul>
+                                {
+                                    (_.orderBy(articles, ['view'], ['desc']).slice(0, 3)).map((article, index) => {
+                                        return (
+                                            <li>
+                                                <Link to={`/blog/${article._id}`}>
+                                                    <span>{article.title}</span>
+                                                    <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+                                                </Link>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
                         </div>
                         <div className="third_box">
-                            .
+                            <h6>Most commented Articles!</h6>
+                            <ul>
+                                {
+                                    (_.orderBy(articles, ['comment'], ['desc']).slice(0, 3)).map((article, index) => {
+                                        return (
+                                            <li>
+                                                <Link to={`/blog/${article._id}`}>
+                                                    <span>{article.title}</span>
+                                                    <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+                                                </Link>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
                         </div>
                         <div className="fourth_box">
-                            .
+                            <h6>Oldest Articles!</h6>
+                            <ul>
+                                {
+                                    (_.orderBy(articles, ['createdAt'], ['asc']).slice(0, 3)).map((article, index) => {
+                                        return (
+                                            <li>
+                                                <Link to={`/blog/${article._id}`}>
+                                                    <span>{article.title}</span>
+                                                    <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+                                                </Link>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
                         </div>
                     </div>
                     <div className="mail-modal">
@@ -235,41 +327,83 @@ class Footer extends React.Component {
 
                                     <div className="row">
                                         <div className="input-field col s6">
-                                            <input className="validate form-group-input username" id="username" type="text" name="username" required="required"/>
-                                            <label htmlFor='username'>your name</label>
+                                            <input 
+                                                className="validate form-group-input mail_username" 
+                                                id="mail_username" 
+                                                type="text" 
+                                                name="mail_username" 
+                                                required="required"
+                                                value={this.state.mail_username} 
+                                                onChange={this.handleChange}
+                                            />
+                                            <label htmlFor='mail_username'>username*</label>
                                             <div className="form-group-line"></div>
                                         </div>
                                         <div className="input-field col s6">
-                                            <input className="validate form-group-input location" id="location" type="text" name="location" required="required"/>
-                                            <label htmlFor='location'>your location</label>
+                                            <input 
+                                                className="validate form-group-input mail_location" 
+                                                id="mail_location" 
+                                                type="text" 
+                                                name="mail_location"
+                                                value={this.state.mail_location} 
+                                                onChange={this.handleChange}
+                                            />
+                                            <label htmlFor='mail_location'>address</label>
                                             <div className="form-group-line"></div>
                                         </div>
                                     </div>
 
                                     <div className="row">
                                         <div className="input-field col s6">
-                                            <input className="validate form-group-input email" id="email" type="text" name="email" required="required"/>
-                                            <label htmlFor='email'>your email</label>
+                                            <input 
+                                                className="validate form-group-input mail_email" 
+                                                id="mail_email" 
+                                                type="text" 
+                                                name="mail_email" 
+                                                required="required"
+                                                value={this.state.mail_email} 
+                                                onChange={this.handleChange}
+                                            />
+                                            <label htmlFor='mail_email'>email*</label>
                                             <div className="form-group-line"></div>
                                         </div>
                                         <div className="input-field col s6">
-                                            <input className="validate form-group-input phone" id="phone" type="text" name="phone" required="required"/>
-                                            <label htmlFor='phone'>your phone</label>
+                                            <input 
+                                                className="validate form-group-input mail_phone" 
+                                                id="mail_phone" 
+                                                type="text" 
+                                                name="mail_phone" 
+                                                value={this.state.mail_phone} 
+                                                onChange={this.handleChange}
+                                            />
+                                            <label htmlFor='mail_phone'>phone</label>
                                             <div className="form-group-line"></div>
                                         </div>
                                     </div>
 
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <textarea className="validate form-group-input materialize-textarea content" id="content" name="content" required="required"/>
-                                            <label htmlFor='content'>what can i do for you ?</label>
+                                            <textarea 
+                                                className="validate form-group-input materialize-textarea mail_content" 
+                                                id="mail_content" 
+                                                name="mail_content" 
+                                                required="required"
+                                                value={this.state.mail_content} 
+                                                onChange={this.handleChange}
+                                            />
+                                            <label htmlFor='mail_content'>what can i do for you ?</label>
                                             <div className="form-group-line textarea_line"></div>
                                         </div>
                                     </div>
 
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <button className="pull-right" type="submit">
+                                            <button 
+                                                className="pull-right" 
+                                                type="submit"
+                                                name='btn_login' 
+                                                onClick={this.send_mail}
+                                            >
                                                 <span>
                                                     <span>
                                                         <span data-attr-span="Submit.">
@@ -280,6 +414,7 @@ class Footer extends React.Component {
                                             </button>
                                         </div>
                                     </div>
+
                                 </form>
                             </div>
 
