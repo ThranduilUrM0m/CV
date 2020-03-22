@@ -46,6 +46,7 @@ class Post extends React.Component {
             tag: [],
             tagInput: '',
 			comment: [],
+			comment_author: '',
 			comment_body: '',
 			comment_changed: false,
 			upvotes: [],
@@ -141,15 +142,16 @@ class Post extends React.Component {
 		}
 	}
 	handleSubmitComment() {
-        if( localStorage.getItem('email') ){
-			const { comment_body } = this.state;
+        const { comment_author, comment_body } = this.state;
+		if(comment_author && comment_body) {
 			this.setState(state => ({
-				comment: [...state.comment, {author: localStorage.getItem('email'), body: comment_body, date: moment().format()}],
+				comment: [...state.comment, {author: comment_author, body: comment_body, date: moment().format()}],
+				comment_author: '',
 				comment_body: '',
 				comment_changed: true,
 			}));
 		} else {
-			$('#exampleModal').modal('toggle');
+			$('#exampleModal_comment').modal('show');
 		}
 	}
 	handleSubmitupvotes() {
@@ -183,7 +185,7 @@ class Post extends React.Component {
 
 			}
 		} else {
-			$('#exampleModal').modal('toggle');
+			$('#exampleModal').modal('show');
 		}
 	}
 	handleSubmitdownvotes() {
@@ -218,7 +220,7 @@ class Post extends React.Component {
 			}
 
 		} else {
-			$('#exampleModal').modal('toggle');
+			$('#exampleModal').modal('show');
 		}
 	}
 	handleSubmitviews() {
@@ -312,6 +314,16 @@ class Post extends React.Component {
 								</div>
 							</div>
 						</div>
+						<div className="modal fade" id="exampleModal_comment" tabIndex="-1" role="dialog" aria-labelledby="exampleModal_commentLabel" aria-hidden="true">
+							<div className="modal-dialog" role="document">
+								<div className="modal-content">
+									<div className="modal-body">
+										<a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+										<div>👉 Please provide your name and the content of ur msg.</div>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div className="wrapper_full">
 							<div className="shadow_title">{_.head(_.words(_.get(_.find(articles, {'_id': match.params.postId}), 'title')))}.</div>
 							<div className="shadow_letter">{this._FormatNumberLength(_.indexOf(_.orderBy(articles, ['createdAt'], ['asc']), _.find(articles, {'_id': match.params.postId}))+1, 2)}.</div>
@@ -336,60 +348,60 @@ class Post extends React.Component {
 				<Slide>
 					<section id='comments_post' className="second_section_post">
 						<div className="wrapper_full">
-							<div className="other_posts">
-							{
-								(_.orderBy(articles, ['createdAt'], ['desc']).slice(0, 4)).map((article, index) => {
-									return (
-										<div className={"card card_" + index} data-title={article.title} data-index={index+1}>
-											<span className="index_article">{this._FormatNumberLength(index+1, 2)}.</span>
-											<div className="card-body">
-												<h4>{article.title}</h4>
-												<Link to={`/blog/${article._id}`}>
-													<button>
-														<span>
-															<span>
-																<span data-attr-span="Read More About it">
-																	Read More About it
-																</span>
-															</span>
-														</span>
-													</button>
-												</Link>
-												<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
-											</div>
-										</div>
-									)
-								})
-							}
-							</div>
 							<div className="comment-modal">
 								<div className="modal-inner">
 									<div className="modal-content">
-									
-										<fieldset className="input-field form-group">
-											<textarea 
-												onChange={(ev) => this.handleChangeField('comment_body', ev)}
-												value={comment_body}
-												className="validate form-group-input materialize-textarea comment_body" 
-												id="comment_body" 
-												name="comment_body"
-												required="required"
-											/>
-											<label htmlFor='comment_body'>What do you think ?</label>
-											<div className="form-group-line textarea_line"></div>
-										</fieldset>
 										
-										<button onClick={this.handleSubmitComment} className="btn btn-primary pull-right" type="submit">Leave a Comment</button>
-									
-									</div>
-								</div>
-							</div>
-							<div id="comments-modal" className="comments-modal">
-								<div className="modal-inner">
-									<div className="modal-content">
-									{
-										_.isEmpty(_.get(_.find(articles, {'_id': match.params.postId}), 'comment')) ? null : <Comments comment={_.get(_.find(articles, {'_id': match.params.postId}), 'comment')}/>
-									}
+										<div className="row">
+											<div className="input-field col s12">
+												<textarea 
+													onChange={(ev) => this.handleChangeField('comment_body', ev)}
+													value={comment_body}
+													className="validate form-group-input materialize-textarea comment_body" 
+													id="comment_body" 
+													name="comment_body" 
+													required="required"/>
+												<label htmlFor='comment_body'>what can i do for you ?</label>
+												<div className="form-group-line textarea_line"></div>
+											</div>
+										</div>
+
+										<div className="row">
+											<div className="input-field col s6">
+												<input 
+													onChange={(ev) => this.handleChangeField('comment_author', ev)}
+													value={comment_author}
+													className="validate form-group-input comment_author" 
+													id="comment_author" 
+													type="text" 
+													name="comment_author" 
+													required="required"/>
+												<label htmlFor='comment_author'>your name</label>
+												<div className="form-group-line"></div>
+											</div>
+											<div className="input-field col s6">
+												<button onClick={this.handleSubmitComment} className="btn btn-primary pull-right" type="submit">
+													<span>
+														<span>
+															<span data-attr-span="Leave a Comment.">
+																Leave a Comment.
+															</span>
+														</span>
+													</span>
+												</button>
+											</div>
+										</div>
+										
+
+										<div id="comments-modal" className="comments-modal">
+											<div className="modal-inner">
+												<div className="modal-content">
+												{
+													_.isEmpty(_.get(_.find(articles, {'_id': match.params.postId}), 'comment')) ? null : <Comments comment={_.get(_.find(articles, {'_id': match.params.postId}), 'comment')}/>
+												}
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
