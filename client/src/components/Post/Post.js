@@ -155,14 +155,14 @@ class Post extends React.Component {
 		}
 	}
 	handleSubmitupvotes() {
+		var fingerprint = new Fingerprint().get();
+
 		if( localStorage.getItem('email') ){
 			if( _.isUndefined(_.find(this.state.upvotes, {'upvoter': localStorage.getItem('email')})) ) {
-				
 				this.setState(state => ({
 					upvotes: [...state.upvotes, {upvoter: localStorage.getItem('email')}],
 					upvotes_changed: true,
 				}));
-
 				if( !_.isUndefined(_.find(this.state.downvotes, {'downvoter': localStorage.getItem('email')})) ) {
 					let _new_downvote = _.takeWhile(this.state.downvotes, function(o) { return o.downvoter != localStorage.getItem('email'); });
 					this.setState(state => ({
@@ -171,32 +171,49 @@ class Post extends React.Component {
 					}));
 					$('p.downvotes').removeClass('active');
 				}
-
 				$('p.upvotes').addClass('active');
-
 			} else {
-
 				let _new_upvote = _.takeWhile(this.state.upvotes, function(o) { return o.upvoter != localStorage.getItem('email'); });
 				this.setState(state => ({
 					upvotes: _new_upvote,
 					upvotes_changed: true,
 				}));
 				$('p.upvotes').removeClass('active');
-
 			}
 		} else {
-			$('#exampleModal').modal('show');
+			if(_.isUndefined(_.find(this.state.upvotes, {'upvoter': fingerprint.toString()}))) {
+				this.setState(state => ({
+					upvotes: [...state.upvotes, {upvoter: fingerprint.toString()}],
+					upvotes_changed: true,
+				}));
+				if( !_.isUndefined(_.find(this.state.downvotes, {'downvoter': fingerprint.toString()})) ) {
+					let _new_downvote = _.takeWhile(this.state.downvotes, function(o) { return o.downvoter != fingerprint.toString(); });
+					this.setState(state => ({
+						downvotes: _new_downvote,
+						downvotes_changed: true,
+					}));
+					$('p.downvotes').removeClass('active');
+				}
+				$('p.upvotes').addClass('active');
+			} else {
+				let _new_upvote = _.takeWhile(this.state.upvotes, function(o) { return o.upvoter != fingerprint.toString(); });
+				this.setState(state => ({
+					upvotes: _new_upvote,
+					upvotes_changed: true,
+				}));
+				$('p.upvotes').removeClass('active');
+			}
 		}
 	}
 	handleSubmitdownvotes() {
+		var fingerprint = new Fingerprint().get();
+
 		if( localStorage.getItem('email') ){
 			if( _.isUndefined(_.find(this.state.downvotes, {'downvoter': localStorage.getItem('email')})) ) {
-				
 				this.setState(state => ({
 					downvotes: [...state.downvotes, {downvoter: localStorage.getItem('email')}],
 					downvotes_changed: true,
 				}));
-
 				if( !_.isUndefined(_.find(this.state.upvotes, {'upvoter': localStorage.getItem('email')})) ) {
 					let _new_upvote = _.takeWhile(this.state.upvotes, function(o) { return o.upvoter != localStorage.getItem('email'); });
 					this.setState(state => ({
@@ -205,22 +222,38 @@ class Post extends React.Component {
 					}));
 					$('p.upvotes').removeClass('active');
 				}
-
 				$('p.downvotes').addClass('active');
-
 			} else {
-
 				let _new_downvote = _.takeWhile(this.state.downvotes, function(o) { return o.downvoter != localStorage.getItem('email'); });
 				this.setState(state => ({
 					downvotes: _new_downvote,
 					downvotes_changed: true,
 				}));
 				$('p.downvotes').removeClass('active');
-
 			}
-
 		} else {
-			$('#exampleModal').modal('show');
+			if(_.isUndefined(_.find(this.state.downvotes, {'downvoter': fingerprint.toString()}))) {
+				this.setState(state => ({
+					downvotes: [...state.downvotes, {downvoter: fingerprint.toString()}],
+					downvotes_changed: true,
+				}));
+				if( !_.isUndefined(_.find(this.state.upvotes, {'upvoter': fingerprint.toString()})) ) {
+					let _new_upvote = _.takeWhile(this.state.upvotes, function(o) { return o.upvoter != fingerprint.toString(); });
+					this.setState(state => ({
+						upvotes: _new_upvote,
+						upvotes_changed: true,
+					}));
+					$('p.upvotes').removeClass('active');
+				}
+				$('p.downvotes').addClass('active');
+			} else {
+				let _new_downvote = _.takeWhile(this.state.downvotes, function(o) { return o.downvoter != fingerprint.toString(); });
+				this.setState(state => ({
+					downvotes: _new_downvote,
+					downvotes_changed: true,
+				}));
+				$('p.downvotes').removeClass('active');
+			}
 		}
 	}
 	handleSubmitviews() {
@@ -241,9 +274,15 @@ class Post extends React.Component {
 				}));
 			}
 		} else {
+			if( !_.isUndefined(_.find(this.state.upvotes, {'upvoter': fingerprint.toString()})) ) {
+				$('p.upvotes').addClass('active');
+			}
+			if( !_.isUndefined(_.find(this.state.downvotes, {'downvoter': fingerprint.toString()})) ) {
+				$('p.downvotes').addClass('active');
+			}
 			if(_.isUndefined(_.find(this.state.view, {'viewer': fingerprint.toString()}))) {
 				this.setState(state => ({
-					view: [...state.view, {viewer: fingerprint, _yes_or_no: true}],
+					view: [...state.view, {viewer: fingerprint.toString(), _yes_or_no: true}],
 					view_changed: true,
 				}));
 			}
