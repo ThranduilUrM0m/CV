@@ -335,13 +335,9 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this._handleClickEvents = this._handleClickEvents.bind(this);
-        this._handleTap = this._handleTap.bind(this);
-        this._handleScroll = this._handleScroll.bind(this);
     }
     componentDidMount() {
         this._handleClickEvents();
-        this._handleTap();
-        this._handleScroll();
         let _links = $('.menu .nav-link');
         let _url = window.location.pathname;
         _links.map((_link, index) => {
@@ -383,11 +379,37 @@ class Header extends React.Component {
         });
     }
     _handleClickEvents() {
+        let searchWrapper = document.querySelector('.search-wrapper'),
+            searchInput = document.querySelector('.search-input'),
+            searchIcon = document.querySelector('.search'),
+            searchActivated = false;
+
+        $('.search_form').click((event) => {
+            if (!searchActivated) {
+                searchWrapper.classList.add('focused');
+                searchIcon.classList.add('active');
+                searchInput.focus();
+                searchActivated = !searchActivated;
+                $('.overlay_menu').toggleClass('overlay_menu--is-closed');
+            } else {
+                if($(event.target).hasClass('search')){
+                    searchWrapper.classList.remove('focused');
+                    searchIcon.classList.remove('active');
+                    searchActivated = !searchActivated;
+                    $('.overlay_menu').toggleClass('overlay_menu--is-closed');
+                }
+            }
+        });
+
         /* menu */
         $('.navToggle').click(function(event) {
             $('.navToggle').toggleClass('active');
             $('.menu').toggleClass('menu--is-closed');
             $('.overlay_menu').toggleClass('overlay_menu--is-closed');
+
+            searchWrapper.classList.remove('focused');
+            searchIcon.classList.remove('active');
+            searchActivated = !searchActivated;
 
             if($(".login").css('display') != 'none'){
                 $(".login").toggle(400);
@@ -406,6 +428,10 @@ class Header extends React.Component {
             $('.overlay_menu').toggleClass('overlay_menu--is-closed');
             $(this).addClass('active');
             $('.nav-link').not(this).removeClass('active');
+
+            searchWrapper.classList.remove('focused');
+            searchIcon.classList.remove('active');
+            searchActivated = !searchActivated;
         });
 
         $('._profil_link').click(() => {
@@ -418,6 +444,10 @@ class Header extends React.Component {
                 $('.menu').toggleClass('menu--is-closed');
                 $('.navToggle').toggleClass('active');
             }
+
+            searchWrapper.classList.remove('focused');
+            searchIcon.classList.remove('active');
+            searchActivated = !searchActivated;
         });
 
         /* outside the login or menu */
@@ -437,6 +467,10 @@ class Header extends React.Component {
                 $('.menu').toggleClass('menu--is-closed');
                 $('.navToggle').toggleClass('active');
             }
+
+            searchWrapper.classList.remove('focused');
+            searchIcon.classList.remove('active');
+            searchActivated = !searchActivated;
         });
 
         document.querySelectorAll(".js-fr").forEach(trigger => {
@@ -464,37 +498,6 @@ class Header extends React.Component {
         };
         });
     }
-    _handleTap() {
-        let searchWrapper = document.querySelector('.search-wrapper'),
-            searchInput = document.querySelector('.search-input'),
-            searchIcon = document.querySelector('.search'),
-            searchActivated = false;
-
-        $('.search').click(() => {
-            if (!searchActivated) {
-                searchWrapper.classList.add('focused');
-                searchIcon.classList.add('active');
-                searchInput.focus();
-                searchActivated = !searchActivated;
-                $('.overlay_menu').toggleClass('overlay_menu--is-closed');
-            } else {
-                searchWrapper.classList.remove('focused');
-                searchIcon.classList.remove('active');
-                searchActivated = !searchActivated;
-                $('.overlay_menu').toggleClass('overlay_menu--is-closed');
-            }
-        });
-    }
-    _handleScroll(){
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 0){
-                $('.fixedHeaderContainer').addClass('scrolled');
-            }
-            else{
-                $('.fixedHeaderContainer').removeClass('scrolled');
-            }
-        });
-    }
     render() {
         return (
             <>
@@ -517,10 +520,10 @@ class Header extends React.Component {
                                 <span className="js-fr">fr</span>
                                 <span className="js-en is-active">en</span>
                             </div>
-                            <form>
+                            <form className="search_form">
                                 <div className="search-wrapper">
                                     <input className="search-input" type="text" placeholder="Search"/>
-                                    <span></span>
+                                    <span className="hover_effect"></span>
                                     <div className='search'></div>
                                 </div>
                             </form>

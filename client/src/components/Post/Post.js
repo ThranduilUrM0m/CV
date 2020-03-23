@@ -69,6 +69,7 @@ class Post extends React.Component {
 		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
 		this._FormatNumberLength = this._FormatNumberLength.bind(this);
         this._handleMouseMove = this._handleMouseMove.bind(this);
+        this._handleScroll = this._handleScroll.bind(this);
 	}
 	componentDidMount() {
         const { onLoad } = this.props;
@@ -85,7 +86,7 @@ class Post extends React.Component {
 		document.getElementById('articles_post').parentElement.style.height = 'initial';
 		document.getElementById('comments_post').parentElement.style.height = 'initial';
 		this._handleMouseMove();
-        $('.fixedHeaderContainer').removeClass('blog_header');
+        this._handleScroll();
 	}
 	componentWillReceiveProps(nextProps) {
         if(nextProps.articleToEdit) {
@@ -328,6 +329,16 @@ class Post extends React.Component {
             $('.first_section_post .shadow_letter').css('top', amountMovedY);
         });
 	}
+    _handleScroll(){
+        $(window).scroll(function() {
+            if ($(document).height() - $(window).height() - $(window).scrollTop() == 0){
+                $('.fixedHeaderContainer').addClass('blog_header');
+            }
+            else{
+                $('.fixedHeaderContainer').removeClass('blog_header');
+            }
+        });
+    }
     render() {
 		const { articles } = this.props;
         const { match } = this.props;

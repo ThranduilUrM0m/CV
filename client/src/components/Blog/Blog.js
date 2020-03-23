@@ -19,7 +19,6 @@ var _ = require('lodash');
 class Blog extends React.Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			currentCard: 0,
 			position: 0,
@@ -28,22 +27,22 @@ class Blog extends React.Component {
 			},
 			width: 0,
 		};
-
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
 		this._FormatNumberLength = this._FormatNumberLength.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.setCard = this.setCard.bind(this);
+        this._handleScroll = this._handleScroll.bind(this);
 	}
 	componentDidMount() {
         const { onLoad } = this.props;
 		const self = this;
+        this._handleScroll();
         axios('http://localhost:8800/api/articles')
         .then(function (response) {
             // handle success
 			onLoad(response.data);
-
 			function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
                 //if one or more elements have been yielded by jquery
@@ -62,6 +61,7 @@ class Blog extends React.Component {
                 let boxWidth = document.getElementById("article_card").clientWidth;
     			self.setState({ width: boxWidth });
 			});
+			$('.fixedHeaderContainer').addClass('blog_header');
         })
         .catch(function (error) {
             // handle error
@@ -70,7 +70,6 @@ class Blog extends React.Component {
         .then(function () {
             // always executed
 		});
-		$('.fixedHeaderContainer').addClass('blog_header');
 	}
 	handleDelete(id) {
 		const { onDelete } = this.props;
@@ -143,6 +142,16 @@ class Blog extends React.Component {
 			}
 		})
 	}
+    _handleScroll(){
+        $(window).scroll(function() {
+			if ($(this).scrollTop() < 625 || $(document).height() - $(window).height() - $(window).scrollTop() < 100){
+                $('.fixedHeaderContainer').addClass('blog_header');
+            }
+            else{
+                $('.fixedHeaderContainer').removeClass('blog_header');
+            }
+        });
+    }
 	render() {
 		const { articles } = this.props;
 		const { match } = this.props;

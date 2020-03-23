@@ -25,9 +25,11 @@ class Home extends React.Component {
         this._handleSlider = this._handleSlider.bind(this);
         this._handleMouseMove = this._handleMouseMove.bind(this);
 		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
+        this._handleScroll = this._handleScroll.bind(this);
     }
     componentDidMount() {
         const { onLoad, onLoadProject } = this.props;
+        this._handleScroll();
         const self = this;
         axios('http://localhost:8800/api/articles')
         .then(function (response) {
@@ -328,6 +330,16 @@ class Home extends React.Component {
             $('.second_section .image').append("<div class='border_effect'></div>")
 		});
 	}
+    _handleScroll(){
+        $(window).scroll(function() {
+            if ($(document).height() - $(window).height() - $(window).scrollTop() < 100){
+                $('.fixedHeaderContainer').addClass('blog_header');
+            }
+            else{
+                $('.fixedHeaderContainer').removeClass('blog_header');
+            }
+        });
+    }
     render() {
         const { articles, projects } = this.props;
         return (
