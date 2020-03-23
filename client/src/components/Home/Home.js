@@ -344,9 +344,9 @@ class Home extends React.Component {
         const { articles, projects } = this.props;
         return (
             <FullPage>
-                <Slide>
+                {/* <Slide>
                     <Form />
-                </Slide>
+                </Slide> */}
                 {/* <Slide>
                     <Form_Project />
                 </Slide> */}
