@@ -39,7 +39,7 @@ class Blog extends React.Component {
         const { onLoad } = this.props;
 		const self = this;
         this._handleScroll();
-        axios(process.env.baseURL || "http://localhost:8800"+'/api/articles')
+        axios('/api/articles')
         .then(function (response) {
             // handle success
 			onLoad(response.data);
@@ -73,7 +73,7 @@ class Blog extends React.Component {
 	}
 	handleDelete(id) {
 		const { onDelete } = this.props;
-		return axios.delete(process.env.baseURL || "http://localhost:8800"+`/api/articles/${id}`)
+		return axios.delete(`/api/articles/${id}`)
 			.then(() => onDelete(id));
 	}
 	handleEdit(article) {
