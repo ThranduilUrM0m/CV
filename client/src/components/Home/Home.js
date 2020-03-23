@@ -344,12 +344,12 @@ class Home extends React.Component {
         const { articles, projects } = this.props;
         return (
             <FullPage>
-                {/* <Slide>
+                <Slide>
                     <Form />
-                </Slide> */}
-                {/* <Slide>
+                </Slide>
+                <Slide>
                     <Form_Project />
-                </Slide> */}
+                </Slide>
                 <Slide>
                     <section className="active first_section">
                         <div className="wrapper left_part">

@@ -346,9 +346,9 @@ class Post extends React.Component {
 		
 		return (
             <FullPage scrollMode={'normal'}>
-				{/* <Slide>
+				<Slide>
                     <Form />
-                </Slide> */}
+                </Slide>
 				<Slide>
 					<section id='articles_post' className="active first_section_post">
 						<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
