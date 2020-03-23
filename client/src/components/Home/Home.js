@@ -31,7 +31,7 @@ class Home extends React.Component {
         const { onLoad, onLoadProject } = this.props;
         this._handleScroll();
         const self = this;
-        axios('/api/articles')
+        axios(process.env.baseURL || "http://localhost:8800"+'/api/articles')
         .then(function (response) {
             // handle success
             onLoad(response.data);
@@ -62,7 +62,7 @@ class Home extends React.Component {
             // always executed
         });
 
-        axios('/api/projects')
+        axios(process.env.baseURL || "http://localhost:8800"+'/api/projects')
         .then(function (response) {
             // handle success
             onLoadProject(response.data);

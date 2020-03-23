@@ -35,7 +35,7 @@ class Footer extends React.Component {
         this._handleMouseMove();
         const self = this;
         const {onLoad} = this.props;
-        axios('/api/articles')
+        axios(process.env.baseURL || "http://localhost:8800"+'/api/articles')
             .then(function (response) {
                 // handle success
                 onLoad(response.data);

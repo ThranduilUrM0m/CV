@@ -68,7 +68,7 @@ class Form_Project extends React.Component {
         const { title, image, link_to, author, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
         const self = this;
         if(!projectToEdit) {
-            return axios.post('/api/projects', {
+            return axios.post(process.env.baseURL || "http://localhost:8800"+'/api/projects', {
                 title,
                 image,
                 link_to,
@@ -97,7 +97,7 @@ class Form_Project extends React.Component {
                     })
                 });
         } else {
-            return axios.patch(`/api/projects/${projectToEdit._id}`, {
+            return axios.patch(process.env.baseURL || "http://localhost:8800"+`/api/projects/${projectToEdit._id}`, {
                 title,
                 image,
                 link_to,
