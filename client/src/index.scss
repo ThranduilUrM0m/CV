@@ -520,6 +520,7 @@ body, html {
 					}
 					form{
 						margin-left: auto;
+						margin-right: calc(calc(5rem - 2.6rem) / 2);
 						position: relative;
 						&::before{
 							width: calc(20rem - 2.5rem);

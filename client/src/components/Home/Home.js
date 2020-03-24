@@ -26,6 +26,7 @@ class Home extends React.Component {
         this._handleMouseMove = this._handleMouseMove.bind(this);
 		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
         this._handleScroll = this._handleScroll.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
     componentDidMount() {
         const { onLoad, onLoadProject } = this.props;
@@ -340,6 +341,11 @@ class Home extends React.Component {
             }
         });
     }
+    handleClick(href) {
+        $('html,body').animate({scrollTop: $('#'+href).offset().top}, 200, function() {
+            $('#mail_content').focus();
+        });
+    }
     render() {
         const { articles, projects } = this.props;
         return (
@@ -435,7 +441,7 @@ class Home extends React.Component {
                                     })
                                 }
                             </div>
-                            <button>
+                            <button onClick={() => this.handleClick('footer_to')} type="button">
                                 <span>
                                     <span>
                                         <span data-attr-span="Hire Me.">

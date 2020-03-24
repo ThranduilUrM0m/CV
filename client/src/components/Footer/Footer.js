@@ -213,7 +213,7 @@ class Footer extends React.Component {
     render() {
         const { articles } = this.props;
         return (
-            <div className="footer">
+            <div className="footer" id="footer_to">
                 <div className="modal fade" id="mailSentModal" tabIndex="-1" role="dialog" aria-labelledby="mailSentModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
