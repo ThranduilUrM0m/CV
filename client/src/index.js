@@ -14,6 +14,7 @@ import NotFound from './components/App/NotFound';
 import Home from './components/Home/Home';
 import Blog from './components/Blog/Blog';
 import Post from './components/Post/Post';
+import About from './components/About/About';
 import Coffee from './components/Coffee/Coffee';
 import FAQ from './components/FAQ/FAQ';
 import Dashboard from './components/Dashboard/Dashboard';
@@ -28,6 +29,7 @@ ReactDOM.render(
                     <Route exact path="/" component={Home}/>
                     <Route exact path="/blog" component={Blog}/>
                     <Route path={`/blog/:postId`} component={Post}/>
+                    <Route exact path='/about' component={About} />
                     <Route exact path='/coffee' component={Coffee} />
                     <Route exact path='/faq' component={FAQ} />
                     <PrivateRoute path='/dashboard' component={Dashboard} />

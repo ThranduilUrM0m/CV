@@ -1,45 +1,137 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import Footer from '../Footer/Footer';
 import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
-import { Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom';
+import { Form } from '../Article';
+import { Form_Project } from '../Project';
 import 'whatwg-fetch';
-import Fingerprint from 'fingerprintjs';
-import Footer from '../Footer/Footer';
 import * as $ from "jquery";
+import jQuery from 'jquery';
 import 'bootstrap';
+
+var _ = require('lodash');
 
 class About extends React.Component {
     constructor(props){
         super(props);
+        this.typewriting = this.typewriting.bind(this);
+    }
+    componentDidMount() {
+        const { onLoad } = this.props;
+        this.typewriting();
+        axios('/api/articles')
+        .then(function (response) {
+            // handle success
+            onLoad(response.data);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+        $('.fixedHeaderContainer').removeClass('blog_header');
+    }
+    typewriting() {
+        var TxtType = function(el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 2000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
+    
+        TxtType.prototype.tick = function() {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+    
+            if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+    
+            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+    
+            var that = this;
+            var delta = 200 - Math.random() * 100;
+    
+            if (this.isDeleting) { delta /= 2; }
+    
+            if (!this.isDeleting && this.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 500;
+            }
+    
+            setTimeout(function() {
+            that.tick();
+            }, delta);
+        };
+    
+        window.onload = function() {
+            var elements = document.getElementsByClassName('typewrite');
+            for (var i=0; i<elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-type');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                  new TxtType(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #000}";
+            document.body.appendChild(css);
+        };
     }
     render() {
+		const { articles } = this.props;
         return(
-            <FullPage scrollMode={'normal'}>
+            <FullPage>
 				<Slide>
-					<section className="first_section_coffee">
+					<section className="first_section_about">
+                        <span className="shadowHi">HI</span>
                         <div className="wrapper_full">
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="_body">
-                                        <h2>Join Us in Our Headquarters for a cup of coffee, or hot chocolate whip cream (No judging), To discuss with us the impact of Web on education and how to build a new educational system, based on technology and advancement.</h2>
-                                    </div>
-                                </div>
+                            <div className="artsy">
+                                
                             </div>
-							<div id="social_media">
-								<div className="icons_gatherer">
-									<a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-									<a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-									<a href="#" className="icon-button scroll">
-										<span className="scroll-icon">
-											<span className="scroll-icon__wheel-outer">
-												<span className="scroll-icon__wheel-inner"></span>
-											</span>
-										</span>
-									</a>
-								</div>
-							</div>
+                            <div className="type">
+                                <h1>
+                                    <span>I'm</span>
+                                </h1>
+                                <h1>
+                                    <div className="typewrite" data-period="2000" data-type='[ "Zakariae.", "Boutaleb.", "A developer.", "A Teacher." ]'>
+                                        <span className="wrap"></span>
+                                    </div>
+                                </h1>
+                                <span className="lorem">
+                                    <p>So! My Name is Zakariae Boutaleb, I do teach elemantary &  studied computer science, and learned to design websites.</p>
+                                    <p>How about you read something i wrote for you ?</p>
+                                </span>
+                                <Link to={`blog/${_.get(_.find(articles, {'title': 'about me'}), '_id')}`}>
+                                    <div className="readmore">
+                                        <button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
+                                            <div className="line line-1"></div>
+                                            <div className="line line-2"></div>
+                                        </button>
+                                    </div>
+                                </Link>
+                            </div>
                         </div>
                     </section>
 				</Slide>
@@ -51,4 +143,12 @@ class About extends React.Component {
     }
 }
   
-export default About
+const mapStateToProps = state => ({
+    articles: state.home.articles,
+});
+
+const mapDispatchToProps = dispatch => ({
+    onLoad: data => dispatch({ type: 'HOME_PAGE_LOADED', data }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(About);

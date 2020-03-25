@@ -33,13 +33,13 @@ class Footer extends React.Component {
     }
     componentDidMount() {
         this._handleMouseMove();
+        this._handleAlphabet();
         const self = this;
         const {onLoad} = this.props;
         axios('/api/articles')
             .then(function (response) {
                 // handle success
                 onLoad(response.data);
-                self._handleAlphabet();
             })
             .catch(function (error) {
                 // handle error
