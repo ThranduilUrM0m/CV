@@ -311,20 +311,14 @@ $strips-angle:45deg;//90deg;
 		height: 0;
 	}
 }
-@keyframes typewriter{
-	from{
-		width: 0;
+@keyframes scroll {
+	from {
+		top: 10px;
+		opacity: 1;
 	}
-	to{
-		width: fit-content;
-	}
-}
-@keyframes blinkTextCursor{
-	from{
-		border-right-color: rgba(0,0,0,.75);
-	}
-	to{
-		border-right-color: transparent;
+	to {
+		top: 50%;
+		opacity: 0;
 	}
 }
 
@@ -460,6 +454,141 @@ body, html {
 		width: 100%;
 		padding-right: 0;
 		padding-left: 0;
+		
+		#social_media{
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			z-index: 0;
+			.icons_gatherer {
+				display: flex;
+				flex-direction: column;
+				.icon-button {
+					position: relative;
+					font-family: FontAwesome;
+					font-weight: normal;
+					font-style: normal;
+					text-decoration: inherit;
+					-webkit-font-smoothing: antialiased;
+					border-radius: 2.6rem;
+					display: inline-block;
+					font-size: 1.3rem;
+					width: 2.6rem;
+					height: 2.6rem;
+					line-height: 2.6rem;
+					margin: 0 5px;
+					text-align: center;
+					-webkit-user-select: none;
+					-moz-user-select: none;
+						-ms-user-select: none;
+							user-select: none;
+					&.instagram {
+						span {
+							background-color: #e4405f;
+						}
+					}
+					&.facebook {
+						span {
+							background-color: #3B5998;
+						}
+					}
+					&.github {
+						span {
+							background-color: #211F1F;
+						}
+					}
+					&.scroll {
+						position: relative;
+						cursor: default;
+						&::before {
+							content: '';
+							position: absolute;
+							top: 5px;
+							left: 50%;
+							transform: translate(-50%, 0);
+							width: 1.3rem;
+							height: calc(100% - 10px);
+							border: 0.2rem solid #000;
+							border-radius: 1.3rem;
+						}
+						&::after {
+							content: '';
+							position: absolute;
+							top: 10px;
+							left: 50%;
+							transform: translate(-50%, 0);
+							width: 0.3rem;
+							height: 0.3rem;
+							border-radius: 0.3rem;
+							background: #000;
+							animation: scroll 0.5s infinite ease-in-out;
+						}
+					}
+					&.instagram, &.facebook, &.github {
+						i {
+							position: absolute;
+							height: 2.6rem;
+							width: 2.6rem;
+							left: 0;
+							top: 0;
+							line-height: 2.6rem;
+							background: none;
+							color: #000;
+							-webkit-transition: all 0.3s;
+								-moz-transition: all 0.3s;
+								-o-transition: all 0.3s;
+									transition: all 0.3s;
+							z-index: 10;
+						}
+						span {
+							position: absolute;
+							display: block;
+							height: 0;
+							width: 0;
+							top: 50%;
+							left: 50%;
+							border-radius: 0;
+							margin: 0;
+							-webkit-transition: all 0.3s;
+								-moz-transition: all 0.3s;
+								-o-transition: all 0.3s;
+									transition: all 0.3s;
+						}
+					}
+					&:hover {
+						span:not(.circle) {
+							width: 2.6rem;
+							height: 2.6rem;
+							border-radius: 2.6rem;
+							margin: -1.3rem;
+						}
+						.icon-facebook{
+							color: $liteBg;
+						}
+						.fa-instagram{
+							color: $liteBg;
+						}
+						.fa-github{
+							color: $liteBg;
+						}
+					}
+				}
+				&::before{
+					position: absolute;
+					content: "";
+					width: 0.1rem;
+					height: 10rem;
+					left: 50%;
+					transform: translate(-50%, -120%);
+					background: #000;
+					cursor: default;
+				}
+			}
+		}
 		.fixedHeaderContainer {
 			-webkit-transition: all 0.3s;
 			-moz-transition: all 0.3s;
@@ -6080,127 +6209,6 @@ body, html {
 					font-size: 4rem;
 					font-family: 'Abril Fatface', cursive;
 				}
-				#social_media{
-					position: absolute;
-					bottom: 0;
-					right: 0;
-					display: flex;
-					flex-direction: column;
-					height: 100%;
-					z-index: 0;
-					background: lighten($color: $liteBg_gray, $amount: 10);
-					justify-content: flex-end;
-					margin-bottom: 1px;
-					.icons_gatherer {
-						display: flex;
-						flex-direction: column;
-					}
-					.icons_gatherer::before{
-						position: absolute;
-						content: "";
-						width: 0.1rem;
-						height: 10rem;
-						background: #000;
-						left: 50%;
-    					transform: translate(-50%, -120%);
-						cursor: default;
-					}
-					.icon-button {
-						font-family: FontAwesome;
-						font-weight: normal;
-						font-style: normal;
-						text-decoration: inherit;
-						-webkit-font-smoothing: antialiased;
-						border-radius: 2.6rem;
-						cursor: pointer;
-						display: inline-block;
-						font-size: 1.3rem;
-						height: 2.6rem;
-						line-height: 2.6rem;
-						margin: 0 5px;
-						position: relative;
-						text-align: center;
-						-webkit-user-select: none;
-						-moz-user-select: none;
-							-ms-user-select: none;
-								user-select: none;
-						width: 2.6rem;
-						i {
-							background: none;
-							color: black;
-							height: 2.6rem;
-							left: 0;
-							line-height: 2.6rem;
-							position: absolute;
-							top: 0;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
-							width: 2.6rem;
-							z-index: 10;
-						}
-						.scroll-icon {
-							height: 2rem;
-							width: 1.2rem;
-							border: .25rem solid black;
-							border-radius: 1rem;
-							transform: translate(-50%, -50%);
-							.scroll-icon__wheel-outer {
-								position: absolute;
-								left: 50%;
-								top: .1rem;
-								transform: translate(-50%, .1rem);
-								height: .8rem;
-								width: .4em;
-								border-radius: .4rem;
-								overflow: hidden;
-								.scroll-icon__wheel-inner {
-									display: block;
-									height: $dot-diameter;
-									width: $dot-diameter;
-									border-radius: inherit;
-									background: black;
-									animation: dot--a $duration infinite;
-									left: 50%;
-									transform: translateX(-50%);
-								}
-							}
-						}
-						span {
-							border-radius: 0;
-							display: block;
-							height: 0;
-							left: 50%;
-							margin: 0;
-							position: absolute;
-							top: 50%;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
-							width: 0;
-						}
-						&:hover span:not(.scroll-icon):not(.scroll-icon__wheel-outer):not(.scroll-icon__wheel-inner) {
-							width: 2.6rem;
-							height: 2.6rem;
-							border-radius: 2.6rem;
-							margin: -1.3rem;
-						}
-						&:hover .icon-facebook{
-							color: $liteBg;
-						}
-						&:hover .fa-instagram{
-							color: $liteBg;
-						}
-					}
-					.instagram span {
-						background-color: #e4405f;
-					}
-					.facebook span {
-						background-color: #3B5998;
-					}
-				}
 			}
 		}
 		.first_section_coffee {
@@ -6278,127 +6286,6 @@ body, html {
 								opacity: 0.4;
 							}
 						}
-					}
-				}
-				#social_media{
-					position: absolute;
-					bottom: 0;
-					right: 0;
-					display: flex;
-					flex-direction: column;
-					height: 100%;
-					z-index: 0;
-					background: lighten($color: $liteBg_gray, $amount: 10);
-					justify-content: flex-end;
-					margin-bottom: 1px;
-					.icons_gatherer {
-						display: flex;
-						flex-direction: column;
-					}
-					.icons_gatherer::before{
-						position: absolute;
-						content: "";
-						width: 0.1rem;
-						height: 10rem;
-						background: #000;
-						left: 50%;
-    					transform: translate(-50%, -120%);
-						cursor: default;
-					}
-					.icon-button {
-						font-family: FontAwesome;
-						font-weight: normal;
-						font-style: normal;
-						text-decoration: inherit;
-						-webkit-font-smoothing: antialiased;
-						border-radius: 2.6rem;
-						cursor: pointer;
-						display: inline-block;
-						font-size: 1.3rem;
-						height: 2.6rem;
-						line-height: 2.6rem;
-						margin: 0 5px;
-						position: relative;
-						text-align: center;
-						-webkit-user-select: none;
-						-moz-user-select: none;
-							-ms-user-select: none;
-								user-select: none;
-						width: 2.6rem;
-						i {
-							background: none;
-							color: black;
-							height: 2.6rem;
-							left: 0;
-							line-height: 2.6rem;
-							position: absolute;
-							top: 0;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
-							width: 2.6rem;
-							z-index: 10;
-						}
-						.scroll-icon {
-							height: 2rem;
-							width: 1.2rem;
-							border: .25rem solid black;
-							border-radius: 1rem;
-							transform: translate(-50%, -50%);
-							.scroll-icon__wheel-outer {
-								position: absolute;
-								left: 50%;
-								top: .1rem;
-								transform: translate(-50%, .1rem);
-								height: .8rem;
-								width: .4em;
-								border-radius: .4rem;
-								overflow: hidden;
-								.scroll-icon__wheel-inner {
-									display: block;
-									height: $dot-diameter;
-									width: $dot-diameter;
-									border-radius: inherit;
-									background: black;
-									animation: dot--a $duration infinite;
-									left: 50%;
-									transform: translateX(-50%);
-								}
-							}
-						}
-						span {
-							border-radius: 0;
-							display: block;
-							height: 0;
-							left: 50%;
-							margin: 0;
-							position: absolute;
-							top: 50%;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
-							width: 0;
-						}
-						&:hover span:not(.scroll-icon):not(.scroll-icon__wheel-outer):not(.scroll-icon__wheel-inner) {
-							width: 2.6rem;
-							height: 2.6rem;
-							border-radius: 2.6rem;
-							margin: -1.3rem;
-						}
-						&:hover .icon-facebook{
-							color: $liteBg;
-						}
-						&:hover .fa-instagram{
-							color: $liteBg;
-						}
-					}
-					.instagram span {
-						background-color: #e4405f;
-					}
-					.facebook span {
-						background-color: #3B5998;
 					}
 				}
 			}
@@ -6636,127 +6523,6 @@ body, html {
 					li.current{
 						height: 0.4rem;
 						transform: translateY(-50%);
-					}
-				}
-				#social_media{
-					position: absolute;
-					bottom: 0;
-					right: 0;
-					display: flex;
-					flex-direction: column;
-					height: 100%;
-					z-index: 0;
-					background: lighten($color: $liteBg_gray, $amount: 10);
-					justify-content: flex-end;
-					margin-bottom: 1px;
-					.icons_gatherer {
-						display: flex;
-						flex-direction: column;
-					}
-					.icons_gatherer::before{
-						position: absolute;
-						content: "";
-						width: 0.1rem;
-						height: 10rem;
-						background: #000;
-						left: 50%;
-    					transform: translate(-50%, -120%);
-						cursor: default;
-					}
-					.icon-button {
-						font-family: FontAwesome;
-						font-weight: normal;
-						font-style: normal;
-						text-decoration: inherit;
-						-webkit-font-smoothing: antialiased;
-						border-radius: 2.6rem;
-						cursor: pointer;
-						display: inline-block;
-						font-size: 1.3rem;
-						height: 2.6rem;
-						line-height: 2.6rem;
-						margin: 0 5px;
-						position: relative;
-						text-align: center;
-						-webkit-user-select: none;
-						-moz-user-select: none;
-							-ms-user-select: none;
-								user-select: none;
-						width: 2.6rem;
-						i {
-							background: none;
-							color: black;
-							height: 2.6rem;
-							left: 0;
-							line-height: 2.6rem;
-							position: absolute;
-							top: 0;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
-							width: 2.6rem;
-							z-index: 10;
-						}
-						.scroll-icon {
-							height: 2rem;
-							width: 1.2rem;
-							border: .25rem solid black;
-							border-radius: 1rem;
-							transform: translate(-50%, -50%);
-							.scroll-icon__wheel-outer {
-								position: absolute;
-								left: 50%;
-								top: .1rem;
-								transform: translate(-50%, .1rem);
-								height: .8rem;
-								width: .4em;
-								border-radius: .4rem;
-								overflow: hidden;
-								.scroll-icon__wheel-inner {
-									display: block;
-									height: $dot-diameter;
-									width: $dot-diameter;
-									border-radius: inherit;
-									background: black;
-									animation: dot--a $duration infinite;
-									left: 50%;
-									transform: translateX(-50%);
-								}
-							}
-						}
-						span {
-							border-radius: 0;
-							display: block;
-							height: 0;
-							left: 50%;
-							margin: 0;
-							position: absolute;
-							top: 50%;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
-							width: 0;
-						}
-						&:hover span:not(.scroll-icon):not(.scroll-icon__wheel-outer):not(.scroll-icon__wheel-inner) {
-							width: 2.6rem;
-							height: 2.6rem;
-							border-radius: 2.6rem;
-							margin: -1.3rem;
-						}
-						&:hover .icon-facebook{
-							color: $liteBg;
-						}
-						&:hover .fa-instagram{
-							color: $liteBg;
-						}
-					}
-					.instagram span {
-						background-color: #e4405f;
-					}
-					.facebook span {
-						background-color: #3B5998;
 					}
 				}
 			}
@@ -7222,132 +6988,6 @@ body, html {
 						height: 25vh;
 						background-color: $main-color;
 					}
-					#social_media{
-						position: absolute;
-						bottom: 0;
-						left: 0;
-						display: flex;
-						flex-direction: column;
-						height: 100%;
-						z-index: 10;
-						justify-content: flex-end;
-						margin-bottom: 1px;
-						.icons_gatherer {
-							display: flex;
-							flex-direction: column;
-						}
-						.icons_gatherer::before{
-							position: absolute;
-							content: "";
-							width: 0.1rem;
-							height: 10rem;
-							background: #fff;
-							left: 50%;
-							transform: translate(-50%, -120%);
-							cursor: default;
-						}
-						.icon-button {
-							font-family: FontAwesome;
-							font-weight: normal;
-							font-style: normal;
-							text-decoration: inherit;
-							-webkit-font-smoothing: antialiased;
-							border-radius: 2.6rem;
-							cursor: pointer;
-							display: inline-block;
-							font-size: 1.3rem;
-							height: 2.6rem;
-							line-height: 2.6rem;
-							margin: 0 5px;
-							position: relative;
-							text-align: center;
-							-webkit-user-select: none;
-							-moz-user-select: none;
-								-ms-user-select: none;
-									user-select: none;
-							width: 2.6rem;
-							i {
-								background: none;
-								color: #fff;
-								height: 2.6rem;
-								left: 0;
-								line-height: 2.6rem;
-								position: absolute;
-								top: 0;
-								-webkit-transition: all 0.3s;
-									-moz-transition: all 0.3s;
-									-o-transition: all 0.3s;
-										transition: all 0.3s;
-								width: 2.6rem;
-								z-index: 10;
-							}
-							span {
-								border-radius: 0;
-								display: block;
-								height: 0;
-								left: 50%;
-								margin: 0;
-								position: absolute;
-								top: 50%;
-								-webkit-transition: all 0.3s;
-									-moz-transition: all 0.3s;
-									-o-transition: all 0.3s;
-										transition: all 0.3s;
-								width: 0;
-							}
-							&:hover span:not(.scroll-icon):not(.scroll-icon__wheel-outer):not(.scroll-icon__wheel-inner) {
-								width: 2.6rem;
-								height: 2.6rem;
-								border-radius: 2.6rem;
-								margin: -1.3rem;
-							}
-							&:hover .icon-facebook{
-								color: white;
-							}
-							&:hover .fa-instagram{
-								color: white;
-							}
-							&:hover .fa-github{
-								color: white;
-							}
-							.scroll-icon {
-								height: 2rem;
-								width: 1.2rem;
-								border: .25rem solid #fff;
-								border-radius: 1rem;
-								transform: translate(-50%, -50%);
-								.scroll-icon__wheel-outer {
-									position: absolute;
-									left: calc(50% + .05rem);
-									top: .1rem;
-									transform: translate(-50%, 0.1rem);
-									height: .8rem;
-									width: 0.25rem;
-									border-radius: .4rem;
-									overflow: hidden;
-									.scroll-icon__wheel-inner {
-										display: block;
-										height: $dot-diameter;
-										width: $dot-diameter;
-										border-radius: inherit;
-										background: #fff;
-										animation: dot--a $duration infinite;
-										left: 50%;
-										transform: translateX(-50%);
-									}
-								}
-							}
-						}
-						.instagram span {
-							background-color: #e4405f;
-						}
-						.facebook span {
-							background-color: #3B5998;
-						}
-						.github span {
-							background-color: #211F1F;
-						}
-					}
 				}
 				&.right_part{
 					width: 50%;
@@ -7424,132 +7064,6 @@ body, html {
 						transform: translate(-50%, -50%);
 						background: url('b..svg') no-repeat;
 						background-size: contain;
-					}
-					#social_media{
-						position: absolute;
-						bottom: 0;
-						left: 0;
-						display: flex;
-						flex-direction: column;
-						height: 100%;
-						z-index: 0;
-						justify-content: flex-end;
-						margin-bottom: 1px;
-						.icons_gatherer {
-							display: flex;
-							flex-direction: column;
-						}
-						.icons_gatherer::before{
-							position: absolute;
-							content: "";
-							width: 0.1rem;
-							height: 10rem;
-							background: #000;
-							left: 50%;
-    						transform: translate(-50%, -120%);
-							cursor: default;
-						}
-						.icon-button {
-							font-family: FontAwesome;
-							font-weight: normal;
-							font-style: normal;
-							text-decoration: inherit;
-							-webkit-font-smoothing: antialiased;
-							border-radius: 2.6rem;
-							cursor: pointer;
-							display: inline-block;
-							font-size: 1.3rem;
-							height: 2.6rem;
-							line-height: 2.6rem;
-							margin: 0 5px;
-							position: relative;
-							text-align: center;
-							-webkit-user-select: none;
-							-moz-user-select: none;
-								-ms-user-select: none;
-									user-select: none;
-							width: 2.6rem;
-							i {
-								background: none;
-								color: #000;
-								height: 2.6rem;
-								left: 0;
-								line-height: 2.6rem;
-								position: absolute;
-								top: 0;
-								-webkit-transition: all 0.3s;
-									-moz-transition: all 0.3s;
-									-o-transition: all 0.3s;
-										transition: all 0.3s;
-								width: 2.6rem;
-								z-index: 10;
-							}
-							span {
-								border-radius: 0;
-								display: block;
-								height: 0;
-								left: 50%;
-								margin: 0;
-								position: absolute;
-								top: 50%;
-								-webkit-transition: all 0.3s;
-									-moz-transition: all 0.3s;
-									-o-transition: all 0.3s;
-										transition: all 0.3s;
-								width: 0;
-							}
-							&:hover span:not(.scroll-icon):not(.scroll-icon__wheel-outer):not(.scroll-icon__wheel-inner) {
-								width: 2.6rem;
-								height: 2.6rem;
-								border-radius: 2.6rem;
-								margin: -1.3rem;
-							}
-							&:hover .icon-facebook{
-								color: $liteBg;
-							}
-							&:hover .fa-instagram{
-								color: $liteBg;
-							}
-							&:hover .fa-github{
-								color: $liteBg;
-							}
-							.scroll-icon {
-								height: 2rem;
-								width: 1.2rem;
-								border: .25rem solid #000;
-								border-radius: 1rem;
-								transform: translate(-50%, -50%);
-								.scroll-icon__wheel-outer {
-									position: absolute;
-									left: calc(50% + .05rem);
-									top: .1rem;
-									transform: translate(-50%, 0.1rem);
-									height: .8rem;
-									width: 0.25rem;
-									border-radius: .4rem;
-									overflow: hidden;
-									.scroll-icon__wheel-inner {
-										display: block;
-										height: $dot-diameter;
-										width: $dot-diameter;
-										border-radius: inherit;
-										background: #000;
-										animation: dot--a $duration infinite;
-										left: 50%;
-										transform: translateX(-50%);
-									}
-								}
-							}
-						}
-						.instagram span {
-							background-color: #e4405f;
-						}
-						.facebook span {
-							background-color: #3B5998;
-						}
-						.github span {
-							background-color: #211F1F;
-						}
 					}
 				}
 				&.right_part{
@@ -8712,133 +8226,6 @@ body, html {
 									}
 								}
 							}
-						}
-					}
-					#social_media{
-						position: absolute;
-						bottom: 0;
-						left: 0;
-						display: flex;
-						flex-direction: row;
-						width: 100%;
-						z-index: 0;
-						justify-content: center;
-						.icons_gatherer {
-							display: flex;
-							flex-direction: row;
-							position: relative;
-							&::before{
-								position: absolute;
-								content: "";
-								height: 0.1rem;
-								width: 10rem;
-								background: #000;
-								left: -100%;
-								top: 50%;
-								transform: translate(-0%, -50%);
-								cursor: default;
-							}
-						}
-						.icon-button {
-							font-family: FontAwesome;
-							font-weight: normal;
-							font-style: normal;
-							text-decoration: inherit;
-							-webkit-font-smoothing: antialiased;
-							border-radius: 2.6rem;
-							cursor: pointer;
-							display: inline-block;
-							font-size: 1.3rem;
-							height: 2.6rem;
-							line-height: 2.6rem;
-							margin: 0 5px;
-							position: relative;
-							text-align: center;
-							-webkit-user-select: none;
-							-moz-user-select: none;
-								-ms-user-select: none;
-									user-select: none;
-							width: 2.6rem;
-							i {
-								background: none;
-								color: black;
-								height: 2.6rem;
-								left: 0;
-								line-height: 2.6rem;
-								position: absolute;
-								top: 0;
-								-webkit-transition: all 0.3s;
-									-moz-transition: all 0.3s;
-									-o-transition: all 0.3s;
-										transition: all 0.3s;
-								width: 2.6rem;
-								z-index: 10;
-							}
-							span {
-								border-radius: 0;
-								display: block;
-								height: 0;
-								left: 50%;
-								margin: 0;
-								position: absolute;
-								top: 50%;
-								-webkit-transition: all 0.3s;
-									-moz-transition: all 0.3s;
-									-o-transition: all 0.3s;
-										transition: all 0.3s;
-								width: 0;
-							}
-							&:hover span:not(.scroll-icon):not(.scroll-icon__wheel-outer):not(.scroll-icon__wheel-inner) {
-								width: 2.6rem;
-								height: 2.6rem;
-								border-radius: 2.6rem;
-								margin: -1.3rem;
-							}
-							&:hover .icon-facebook{
-								color: $liteBg;
-							}
-							&:hover .fa-instagram{
-								color: $liteBg;
-							}
-							&:hover .fa-github{
-								color: $liteBg;
-							}
-							.scroll-icon {
-								height: 2rem;
-								width: 1.2rem;
-								border: .25rem solid black;
-								border-radius: 1rem;
-								transform: translate(-50%, -50%);
-								.scroll-icon__wheel-outer {
-									position: absolute;
-									left: calc(50% + .05rem);
-									top: .1rem;
-									transform: translate(-50%, 0.1rem);
-									height: .8rem;
-									width: 0.25rem;
-									border-radius: .4rem;
-									overflow: hidden;
-									.scroll-icon__wheel-inner {
-										display: block;
-										height: $dot-diameter;
-										width: $dot-diameter;
-										border-radius: inherit;
-										background: black;
-										animation: dot--a $duration infinite;
-										left: 50%;
-										transform: translateX(-50%);
-									}
-								}
-							}
-						}
-						.instagram span {
-							background-color: #e4405f;
-						}
-						.facebook span {
-							background-color: #3B5998;
-						}
-						.github span {
-							background-color: #211F1F;
 						}
 					}
 					&::before {

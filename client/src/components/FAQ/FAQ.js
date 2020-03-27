@@ -22,18 +22,15 @@ class FAQ extends React.Component {
                         <div className="wrapper_full">
                             <h2>FAQ</h2>
 							<div id="social_media">
-								<div className="icons_gatherer">
-									<a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-									<a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-									<a href="#" className="icon-button scroll">
-										<span className="scroll-icon">
-											<span className="scroll-icon__wheel-outer">
-												<span className="scroll-icon__wheel-inner"></span>
-											</span>
-										</span>
-									</a>
-								</div>
-							</div>
+                                <div className="icons_gatherer">
+                                    <a href="#" className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                    <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                    <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                    <a href="#" className="icon-button scroll">
+                                        
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </section>
 				</Slide>
