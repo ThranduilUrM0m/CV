@@ -415,7 +415,7 @@ class Home extends React.Component {
                             </div>
                             <div className="some_text">
                                 <h1 data-text="works." className="display-1">works.</h1>
-                                <p>Hi,<br/>I'm Boutaleb Zakariae. <br/>a Web <b className='web'>developer.</b></p>
+                                <p>Hi, <br/>I'm Boutaleb Zakariae! <br/>a Web <b className='web'>developer.</b></p>
                             </div>
                         </div>
                         <div className="wrapper right_part">
