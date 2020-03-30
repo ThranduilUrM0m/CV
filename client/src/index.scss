@@ -7798,9 +7798,31 @@ body, html {
 							}
 							&.btn-r {
 								right: 0;
+								&::after {
+									content: '';
+									position: absolute;
+									width: 5rem;
+									height: 120%;
+									background: rgba(0,0,0,0);
+									top: 50%;
+									right: 0;
+									transform: translate(100%, -50%);
+									box-shadow: -10px 0px 15px -15px #000;
+								}
 							}
 							&.btn-l {
 								left: 1rem;
+								&::before {
+									content: '';
+									position: absolute;
+									width: 5rem;
+									height: 120%;
+									background: rgba(0,0,0,0);
+									top: 50%;
+									left: 0;
+									transform: translate(-100%, -50%);
+									box-shadow: 10px 0px 15px -15px #000;
+								}
 							}
 						}
 					}
