@@ -9937,8 +9937,13 @@ body, html {
 				.mail-modal {
 					width: 85% !important;
 					height: calc(100% - 3rem) !important;
+					.before {
+						transform: translate(50%, 0) !important;
+						height: 50% !important;
+					}
 					.modal-inner {
 						flex-direction: column;
+						justify-content: flex-end;
 						.modal-left {
 							padding: 1rem 2rem !important;
 							width: 100% !important;
