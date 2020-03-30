@@ -232,7 +232,7 @@ class Footer extends React.Component {
                 <div className="wrapper">
                     <div className="top_shelf">
                         <div className="first_box">
-                            <h6>Latest Articles!</h6>
+                            <h6>Latest.</h6>
                             <ul>
                                 {
                                     (_.orderBy(articles, ['createdAt'], ['desc']).slice(0, 3)).map((article, index) => {
@@ -249,7 +249,7 @@ class Footer extends React.Component {
                             </ul>
                         </div>
                         <div className="second_box">
-                            <h6>Most viewed Articles!</h6>
+                            <h6>Most viewed.</h6>
                             <ul>
                                 {
                                     (_.orderBy(articles, ['view'], ['desc']).slice(0, 3)).map((article, index) => {
@@ -266,7 +266,7 @@ class Footer extends React.Component {
                             </ul>
                         </div>
                         <div className="third_box">
-                            <h6>Most commented Articles!</h6>
+                            <h6>Most commented.</h6>
                             <ul>
                                 {
                                     (_.orderBy(articles, ['comment'], ['desc']).slice(0, 3)).map((article, index) => {
@@ -283,7 +283,7 @@ class Footer extends React.Component {
                             </ul>
                         </div>
                         <div className="fourth_box">
-                            <h6>Oldest Articles!</h6>
+                            <h6>Oldest.</h6>
                             <ul>
                                 {
                                     (_.orderBy(articles, ['createdAt'], ['asc']).slice(0, 3)).map((article, index) => {

@@ -32,7 +32,7 @@ class Home extends React.Component {
         const { onLoad, onLoadProject } = this.props;
         this._handleScroll();
         const self = this;
-        axios('/api/articles')
+        axios('http://localhost:8800/api/articles')
         .then(function (response) {
             // handle success
             onLoad(response.data);
@@ -63,7 +63,7 @@ class Home extends React.Component {
             // always executed
         });
 
-        axios('/api/projects')
+        axios('http://localhost:8800/api/projects')
         .then(function (response) {
             // handle success
             onLoadProject(response.data);
@@ -408,6 +408,29 @@ class Home extends React.Component {
                 <Slide>
                     <section className="second_section">
                         <div className="wrapper left_part">
+                            <div className="circles">
+                                <div className="stars">
+                                    <div className="star-six"></div>
+                                    <div className="starround2"></div>
+                                    <div className="starround6"></div>
+                                </div>
+                                <div className="stars2">
+                                    <div className="starround2"></div>
+                                    <div className="moon"></div>
+                                </div>
+                                <div className="stars3">
+                                    <div className="starround4"></div>
+                                    <div className="starround2"></div>
+                                </div>
+                                <div className="stars4">
+                                    <div className="starround2"></div>
+                                    <div className="star-six"></div>
+                                </div>
+                                <div className="stars5">
+                                    <div className="starround4"></div>
+                                    <div className="starround2"></div>
+                                </div>
+                            </div>
                             <div className="pulsing_dots">
                                 <div className="p1"></div>
                                 <div className="p2"></div>
@@ -460,7 +483,7 @@ class Home extends React.Component {
                                             <span>Front-end Developer</span>
                                         </div>
                                         <div className="content">
-                                            <h7>Languages i'm fluent at</h7>
+                                            <h6>Languages i'm fluent at</h6>
                                             <ul className="text-muted tags">
                                                 <li className="tag_item">_Lodash</li>
                                                 <li className="tag_item">JQuery</li>
@@ -469,7 +492,7 @@ class Home extends React.Component {
                                                 <li className="tag_item">HTML</li>
                                                 <li className="tag_item">ReactJS</li>
                                             </ul>
-                                            <h7>Tools i use</h7>
+                                            <h6>Tools i use</h6>
                                             <ul className="text-muted tags">
                                                 <li className="tag_item">Bootstrap</li>
                                                 <li className="tag_item">Css Grid</li>
@@ -495,7 +518,7 @@ class Home extends React.Component {
                                             <span>Back-end Developer</span>
                                         </div>
                                         <div className="content">
-                                            <h7>Languages i'm fluent at</h7>
+                                            <h6>Languages i'm fluent at</h6>
                                             <ul className="text-muted tags">
                                                 <li className="tag_item">JSON</li>
                                                 <li className="tag_item">NoSQL</li>
@@ -505,7 +528,7 @@ class Home extends React.Component {
                                                 <li className="tag_item">NodeJS</li>
                                                 <li className="tag_item">React Native</li>
                                             </ul>
-                                            <h7>Tools i use</h7>
+                                            <h6>Tools i use</h6>
                                             <ul className="text-muted tags">
                                                 <li className="tag_item">Git</li>
                                             </ul>
