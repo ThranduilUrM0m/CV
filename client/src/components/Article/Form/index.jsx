@@ -34,6 +34,7 @@ class Form extends React.Component {
             title: '',
             body: '',
             author: '',
+            categorie: '',
             tag: [],
             tagInput: '',
             comment: [],
@@ -52,6 +53,7 @@ class Form extends React.Component {
                 title: nextProps.articleToEdit.title,
                 body: nextProps.articleToEdit.body,
                 author: nextProps.articleToEdit.author,
+                categorie: nextProps.articleToEdit.categorie,
                 tag: nextProps.articleToEdit.tag,
                 tagInput: nextProps.articleToEdit.tagInput,
                 comment: nextProps.articleToEdit.comment,
@@ -63,13 +65,14 @@ class Form extends React.Component {
     }
     handleSubmit(){
         const { onSubmit, articleToEdit, onEdit } = this.props;
-        const { title, body, author, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
+        const { title, body, author, categorie, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
         const self = this;
         if(!articleToEdit) {
             return axios.post('/api/articles', {
                 title,
                 body,
                 author,
+                categorie,
                 tag,
                 comment,
                 upvotes,
@@ -84,6 +87,7 @@ class Form extends React.Component {
                         title: '',
                         body: '',
                         author: '',
+                        categorie: '',
                         tag: [],
                         tagInput: '',
                         comment: [],
@@ -97,6 +101,7 @@ class Form extends React.Component {
                 title,
                 body,
                 author,
+                categorie,
                 tag,
                 comment,
                 upvotes,
@@ -111,6 +116,7 @@ class Form extends React.Component {
                         title: '',
                         body: '',
                         author: '',
+                        categorie: '',
                         tag: [],
                         tagInput: '',
                         comment: [],
@@ -148,7 +154,7 @@ class Form extends React.Component {
     }
     render() {
         const { articleToEdit } = this.props;
-        const { title, body, author, tag, tagInput } = this.state;
+        const { title, body, author, categorie, tag, tagInput } = this.state;
     
         return (
             <div className="wrapper_form">
@@ -192,6 +198,13 @@ class Form extends React.Component {
                 className="form-control my-3 author_article"
                 placeholder="Author"
                 />
+
+                <select value={categorie} onChange={(ev) => this.handleChangeField('categorie', ev)}>
+                    <option value="Education">Education</option>
+                    <option value="Design">Design</option>
+                    <option value="Personnel">Community</option>
+                    <option value="Tutorials">Tutorials</option>
+                </select>
 
                 <button onClick={this.handleSubmit} className="btn btn-primary float-right submit_article">{articleToEdit ? 'Update' : 'Submit'}</button>
             </div>

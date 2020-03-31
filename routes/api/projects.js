@@ -20,6 +20,14 @@ router.post('/', (req, res, next) => {
       },
     });
   }
+  
+  if(!body.brand) {
+    return res.status(422).json({
+      errors: {
+        brand: 'is required',
+      },
+    });
+  }
 
   if(!body.link_to) {
     return res.status(422).json({
@@ -33,6 +41,22 @@ router.post('/', (req, res, next) => {
     return res.status(422).json({
       errors: {
         author: 'is required',
+      },
+    });
+  }
+  
+  if(!body.date_) {
+    return res.status(422).json({
+      errors: {
+        date_: 'is required',
+      },
+    });
+  }
+  
+  if(!body.categorie) {
+    return res.status(422).json({
+      errors: {
+        categorie: 'is required',
       },
     });
   }
@@ -82,8 +106,20 @@ router.patch('/:id', (req, res, next) => {
     req.project.link_to = body.link_to;
   }
 
+  if(typeof body.date_ !== 'undefined') {
+    req.project.date_ = body.date_;
+  }
+
+  if(typeof body.categorie !== 'undefined') {
+    req.project.categorie = body.categorie;
+  }
+
   if(typeof body.image !== 'undefined') {
     req.project.image = body.image;
+  }
+
+  if(typeof body.brand !== 'undefined') {
+    req.project.brand = body.brand;
   }
 
   if(typeof body.tag !== 'undefined') {

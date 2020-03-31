@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
 
 const ProjectsSchema = new Schema({
     title: String,
     image: String,
+    brand: String,
     link_to: String,
     author: String,
+    date_: Date,
+    categorie: String,
     tag: [String],
     comment: [{
         author: String,
@@ -36,8 +38,11 @@ ProjectsSchema.methods.toJSON = function() {
         _id: this._id,
         title: this.title,
         image: this.image,
+        brand: this.brand,
         link_to: this.link_to,
         author: this.author,
+        date_: this.date_,
+        categorie: this.categorie,
         tag: this.tag,
         comment: this.comment,
         upvotes: this.upvotes,

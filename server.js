@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 // IMPORT MODELS
 require('./models/Articles');
-require('./models/Letters');
+require('./models/Experiences');
 require('./models/Events');
 require('./models/Projects');
 

@@ -35,11 +35,42 @@ class Footer extends React.Component {
         this._handleMouseMove();
         this._handleAlphabet();
         const self = this;
-        const {onLoad} = this.props;
+        const { onLoad, onLoadProject } = this.props;
         axios('/api/articles')
             .then(function (response) {
                 // handle success
                 onLoad(response.data);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
+
+        axios('/api/projects')
+            .then(function (response) {
+                // handle success
+                onLoadProject(response.data);
+    
+                function runAfterElementExists(jquery_selector, callback){
+                    var checker = window.setInterval(function() {
+                    //if one or more elements have been yielded by jquery
+                    //using this selector
+                    if ($(jquery_selector).length) {
+                        //stop checking for the existence of this element
+                        clearInterval(checker);
+                        //call the passed in function via the parameter above
+                        callback();
+                    }}, 200); //I usually check 5 times per second
+                }
+                //this is an example place in your code where you would like to
+                //start checking whether the target element exists
+                //I have used a class below, but you can use any jQuery selector
+                runAfterElementExists(".second_section .card_"+(response.data.projects.length-1), function() {
+                    self._handleSlider('slider_projects');
+                });
             })
             .catch(function (error) {
                 // handle error
@@ -211,7 +242,7 @@ class Footer extends React.Component {
         });
     }
     render() {
-        const { articles } = this.props;
+        const { articles, projects } = this.props;
         return (
             <div className="footer" id="footer_to">
                 <div className="modal fade" id="mailSentModal" tabIndex="-1" role="dialog" aria-labelledby="mailSentModalLabel" aria-hidden="true">
@@ -283,15 +314,15 @@ class Footer extends React.Component {
                             </ul>
                         </div>
                         <div className="fourth_box">
-                            <h6>Oldest.</h6>
+                            <h6>Latest Projects.</h6>
                             <ul>
                                 {
-                                    (_.orderBy(articles, ['createdAt'], ['asc']).slice(0, 3)).map((article, index) => {
+                                    (_.orderBy(projects, ['createdAt'], ['asc']).slice(0, 3)).map((project, index) => {
                                         return (
                                             <li>
-                                                <Link to={`/blog/${article._id}`}>
-                                                    <span>{article.title}</span>
-                                                    <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+                                                <Link to={`${project.link_to}`}>
+                                                    <span>{project.title}</span>
+                                                    <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
                                                 </Link>
                                             </li>
                                         )
@@ -459,11 +490,13 @@ class Footer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  articles: state.home.articles,
+    articles: state.home.articles,
+    projects: state.home.projects,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: data => dispatch({ type: 'HOME_PAGE_LOADED', data }),
+    onLoad: data => dispatch({ type: 'HOME_PAGE_LOADED', data }),
+    onLoadProject: data => dispatch({ type: 'PROJECT_PAGE_LOADED', data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

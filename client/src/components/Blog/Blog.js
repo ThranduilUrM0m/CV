@@ -72,6 +72,31 @@ class Blog extends React.Component {
         .then(function () {
             // always executed
 		});
+
+		const off = $('#modal_trigger').offset();
+		const wid = ($("#modal_trigger").width() / $(".second_section_blog").width()) * 100;
+		const hei = ($("#modal_trigger").height() / $(".second_section_blog").height()) * 100;
+
+		const top = (off.top / $(".second_section_blog").height()) * 100,
+			  left = (off.left / $(".second_section_blog").width()) * 100,
+			  bottom = (100 - (top + hei)),
+			  right = (100 - (left + wid));
+
+		const ins = top+'% '+right+'% '+bottom+'% '+left+'%';
+
+		$('#myModal').css({
+			'clip-path': 'inset('+ ins +')'
+		});
+		$('#myModal').on('show.bs.modal', function (e) {
+			$('#myModal').css({
+				'clip-path': 'inset(0)'
+			});
+		});
+		$('#myModal').on('hide.bs.modal', function (e) {
+			$('#myModal').css({
+				'clip-path': 'inset('+ ins +')'
+			});
+		});
 	}
 	handleDelete(id) {
 		const { onDelete } = this.props;
@@ -124,7 +149,6 @@ class Blog extends React.Component {
 			new Parallax();
 		});
 		
-		
 		//socials
 		let items = document.querySelectorAll(".socials-item-icon"),
 			self = this;
@@ -161,7 +185,7 @@ class Blog extends React.Component {
 				targetIcon.style.transform = "translate(0px,0px) scale(1)";
 				targetIcon.style.webkitTransform = "translate(0px,0px) scale(1)";
 			});
-		}		
+		}
     }
 	_FormatNumberLength(num, length) {
 		var r = "" + num;
@@ -207,7 +231,7 @@ class Blog extends React.Component {
 		let position = this.state.position; // the position of the cards
 	
 		// slide cards
-		if(type === 'next' && currentCard < cardNumber-1) {
+		if(type === 'next' && currentCard < cardNumber-3) {
 			currentCard++;
 			position -= (cardWidth+cardMargin);
 		} else if(type === 'prev' && currentCard > 0) {
@@ -271,8 +295,33 @@ class Blog extends React.Component {
 				</Slide>
 				<Slide>
 					<section className="second_section_blog">
+						{/* Modal */}
+						<div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div className="modal-dialog" role="document">
+								<div className="modal-content">
+									<div className="modal-body">
+										<a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+										<h5 className="modal-title" id="exampleModalLabel">Voilà!</h5>
+										<div>How about you joins us, not only you can give a feedback to the post you're reading, but you can discover much more about out community.</div>
+										<div><small>Here</small></div>
+										<a className="togglebtn">👉 Sign In If you don't have an Account</a>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div className="wrapper_full">
-							<div className="caption">Latest Talks.</div>
+							<div className="caption">
+								<p>Trending Now.</p>
+								<button id='modal_trigger' type="button" data-toggle="modal" data-target="#myModal">
+									<span>
+										<span>
+											<span data-attr-span="View All.">
+												View All.
+											</span>
+										</span>
+									</span>
+								</button>
+							</div>
 							<div className="cards-slider">
 								<div className="slider-btns">
 									<button className="slider-btn btn-l" onClick={() => this.handleClick('prev')}><i className="fas fa-long-arrow-alt-left"></i></button>
@@ -280,7 +329,7 @@ class Blog extends React.Component {
 								</div>
 								<div className="data-container">
 									{
-										_.orderBy(articles, ['createdAt'], ['desc']).map((article, index) => {
+										_.orderBy(articles, ['view'], ['desc']).map((article, index) => {
 											return (
 												<div className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" style={cardStyle} key={index}>
 													<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
@@ -289,6 +338,7 @@ class Blog extends React.Component {
 														<div className="card-body">
 															<h2>{article.title}</h2>
 															<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+															<p className="categorie">{article.categorie}</p>
 															<ul className="text-muted tags">
 																{
 																	article.tag.map((t, i) => {

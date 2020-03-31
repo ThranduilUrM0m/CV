@@ -6,6 +6,7 @@ const ArticlesSchema = new Schema({
   title: String,
   body: String,
   author: String,
+  categorie: String,
   tag: [String],
   comment: [{
     author: String,
@@ -36,6 +37,7 @@ ArticlesSchema.methods.toJSON = function() {
     title: this.title,
     body: this.body,
     author: this.author,
+    categorie: this.categorie,
     tag: this.tag,
     comment: this.comment,
     upvotes: this.upvotes,

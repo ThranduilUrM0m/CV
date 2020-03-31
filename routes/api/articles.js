@@ -29,6 +29,14 @@ router.post('/', (req, res, next) => {
     });
   }
 
+  if(!body.categorie) {
+    return res.status(422).json({
+      errors: {
+        categorie: 'is required',
+      },
+    });
+  }
+
   const finalArticle = new Articles(body);
   return finalArticle.save()
     .then(() => res.json({ article: finalArticle.toJSON() }))
@@ -72,6 +80,10 @@ router.patch('/:id', (req, res, next) => {
 
   if(typeof body.body !== 'undefined') {
     req.article.body = body.body;
+  }
+
+  if(typeof body.categorie !== 'undefined') {
+    req.article.categorie = body.categorie;
   }
 
   if(typeof body.tag !== 'undefined') {
