@@ -105,7 +105,7 @@ class About extends React.Component {
             <FullPage>
 				<Slide>
 					<section className="first_section_about">
-                        <span className="shadowHi">HI</span>
+                        <span className="shadowHi">developer</span>
                         <div className="wrapper_full">
                             <div className="artsy">
                                 
@@ -120,7 +120,7 @@ class About extends React.Component {
                                     </div>
                                 </h1>
                                 <span className="lorem">
-                                    <p>So! My Name is Zakariae Boutaleb, I do teach elemantary &  studied computer science, and learned to design websites.</p>
+                                    <p>I'm an elemantary teacher indeed, & I'm also a multidisciplinary developer who learned to design at a very young age, to yarn people's stories visually, & now i specialize in responsive web apps and websites.</p>
                                     <p>How about you read something i wrote for you ?</p>
                                 </span>
                                 <Link to={`blog/${_.get(_.find(articles, {'title': 'about me'}), '_id')}`}>

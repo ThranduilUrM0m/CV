@@ -31,6 +31,7 @@ class Home extends React.Component {
     componentDidMount() {
         const { onLoad, onLoadProject } = this.props;
         this._handleScroll();
+        this._handleMouseMove();
         const self = this;
         axios('/api/articles')
         .then(function (response) {
@@ -94,7 +95,6 @@ class Home extends React.Component {
             // always executed
         });
 
-        this._handleMouseMove();
         $('.fixedHeaderContainer').removeClass('blog_header');
     }
     _handleSlider(source) {
@@ -316,6 +316,24 @@ class Home extends React.Component {
             $('.fa-moon').css('marginLeft', amountMovedX);
             $('.fa-moon').css('marginTop', amountMovedY);
         });
+        $('.second_section').mousemove(function(e){
+            var width = $(this).width() / 2;
+            var height = $(this).height() / 2;
+            var amountMovedX = ((width - e.pageX) * -1 / 12);
+            var amountMovedY = ((height - e.pageY) * -1 / 12);
+        
+            $('.display-1').css('marginLeft', amountMovedX);
+            $('.display-1').css('marginTop', amountMovedY);
+        });
+        $('.third_section').mousemove(function(e){
+            var width = $(this).width() / 2;
+            var height = $(this).height() / 2;
+            var amountMovedX = ((width - e.pageX) * -1 / 12);
+            var amountMovedY = ((height - e.pageY) * -1 / 12);
+        
+            $('.display-1').css('left', amountMovedX);
+            $('.display-1').css('top', amountMovedY);
+        });
     }
     handleJSONTOHTML(inputDelta) {
 		function runAfterElementExists(jquery_selector, callback){
@@ -437,8 +455,10 @@ class Home extends React.Component {
                                 <div className="p3"></div>
                             </div>
                             <div className="some_text">
-                                <h1 data-text="works." className="display-1">works.</h1>
-                                <p>Hi, <br/>I'm Boutaleb Zakariae! <br/>a Web <b className='web'>developer.</b></p>
+                                <h1 data-text="projects." className="display-1">projects.</h1>
+                                <p>Website and user <br/>interface <b className='web'>developer.</b></p>
+                                <p className="name">ZAKARIAE BOUTALEB</p>
+                                <p className="text">I Usually work on multiple projects, but feel free to reach out, and we can discuss how i can help.</p>
                             </div>
                         </div>
                         <div className="wrapper right_part">
@@ -463,8 +483,8 @@ class Home extends React.Component {
                             <button onClick={() => this.handleClick('footer_to')} type="button">
                                 <span>
                                     <span>
-                                        <span data-attr-span="Hire Me.">
-                                            Hire Me.
+                                        <span data-attr-span="Reach Out.">
+                                            Reach Out.
                                         </span>
                                     </span>
                                 </span>
@@ -536,7 +556,7 @@ class Home extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <h1 data-text="SKILLS." className="display-1">SKILLS.</h1>
+                            <h1 data-text="skills." className="display-1">skills.</h1>
                         </div>
                     </section>
                 </Slide>

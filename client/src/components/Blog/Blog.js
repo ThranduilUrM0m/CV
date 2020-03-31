@@ -34,11 +34,13 @@ class Blog extends React.Component {
 		this.handleClick = this.handleClick.bind(this);
 		this.setCard = this.setCard.bind(this);
         this._handleScroll = this._handleScroll.bind(this);
+        this._handleMouseMove = this._handleMouseMove.bind(this);
 	}
 	componentDidMount() {
         const { onLoad } = this.props;
 		const self = this;
         this._handleScroll();
+        this._handleMouseMove();
         axios('/api/articles')
         .then(function (response) {
             // handle success
@@ -80,6 +82,87 @@ class Blog extends React.Component {
 		const { setEdit } = this.props;
 		setEdit(article);
 	}
+    _handleMouseMove() {
+		function Parallax(options){
+			options = options || {};
+			this.nameSpaces = {
+				wrapper: options.wrapper || '.first_section_blog',
+				layers: options.layers || '.parallax-layer',
+				deep: options.deep || 'data-parallax-deep'
+			};
+			this.init = function() {
+				var self = this,
+					parallaxWrappers = document.querySelectorAll(this.nameSpaces.wrapper);
+				  for(var i = 0; i < parallaxWrappers.length; i++){
+					(function(i){
+						parallaxWrappers[i].addEventListener('mousemove', function(e){
+							var x = e.clientX,
+								y = e.clientY,
+								layers = parallaxWrappers[i].querySelectorAll(self.nameSpaces.layers);
+							for(var j = 0; j < layers.length; j++){
+					(function(j){
+					  var deep = layers[j].getAttribute(self.nameSpaces.deep),
+						  disallow = layers[j].getAttribute('data-parallax-disallow'),
+						  direction = layers[j].getAttribute('data-parallax-direction'),
+						  itemX = (disallow && disallow === 'x') ? 0 : x / deep,
+						  itemY = (disallow && disallow === 'y') ? 0 : y / deep;
+						  itemX = (direction && direction === 'minus') ? -itemX : itemX;
+						  itemY = (direction && direction === 'plus') ? -itemY : itemY;
+						  if(disallow && disallow === 'both') return;
+						  layers[j].style.transform = 'translateX(' + itemX + '%) translateY(' + itemY + '%)';
+					})(j);  
+							}
+						})
+					})(i);
+				  }
+			};
+			this.init();
+			return this;
+		}
+		
+		window.addEventListener('load', function(){
+			new Parallax();
+		});
+		
+		
+		//socials
+		let items = document.querySelectorAll(".socials-item-icon"),
+			self = this;
+		items.forEach((item, index) => {
+			item.addEventListener("mousemove", mouseMove);
+			item.addEventListener("mouseleave", mouseLeave);
+		});
+		
+		function mouseMove(e) {
+			let target = e.target.closest("a"),
+				targetData = target.getBoundingClientRect(),
+				targetIcon = target.querySelector("i"),
+				offset = {
+					x: ((e.pageX - (targetData.left + targetData.width / 2)) / 4) * -1,
+					y: ((e.pageY - (targetData.top + targetData.height / 2)) / 4) * -1
+				};
+			target.style.transform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
+			target.style.webkitTransform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
+			document.querySelectorAll(".socials-item-icon").forEach((e) => {
+			if (e !== target) {
+				e.style.transform = "translate(" + offset.x / 2 + "px, " + offset.y / 2 + "px) scale(" + 0.9 + ")";
+				e.style.webkitTransform = "translate(" + offset.x / 2 + "px, " + offset.y / 2 + "px) scale(" + 0.9 + ")";
+			}
+		  });
+		  targetIcon.style.transform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
+		  targetIcon.style.webkitTransform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
+		}
+		
+		function mouseLeave(e) {
+			document.querySelectorAll(".socials-item-icon").forEach((target) => {
+				let targetIcon = target.querySelector("i");
+				target.style.transform = "translate(0px,0px) scale(1)";
+				target.style.webkitTransform = "translate(0px,0px) scale(1)";
+				targetIcon.style.transform = "translate(0px,0px) scale(1)";
+				targetIcon.style.webkitTransform = "translate(0px,0px) scale(1)";
+			});
+		}		
+    }
 	_FormatNumberLength(num, length) {
 		var r = "" + num;
 		while (r.length < length) {
@@ -160,8 +243,9 @@ class Blog extends React.Component {
 			<FullPage>
 				<Slide>
 					<section className="active first_section_blog">
+						<span className="parallax-layer parallax-layer__1 l_name" data-parallax-direction="plus" data-parallax-deep="1000">Boutaleb<span className="outlined">Boutaleb</span>BoutalebBoutaleb</span>
+						<span className="parallax-layer parallax-layer__2 f_name" data-parallax-direction="minus" data-parallax-deep="1000">Zakariae<span className="outlined">Zakariae</span>ZakariaeZakariae</span>
 						<div className="wrapper left_part">
-							<span className="name">Boutaleb<br/>Zakariae.</span>
 							<div className="caption">
 								<p><b>The teacher</b></p>
 								<p>My father was an educator, My grandfather was an educator, i was born to educate, and my sons will also educate.</p>
@@ -178,7 +262,6 @@ class Blog extends React.Component {
                             </div>
 						</div>
 						<div className="wrapper right_part">
-							<span className="name">Boutaleb<br/>Zakariae.</span>
 							<div className="caption">
 								<p><b>The Coder</b></p>
 								<p>Grew up next to a computer, learned to create at a young age, i was born to create to look from all sides and discover hidden meanings.</p>

@@ -434,8 +434,7 @@ class Footer extends React.Component {
                                 </li>
                                 <li className="list-inline-item">
                                     <i className="far fa-copyright"></i>
-                                    <span>{moment().format('YYYY')}</span>
-                                    all rights reserved
+                                    <span>{moment().format('YYYY')}</span> - With <i className="fas fa-heart"></i>, Zakariae boutaleb.
                                 </li>
                             </ul>
                         </span>
