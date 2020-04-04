@@ -74,7 +74,7 @@ class Post extends React.Component {
 	componentDidMount() {
         const { onLoad } = this.props;
 		const { match } = this.props;
-		axios('/api/articles')
+		axios('http://localhost:8800/api/articles')
 			.then((res) => onLoad(res.data))
 			.then((res) => {
 				this.handleEdit(_.find(res.data.articles, {'_id': match.params.postId}));
@@ -106,7 +106,7 @@ class Post extends React.Component {
 	}
 	handleDelete(id) {
 		const { onDelete } = this.props;
-		return axios.delete(`/api/articles/${id}`)
+		return axios.delete(`http://localhost:8800/api/articles/${id}`)
 			.then(() => onDelete(id));
 	}
 	handleEdit(article) {
@@ -120,7 +120,7 @@ class Post extends React.Component {
 		
 		if(_id) {
 			if(this.state.comment_changed || this.state.upvotes_changed || this.state.downvotes_changed || this.state.view_changed){
-				return axios.patch(`/api/articles/${_id}`, {
+				return axios.patch(`http://localhost:8800/api/articles/${_id}`, {
 					title,
 					body,
 					author,
@@ -430,7 +430,7 @@ class Post extends React.Component {
 													id="comment_body" 
 													name="comment_body" 
 													required="required"/>
-												<label htmlFor='comment_body'>what can i do for you ?</label>
+												<label htmlFor='comment_body'>Leave a comment.</label>
 												<div className="form-group-line textarea_line"></div>
 											</div>
 										</div>

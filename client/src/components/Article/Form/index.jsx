@@ -199,7 +199,11 @@ class Form extends React.Component {
                 placeholder="Author"
                 />
 
-                <select value={categorie} onChange={(ev) => this.handleChangeField('categorie', ev)}>
+                <select 
+                    value={categorie} 
+                    onChange={(ev) => this.handleChangeField('categorie', ev)}
+                    className="form-control my-3 categorie"
+                >
                     <option value="Education">Education</option>
                     <option value="Design">Design</option>
                     <option value="Personnel">Community</option>

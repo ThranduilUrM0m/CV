@@ -404,6 +404,7 @@ class Home extends React.Component {
                                                 <div className="card-body">
                                                     <Link to={`/blog/${article._id}`}>
                                                         <button>
+									                        <div className="button_border"></div>
                                                             <span>
                                                                 <span>
                                                                     <span data-attr-span="Read More About it">
@@ -481,6 +482,7 @@ class Home extends React.Component {
                                 }
                             </div>
                             <button onClick={() => this.handleClick('footer_to')} type="button">
+								<div className="button_border"></div>
                                 <span>
                                     <span>
                                         <span data-attr-span="Reach Out.">

@@ -334,7 +334,6 @@ class Footer extends React.Component {
                     <div className="mail-modal">
                         <div className="before"></div>
                         <div className="modal-inner">
-
                             <div className="modal-left">
                                 <div>
                                     <h5>Other ways to get in touch</h5>
@@ -352,10 +351,8 @@ class Footer extends React.Component {
                                     <span>zakariaeboutaleb@gmail.com</span>
                                 </div>
                             </div>
-
                             <div className="modal-content">
                                 <form className="mail_form">
-
                                     <div className="row">
                                         <div className="input-field col s6">
                                             <input 
@@ -383,7 +380,6 @@ class Footer extends React.Component {
                                             <div className="form-group-line"></div>
                                         </div>
                                     </div>
-
                                     <div className="row">
                                         <div className="input-field col s6">
                                             <input 
@@ -411,7 +407,6 @@ class Footer extends React.Component {
                                             <div className="form-group-line"></div>
                                         </div>
                                     </div>
-
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <textarea 
@@ -426,7 +421,6 @@ class Footer extends React.Component {
                                             <div className="form-group-line textarea_line"></div>
                                         </div>
                                     </div>
-
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <button 
@@ -435,6 +429,7 @@ class Footer extends React.Component {
                                                 name='btn_login' 
                                                 onClick={this.send_mail}
                                             >
+                                                <div className="button_border"></div>
                                                 <span>
                                                     <span>
                                                         <span data-attr-span="Submit.">
@@ -445,10 +440,8 @@ class Footer extends React.Component {
                                             </button>
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
-
                         </div>
                     </div>
                     <div className="low_shelf">
