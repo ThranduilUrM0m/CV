@@ -80,5 +80,6 @@
   },
   "resolutions": {
     "@babel/preset-env": "*"
-  }
+  },
+  "proxy": "http://localhost:8800"
 }

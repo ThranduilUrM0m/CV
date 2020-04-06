@@ -36,7 +36,7 @@ class Footer extends React.Component {
         this._handleAlphabet();
         const self = this;
         const { onLoad, onLoadProject } = this.props;
-        axios('/api/articles')
+        /* axios('/api/articles')
             .then(function (response) {
                 // handle success
                 onLoad(response.data);
@@ -78,7 +78,7 @@ class Footer extends React.Component {
             })
             .then(function () {
                 // always executed
-            });
+            }); */
     }
     _handleMouseMove() {
         $('.footer').mousemove(function(e){
