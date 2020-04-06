@@ -1,4 +1,5 @@
 import React from 'react';
+import Autocomplete from 'react-autocomplete';
 import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -13,112 +14,9 @@ import 'whatwg-fetch';
 import Footer from '../Footer/Footer';
 import * as $ from "jquery";
 import 'bootstrap';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
 var _ = require('lodash');
-const top100Films = [
-	{ title: 'The Shawshank Redemption', year: 1994 },
-	{ title: 'The Godfather', year: 1972 },
-	{ title: 'The Godfather: Part II', year: 1974 },
-	{ title: 'The Dark Knight', year: 2008 },
-	{ title: '12 Angry Men', year: 1957 },
-	{ title: "Schindler's List", year: 1993 },
-	{ title: 'Pulp Fiction', year: 1994 },
-	{ title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-	{ title: 'The Good, the Bad and the Ugly', year: 1966 },
-	{ title: 'Fight Club', year: 1999 },
-	{ title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 },
-	{ title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
-	{ title: 'Forrest Gump', year: 1994 },
-	{ title: 'Inception', year: 2010 },
-	{ title: 'The Lord of the Rings: The Two Towers', year: 2002 },
-	{ title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-	{ title: 'Goodfellas', year: 1990 },
-	{ title: 'The Matrix', year: 1999 },
-	{ title: 'Seven Samurai', year: 1954 },
-	{ title: 'Star Wars: Episode IV - A New Hope', year: 1977 },
-	{ title: 'City of God', year: 2002 },
-	{ title: 'Se7en', year: 1995 },
-	{ title: 'The Silence of the Lambs', year: 1991 },
-	{ title: "It's a Wonderful Life", year: 1946 },
-	{ title: 'Life Is Beautiful', year: 1997 },
-	{ title: 'The Usual Suspects', year: 1995 },
-	{ title: 'Léon: The Professional', year: 1994 },
-	{ title: 'Spirited Away', year: 2001 },
-	{ title: 'Saving Private Ryan', year: 1998 },
-	{ title: 'Once Upon a Time in the West', year: 1968 },
-	{ title: 'American History X', year: 1998 },
-	{ title: 'Interstellar', year: 2014 },
-	{ title: 'Casablanca', year: 1942 },
-	{ title: 'City Lights', year: 1931 },
-	{ title: 'Psycho', year: 1960 },
-	{ title: 'The Green Mile', year: 1999 },
-	{ title: 'The Intouchables', year: 2011 },
-	{ title: 'Modern Times', year: 1936 },
-	{ title: 'Raiders of the Lost Ark', year: 1981 },
-	{ title: 'Rear Window', year: 1954 },
-	{ title: 'The Pianist', year: 2002 },
-	{ title: 'The Departed', year: 2006 },
-	{ title: 'Terminator 2: Judgment Day', year: 1991 },
-	{ title: 'Back to the Future', year: 1985 },
-	{ title: 'Whiplash', year: 2014 },
-	{ title: 'Gladiator', year: 2000 },
-	{ title: 'Memento', year: 2000 },
-	{ title: 'The Prestige', year: 2006 },
-	{ title: 'The Lion King', year: 1994 },
-	{ title: 'Apocalypse Now', year: 1979 },
-	{ title: 'Alien', year: 1979 },
-	{ title: 'Sunset Boulevard', year: 1950 },
-	{ title: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb', year: 1964 },
-	{ title: 'The Great Dictator', year: 1940 },
-	{ title: 'Cinema Paradiso', year: 1988 },
-	{ title: 'The Lives of Others', year: 2006 },
-	{ title: 'Grave of the Fireflies', year: 1988 },
-	{ title: 'Paths of Glory', year: 1957 },
-	{ title: 'Django Unchained', year: 2012 },
-	{ title: 'The Shining', year: 1980 },
-	{ title: 'WALL·E', year: 2008 },
-	{ title: 'American Beauty', year: 1999 },
-	{ title: 'The Dark Knight Rises', year: 2012 },
-	{ title: 'Princess Mononoke', year: 1997 },
-	{ title: 'Aliens', year: 1986 },
-	{ title: 'Oldboy', year: 2003 },
-	{ title: 'Once Upon a Time in America', year: 1984 },
-	{ title: 'Witness for the Prosecution', year: 1957 },
-	{ title: 'Das Boot', year: 1981 },
-	{ title: 'Citizen Kane', year: 1941 },
-	{ title: 'North by Northwest', year: 1959 },
-	{ title: 'Vertigo', year: 1958 },
-	{ title: 'Star Wars: Episode VI - Return of the Jedi', year: 1983 },
-	{ title: 'Reservoir Dogs', year: 1992 },
-	{ title: 'Braveheart', year: 1995 },
-	{ title: 'M', year: 1931 },
-	{ title: 'Requiem for a Dream', year: 2000 },
-	{ title: 'Amélie', year: 2001 },
-	{ title: 'A Clockwork Orange', year: 1971 },
-	{ title: 'Like Stars on Earth', year: 2007 },
-	{ title: 'Taxi Driver', year: 1976 },
-	{ title: 'Lawrence of Arabia', year: 1962 },
-	{ title: 'Double Indemnity', year: 1944 },
-	{ title: 'Eternal Sunshine of the Spotless Mind', year: 2004 },
-	{ title: 'Amadeus', year: 1984 },
-	{ title: 'To Kill a Mockingbird', year: 1962 },
-	{ title: 'Toy Story 3', year: 2010 },
-	{ title: 'Logan', year: 2017 },
-	{ title: 'Full Metal Jacket', year: 1987 },
-	{ title: 'Dangal', year: 2016 },
-	{ title: 'The Sting', year: 1973 },
-	{ title: '2001: A Space Odyssey', year: 1968 },
-	{ title: "Singin' in the Rain", year: 1952 },
-	{ title: 'Toy Story', year: 1995 },
-	{ title: 'Bicycle Thieves', year: 1948 },
-	{ title: 'The Kid', year: 1921 },
-	{ title: 'Inglourious Basterds', year: 2009 },
-	{ title: 'Snatch', year: 2000 },
-	{ title: '3 Idiots', year: 2009 },
-	{ title: 'Monty Python and the Holy Grail', year: 1975 },
-];
+
 class Blog extends React.Component {
 	constructor(props) {
 		super(props);
@@ -156,7 +54,7 @@ class Blog extends React.Component {
         this._handleScroll();
 		this._handleMouseMove();
 		this._handleModal();
-        axios('http://localhost:8800/api/articles')
+        axios('/api/articles')
         .then(function (response) {
             // handle success
 			onLoad(response.data);
@@ -176,7 +74,7 @@ class Blog extends React.Component {
             //I have used a class below, but you can use any jQuery selector
             runAfterElementExists(".second_section_blog .article_card", function() {
                 let boxWidth = document.getElementById("article_card").clientWidth;
-    			self.setState({ width: boxWidth });
+				self.setState({ width: boxWidth });
 			});
 			$('.fixedHeaderContainer').addClass('blog_header');
         })
@@ -380,6 +278,14 @@ class Blog extends React.Component {
 						self.setState({
 							scroll_mode: 'normal'
 						});
+						//to edit the focus of the tags input in filter modal, because the label is not directly after it, it's after the autocomplete object
+						$('.modal-top-filter input.tags').focus(() => {
+							$('.modal-top-filter label#tags_label').toggleClass('active');
+						});
+						$('.modal-top-filter input.tags').blur(() => {
+							if(!self.state.tags)
+								$('.modal-top-filter label#tags_label').toggleClass('active');
+						});
 					}
 				});
 				closeButton.click(function(event) {
@@ -397,9 +303,7 @@ class Blog extends React.Component {
 		Boxlayout.init();
 	}
     handleChangeField(key, event) {
-        this.setState({
-            [key]: event.target.value,
-        });
+        this.setState({ [key]: event.target.value });
     }
 	render() {
 		const { articles, match } = this.props;
@@ -444,10 +348,10 @@ class Blog extends React.Component {
 									<div className="modal-body">
 										<div className="modal-top">
 											<h5 className="modal-title" id="exampleModalLabel">
-												Showing
+												Showing&nbsp;
 												<strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>  
-												to
-												<strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : articles), function(o) { 
+												&nbsp;to&nbsp;
+												<strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : articles), function(o) { 
 													if(timeframe === 'Today') 
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
 													if(timeframe === 'This_Past_Week')
@@ -463,9 +367,14 @@ class Blog extends React.Component {
 															return true;
 														else 
 															return op.categorie === categorie;
-													})))}</strong>
-												of
-												<strong>{_.toNumber(_.size(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
+													}), (op_bytag) => {
+														if(!tags)
+															return true;
+														else 
+															return _.includes(op_bytag.tag, tags);
+													}) ))}</strong>
+												&nbsp;of&nbsp;
+												<strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
 													if(timeframe === 'Today') 
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
 													if(timeframe === 'This_Past_Week')
@@ -481,9 +390,14 @@ class Blog extends React.Component {
 															return true;
 														else 
 															return op.categorie === categorie;
+													}), (op_bytag) => {
+														if(!tags)
+															return true;
+														else 
+															return _.includes(op_bytag.tag, tags);
 													})))}
 												</strong> 
-												articles.
+												&nbsp;articles.
 											</h5>
 											<div>
 												<span className="filter" onClick={(event) => this.handleShowFilter(event)}><i className="fas fa-sliders-h"></i></span>
@@ -542,28 +456,27 @@ class Blog extends React.Component {
 												<div className="form-group-line"></div>
 											</div>
 											<div className="input-field col s3">
-												{/* <input 
-													className="form-group-input tags" 
-													id="tags"
-													type="text"
-													name="tags"
-													value={tags}
-													onChange={(ev) => this.handleChangeField('tags', ev)}
-												/>
-												<label htmlFor='tags'>tags</label>
-												<div className="form-group-line"></div> */}
 												<Autocomplete
-													id="combo-box-demo"
-													options={top100Films}
-													getOptionLabel={(option) => option.title}
-													style={{ width: 300 }}
-													renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+													getItemValue={(item) => item}
+													wrapperStyle={{ position: 'relative', display: 'inline-block', width: '100%', height: '100%' }}
+													inputProps={{ id: 'tags', className: 'form-group-input tags', name: 'tags' }}
+													items={_.flattenDeep(_.map(articles, 'tag'))}
+													renderItem={(item, isHighlighted) =>
+														<div className={`item ${isHighlighted ? 'item-highlighted' : ''}`}>
+															{item}
+														</div>
+													}
+													value={tags}
+													onChange={ev => this.setState({ tags: ev.target.value })}
+													onSelect={tags => this.setState({ tags })}
 												/>
+												<label id="tags_label" htmlFor='tags' className={tags ? 'active' : ''}>tags</label>
+												<div className='form-group-line'></div>
 											</div>
 										</div>
 										<ul id="page">
 											{
-												_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
+												_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
 													if(timeframe === 'Today')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
 													if(timeframe === 'This_Past_Week')
@@ -579,6 +492,11 @@ class Blog extends React.Component {
 															return true;
 														else 
 															return op.categorie === categorie;
+													}), (op_bytag) => {
+														if(!tags)
+															return true;
+														else 
+															return _.includes(op_bytag.tag, tags);
 													}).map((article, index) => {
 													return (
 														<li className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" style={cardStyle} key={index}>
@@ -623,7 +541,7 @@ class Blog extends React.Component {
 										</ul>
 										<ul id="page-numbers">
 											{
-												([...Array(Math.ceil(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
+												([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
 													if(timeframe === 'Today') 
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
 													if(timeframe === 'This_Past_Week')
@@ -639,6 +557,11 @@ class Blog extends React.Component {
 															return true;
 														else 
 															return op.categorie === categorie;
+													}), (op_bytag) => {
+														if(!tags)
+															return true;
+														else 
+															return _.includes(op_bytag.tag, tags);
 													}).length / todosPerPage)).keys()]).map(number => {
 													return (
 														<li
