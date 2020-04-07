@@ -34,51 +34,6 @@ class Footer extends React.Component {
     componentDidMount() {
         this._handleMouseMove();
         this._handleAlphabet();
-        const self = this;
-        const { onLoad, onLoadProject } = this.props;
-        /* axios('/api/articles')
-            .then(function (response) {
-                // handle success
-                onLoad(response.data);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
-
-        axios('/api/projects')
-            .then(function (response) {
-                // handle success
-                onLoadProject(response.data);
-    
-                function runAfterElementExists(jquery_selector, callback){
-                    var checker = window.setInterval(function() {
-                    //if one or more elements have been yielded by jquery
-                    //using this selector
-                    if ($(jquery_selector).length) {
-                        //stop checking for the existence of this element
-                        clearInterval(checker);
-                        //call the passed in function via the parameter above
-                        callback();
-                    }}, 200); //I usually check 5 times per second
-                }
-                //this is an example place in your code where you would like to
-                //start checking whether the target element exists
-                //I have used a class below, but you can use any jQuery selector
-                runAfterElementExists(".second_section .card_"+(response.data.projects.length-1), function() {
-                    self._handleSlider('slider_projects');
-                });
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            }); */
     }
     _handleMouseMove() {
         $('.footer').mousemove(function(e){
@@ -458,7 +413,7 @@ class Footer extends React.Component {
                                 </li>
                                 <li className="list-inline-item">
                                     <i className="far fa-copyright"></i>
-                                    <span>{moment().format('YYYY')}</span> - With <i className="fas fa-heart"></i>, Zakariae boutaleb.
+                                    <span>{moment().format('YYYY')}</span> - With <i className="fas fa-heart"></i> from Zakariae boutaleb.
                                 </li>
                             </ul>
                         </span>

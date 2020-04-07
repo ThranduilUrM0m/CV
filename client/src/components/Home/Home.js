@@ -469,11 +469,11 @@ class Home extends React.Component {
                                         return (
                                             <div className={"card card_" + index} data-title={project.title} data-index={index+1}>
                                                 <div className="card-body">
-                                                    <Link to={`${project.link_to}`}>
+                                                    <a href={project.link_to} target="_blank">
                                                         <div className='image'>
                                                             { this.handleJSONTOHTML(project.image) }
                                                         </div>
-                                                    </Link>
+                                                    </a>
                                                     <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
                                                 </div>
                                             </div>

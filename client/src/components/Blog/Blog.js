@@ -85,6 +85,28 @@ class Blog extends React.Component {
         .then(function () {
             // always executed
 		});
+
+		function WindowSize(){
+            if ($(window).width() <= 425) {
+                $('span.attr').attr("data-attr-span","");
+            } else {
+                $('span.attr').attr("data-attr-span",'View All.' );
+            }
+        }
+         
+        // Attaching the event listener function to window's resize event
+        window.addEventListener("resize", WindowSize);
+        
+        // Calling the function for the first time
+		WindowSize();
+		
+		$( ".cards-slider" ).on( "swipe", swipeHandler );
+ 
+		// Callback function references the event target and adds the 'swipe' class to it
+		function swipeHandler( event ){
+			console.log('mok');
+			$( event.target ).addClass( "swipe" );
+		}
 	}
 	handleDelete(id) {
 		const { onDelete } = this.props;
@@ -588,9 +610,7 @@ class Blog extends React.Component {
 									<div className="button_border"></div>
 									<span>
 										<span>
-											<span data-attr-span="View All.">
-												View All.
-											</span>
+											<span className="attr" data-attr-span="View All."></span>
 										</span>
 									</span>
 								</button>

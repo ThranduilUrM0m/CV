@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../logo.svg';
+import favicon from '../../favicon.svg';
 import API from '../../utils/API';
 import * as $ from "jquery";
 import 'bootstrap';
@@ -10,10 +11,14 @@ const _ = require('lodash');
 class Header extends React.Component {
     constructor(props) {
         super(props);
+		this.state = {
+			logo_to_show: logo,
+		};
         this._handleClickEvents = this._handleClickEvents.bind(this);
     }
     componentDidMount() {
         this._handleClickEvents();
+        const self = this;
         let _links = $('.menu .nav-link');
         let _url = window.location.pathname;
         _links.map((_link, index) => {
@@ -53,6 +58,30 @@ class Header extends React.Component {
                     console.log("Désolé, nous n'avons plus.");
             }
         });
+        
+        function displayWindowSize(){
+            if ($(window).width() <= 425) {
+                self.setState({
+                    logo_to_show: favicon
+                });
+                $('.logoHolder').css({
+                    height: '4rem'
+                })
+            } else {
+                self.setState({
+                    logo_to_show: logo
+                });
+                $('.logoHolder').css({
+                    height: '1.5rem'
+                });
+            }
+        }
+         
+        // Attaching the event listener function to window's resize event
+        window.addEventListener("resize", displayWindowSize);
+        
+        // Calling the function for the first time
+        displayWindowSize();
     }
     _handleClickEvents() {
         let searchWrapper = document.querySelector('.search-wrapper'),
@@ -175,6 +204,7 @@ class Header extends React.Component {
         });
     }
     render() {
+        const { logo_to_show } = this.state;
         return (
             <>
                 <div className="overlay_menu overlay_menu--is-closed"></div>
@@ -191,7 +221,7 @@ class Header extends React.Component {
                                 </svg>
                             </span>
                             <a className="logoHolder" href="/">
-                                <img className="logo img-fluid" src={logo} alt="Risala"/>
+                                <img className="logo img-fluid" src={logo_to_show} alt="Risala"/>
                             </a>
                             <div className="js-lang u-mb-15">
                                 <span className="js-fr">fr</span>
