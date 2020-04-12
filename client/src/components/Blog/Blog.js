@@ -572,18 +572,21 @@ class Blog extends React.Component {
 						</div>
 						{/* Modal */}
 						<div className="wrapper_full">
-							<span contentEditable data-heading="Louder.">Louder.</span>
+							<span data-heading="Louder.">Louder.</span>
 							<div className="caption">
-								<button id='modal_trigger' type="button">
-									<span>
-										<span>
-											<span className="attr" data-attr-span="View All."></span>
-										</span>
-									</span>
-								</button>
+								<i className="fas fa-chalkboard-teacher"></i>
 							</div>
 							<div className="articles_slider">
-								<h1>Youth to Speek <strong>Louder.</strong></h1>
+								<div className="articles_caption">
+									<h1>Youth to Speek <br/> <strong>Louder.</strong></h1>
+									<button id='modal_trigger' type="button">
+										<span>
+											<span>
+												<span className="attr" data-attr-span="View All."></span>
+											</span>
+										</span>
+									</button>
+								</div>
 								<div className="articles_slider_wrapper swiper-container">
 									<div className="articles_slider_wrapper_cards swiper-wrapper">
 										{
@@ -637,18 +640,6 @@ class Blog extends React.Component {
 								</div>
 							</div>
 						</div>
-						<svg hidden="hidden">
-							<defs>
-								<symbol id="icon-arrow-left" viewBox="0 0 32 32">
-									<title>arrow-left</title>
-									<path d="M0.704 17.696l9.856 9.856c0.896 0.896 2.432 0.896 3.328 0s0.896-2.432 0-3.328l-5.792-5.856h21.568c1.312 0 2.368-1.056 2.368-2.368s-1.056-2.368-2.368-2.368h-21.568l5.824-5.824c0.896-0.896 0.896-2.432 0-3.328-0.48-0.48-1.088-0.704-1.696-0.704s-1.216 0.224-1.696 0.704l-9.824 9.824c-0.448 0.448-0.704 1.056-0.704 1.696s0.224 1.248 0.704 1.696z"></path>
-								</symbol>
-								<symbol id="icon-arrow-right" viewBox="0 0 32 32">
-									<title>arrow-right</title>
-									<path d="M31.296 14.336l-9.888-9.888c-0.896-0.896-2.432-0.896-3.328 0s-0.896 2.432 0 3.328l5.824 5.856h-21.536c-1.312 0-2.368 1.056-2.368 2.368s1.056 2.368 2.368 2.368h21.568l-5.856 5.824c-0.896 0.896-0.896 2.432 0 3.328 0.48 0.48 1.088 0.704 1.696 0.704s1.216-0.224 1.696-0.704l9.824-9.824c0.448-0.448 0.704-1.056 0.704-1.696s-0.224-1.248-0.704-1.664z"></path>
-								</symbol>
-							</defs>
-						</svg>
 					</section>
 				</Slide>
 				<Slide>

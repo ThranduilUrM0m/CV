@@ -7605,13 +7605,13 @@ body, html {
 				height: 100%;
 				& > span {
 					position: absolute;
-					top: 40%;
+					top: calc(35% - 13rem);
 					left: 10%;
 					font-size: 13rem;
 					line-height: 13rem;
 					font-weight: bold;
 					color: black;
-					transform: translate(0, -80%);
+					transform: translate(0, 35%);
 					z-index: 1;
 					&:before {
 						content: attr(data-heading);
@@ -7624,7 +7624,7 @@ body, html {
 						width: 100%;
 						height: 100%;
 						color: white;
-						clip-path: inset(0 0 34% 0);
+						clip-path: inset(0 0 35% 0);
 				  	}
 				}
 				.caption {
@@ -7637,104 +7637,11 @@ body, html {
 					font-size: 2.5rem;
 					background-color: black;
 					padding: 5rem 5rem 2.5rem 5rem;
-					button{
-						-webkit-appearance: none;
-						border: none;
-						background: none;
-						color:white;
-						width: 12rem;
-						height: 3rem;
-						font-size: 1rem;
-						margin-bottom: 0;
-						padding: 0;
-						outline: none;
-						position: relative;
-						z-index: 1051;
-						span{
-							display: block;
-							position: relative;
-							line-height: 50px;
-							height: 100%;
-							padding: 0;
-							cursor: pointer;
-						}
-						& > span {
-							& > span {
-								& > span{
-									transition: color 0.15s ease-out 0.3s;
-									color: transparent;
-									&::after{
-										position: absolute;
-										top:0;left:0;right:0;bottom:0;
-										color: black;
-										content: attr(data-attr-span);
-										width: 0%;
-										height: 100%;
-										background: white;
-										white-space: nowrap;
-										text-align: center;
-										margin: auto;
-										overflow: hidden;
-										display: flex;
-										justify-content: center;
-										transition: width 0.2s;
-									}
-								}
-								&::before{
-									content:'';
-									position: absolute;
-									bottom:0;
-									right: 0%;
-									width: 1px;
-									height: 1px;
-									opacity: 0;
-								}
-								&::after{
-									content:'';
-									position: absolute;
-									bottom:0;
-									left: 0%;
-									width: 1px;
-									height: 1px;
-									opacity: 0;
-								}
-							}
-							&::before {
-								content:'';
-								position: absolute;
-								top:0;
-								right: 50%;
-								width: 20px;
-								height: 0;
-								border: .5rem solid white;
-								border-right: none;
-								border-bottom: none;
-								transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
-							}
-							&::after {
-								content:'';
-								position: absolute;
-								top:0;
-								left: 50%;
-								width: 20px;
-								height: 0;
-								border: .5rem solid white;
-								border-left: none;
-								border-bottom: none;
-								transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
-							}
-						}
-						&:hover{
-							& > span {
-								& > span {
-									& > span {
-										&::after {
-											width: 100%;
-										}
-									}
-								}
-							}
-						}
+					i {
+						color: white;
+						opacity: 0.2;
+						font-size: 20rem;
+						margin-bottom: -5rem;
 					}
 				}
 				.articles_slider {
@@ -7745,12 +7652,114 @@ body, html {
 					position: relative;
 					height: 65%;
 					padding: 0 0 1rem 5rem;
-					h1 {
-						color: black;
-						font-weight: lighter;
-						width: calc(100% - calc(calc(18vw + 2rem) * 3));
-						strong {
-							font-weight: bold;
+					.articles_caption {
+						flex-direction: column;
+						width: calc(40vw - 5rem);
+						h1 {
+							color: black;
+							font-weight: lighter;
+							strong {
+								font-weight: bold;
+							}
+						}
+						button{
+							-webkit-appearance: none;
+							border: none;
+							background: none;
+							color:$main-color;
+							width: 12rem;
+							height: 3rem;
+							font-size: 1rem;
+							margin-bottom: 0;
+							padding: 0;
+							outline: none;
+							position: relative;
+							z-index: 1051;
+							span{
+								display: block;
+								position: relative;
+								line-height: 50px;
+								height: 100%;
+								padding: 0;
+								cursor: pointer;
+							}
+							& > span {
+								& > span {
+									& > span{
+										transition: color 0.15s ease-out 0.3s;
+										color: transparent;
+										&::after{
+											position: absolute;
+											top:0;left:0;right:0;bottom:0;
+											color: white;
+											content: attr(data-attr-span);
+											width: 0%;
+											height: 100%;
+											background: $main-color;
+											white-space: nowrap;
+											text-align: center;
+											margin: auto;
+											overflow: hidden;
+											display: flex;
+											justify-content: center;
+											transition: width 0.2s;
+										}
+									}
+									&::before{
+										content:'';
+										position: absolute;
+										bottom:0;
+										right: 0%;
+										width: 1px;
+										height: 1px;
+										opacity: 0;
+									}
+									&::after{
+										content:'';
+										position: absolute;
+										bottom:0;
+										left: 0%;
+										width: 1px;
+										height: 1px;
+										opacity: 0;
+									}
+								}
+								&::before {
+									content:'';
+									position: absolute;
+									top:0;
+									right: 50%;
+									width: 20px;
+									height: 0;
+									border: .5rem solid $main-color;
+									border-right: none;
+									border-bottom: none;
+									transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+								}
+								&::after {
+									content:'';
+									position: absolute;
+									top:0;
+									left: 50%;
+									width: 20px;
+									height: 0;
+									border: .5rem solid $main-color;
+									border-left: none;
+									border-bottom: none;
+									transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+								}
+							}
+							&:hover{
+								& > span {
+									& > span {
+										& > span {
+											&::after {
+												width: 100%;
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 					&_wrapper {

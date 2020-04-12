@@ -25,6 +25,8 @@ class Footer extends React.Component {
             mail_email: '',
             mail_phone: '',
             mail_content: '',
+            window_height: '',
+            window_width: '',
         }
         this._handleMouseMove = this._handleMouseMove.bind(this);
         this._handleAlphabet = this._handleAlphabet.bind(this);
@@ -32,8 +34,52 @@ class Footer extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
     componentDidMount() {
+        const { onLoad, onLoadProject } = this.props;
+        let self = this;
         this._handleMouseMove();
-        this._handleAlphabet();
+
+        axios('/api/articles')
+        .then(function (response) {
+            // handle success
+            onLoad(response.data);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+
+        axios('/api/projects')
+        .then(function (response) {
+            // handle success
+            onLoadProject(response.data);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+
+        self.setState({
+            window_height: $(window).height(),
+            window_width: $(window).width()
+        }, () => {
+            self._handleAlphabet();
+        });
+
+        //upon resizinng window, recheck the alphabets
+        $(window).resize(function() {
+            self.setState({
+                window_height: $(window).height(),
+                window_width: $(window).width()
+            }, () => {
+                self._handleAlphabet();
+            });
+        });
     }
     _handleMouseMove() {
         $('.footer').mousemove(function(e){
@@ -47,10 +93,10 @@ class Footer extends React.Component {
         });
     }
     _handleAlphabet() {
+        const { window_height, window_width } = this.state;
         (function(){
             // setup
           
-            var grid = document.querySelector('.letter-grid');
             var gridWidth;
             var gridHeight;
             var letterWidth = 30; // @todo: make this dynamic
@@ -64,17 +110,15 @@ class Footer extends React.Component {
             // http://www.codingforums.com/showpost.php?s=ca38992f8716f43d325c12be6fc0198b&p=843844&postcount=3
           
             var charCodeRange = {
-                start: 65,
-                end: 90
+                start: 48,
+                end: 49
             };
           
             // get the grid's width and height
           
             function getDimensions(){
-                var gridRect = grid.getBoundingClientRect();
-                gridWidth = gridRect.width;
-                gridHeight = gridRect.height;
-                //console.log('Grid width: '+gridWidth, '\nGrid height: '+gridHeight);
+                gridWidth = window_width;
+                gridHeight = window_height;
             }
           
             // get the total possible letters needed to fill the grid
@@ -107,7 +151,7 @@ class Footer extends React.Component {
                     text = document.createTextNode(letterArray[count]);
                     span = document.createElement('span');
                     span.appendChild(text);
-                    grid.appendChild(span);
+                    $('.letter-grid').append(span);
                     count++;
                 
                     // if our count equals the length of our letter array, then that
@@ -123,7 +167,7 @@ class Footer extends React.Component {
                     // then we've finished our loop and we throw a class onto the grid element
                     
                     if (letter === value) {
-                        grid.classList.add('js-show-letters');
+                        $('.letter-grid').addClass('js-show-letters');
                     }
                 }
             }
@@ -132,7 +176,7 @@ class Footer extends React.Component {
             // essentially the current number of letters in the grid at this point
           
             function getCurrentLetters(){
-                currentLetters = grid.querySelectorAll('span').length;
+                currentLetters = $('.letter-grid').find('span').length;
             }
           
             function init() {
