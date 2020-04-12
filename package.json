@@ -13,11 +13,13 @@
         "errorhandler": "*",
         "express": "*",
         "express-session": "*",
+        "interactjs": "^1.9.9",
         "jwt-simple": "*",
         "mongoose": "*",
         "morgan": "*",
         "nodemailer": "*",
-        "password-hash": "*"
+        "password-hash": "*",
+        "swiper": "^5.3.6"
     },
     "devDependencies": {
         "concurrently": "*",

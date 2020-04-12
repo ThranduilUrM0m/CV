@@ -1,5 +1,6 @@
 import React from 'react';
 import Autocomplete from 'react-autocomplete';
+import Swiper from 'swiper';
 import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -27,9 +28,6 @@ class Blog extends React.Component {
 			currentCard: 0,
 			position: 0,
 			width: 0,
-			cardStyle: {
-			  	transform: 'translateX(0px)'
-			},
 			sort: 'Relevant',
 			timeframe: 'All_Time',
 			categorie: '',
@@ -39,19 +37,16 @@ class Blog extends React.Component {
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleJSONTOHTMLIMAGE = this.handleJSONTOHTMLIMAGE.bind(this);
 		this._FormatNumberLength = this._FormatNumberLength.bind(this);
-		this.handleClick = this.handleClick.bind(this);
         this.handleClickPage = this.handleClickPage.bind(this);
-		this.setCard = this.setCard.bind(this);
-        this._handleScroll = this._handleScroll.bind(this);
         this._handleMouseMove = this._handleMouseMove.bind(this);
         this._handleModal = this._handleModal.bind(this);
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleShowFilter = this.handleShowFilter.bind(this);
+        this._handleDrag = this._handleDrag.bind(this);
 	}
 	componentDidMount() {
         const { onLoad } = this.props;
 		const self = this;
-        this._handleScroll();
 		this._handleMouseMove();
 		this._handleModal();
         axios('/api/articles')
@@ -69,12 +64,8 @@ class Blog extends React.Component {
                     callback();
                 }}, 200); //I usually check 5 times per second
             }
-            //this is an example place in your code where you would like to
-            //start checking whether the target element exists
-            //I have used a class below, but you can use any jQuery selector
-            runAfterElementExists(".second_section_blog .article_card", function() {
-                let boxWidth = document.getElementById("article_card").clientWidth;
-				self.setState({ width: boxWidth });
+            runAfterElementExists(".second_section_blog .articles_slider_wrapper_cards_item", function() {
+				self._handleDrag();
 			});
 			$('.fixedHeaderContainer').addClass('blog_header');
         })
@@ -93,20 +84,8 @@ class Blog extends React.Component {
                 $('span.attr').attr("data-attr-span",'View All.' );
             }
         }
-         
-        // Attaching the event listener function to window's resize event
         window.addEventListener("resize", WindowSize);
-        
-        // Calling the function for the first time
 		WindowSize();
-		
-		$( ".cards-slider" ).on( "swipe", swipeHandler );
- 
-		// Callback function references the event target and adds the 'swipe' class to it
-		function swipeHandler( event ){
-			console.log('mok');
-			$( event.target ).addClass( "swipe" );
-		}
 	}
 	handleDelete(id) {
 		const { onDelete } = this.props;
@@ -116,6 +95,39 @@ class Blog extends React.Component {
 	handleEdit(article) {
 		const { setEdit } = this.props;
 		setEdit(article);
+	}
+	_handleDrag() {
+		var mySwiper = new Swiper ('.swiper-container', {
+			// Optional parameters
+			effect: 'coverflow',
+			direction: 'horizontal',
+			dynamicBullets: true,
+			grabCursor: true,
+			loop: true,
+			slidesPerView: 'auto',
+			centeredSlides: false,
+			centeredSlidesBounds: true,
+			paginationClickable: true,
+			centerInsufficientSlides: true,
+			spaceBetween: 0,
+			coverflowEffect: {
+				rotate: 0,
+				stretch: 0,
+				depth: 0,
+				modifier: 3,
+				slideShadows: false
+			},
+			simulateTouch: true,
+			// If we need pagination
+			pagination: {
+			  el: '.swiper-pagination',
+			},
+			// Navigation arrows
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			}
+		})
 	}
     _handleMouseMove() {
 		function Parallax(options){
@@ -154,7 +166,6 @@ class Blog extends React.Component {
 			this.init();
 			return this;
 		}
-		
 		window.addEventListener('load', function(){
 			new Parallax();
 		});
@@ -166,7 +177,6 @@ class Blog extends React.Component {
 			item.addEventListener("mousemove", mouseMove);
 			item.addEventListener("mouseleave", mouseLeave);
 		});
-		
 		function mouseMove(e) {
 			let target = e.target.closest("a"),
 				targetData = target.getBoundingClientRect(),
@@ -186,7 +196,6 @@ class Blog extends React.Component {
 		  targetIcon.style.transform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
 		  targetIcon.style.webkitTransform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
 		}
-		
 		function mouseLeave(e) {
 			document.querySelectorAll(".socials-item-icon").forEach((target) => {
 				let targetIcon = target.querySelector("i");
@@ -217,28 +226,6 @@ class Blog extends React.Component {
 			$('.card_'+index+' figure').html($(html).find('img').first());
 		});
 	}
-	handleClick(type) {
-		const { articles } = this.props;
-		// get the card's margin-right
-		let margin = window.getComputedStyle(document.getElementById("article_card")).marginRight;
-		margin = JSON.parse(margin.replace(/px/i, '')); 
-	
-		const cardWidth = this.state.width; // the card's width
-		const cardMargin = margin; // the card's margin
-		const cardNumber = articles.length; // the number of cards
-		let currentCard = this.state.currentCard; // the index of the current card
-		let position = this.state.position; // the position of the cards
-	
-		// slide cards
-		if(type === 'next' && currentCard < cardNumber-3) {
-			currentCard++;
-			position -= (cardWidth+cardMargin);
-		} else if(type === 'prev' && currentCard > 0) {
-			currentCard--;
-			position += (cardWidth+cardMargin);
-		}
-		this.setCard(currentCard, position);
-	}
 	handleClickPage(event) {
 		$([document.documentElement, document.body]).animate({
 			scrollTop: $("#second_section_blog").offset().top
@@ -257,25 +244,6 @@ class Blog extends React.Component {
 			wrapper.removeClass('expand', 500);
 			buttonF.removeClass('expand', 500);
 		}
-	}
-	setCard(currentCard, position) {
-		this.setState({
-			currentCard: currentCard,
-			position: position,
-			cardStyle: {
-				transform: `translateX(${position}px)`
-			}
-		})
-	}
-    _handleScroll(){
-        $(window).scroll(function() {
-			if ($(this).scrollTop() < 625 || $(document).height() - $(window).height() - $(window).scrollTop() < 100){
-                $('.fixedHeaderContainer').addClass('blog_header');
-            }
-            else{
-                $('.fixedHeaderContainer').removeClass('blog_header');
-            }
-        });
 	}
 	_handleModal() {
 		const self = this;
@@ -329,7 +297,7 @@ class Blog extends React.Component {
     }
 	render() {
 		const { articles, match } = this.props;
-		const { scroll_mode, cardStyle, currentPage, todosPerPage, sort, timeframe, categorie, tags } = this.state;
+		const { scroll_mode, currentPage, todosPerPage, sort, timeframe, categorie, tags } = this.state;
 		
 		return (
 			<FullPage scrollMode={scroll_mode}>
@@ -521,7 +489,7 @@ class Blog extends React.Component {
 															return _.includes(op_bytag.tag, tags);
 													}).map((article, index) => {
 													return (
-														<li className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" style={cardStyle} key={index}>
+														<li className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" key={index}>
 															<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
 																<div className="card-body">
 																	<figure>{this.handleJSONTOHTMLIMAGE(article.body, index)}</figure>
@@ -604,10 +572,9 @@ class Blog extends React.Component {
 						</div>
 						{/* Modal */}
 						<div className="wrapper_full">
+							<span contentEditable data-heading="Louder.">Louder.</span>
 							<div className="caption">
-								<p>Trending Now.</p>
 								<button id='modal_trigger' type="button">
-									<div className="button_border"></div>
 									<span>
 										<span>
 											<span className="attr" data-attr-span="View All."></span>
@@ -615,57 +582,73 @@ class Blog extends React.Component {
 									</span>
 								</button>
 							</div>
-							<div className="cards-slider">
-								<div className="slider-btns">
-									<button className="slider-btn btn-l" onClick={() => this.handleClick('prev')}><i className="fas fa-long-arrow-alt-left"></i></button>
-									<button className="slider-btn btn-r" onClick={() => this.handleClick('next')}><i className="fas fa-long-arrow-alt-right"></i></button>
-								</div>
-								<div className="data-container">
-									{
-										_.orderBy(articles, ['view'], ['desc']).map((article, index) => {
-											return (
-												<div className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" style={cardStyle} key={index}>
-													<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
-														<div className="shadow_title">{_.head(_.words(article.title))}</div>
-														<div className="shadow_letter">{_.head(_.head(_.words(article.title)))}</div>
-														<div className="card-body">
-															<h2>{article.title}</h2>
-															<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
-															<p className="categorie">{article.categorie}</p>
-															<ul className="text-muted tags">
-																{
-																	article.tag.map((t, i) => {
-																		return (
-																			<li className="tag_item">{t}</li>
-																		)
-																	})
-																}
-															</ul>
-															<Link to={`${match.url}/${article._id}`}>
-																<div className="readmore">
-																	<button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
-																		<div className="line line-1"></div>
-																		<div className="line line-2"></div>
-																	</button>
+							<div className="articles_slider">
+								<h1>Youth to Speek <strong>Louder.</strong></h1>
+								<div className="articles_slider_wrapper swiper-container">
+									<div className="articles_slider_wrapper_cards swiper-wrapper">
+										{
+											_.orderBy(articles, ['view'], ['desc']).map((article, index) => {
+												return (
+													<div className="articles_slider_wrapper_cards_item swiper-slide" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="articles_slider_wrapper_cards_item" key={index}>
+														<div className='article_item'>
+															<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
+																<div className="shadow_title">{_.head(_.words(article.title))}</div>
+																<div className="shadow_letter">{_.head(_.head(_.words(article.title)))}</div>
+																<div className="card-body">
+																	<h2>{article.title}</h2>
+																	<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+																	<p className="categorie">{article.categorie}</p>
+																	<ul className="text-muted tags">
+																		{
+																			article.tag.map((t, i) => {
+																				return (
+																					<li className="tag_item">{t}</li>
+																				)
+																			})
+																		}
+																	</ul>
+																	<Link to={`${match.url}/${article._id}`}>
+																		<div className="readmore">
+																			<button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
+																				<div className="line line-1"></div>
+																				<div className="line line-2"></div>
+																			</button>
+																		</div>
+																	</Link>
+																	<br/>
+																	<div className="comments_up_down">
+																		<p className="text-muted views"><b>{_.size(article.view)}</b><i className="fas fa-eye"></i></p>
+																		<p className="text-muted comments"><b>{_.size(article.comment)}</b> <i className="fas fa-comment-alt"></i></p>
+																		<p className="text-muted upvotes"><b>{_.size(article.upvotes)}</b> <i className="fas fa-thumbs-up"></i></p>
+																		<p className="text-muted downvotes"><b>{_.size(article.downvotes)}</b> <i className="fas fa-thumbs-down"></i></p>
+																	</div>
 																</div>
-															</Link>
-															<br/>
-															<div className="comments_up_down">
-																<p className="text-muted views"><b>{_.size(article.view)}</b><i className="fas fa-eye"></i></p>
-																<p className="text-muted comments"><b>{_.size(article.comment)}</b> <i className="fas fa-comment-alt"></i></p>
-																<p className="text-muted upvotes"><b>{_.size(article.upvotes)}</b> <i className="fas fa-thumbs-up"></i></p>
-																<p className="text-muted downvotes"><b>{_.size(article.downvotes)}</b> <i className="fas fa-thumbs-down"></i></p>
 															</div>
+															<div className="card_shadower"></div>
 														</div>
 													</div>
-													<div className="card_shadower"></div>
-												</div>
-											)
-										})
-									}
+												)
+											})
+										}
+									</div>
+									<div className="articles_slider_pagination swiper-pagination"></div>
+									<div className="slider-btn btn-l swiper-button-prev"><i className="fas fa-long-arrow-alt-left"></i></div>
+									<div className="slider-btn btn-r swiper-button-next"><i className="fas fa-long-arrow-alt-right"></i></div>
 								</div>
 							</div>
 						</div>
+						<svg hidden="hidden">
+							<defs>
+								<symbol id="icon-arrow-left" viewBox="0 0 32 32">
+									<title>arrow-left</title>
+									<path d="M0.704 17.696l9.856 9.856c0.896 0.896 2.432 0.896 3.328 0s0.896-2.432 0-3.328l-5.792-5.856h21.568c1.312 0 2.368-1.056 2.368-2.368s-1.056-2.368-2.368-2.368h-21.568l5.824-5.824c0.896-0.896 0.896-2.432 0-3.328-0.48-0.48-1.088-0.704-1.696-0.704s-1.216 0.224-1.696 0.704l-9.824 9.824c-0.448 0.448-0.704 1.056-0.704 1.696s0.224 1.248 0.704 1.696z"></path>
+								</symbol>
+								<symbol id="icon-arrow-right" viewBox="0 0 32 32">
+									<title>arrow-right</title>
+									<path d="M31.296 14.336l-9.888-9.888c-0.896-0.896-2.432-0.896-3.328 0s-0.896 2.432 0 3.328l5.824 5.856h-21.536c-1.312 0-2.368 1.056-2.368 2.368s1.056 2.368 2.368 2.368h21.568l-5.856 5.824c-0.896 0.896-0.896 2.432 0 3.328 0.48 0.48 1.088 0.704 1.696 0.704s1.216-0.224 1.696-0.704l9.824-9.824c0.448-0.448 0.704-1.056 0.704-1.696s-0.224-1.248-0.704-1.664z"></path>
+								</symbol>
+							</defs>
+						</svg>
 					</section>
 				</Slide>
 				<Slide>
