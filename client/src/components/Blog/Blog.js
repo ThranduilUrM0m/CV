@@ -641,6 +641,7 @@ class Blog extends React.Component {
 							</div>
 						</div>
 					</section>
+					
 				</Slide>
 				<Slide>
 					<Footer/>
