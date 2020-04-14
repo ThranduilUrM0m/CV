@@ -95,6 +95,8 @@ class Form extends React.Component {
                         downvotes: [],
                         view: [],
                     })
+                }).catch(error => {
+                    console.log(error.response)
                 });
         } else {
             return axios.patch(`/api/articles/${articleToEdit._id}`, {

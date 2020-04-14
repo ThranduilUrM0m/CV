@@ -23,6 +23,7 @@ class About extends React.Component {
     constructor(props){
         super(props);
         this.typewriting = this.typewriting.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
     componentDidMount() {
         const { onLoad } = this.props;
@@ -99,26 +100,53 @@ class About extends React.Component {
             document.body.appendChild(css);
         };
     }
+    handleClick(href) {
+        $('html,body').animate({scrollTop: $('#'+href).offset().top}, 200, function() {
+            $('#mail_content').focus();
+        });
+    }
     render() {
 		const { articles } = this.props;
         return(
             <FullPage>
 				<Slide>
 					<section className="first_section_about">
-                        <span className="shadowHi">developer</span>
+                        <div id="social_media">
+                            <div className="icons_gatherer">
+                                <a href="#" className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                <a href="#" className="icon-button scroll">
+                                    
+                                </a>
+                            </div>
+                        </div>
+                        <span className="shadowHi"></span>
                         <div className="wrapper_full">
                             <div className="artsy">
                                 
                             </div>
                             <div className="type">
-                                <h1>
-                                    <span>I'm</span>
-                                </h1>
-                                <h1>
-                                    <div className="typewrite" data-period="2000" data-type='[ "Zakariae.", "Boutaleb.", "A developer.", "A Teacher." ]'>
-                                        <span className="wrap"></span>
-                                    </div>
-                                </h1>
+                                <p className="text-muted">by A <b>Creative</b> Soul</p>
+                                <button onClick={() => this.handleClick('footer_to')} type="button">
+                                    <span>
+                                        <span>
+                                            <span data-attr-span="Reach Out.">
+                                                Reach Out.
+                                            </span>
+                                        </span>
+                                    </span>
+                                </button>
+                                <div className="title">
+                                    <h1>
+                                        <span>I'm</span>
+                                    </h1>
+                                    <h1>
+                                        <div className="typewrite" data-period="2000" data-type='[ "Zakariae.", "Boutaleb.", "A developer.", "A Teacher." ]'>
+                                            <span className="wrap"></span>
+                                        </div>
+                                    </h1>
+                                </div>
                                 <span className="lorem">
                                     <p>I'm an elemantary teacher indeed, & I'm also a multidisciplinary developer who learned to design at a very young age, to yarn people's stories visually, & now i specialize in responsive web apps and websites.</p>
                                     <p>How about you read something i wrote for you ?</p>

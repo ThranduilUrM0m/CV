@@ -24,7 +24,7 @@ class Blog extends React.Component {
 		this.state = {
 			scroll_mode: 'full-page',
 			currentPage: 1,
-          	todosPerPage: 4,
+          	todosPerPage: 6,
 			currentCard: 0,
 			position: 0,
 			width: 0,
@@ -265,6 +265,7 @@ class Blog extends React.Component {
 						modal.addClass(expandedClass, 500);
 						wrapper.classList.add(hasExpandedClass);
 						document.getElementById('second_section_blog').parentElement.style.height = 'initial';
+						$('.fixedHeaderContainer').toggleClass('blog_header');
 						self.setState({
 							scroll_mode: 'normal'
 						});
@@ -283,6 +284,7 @@ class Blog extends React.Component {
 						modal.removeClass(expandedClass);
 						wrapper.classList.remove(hasExpandedClass);
 						document.getElementById('second_section_blog').parentElement.style.height = '100%';
+						$('.fixedHeaderContainer').toggleClass('blog_header');
 						self.setState({
 							scroll_mode: 'full-page'
 						});
@@ -466,7 +468,7 @@ class Blog extends React.Component {
 										</div>
 										<ul id="page">
 											{
-												_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
+												_.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
 													if(timeframe === 'Today')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
 													if(timeframe === 'This_Past_Week')
@@ -487,7 +489,7 @@ class Blog extends React.Component {
 															return true;
 														else 
 															return _.includes(op_bytag.tag, tags);
-													}).map((article, index) => {
+													}), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((article, index) => {
 													return (
 														<li className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" key={index}>
 															<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
@@ -641,7 +643,6 @@ class Blog extends React.Component {
 							</div>
 						</div>
 					</section>
-					
 				</Slide>
 				<Slide>
 					<Footer/>

@@ -400,11 +400,10 @@ class Home extends React.Component {
                                     (_.orderBy(articles, ['view'], ['desc']).slice(0, 10)).map((article, index) => {
                                         return (
                                             <div className={"card card_" + index} data-title={_.head( article.title.split(" ") )} data-index={index+1}>
-                                                <div className="shadow_title">{_.head( article.title.split(" ") )}.</div>
+                                                <div className="shadow_title">{(_.head( article.title.split(/[\s.]+/) ).length <= 2 ) ? _.head( article.title.split(/[\s.]+/) )+" "+_.nth(article.title.split(/[\s.]+/), 1) : _.head( article.title.split(/[\s.]+/) )}.</div>
                                                 <div className="card-body">
                                                     <Link to={`/blog/${article._id}`}>
                                                         <button>
-									                        <div className="button_border"></div>
                                                             <span>
                                                                 <span>
                                                                     <span data-attr-span="Read More About it">
@@ -414,7 +413,6 @@ class Home extends React.Component {
                                                             </span>
                                                         </button>
                                                     </Link>
-                                                    <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
                                                 </div>
                                             </div>
                                         )
