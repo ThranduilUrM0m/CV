@@ -1,8 +1,9 @@
 export default (state={
-        articles: [], 
-        letters: [],
+        articles: [],
         events: [],
+        experiences: [],
         projects: [],
+        testimonies: [],
         user: {},
     }, action) => {
     switch(action.type) {
@@ -41,41 +42,6 @@ export default (state={
                 articleToEdit: undefined,
             };
 
-        //LETTER
-        case 'LETTER_PAGE_LOADED':
-            return {
-                ...state,
-                letters: action.data.letters,
-            };
-        case 'SUBMIT_LETTER':
-            return {
-                ...state,
-                letters: ([action.data.letter]).concat(state.letters),
-            };
-        case 'DELETE_LETTER':
-            return {
-                ...state,
-                letters: state.letters.filter((letter) => letter._id !== action.id),
-            };
-        case 'SET_EDIT_LETTER':
-            return {
-                ...state,
-                letterToEdit: action.letter,
-            };
-        case 'EDIT_LETTER':
-            return {
-                ...state,
-                letters: state.letters.map((letter) => {
-                    if(letter._id === action.data.letter._id) {
-                        return {
-                            ...action.data.letter,
-                        }
-                    }
-                    return letter;
-                }),
-                letterToEdit: undefined,
-            };
-
         //EVENT
         case 'EVENT_PAGE_LOADED':
             return {
@@ -111,38 +77,39 @@ export default (state={
                 eventToEdit: undefined,
             };
 
-        //USER
-        case 'USER_PAGE_LOADED':
-            return {
-                user: action.data.user,
-            };
-        case 'SUBMIT_USER':
+        //EXPERIENCE
+        case 'EXPERIENCE_PAGE_LOADED':
             return {
                 ...state,
-                users: ([action.data.user]).concat(state.user),
+                experiences: action.data.experiences,
             };
-        case 'DELETE_USER':
+        case 'SUBMIT_EXPERIENCE':
             return {
                 ...state,
-                users: state.users.filter((user) => user._id !== action.id),
+                experiences: ([action.data.experience]).concat(state.experiences),
             };
-        case 'SET_EDIT_USER':
+        case 'DELETE_EXPERIENCE':
             return {
                 ...state,
-                userToEdit: action.user,
+                experiences: state.experiences.filter((experience) => experience._id !== action.id),
             };
-        case 'EDIT_USER':
+        case 'SET_EDIT_EXPERIENCE':
             return {
                 ...state,
-                users: state.users.map((user) => {
-                    if(user._id === action.data.user._id) {
+                experienceToEdit: action.experience,
+            };
+        case 'EDIT_EXPERIENCE':
+            return {
+                ...state,
+                experiences: state.experiences.map((experience) => {
+                    if(experience._id === action.data.experience._id) {
                         return {
-                            ...action.data.user,
+                            ...action.data.experience,
                         }
                     }
-                    return user;
+                    return experience;
                 }),
-                userToEdit: undefined,
+                experienceToEdit: undefined,
             };
 
         //PROJECT
@@ -180,15 +147,73 @@ export default (state={
                 projectToEdit: undefined,
             };
 
-        //DASHBOARD
-        case 'DASHBOARD_PAGE_LOADED':
+        //TESTIMONY
+        case 'TESTIMONY_PAGE_LOADED':
             return {
                 ...state,
-                articles: action.data.articles,
-                events: action.data.events,
-                letters: action.data.letters,
-                projects: action.data.projects,
+                testimonies: action.data.testimonies,
+            };
+        case 'SUBMIT_TESTIMONY':
+            return {
+                ...state,
+                testimonies: ([action.data.testimony]).concat(state.testimonies),
+            };
+        case 'DELETE_TESTIMONY':
+            return {
+                ...state,
+                testimonies: state.testimonies.filter((testimony) => testimony._id !== action.id),
+            };
+        case 'SET_EDIT_TESTIMONY':
+            return {
+                ...state,
+                testimonyToEdit: action.testimony,
+            };
+        case 'EDIT_TESTIMONY':
+            return {
+                ...state,
+                testimonies: state.testimonies.map((testimony) => {
+                    if(testimony._id === action.data.testimony._id) {
+                        return {
+                            ...action.data.testimony,
+                        }
+                    }
+                    return testimony;
+                }),
+                testimonyToEdit: undefined,
+            };
+
+        //USER
+        case 'USER_PAGE_LOADED':
+            return {
                 user: action.data.user,
+            };
+        case 'SUBMIT_USER':
+            return {
+                ...state,
+                users: ([action.data.user]).concat(state.user),
+            };
+        case 'DELETE_USER':
+            return {
+                ...state,
+                users: state.users.filter((user) => user._id !== action.id),
+            };
+        case 'SET_EDIT_USER':
+            return {
+                ...state,
+                userToEdit: action.user,
+            };
+        case 'EDIT_USER':
+            return {
+                ...state,
+                users: state.users.map((user) => {
+                    if(user._id === action.data.user._id) {
+                        return {
+                            ...action.data.user,
+                        }
+                    }
+                    return user;
+                }),
+                userToEdit: undefined,
             };
 
         default:

@@ -243,7 +243,7 @@ class Header extends React.Component {
                     <li><span className="item item-1"><Link to='/' className="nav-link" id="_home_link"> Home. </Link></span></li>
                     <li><span className="item item-2"><Link to='/blog' className="nav-link" id="_blog_link"> Blog. </Link></span></li>
                     <li><span className="item item-3"><Link to='/about' className="nav-link" id="_about_link"> About Me. </Link></span></li>
-                    <li><span className="item item-4"><Link to='/coffee' className="nav-link" id="_coffee_link"> Coffee. </Link></span></li>
+                    <li><span className="item item-4"><Link to='/coffee' className="nav-link" id="_coffee_link"> Mint Tea. </Link></span></li>
                     <li><span className="item item-5"><Link to='/faq' className="nav-link" id="_faq_link"> Ask Me. </Link></span></li>
                 </ul>
                 <div className="modal fade" id="signup_modal" tabIndex="-1" role="dialog" aria-labelledby="signup_modalLabel" aria-hidden="true">

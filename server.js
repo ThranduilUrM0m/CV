@@ -11,6 +11,7 @@ require('./models/Articles');
 require('./models/Experiences');
 require('./models/Events');
 require('./models/Projects');
+require('./models/Testimonies')
 
 //On définit notre objet express nommé app
 const app = express();
@@ -19,7 +20,7 @@ const app = express();
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
 mongoose
-    .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/db")
+    .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/db", { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
     .then(() => {
         console.log("Connected to mongoDB");
     })

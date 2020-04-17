@@ -413,7 +413,7 @@ img {
 	z-index: 1050;
 }
 
-body, html {
+body, html {	
 	height: 100%;
 	background-color: rgba(0,0,0,0);
 	color: rgba(0,0,0,1);
@@ -5588,79 +5588,370 @@ body, html {
 		.first_section_coffee {
 			position: relative;
 			width: 100%;
-			height: fit-content;
-			min-height: 100%;
+			height: 100%;
 			padding: 0;
 			margin: 0 auto;
 			display: flex;
 			flex-wrap: wrap;
-			border: 0.5rem solid $color1;
 			.wrapper_full {
+				overflow: hidden;
 				position: relative;
+				height: 100%;
 				width: 100%;
-				overflow-x: hidden;
 				display: flex;
+				flex-direction: row;
 				justify-content: center;
-				align-items: center;
-				.card{
-					width: fit-content;
-					min-width: 50vw;
-					max-width: 50vw;
-					height: fit-content;
-					min-height: 50vh;
-					padding: 2.6rem;
-					border: 0;
-					-webkit-transition: all 0.3s;
-					-moz-transition: all 0.3s;
-					-o-transition: all 0.3s;
-					transition: all 0.3s;
-					box-shadow: none;
-					border: 0.5rem solid #292929;
-					.card-body {
-						position: relative;
-						&::after{
-							position: absolute;
-							top:0;
-							left: 0;
-							right:0;
-							bottom: 0;
-							/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a29ca9+0,95909b+99 */
-							background: #a29ca9; /* Old browsers */
-							background: -moz-linear-gradient(-45deg, #a29ca9 0%, #95909b 99%); /* FF3.6-15 */
-							background: -webkit-linear-gradient(-45deg, #a29ca9 0%,#95909b 99%); /* Chrome10-25,Safari5.1-6 */
-							background: linear-gradient(135deg, #a29ca9 0%,#95909b 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-							filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a29ca9', endColorstr='#95909b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-							content: '';
-							opacity: 0;
-							transition: opacity 0.9s ease 0s; 
+				.card {
+					padding: 1rem;
+					&.card_buymecoffee {
+						width: 35%;
+						height: calc(100% - 10rem);
+						border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+						margin: 5rem 2rem 5rem calc(3.6rem + 5px);
+						box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.25);
+						transition: all 0.6s ease 0s;
+						line-height: 0;
+						p {
+							line-height: initial;
+							font-size: small;
+						}
+						.coffee_buyout {
+							transition: 600ms ease;
+							height: fit-content;
+							.row {
+								margin-right: 0;
+								margin-left: 0;
+								margin-bottom: 0;
+								.input-field {
+									position: relative;
+									margin: 0 0 0.5rem 0;
+									padding: 0 !important;
+									div {
+										display: flex;
+										flex-direction: row;
+										align-items: center;
+										height: 4rem;
+										margin-bottom: 0.5rem;
+										border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+										span:nth-of-type(1) {
+											height: 100%;
+											width: 25%;
+											background: url('ONE.png');
+											background-size: contain;
+											background-repeat: no-repeat;
+										}
+									}
+								}
+							}
+						}
+						.mail_form {
+							transition: 600ms ease;
+							height: fit-content;
+							display: flex;
+							flex-direction: column;
+							.row {
+								margin-right: 0;
+								margin-left: 0;
+								margin-bottom: 0;
+								.input-field {
+									position: relative;
+									margin: 0 0 0.5rem 0;
+									padding: 0 !important;
+									input:not([type='checkbox']), textarea {
+										border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+										width: calc(100% - 1rem);
+									}
+									input[type='checkbox'] {
+										height: initial;
+										display: none;
+									}
+									textarea {
+										padding: 0;
+										margin-bottom: 0.5rem;
+										min-height: 6rem;
+									}
+									label:not(.is_private) {
+										font-weight: 400;
+										width: calc(100% - 1.25rem);
+										top: 1rem;
+										&.active{
+											-webkit-transform: translateY(-100%);
+											transform: translateY(-100%);
+											top: 0;
+										}
+									}
+									label.is_private {
+										left: 0;
+										white-space: nowrap;
+										transform: unset;
+									}
+									.form-group-line {
+										position: absolute;
+										bottom: 1rem;
+										left: 0.5rem;
+									}
+									.form-group-input:focus ~ .form-group-line,
+									.form-group-input:valid ~ .form-group-line {
+										animation: input3 0.5s 1 ease;
+										width: calc(100% - 1rem);
+									}
+								}
+								&:nth-of-type(3) {
+									flex: 1;
+								}
+								&:last-of-type {
+									.input-field {
+										display: flex;
+										button {
+											-webkit-appearance: none;
+											border: none;
+											background: none;
+											color:black;
+											width: 15rem;
+											height: 3rem;
+											font-size: 1.2rem;
+											margin-left: 0.25rem;
+											padding: 0;
+											outline: none;
+											z-index: 10;
+											span {
+												display: block;
+												position: relative;
+												line-height: 50px;
+												height: 100%;
+												cursor: pointer;
+											}
+											& > span {
+												& > span {
+													& > span{
+														transition: color 0.15s ease-out 0.3s;
+														color: transparent;
+														&::after{
+															position: absolute;
+															top: 0;
+															right: 0;
+															color: $liteBg_gray;
+															content: attr(data-attr-span);
+															width: 0%;
+															height: 0%;
+															background: $main-color;
+															white-space: nowrap;
+															text-align: center;
+															margin: auto;
+															overflow: hidden;
+															display: flex;
+															justify-content: center;
+															transition: all 0.2s;
+														}
+													}
+													&::before{
+														content:'';
+														position: absolute;
+														bottom:0;
+														right: 0%;
+														width: 1px;
+														height: 1px;
+														opacity: 0;
+													}
+													&::after{
+														content:'';
+														position: absolute;
+														bottom:0;
+														left: 0%;
+														width: 1px;
+														height: 1px;
+														opacity: 0;
+													}
+												}
+												&::before {
+													content:'';
+													position: absolute;
+													top:0;
+													left: 100%;
+													transform-origin: top left;
+													transform: rotate(90deg);
+													width: 20px;
+													height: 0;
+													border: .5rem solid $main-color;
+													border-right: none;
+													border-bottom: none;
+													transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+												}
+												&::after {
+													content:'';
+													position: absolute;
+													top:0;
+													right: 0;
+													width: 20px;
+													height: 0;
+													border: .5rem solid $main-color;
+													border-left: none;
+													border-bottom: none;
+													transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+												}
+											}
+											&:hover{
+												.button_border {
+													width: 100%;
+													height: 100%;
+													box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, 0.15);
+												}
+												& > span {
+													& > span {
+														& > span {
+															&::after {
+																width: 100%;
+																height: 100%;
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 						&:hover {
-							&::after{
-								opacity: 0.4;
-							}
+							box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 						}
 					}
-					h1, h2, h3, h4, h5, h6{
-						text-align: -webkit-left;
-					}
-					&::after{
-						position: absolute;
-						content: "";
-						width: 30vw;
-						height: 30vw;
-						left: 50%;
-						top: 50%;
-						opacity: 0.05;
-						transform: translate(0, -50%);
-						background:url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 16c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm0-2c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zm33.414-6l5.95-5.95L45.95.636 40 6.586 34.05.636 32.636 2.05 38.586 8l-5.95 5.95 1.414 1.414L40 9.414l5.95 5.95 1.414-1.414L41.414 8zM40 48c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm0-2c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zM9.414 40l5.95-5.95-1.414-1.414L8 38.586l-5.95-5.95L.636 34.05 6.586 40l-5.95 5.95 1.414 1.414L8 41.414l5.95 5.95 1.414-1.414L9.414 40z' fill='%23000000' fill-rule='evenodd'/%3E%3C/svg%3E") repeat;
-					}
-					&:hover {
+					&.card_coffesbought {
+						width: 65%;
+						height: 100%;
+						box-shadow: none;
+						margin: 0;
+						padding: 5rem 1rem 1rem 1rem;
+						border: 0;
 						.card-body {
-							&::after{
-								opacity: 0.4;
+							.testimonies-modal {
+								width: 80%;
+								margin: 2rem auto;
+								z-index: 500;
+								.modal-inner {
+									display: flex;
+									.modal-content {
+										position: relative;
+										background: white;
+										border-radius: 0;
+										border: 0;
+										padding: 0.5rem;
+										box-shadow: none;
+										.shadow_title{
+											opacity: 0.1;
+											font-size: 5rem;
+											position: absolute;
+											font-weight: bolder;
+											left: -2rem;
+										}
+										.card{
+											width: 35vw;
+											height: fit-content;
+											border: 0;
+											-webkit-transition: all 0.3s;
+											-moz-transition: all 0.3s;
+												-o-transition: all 0.3s;
+												transition: all 0.3s;
+											box-shadow: none;
+											.card-body {
+												position: relative;
+												border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+												display: flex;
+												flex-direction: column;
+												.top_row {
+													display: flex;
+													flex-direction: row;
+													align-items: flex-end;
+													* {
+														margin: 0;
+														height: fit-content;
+													}
+													p {
+														font-size: xx-small;
+														margin-left: 1rem;
+													}
+													.up_down {
+														display: flex;
+														flex-direction: row;
+														margin-left: auto;
+														.upvotes, .downvotes {
+															margin-left: 1rem;
+															text-align: -webkit-right;
+															font-size: small;
+															button {
+																background: none;
+																color: #20232a;
+																border: none; 
+																padding: 0 !important;
+																font: inherit;
+															}
+															i{
+																padding-left: 0.25rem;
+															}
+															&.active {
+																button {
+																	color: $softLightGradient;
+																}
+															}
+														}
+														i {
+															margin-left: 0.5rem;
+															margin-bottom: 0;
+														}
+													}
+												}
+												.middle_row {
+													margin-top: 1rem;
+													display: flex;
+													flex-direction: row;
+													
+												}
+												.bottom_row {
+													display: flex;
+													flex-direction: row;
+													align-items: flex-end;
+													justify-content: flex-end;
+													font-size: small;
+													.crud {
+														i {
+															cursor: pointer;
+															&::after {
+																display: none;
+															}
+														}
+													}
+												}
+											}
+											h1, h2, h3, h4, h5, h6{
+												text-align: -webkit-left;
+											}
+										}
+									}
+								}
 							}
 						}
+						&::before {
+							content: '';
+							position: absolute;
+							width: 70%;
+							height: 70%;
+							top: 50%;
+							left: 100%;
+							transform: translate(-50%, -50%);
+							background: url('b..svg');
+							background-size: contain;
+							background-repeat: no-repeat;
+						}
 					}
+				}
+				&::before {
+					content: '';
+					position: absolute;
+					width: 35%;
+					height: 100%;
+					top: 0;
+					left: 0;
+					background: #f5f5f4;
 				}
 			}
 		}
