@@ -11,7 +11,7 @@ require('./models/Articles');
 require('./models/Experiences');
 require('./models/Events');
 require('./models/Projects');
-require('./models/Testimonies')
+require('./models/Testimonies');
 
 //On définit notre objet express nommé app
 const app = express();

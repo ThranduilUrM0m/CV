@@ -3,45 +3,40 @@ import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
-import 'whatwg-fetch';
 import Footer from '../Footer/Footer';
 import Fingerprint from 'fingerprintjs';
 import * as $ from "jquery";
 import 'bootstrap';
-import 'whatwg-fetch';
-import API from '../../utils/API';
 
 var _ = require('lodash');
 
 class Coffee extends React.Component {
     constructor(props){
         super(props);
+
+        var f = new Fingerprint().get();
         this.state = {
             author: '',
             body: '',
             is_private: false,
-            fingerprint: '',
+            fingerprint: f.toString(),
             upvotes: [],
             downvotes: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.handleSubmitupvotesTestimony = this.handleSubmitupvotesTestimony.bind(this);
+        this.handleSubmitdownvotesTestimony = this.handleSubmitdownvotesTestimony.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
     componentDidMount() {
         const { onLoadTestimony } = this.props;
-        const self = this;
 
         axios('/api/testimonies')
         .then((response) => {
             onLoadTestimony(response.data);
-            var f = new Fingerprint().get();
-            self.setState({
-                fingerprint : f.toString()
-            });
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
         });
     }
     componentWillReceiveProps(nextProps) {
@@ -56,10 +51,135 @@ class Coffee extends React.Component {
             });
         }
     }
+	handleSubmitupvotesTestimony(testimony, event) {
+        var f = new Fingerprint().get();
+        let self = this;
+        let target = event.target;
+        if( _.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
+            function setEditFunction() {
+                // Get the current 'global' time from an API using Promise
+                return new Promise((resolve, reject) => {
+                    setTimeout(function() {
+                        self.handleEdit(testimony);
+                        true ? resolve('Success') : reject('Error');
+                    }, 2000);
+                })
+            }
+            setEditFunction()
+                .then(() => {
+                    self.setState(state => ({
+                        upvotes: [...state.upvotes, {upvoter: f.toString()}],
+                    }), () => {
+                        if( !_.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
+                            let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
+                            self.setState({
+                                downvotes: _downvotes,
+                            }, () => {
+                                self.handleSubmit();
+                            });
+                            $(target).closest("div").parent().find('div.downvotes').removeClass('active');
+                        } else {
+                            self.handleSubmit();
+                        }
+                        $(target).closest("div").addClass('active');
+                    });
+                    return true;
+                })
+                .catch(err => console.log('There was an error:' + err));
+        } else {
+            function setEditFunction() {
+                // Get the current 'global' time from an API using Promise
+                return new Promise((resolve, reject) => {
+                    setTimeout(function() {
+                        self.handleEdit(testimony);
+                        true ? resolve('Success') : reject('Error');
+                    }, 2000);
+                })
+            }
+            setEditFunction()
+                .then(() => {
+                    let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
+                    self.setState(state => ({
+                        upvotes: _upvotes,
+                    }), () => {
+                        self.handleSubmit();
+                        $(target).closest("div").removeClass('active');
+                    });
+                    return true;
+                })
+                .catch(err => console.log('There was an error:' + err));
+        }
+	}
+	handleSubmitdownvotesTestimony(testimony, event) {
+        var f = new Fingerprint().get();
+        let self = this;
+        let target = event.target;
+        if( _.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
+            function setEditFunction() {
+                // Get the current 'global' time from an API using Promise
+                return new Promise((resolve, reject) => {
+                    setTimeout(function() {
+                        self.handleEdit(testimony);
+                        true ? resolve('Success') : reject('Error');
+                    }, 2000);
+                })
+            }
+            setEditFunction()
+                .then(() => {
+                    self.setState(state => ({
+                        downvotes: [...state.downvotes, {downvoter: f.toString()}],
+                    }), () => {
+                        if( !_.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
+                            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
+                            self.setState({
+                                upvotes: _upvotes,
+                            }, () => {
+                                self.handleSubmit();
+                            });
+                            $(target).closest("div").parent().find('div.upvotes').removeClass('active');
+                        } else {
+                            self.handleSubmit();
+                        }
+                        $(target).closest("div").addClass('active');
+                    });
+                    return true;
+                })
+                .catch(err => console.log('There was an error:' + err));
+        } else {
+            function setEditFunction() {
+                // Get the current 'global' time from an API using Promise
+                return new Promise((resolve, reject) => {
+                    setTimeout(function() {
+                        self.handleEdit(testimony);
+                        true ? resolve('Success') : reject('Error');
+                    }, 2000);
+                })
+            }
+            setEditFunction()
+                .then(() => {
+                    let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
+                    self.setState(state => ({
+                        downvotes: _downvotes,
+                    }), () => {
+                        self.handleSubmit();
+                        $(target).closest("div").removeClass('active');
+                    });
+                    return true;
+                })
+                .catch(err => console.log('There was an error:' + err));
+        }
+    }
+    handleDelete(id) {
+        const { onDeleteTestimony } = this.props;
+        return axios.delete(`/api/testimonies/${id}`).then(() => onDeleteTestimony(id));
+    }
+    handleEdit(testimony) {
+        const { setEditTestimony } = this.props;
+        setEditTestimony(testimony);
+    }
     handleSubmit(){
         const { onSubmitTestimony, testimonyToEdit, onEditTestimony } = this.props;
         const { body, author, is_private, fingerprint, upvotes, downvotes } = this.state;
-        const self = this;
 
         if(!testimonyToEdit) {
             return axios.post('/api/testimonies', {
@@ -71,16 +191,14 @@ class Coffee extends React.Component {
                 downvotes,
             })
                 .then((res) => onSubmitTestimony(res.data))
-                .then(function() {
-                    self.setState({ 
+                .then(() => {
+                    this.setState({ 
                         author: '',
                         body: '',
                         is_private: false,
                         upvotes: [],
                         downvotes: [],
                     })
-                }).catch(error => {
-                    console.log(error.response)
                 });
         } else {
             return axios.patch(`/api/testimonies/${testimonyToEdit._id}`, {
@@ -92,11 +210,11 @@ class Coffee extends React.Component {
                 downvotes,
             })
                 .then((res) => onEditTestimony(res.data))
-                .then(function() {
-                    self.setState({ 
+                .then(() => {
+                    this.setState({ 
                         author: '',
                         body: '',
-                        is_private: '',
+                        is_private: false,
                         upvotes: [],
                         downvotes: [],
                     })
@@ -110,7 +228,7 @@ class Coffee extends React.Component {
     }
     render() {
         const { testimonyToEdit, testimonies } = this.props;
-        const { body, author, is_private } = this.state;
+        const { body, author, is_private, fingerprint } = this.state;
         return(
             <FullPage>
 				<Slide>
@@ -210,17 +328,27 @@ class Coffee extends React.Component {
                                         <div className="modal-inner">
                                             <div className="modal-content">
                                             {
-                                                _.orderBy(testimonies, ['view'], ['desc']).map((testimony, index) => {
+                                                _.orderBy(_.filter(testimonies, { 'is_private': false }), ['view'], ['desc']).map((testimony, index) => {
                                                     return (
                                                         <div className={"card card_" + index} data-index={index+1}>
                                                             <div className="shadow_title">{_.head(_.words(testimony.body))}</div>
                                                             <div className="card-body">
                                                                 <div className="top_row">
                                                                     <h6 className="author">by <b>{testimony.author}</b></h6>
-                                                                    <p className="text-muted fromNow">{moment(new Date(testimony.updatedAt)).fromNow()}</p>
+                                                                    <p className="text-muted fromNow">{moment(new Date(testimony.createdAt)).fromNow()}</p>
                                                                     <div className="up_down">
-                                                                        <p className="text-muted upvotes"><b>{_.size(_.get(testimony, 'upvotes'))}</b> <button onClick={this.handleSubmitupvotes}><i className="fas fa-thumbs-up"></i></button> </p>
-                                                                        <p className="text-muted downvotes"><b>{_.size(_.get(testimony, 'downvotes'))}</b> <button onClick={this.handleSubmitdownvotes}><i className="fas fa-thumbs-down"></i></button> </p>
+                                                                        <div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === fingerprint}) ) ? '' : 'active'}`}>
+                                                                            <b>{_.size(_.get(testimony, 'upvotes'))}</b> 
+                                                                            <button onClick={(ev) => this.handleSubmitupvotesTestimony(testimony, ev)}>
+                                                                                <i className="fas fa-thumbs-up"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div className={`text-muted downvotes ${_.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === fingerprint}) ) ? '' : 'active'}`}>
+                                                                            <b>{_.size(_.get(testimony, 'downvotes'))}</b>
+                                                                            <button onClick={(ev) => this.handleSubmitdownvotesTestimony(testimony, ev)}>
+                                                                                <i className="fas fa-thumbs-down"></i>
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="middle_row">
@@ -231,9 +359,9 @@ class Coffee extends React.Component {
                                                                         <i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
                                                                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                                                             <button className="dropdown-item" type="button">Reply</button>
-                                                                            <button className="dropdown-item" type="button">Edit</button>
+                                                                            <button onClick={() => this.handleEdit(testimony)}  className="dropdown-item">Edit</button>
                                                                             <div className="dropdown-divider"></div>
-                                                                            <button className="dropdown-item" type="button">Delete</button>
+                                                                            <button onClick={() => this.handleDelete(testimony._id)} className="dropdown-item">Delete</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -245,7 +373,6 @@ class Coffee extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -260,14 +387,16 @@ class Coffee extends React.Component {
 }
   
 const mapStateToProps = state => ({
-    testimonies: state.home.testimonies,
     testimonyToEdit: state.home.testimonyToEdit,
+
+    testimonies: state.home.testimonies,
 });
 
 const mapDispatchToProps = dispatch => ({
-    onLoadTestimony: data => dispatch({ type: 'TESTIMONY_PAGE_LOADED', data }),
-	onSubmitTestimony: data => dispatch({ type: 'SUBMIT_TESTIMONY', data }),
+    onSubmitTestimony: data => dispatch({ type: 'SUBMIT_TESTIMONY', data }),
     onEditTestimony: data => dispatch({ type: 'EDIT_TESTIMONY', data }),
+
+    onLoadTestimony: data => dispatch({ type: 'TESTIMONY_PAGE_LOADED', data }),
 	onDeleteTestimony: id => dispatch({ type: 'DELETE_TESTIMONY', id }),
 	setEditTestimony: testimony => dispatch({ type: 'SET_EDIT_TESTIMONY', testimony }),
 });
