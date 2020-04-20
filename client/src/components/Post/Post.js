@@ -13,31 +13,11 @@ import 'bootstrap';
 
 var _ = require('lodash');
 
-class Comments extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	render() {
-		return(
-			this.props.comment.map((comment, index) => {
-				return (
-					<div className={"card card_" + index} data-index={index+1}>
-						<div className="shadow_title">{_.head(_.words(comment.body))}</div>
-						<div className="card-body">
-							<h5>{comment.body}</h5>
-							<p className="text-muted author">by <b>{comment.author}</b>, {moment(new Date(comment.date)).fromNow()}</p>
-						</div>
-					</div>
-				)
-			})
-		)
-	}
-}
-
 class Post extends React.Component {
     constructor(props) {
 		super(props);
 
+        var f = new Fingerprint().get();
 		this.state = {
 			_id: '',
             title: '',
@@ -45,10 +25,17 @@ class Post extends React.Component {
             author: '',
             tag: [],
             tagInput: '',
+			
 			comment: [],
-			comment_author: '',
-			comment_body: '',
+			comment_parent_id: null,
+            comment_author: '',
+            comment_body: '',
+            comment_fingerprint: f.toString(),
+            comment__createdAt: '',
+            comment_upvotes: [],
+			comment_downvotes: [],
 			comment_changed: false,
+
 			upvotes: [],
 			upvotes_changed: false,
 			downvotes: [],
@@ -74,7 +61,7 @@ class Post extends React.Component {
 	componentDidMount() {
         const { onLoad } = this.props;
 		const { match } = this.props;
-		axios('http://localhost:8800/api/articles')
+		axios('/api/articles')
 			.then((res) => onLoad(res.data))
 			.then((res) => {
 				this.handleEdit(_.find(res.data.articles, {'_id': match.params.postId}));
@@ -97,7 +84,6 @@ class Post extends React.Component {
                 tag: nextProps.articleToEdit.tag,
                 tagInput: nextProps.articleToEdit.tagInput,
 				comment: nextProps.articleToEdit.comment,
-				comment_body: nextProps.articleToEdit.comment_body,
                 upvotes: nextProps.articleToEdit.upvotes,
                 downvotes: nextProps.articleToEdit.downvotes,
 				view: nextProps.articleToEdit.view,
@@ -106,7 +92,7 @@ class Post extends React.Component {
 	}
 	handleDelete(id) {
 		const { onDelete } = this.props;
-		return axios.delete(`http://localhost:8800/api/articles/${id}`)
+		return axios.delete(`/api/articles/${id}`)
 			.then(() => onDelete(id));
 	}
 	handleEdit(article) {
@@ -120,7 +106,7 @@ class Post extends React.Component {
 		
 		if(_id) {
 			if(this.state.comment_changed || this.state.upvotes_changed || this.state.downvotes_changed || this.state.view_changed){
-				return axios.patch(`http://localhost:8800/api/articles/${_id}`, {
+				return axios.patch(`/api/articles/${_id}`, {
 					title,
 					body,
 					author,
@@ -143,18 +129,112 @@ class Post extends React.Component {
 		}
 	}
 	handleSubmitComment() {
-        const { comment_author, comment_body } = this.state;
-		if(comment_author && comment_body) {
+        const { comment_parent_id, comment_author, comment_body, comment_fingerprint, comment__createdAt, comment_upvotes, comment_downvotes } = this.state;
+		if(comment_author && comment_body && comment_fingerprint) {
 			this.setState(state => ({
-				comment: [...state.comment, {author: comment_author, body: comment_body, date: moment().format()}],
+				comment: [...state.comment, {parent_id: comment_parent_id, author: comment_author, body: comment_body, fingerprint: comment_fingerprint, _createdAt: moment().format(), upvotes: comment_upvotes, downvotes: comment_downvotes}],
+				comment_parent_id: null,
 				comment_author: '',
 				comment_body: '',
+				comment_upvotes: [],
+				comment_downvotes: [],
 				comment_changed: true,
 			}));
 		} else {
 			$('#exampleModal_comment').modal('show');
 		}
 	}
+	handleSubmitupvotesComment(comment, event) {
+        var f = new Fingerprint().get();
+        let self = this;
+        let target = event.target;
+        if( _.isUndefined( _.find(_.get(comment, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
+			
+			self.setState(state => ({
+				comment_upvotes: [...state.comment_upvotes, {upvoter: f.toString()}],
+			}), () => {
+				if( !_.isUndefined( _.find(_.get(comment, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
+					let _downvotes = _.takeWhile(self.state.comment_downvotes, function(o) { return o.downvoter != f.toString(); });
+					self.setState({
+						comment_downvotes: _downvotes,
+					}, () => {
+						//self.handleEditComment();
+					});
+					$(target).closest("div").parent().find('div.downvotes').removeClass('active');
+				} else {
+					//self.handleEditComment();
+				}
+				$(target).closest("div").addClass('active');
+			});
+        } else {
+            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
+			self.setState(state => ({
+				upvotes: _upvotes,
+			}), () => {
+				self.handleSubmit();
+				$(target).closest("div").removeClass('active');
+			});
+        }
+	}
+	handleSubmitdownvotesComment(comment, event) {
+        var f = new Fingerprint().get();
+        let self = this;
+        let target = event.target;
+        if( _.isUndefined( _.find(_.get(comment, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
+            function setEditFunction() {
+                // Get the current 'global' time from an API using Promise
+                return new Promise((resolve, reject) => {
+                    setTimeout(function() {
+                        self.handleEdit(comment);
+                        true ? resolve('Success') : reject('Error');
+                    }, 2000);
+                })
+            }
+            setEditFunction()
+                .then(() => {
+                    self.setState(state => ({
+                        downvotes: [...state.downvotes, {downvoter: f.toString()}],
+                    }), () => {
+                        if( !_.isUndefined( _.find(_.get(comment, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
+                            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
+                            self.setState({
+                                upvotes: _upvotes,
+                            }, () => {
+                                self.handleSubmit();
+                            });
+                            $(target).closest("div").parent().find('div.upvotes').removeClass('active');
+                        } else {
+                            self.handleSubmit();
+                        }
+                        $(target).closest("div").addClass('active');
+                    });
+                    return true;
+                })
+                .catch(err => console.log('There was an error:' + err));
+        } else {
+            function setEditFunction() {
+                // Get the current 'global' time from an API using Promise
+                return new Promise((resolve, reject) => {
+                    setTimeout(function() {
+                        self.handleEdit(comment);
+                        true ? resolve('Success') : reject('Error');
+                    }, 2000);
+                })
+            }
+            setEditFunction()
+                .then(() => {
+                    let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
+                    self.setState(state => ({
+                        downvotes: _downvotes,
+                    }), () => {
+                        self.handleSubmit();
+                        $(target).closest("div").removeClass('active');
+                    });
+                    return true;
+                })
+                .catch(err => console.log('There was an error:' + err));
+        }
+    }
 	handleSubmitupvotes() {
 		var fingerprint = new Fingerprint().get();
 
@@ -342,7 +422,7 @@ class Post extends React.Component {
     render() {
 		const { articles } = this.props;
         const { match } = this.props;
-		const { title, body, author, tag, comment, comment_author, comment_body, upvotes, downvotes, view } = this.state;
+		const { comment_body, comment_author, comment_fingerprint } = this.state;
 		
 		return (
             <FullPage scrollMode={'normal'}>
@@ -383,7 +463,7 @@ class Post extends React.Component {
 								</ol>
 							</nav>
 							<div className="shadow_title">{_.head(_.words(_.get(_.find(articles, {'_id': match.params.postId}), 'title')))}.</div>
-							<div className="shadow_letter">{this._FormatNumberLength(_.indexOf(_.orderBy(articles, ['createdAt'], ['asc']), _.find(articles, {'_id': match.params.postId}))+1, 2)}.</div>
+							<div className="shadow_letter">{this._FormatNumberLength(_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))+1, 2)}.</div>
 							<div id="box">
 								<h1>{_.get(_.find(articles, {'_id': match.params.postId}), 'title')}</h1>
 								<p className="text-muted author">by <b>{_.get(_.find(articles, {'_id': match.params.postId}), 'author')}</b>, {moment(new Date(_.get(_.find(articles, {'_id': match.params.postId}), 'createdAt'))).fromNow()}</p>
@@ -400,12 +480,13 @@ class Post extends React.Component {
 								</div>
 							</div>
 							<div className="beforeorafter">
-								<a className="before_article">
+								<a href={_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))-1], '_id', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), '_id'))} className="before_article">
 									{
 									_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))-1], 'title', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), 'title'))
 									}.
 								</a>
-								<a className="after_article">
+								<a href={_.get(
+									_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))+1], '_id', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), '_id'))} className="after_article">
 									{
 									_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))+1], 'title', _.get(_.head(_.orderBy(articles, ['view'], ['desc'])), 'title'))
 									}.
@@ -420,7 +501,6 @@ class Post extends React.Component {
 							<div className="comment-modal">
 								<div className="modal-inner">
 									<div className="modal-content">
-										
 										<div className="row">
 											<div className="input-field col s12">
 												<textarea 
@@ -434,7 +514,6 @@ class Post extends React.Component {
 												<div className="form-group-line textarea_line"></div>
 											</div>
 										</div>
-
 										<div className="row">
 											<div className="input-field col s6">
 												<input 
@@ -460,13 +539,104 @@ class Post extends React.Component {
 												</button>
 											</div>
 										</div>
-										
-
 										<div id="comments-modal" className="comments-modal">
 											<div className="modal-inner">
 												<div className="modal-content">
 												{
-													_.isEmpty(_.get(_.find(articles, {'_id': match.params.postId}), 'comment')) ? null : <Comments comment={_.get(_.find(articles, {'_id': match.params.postId}), 'comment')}/>
+													_.isEmpty(_.get(_.find(articles, {'_id': match.params.postId}), 'comment')) 
+													? null 
+													: <>
+													{
+														_.orderBy(_.filter(_.get(_.find(articles, {'_id': match.params.postId}), 'comment'), { parent_id: null }), ['upvotes'], ['desc']).map((comment, index) => {
+															return (
+																<div className={"card card_" + index} data-index={index+1}>
+																	<div className="shadow_title">{_.head(_.words(comment.body))}</div>
+																	<div className="card-body">
+																		<div className="top_row">
+																			<h6 className="author">by <b>{comment.author}</b></h6>
+																			<p className="text-muted fromNow">{moment(new Date(comment._createdAt)).fromNow()}</p>
+																			<div className="up_down">
+																				<div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(comment, 'upvotes'), (upvote) => {return upvote.upvoter === comment_fingerprint}) ) ? '' : 'active'}`}>
+																					<b>{_.size(_.get(comment, 'upvotes'))}</b> 
+																					<button onClick={(ev) => this.handleSubmitupvotesComment(comment, ev)}>
+																						<i className="fas fa-thumbs-up"></i>
+																					</button>
+																				</div>
+																				<div className={`text-muted downvotes ${_.isUndefined( _.find(_.get(comment, 'downvotes'), (downvote) => {return downvote.downvoter === comment_fingerprint}) ) ? '' : 'active'}`}>
+																					<b>{_.size(_.get(comment, 'downvotes'))}</b>
+																					<button onClick={(ev) => this.handleSubmitdownvotesComment(comment, ev)}>
+																						<i className="fas fa-thumbs-down"></i>
+																					</button>
+																				</div>
+																			</div>
+																		</div>
+																		<div className="middle_row">
+																			<h5>{comment.body}</h5>
+																		</div>
+																		<div className="bottom_row">
+																			<div className="crud">
+																				<i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
+																				<div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+																					<button onClick={() => this.handleReply(comment._id)} className="dropdown-item" type="button">Reply</button>
+																					{
+																						comment.fingerprint === comment_fingerprint 
+																						? <><button onClick={() => this.handleEdit(comment)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(comment._id)} className="dropdown-item">Delete</button></>
+																						: ''
+																					}
+																				</div>
+																			</div>
+																		</div>
+																		{
+																			_.orderBy(_.reject(_.get(_.find(articles, {'_id': match.params.postId}), 'comment'), { parent_id: null }), ['upvotes'], ['desc']).map((comment_reply, index_reply) => {
+																				if(comment_reply.parent_id === comment._id)
+																					return (
+																						<div className={"card card_" + index_reply} data-index={index_reply+1}>
+																							<div className="shadow_title">{_.head(_.words(comment_reply.body))}</div>
+																							<div className="card-body">
+																								<div className="top_row">
+																									<h6 className="author">by <b>{comment_reply.author}</b></h6>
+																									<p className="text-muted fromNow">{moment(new Date(comment_reply._createdAt)).fromNow()}</p>
+																									<div className="up_down">
+																										<div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(comment_reply, 'upvotes'), (upvote) => {return upvote.upvoter === comment_fingerprint}) ) ? '' : 'active'}`}>
+																											<b>{_.size(_.get(comment_reply, 'upvotes'))}</b> 
+																											<button onClick={(ev) => this.handleSubmitupvotesComment(comment_reply, ev)}>
+																												<i className="fas fa-thumbs-up"></i>
+																											</button>
+																										</div>
+																										<div className={`text-muted downvotes ${_.isUndefined( _.find(_.get(comment_reply, 'downvotes'), (downvote) => {return downvote.downvoter === comment_fingerprint}) ) ? '' : 'active'}`}>
+																											<b>{_.size(_.get(comment_reply, 'downvotes'))}</b>
+																											<button onClick={(ev) => this.handleSubmitdownvotesComment(comment_reply, ev)}>
+																												<i className="fas fa-thumbs-down"></i>
+																											</button>
+																										</div>
+																									</div>
+																								</div>
+																								<div className="middle_row">
+																									<h5>{comment_reply.body}</h5>
+																								</div>
+																								<div className="bottom_row">
+																									<div className="crud">
+																										<i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
+																										<div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+																											{
+																												comment_reply.fingerprint === comment_fingerprint 
+																												? <><button onClick={() => this.handleEdit(comment_reply)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(comment_reply._id)} className="dropdown-item">Delete</button></>
+																												: ''
+																											}
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																						</div>
+																					)
+																			})
+																		}
+																	</div>
+																</div>
+															)
+														})
+													}
+													</>
 												}
 												</div>
 											</div>

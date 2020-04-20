@@ -344,7 +344,7 @@ class Coffee extends React.Component {
                                         <div className="modal-inner">
                                             <div className="modal-content">
                                             {
-                                                _.orderBy(_.filter(testimonies, { 'is_private': false, parent_id: null }), ['view'], ['desc']).map((testimony, index) => {
+                                                _.orderBy(_.filter(testimonies, { 'is_private': false, parent_id: null }), ['upvotes'], ['desc']).map((testimony, index) => {
                                                     return (
                                                         <div className={"card card_" + index} data-index={index+1}>
                                                             <div className="shadow_title">{_.head(_.words(testimony.body))}</div>

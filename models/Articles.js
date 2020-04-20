@@ -9,9 +9,11 @@ const ArticlesSchema = new Schema({
   categorie: String,
   tag: [String],
   comment: [{
+    parent_id: mongoose.Types.ObjectId,
     author: String,
     body: String,
-    date: Date,
+    fingerprint: String,
+    _createdAt: Date,
     upvotes: [{
       upvoter: String,
     }],

@@ -7265,11 +7265,13 @@ body, html {
 								opacity: 0.1;
 								font-size: 5rem;
 								position: absolute;
+								font-weight: bolder;
 								left: -2rem;
 							}
 							.card{
-								width: 35vw;
+								width: 100%;
 								height: fit-content;
+								margin: 0;
 								border: 0;
 								-webkit-transition: all 0.3s;
 								-moz-transition: all 0.3s;
@@ -7278,116 +7280,76 @@ body, html {
 								box-shadow: none;
 								.card-body {
 									position: relative;
-									h2{
-										color:$color1;
-										letter-spacing: 0;
-										transition: all 0.15s ease 0s; 
-										position: relative;
-										z-index: 10;
-									}
-									p{
-										transition: all 0.15s ease 0s; 
-										position: relative;
-										z-index: 10;
-									}
-									&::after{
-										position: absolute;
-										top:0;
-										left: 0;
-										right:0;
-										bottom: 0;
-										/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a29ca9+0,95909b+99 */
-										background: #a29ca9; /* Old browsers */
-										background: -moz-linear-gradient(-45deg, #a29ca9 0%, #95909b 99%); /* FF3.6-15 */
-										background: -webkit-linear-gradient(-45deg, #a29ca9 0%,#95909b 99%); /* Chrome10-25,Safari5.1-6 */
-										background: linear-gradient(135deg, #a29ca9 0%,#95909b 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-										filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a29ca9', endColorstr='#95909b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-										content: '';
-										opacity: 0;
-										transition: opacity 0.9s ease 0s; 
-									}
-									&:hover {
-										h2 {
-											transform: translateY(-10px);
+									border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+									display: flex;
+									flex-direction: column;
+									.top_row {
+										display: flex;
+										flex-direction: row;
+										align-items: flex-end;
+										* {
+											margin: 0;
+											height: fit-content;
 										}
-										p{
-											transform: translateY(10px);
-										}
-										&::after{
-											opacity: 0.4;
-										}
-										button {
-											& > span {
-												&::after {
-													width: 50%;
-													height: 100%;
-													transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
-												}
-												&::before {
-													width: 50%;
-													height: 100%;
-													transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
-												}
-												& > span {
-													&::after {
-														opacity: 1;
-														border-bottom: 1px solid $color1;
-														width: calc(50%);
-														height: 1px;
-														transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
-													}
-													&::before {
-														opacity: 1;
-														border-bottom: 1px solid $color1;
-														width: calc(50%);
-														height: 1px;
-														transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
-													}
-													& > span {
-														color:$color1;
-													}
-												}
-											}
-										}
-									}
-									.comments_up_down {
-										display: inline-flex;
-										.upvotes, .downvotes, .replies {
+										p {
+											font-size: xx-small;
 											margin-left: 1rem;
-											text-align: -webkit-right;
-											font-size: small;
-											button {
-												background: none;
-												color: #20232a;
-												border: none; 
-												padding: 0 !important;
-												font: inherit;
-											}
-											i{
-												padding-left: 0.25rem;
-											}
-											&.active {
+										}
+										.up_down {
+											display: flex;
+											flex-direction: row;
+											margin-left: auto;
+											.upvotes, .downvotes {
+												margin-left: 1rem;
+												text-align: -webkit-right;
+												font-size: small;
 												button {
-													color: $softLightGradient;
+													background: none;
+													color: #20232a;
+													border: none; 
+													padding: 0 !important;
+													font: inherit;
+													width: initial;
+												}
+												i{
+													padding-left: 0.25rem;
+												}
+												&.active {
+													button {
+														color: $softLightGradient;
+													}
 												}
 											}
+											i {
+												margin-left: 0.5rem;
+												margin-bottom: 0;
+											}
 										}
-										i {
-											margin-left: 0.5rem;
-											margin-bottom: 0;
+									}
+									.middle_row {
+										margin-top: 1rem;
+										display: flex;
+										flex-direction: row;
+										
+									}
+									.bottom_row {
+										display: flex;
+										flex-direction: row;
+										align-items: flex-end;
+										justify-content: flex-end;
+										font-size: small;
+										.crud {
+											i {
+												cursor: pointer;
+												&::after {
+													display: none;
+												}
+											}
 										}
 									}
 								}
 								h1, h2, h3, h4, h5, h6{
 									text-align: -webkit-left;
-								}
-								.author{
-									text-align: -webkit-right;
-									font-size: xx-small;
-								}
-								.body{
-									border-left: 0.05rem solid black;
-									padding-left: 1rem;
 								}
 							}
 						}

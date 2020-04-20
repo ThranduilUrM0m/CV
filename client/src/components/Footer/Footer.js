@@ -428,7 +428,6 @@ class Footer extends React.Component {
                                                 name='btn_login' 
                                                 onClick={this.send_mail}
                                             >
-                                                <div className="button_border"></div>
                                                 <span>
                                                     <span>
                                                         <span data-attr-span="Submit.">
