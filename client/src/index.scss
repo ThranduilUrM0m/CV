@@ -5825,13 +5825,13 @@ body, html {
 						.card-body {
 							.testimonies-modal {
 								width: 80%;
-								margin: 2rem auto;
+								margin: 0 auto;
 								z-index: 500;
 								.modal-inner {
 									display: flex;
 									.modal-content {
 										position: relative;
-										background: white;
+										background: transparent;
 										border-radius: 0;
 										border: 0;
 										padding: 0.5rem;
@@ -5846,6 +5846,7 @@ body, html {
 										.card{
 											width: 35vw;
 											height: fit-content;
+											margin: 0;
 											border: 0;
 											-webkit-transition: all 0.3s;
 											-moz-transition: all 0.3s;

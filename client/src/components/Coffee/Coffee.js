@@ -16,6 +16,7 @@ class Coffee extends React.Component {
 
         var f = new Fingerprint().get();
         this.state = {
+            parent_id: null,
             author: '',
             body: '',
             is_private: false,
@@ -30,9 +31,12 @@ class Coffee extends React.Component {
         this.handleSubmitdownvotesTestimony = this.handleSubmitdownvotesTestimony.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleReply = this.handleReply.bind(this);
     }
     componentDidMount() {
         const { onLoadTestimony } = this.props;
+        document.getElementsByClassName('first_section_coffee')[0].parentElement.style.height = 'initial';
+        document.getElementsByClassName('first_section_coffee')[0].parentElement.style.minHeight = '100%';
 
         axios('/api/testimonies')
         .then((response) => {
@@ -42,6 +46,7 @@ class Coffee extends React.Component {
     componentWillReceiveProps(nextProps) {
         if(nextProps.testimonyToEdit) {
             this.setState({
+                parent_id: nextProps.testimonyToEdit.parent_id,
                 body: nextProps.testimonyToEdit.body,
                 author: nextProps.testimonyToEdit.author,
                 is_private: nextProps.testimonyToEdit.is_private,
@@ -177,12 +182,21 @@ class Coffee extends React.Component {
         const { setEditTestimony } = this.props;
         setEditTestimony(testimony);
     }
+    handleReply(testimony_id) {
+        let self = this;
+        self.setState({
+            parent_id: testimony_id
+        }, () => {
+            $('input.author').focus();
+        })
+    }
     handleSubmit(){
         const { onSubmitTestimony, testimonyToEdit, onEditTestimony } = this.props;
-        const { body, author, is_private, fingerprint, upvotes, downvotes } = this.state;
+        const { parent_id, body, author, is_private, fingerprint, upvotes, downvotes } = this.state;
 
         if(!testimonyToEdit) {
             return axios.post('/api/testimonies', {
+                parent_id,
                 body,
                 author,
                 is_private,
@@ -193,6 +207,7 @@ class Coffee extends React.Component {
                 .then((res) => onSubmitTestimony(res.data))
                 .then(() => {
                     this.setState({ 
+                        parent_id: null,
                         author: '',
                         body: '',
                         is_private: false,
@@ -202,6 +217,7 @@ class Coffee extends React.Component {
                 });
         } else {
             return axios.patch(`/api/testimonies/${testimonyToEdit._id}`, {
+                parent_id,
                 body,
                 author,
                 is_private,
@@ -212,6 +228,7 @@ class Coffee extends React.Component {
                 .then((res) => onEditTestimony(res.data))
                 .then(() => {
                     this.setState({ 
+                        parent_id: null,
                         author: '',
                         body: '',
                         is_private: false,
@@ -228,11 +245,10 @@ class Coffee extends React.Component {
     }
     render() {
         const { testimonyToEdit, testimonies } = this.props;
-        const { body, author, is_private, fingerprint } = this.state;
+        const { parent_id, body, author, is_private, fingerprint } = this.state;
         return(
-            <FullPage>
+            <FullPage scrollMode='normal'>
 				<Slide>
-                    {/* U might wanna think about replies */}
 					<section className="active first_section_coffee">
                         <div className="wrapper_full">
 							<div id="social_media">
@@ -328,7 +344,7 @@ class Coffee extends React.Component {
                                         <div className="modal-inner">
                                             <div className="modal-content">
                                             {
-                                                _.orderBy(_.filter(testimonies, { 'is_private': false }), ['view'], ['desc']).map((testimony, index) => {
+                                                _.orderBy(_.filter(testimonies, { 'is_private': false, parent_id: null }), ['view'], ['desc']).map((testimony, index) => {
                                                     return (
                                                         <div className={"card card_" + index} data-index={index+1}>
                                                             <div className="shadow_title">{_.head(_.words(testimony.body))}</div>
@@ -358,13 +374,60 @@ class Coffee extends React.Component {
                                                                     <div className="crud">
                                                                         <i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
                                                                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                                            <button className="dropdown-item" type="button">Reply</button>
-                                                                            <button onClick={() => this.handleEdit(testimony)}  className="dropdown-item">Edit</button>
-                                                                            <div className="dropdown-divider"></div>
-                                                                            <button onClick={() => this.handleDelete(testimony._id)} className="dropdown-item">Delete</button>
+                                                                            <button onClick={() => this.handleReply(testimony._id)} className="dropdown-item" type="button">Reply</button>
+                                                                            {
+                                                                                testimony.fingerprint === fingerprint 
+                                                                                ? <><button onClick={() => this.handleEdit(testimony)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(testimony._id)} className="dropdown-item">Delete</button></>
+                                                                                : ''
+                                                                            }
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                {
+                                                                    _.orderBy(_.reject(testimonies, { parent_id: null }), ['view'], ['desc']).map((testimony_reply, index_reply) => {
+                                                                        if(testimony_reply.parent_id === testimony._id)
+                                                                            return (
+                                                                                <div className={"card card_" + index_reply} data-index={index_reply+1}>
+                                                                                    <div className="shadow_title">{_.head(_.words(testimony_reply.body))}</div>
+                                                                                    <div className="card-body">
+                                                                                        <div className="top_row">
+                                                                                            <h6 className="author">by <b>{testimony_reply.author}</b></h6>
+                                                                                            <p className="text-muted fromNow">{moment(new Date(testimony_reply.createdAt)).fromNow()}</p>
+                                                                                            <div className="up_down">
+                                                                                                <div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(testimony_reply, 'upvotes'), (upvote) => {return upvote.upvoter === fingerprint}) ) ? '' : 'active'}`}>
+                                                                                                    <b>{_.size(_.get(testimony_reply, 'upvotes'))}</b> 
+                                                                                                    <button onClick={(ev) => this.handleSubmitupvotesTestimony(testimony_reply, ev)}>
+                                                                                                        <i className="fas fa-thumbs-up"></i>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                                <div className={`text-muted downvotes ${_.isUndefined( _.find(_.get(testimony_reply, 'downvotes'), (downvote) => {return downvote.downvoter === fingerprint}) ) ? '' : 'active'}`}>
+                                                                                                    <b>{_.size(_.get(testimony_reply, 'downvotes'))}</b>
+                                                                                                    <button onClick={(ev) => this.handleSubmitdownvotesTestimony(testimony_reply, ev)}>
+                                                                                                        <i className="fas fa-thumbs-down"></i>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="middle_row">
+                                                                                            <h5>{testimony_reply.body}</h5>
+                                                                                        </div>
+                                                                                        <div className="bottom_row">
+                                                                                            <div className="crud">
+                                                                                                <i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
+                                                                                                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                                                                    {
+                                                                                                        testimony_reply.fingerprint === fingerprint 
+                                                                                                        ? <><button onClick={() => this.handleEdit(testimony_reply)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(testimony_reply._id)} className="dropdown-item">Delete</button></>
+                                                                                                        : ''
+                                                                                                    }
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            )
+                                                                    })
+                                                                }
                                                             </div>
                                                         </div>
                                                     )
@@ -385,7 +448,7 @@ class Coffee extends React.Component {
         )
     }
 }
-  
+
 const mapStateToProps = state => ({
     testimonyToEdit: state.home.testimonyToEdit,
 

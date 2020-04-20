@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const TestimoniesSchema = new Schema({
+    parent_id: mongoose.Types.ObjectId,
     author: String,
     body: String,
     is_private: Boolean,
@@ -18,6 +19,7 @@ const TestimoniesSchema = new Schema({
 TestimoniesSchema.methods.toJSON = function() {
     return {
         _id: this._id,
+        parent_id: this.parent_id,
         author: this.author,
         body: this.body,
         is_private: this.is_private,

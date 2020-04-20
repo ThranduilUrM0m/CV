@@ -62,6 +62,10 @@ router.get('/:id', (req, res, next) => {
 router.patch('/:id', (req, res, next) => {
     const { body } = req;
 
+    if(typeof body.parent_id !== 'undefined') {
+        req.testimony.parent_id = body.parent_id;
+    }
+
     if(typeof body.author !== 'undefined') {
         req.testimony.author = body.author;
     }
