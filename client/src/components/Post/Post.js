@@ -20,38 +20,37 @@ class Post extends React.Component {
         var f = new Fingerprint().get();
 		this.state = {
 			_id: '',
-            title: '',
-            body: '',
-            author: '',
-            tag: [],
-            tagInput: '',
-			
+			title: '',
+			body: '',
+			author: '',
+			categorie: '',
+			tag: [],
 			comment: [],
-			comment_parent_id: null,
-            comment_author: '',
-            comment_body: '',
-            comment_fingerprint: f.toString(),
-            comment__createdAt: '',
-            comment_upvotes: [],
-			comment_downvotes: [],
-			comment_changed: false,
-
+			_comment_id_ifEditing: null,
+			_comment_parent_id: null,
+			_comment_author: '',
+			_comment_body: '',
+			_comment_fingerprint: f.toString(),
+			_comment_upvotes: [],
+			_comment_downvotes: [],
 			upvotes: [],
-			upvotes_changed: false,
 			downvotes: [],
-			downvotes_changed: false,
 			view: [],
-			view_changed: false,
+			createdAt: '',
+			fingerprint: f.toString(),
 		}
-		
-		this.handleDelete = this.handleDelete.bind(this);
-		this.handleEdit = this.handleEdit.bind(this);
-		
-		this.handleChangeField = this.handleChangeField.bind(this);
-		this.handleSubmitComment = this.handleSubmitComment.bind(this);
-		this.handleSubmitupvotes = this.handleSubmitupvotes.bind(this);
-		this.handleSubmitdownvotes = this.handleSubmitdownvotes.bind(this);
-		this.handleSubmitviews = this.handleSubmitviews.bind(this);
+
+        this.handleEdit = this.handleEdit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmitViews = this.handleSubmitViews.bind(this);
+        this.handleSubmitUpvotes = this.handleSubmitUpvotes.bind(this);
+        this.handleSubmitDownvotes = this.handleSubmitDownvotes.bind(this);
+        this.handleSubmitComments = this.handleSubmitComments.bind(this);
+        this.handleSubmitupvotesComment = this.handleSubmitupvotesComment.bind(this);
+        this.handleReply = this.handleReply.bind(this);
+        this.handleEditComment = this.handleEditComment.bind(this);
+        this.handleDeleteComment = this.handleDeleteComment.bind(this);
+        this.handleChangeField = this.handleChangeField.bind(this);
 		
 		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
 		this._FormatNumberLength = this._FormatNumberLength.bind(this);
@@ -59,322 +58,407 @@ class Post extends React.Component {
         this._handleScroll = this._handleScroll.bind(this);
 	}
 	componentDidMount() {
-        const { onLoad } = this.props;
-		const { match } = this.props;
-		axios('/api/articles')
-			.then((res) => onLoad(res.data))
-			.then((res) => {
-				this.handleEdit(_.find(res.data.articles, {'_id': match.params.postId}));
-				this.handleSubmitviews();
-				this.setState(state => ({
-					_id: match.params.postId
-				}));
-			});
 		document.getElementById('articles_post').parentElement.style.height = 'initial';
 		document.getElementById('comments_post').parentElement.style.height = 'initial';
 		this._handleMouseMove();
-        this._handleScroll();
+		this._handleScroll();
+
+		const { onLoad, match } = this.props;
+		const self = this;
+		axios('/api/articles')
+			.then((res) => {
+				function setEditFunction() {
+					// Get the current 'global' time from an API using Promise
+					return new Promise((resolve, reject) => {
+						setTimeout(function() {
+							onLoad(res.data);
+							self.handleEdit(_.find(res.data.articles, {'_id': match.params.postId}));
+							true ? resolve('Success') : reject('Error');
+						}, 2000);
+					})
+				}
+				setEditFunction()
+					.then(() => {
+						self.handleSubmitViews();
+						return true;
+					})
+					.catch(err => console.log('There was an error:' + err));
+			});
 	}
 	componentWillReceiveProps(nextProps) {
         if(nextProps.articleToEdit) {
-            this.setState({
+			this.setState({
+				_id: nextProps.articleToEdit._id,
                 title: nextProps.articleToEdit.title,
                 body: nextProps.articleToEdit.body,
                 author: nextProps.articleToEdit.author,
                 tag: nextProps.articleToEdit.tag,
-                tagInput: nextProps.articleToEdit.tagInput,
 				comment: nextProps.articleToEdit.comment,
                 upvotes: nextProps.articleToEdit.upvotes,
                 downvotes: nextProps.articleToEdit.downvotes,
 				view: nextProps.articleToEdit.view,
-            });
+				createdAt: nextProps.articleToEdit.createdAt,
+			});
         }
 	}
-	handleDelete(id) {
-		const { onDelete } = this.props;
-		return axios.delete(`/api/articles/${id}`)
-			.then(() => onDelete(id));
-	}
-	handleEdit(article) {
+    handleEdit(article) {
 		const { setEdit } = this.props;
-		setEdit(article);
+        setEdit(article);
 	}
-	componentDidUpdate () {
-		const { onEdit } = this.props;
-		const { _id, title, body, author, tag, comment, upvotes, downvotes, view } = this.state;
+	handleSubmit(){
+        const { onEdit } = this.props;
+		const { _id, title, body, author, categorie, tag, comment, upvotes, downvotes, view } = this.state;
+		
+        return axios.patch(`/api/articles/${_id}`, {
+			title,
+			body,
+			author,
+			categorie,
+			tag,
+			comment,
+			upvotes,
+			downvotes,
+			view,
+		})
+			.then((res) => onEdit(res.data));
+	}
+	handleSubmitViews() {
+		const f = new Fingerprint().get();
+		const { view } = this.state;
 		const self = this;
 		
-		if(_id) {
-			if(this.state.comment_changed || this.state.upvotes_changed || this.state.downvotes_changed || this.state.view_changed){
-				return axios.patch(`/api/articles/${_id}`, {
-					title,
-					body,
-					author,
-					tag,
-					comment,
-					upvotes,
-					downvotes,
-					view,
-				})
-					.then((res) => onEdit(res.data))
-					.then(function() {
-						self.setState({ 
-							comment_changed: false,
-							upvotes_changed: false,
-							downvotes_changed: false,
-							view_changed: false,
-						})
-					});
-			}
-		}
-	}
-	handleSubmitComment() {
-        const { comment_parent_id, comment_author, comment_body, comment_fingerprint, comment__createdAt, comment_upvotes, comment_downvotes } = this.state;
-		if(comment_author && comment_body && comment_fingerprint) {
-			this.setState(state => ({
-				comment: [...state.comment, {parent_id: comment_parent_id, author: comment_author, body: comment_body, fingerprint: comment_fingerprint, _createdAt: moment().format(), upvotes: comment_upvotes, downvotes: comment_downvotes}],
-				comment_parent_id: null,
-				comment_author: '',
-				comment_body: '',
-				comment_upvotes: [],
-				comment_downvotes: [],
-				comment_changed: true,
-			}));
-		} else {
-			$('#exampleModal_comment').modal('show');
-		}
-	}
-	handleSubmitupvotesComment(comment, event) {
-        var f = new Fingerprint().get();
-        let self = this;
-        let target = event.target;
-        if( _.isUndefined( _.find(_.get(comment, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
-			
+		if( _.isUndefined( _.find(view, (v) => {return v.viewer === f.toString()}) ) ) {
 			self.setState(state => ({
-				comment_upvotes: [...state.comment_upvotes, {upvoter: f.toString()}],
+				view: [...state.view, {viewer: f.toString()}],
 			}), () => {
-				if( !_.isUndefined( _.find(_.get(comment, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
-					let _downvotes = _.takeWhile(self.state.comment_downvotes, function(o) { return o.downvoter != f.toString(); });
+				self.handleSubmit();
+			})
+		}
+	}
+	handleSubmitUpvotes(event) {
+		const { upvotes, downvotes } = this.state;
+        var f = new Fingerprint().get();
+        let target = event.target;
+		let self = this;
+		
+		if( _.isUndefined( _.find(upvotes, (u) => {return u.upvoter === f.toString()}) ) ) {
+			self.setState(state => ({
+				upvotes: [...state.upvotes, {upvoter: f.toString()}],
+			}), () => {
+				if( !_.isUndefined( _.find(downvotes, (d) => {return d.downvoter === f.toString()}) ) ) {
+					let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter != f.toString(); });
 					self.setState({
-						comment_downvotes: _downvotes,
+						downvotes: _downvotes,
 					}, () => {
-						//self.handleEditComment();
+						self.handleSubmit();
 					});
 					$(target).closest("div").parent().find('div.downvotes').removeClass('active');
 				} else {
-					//self.handleEditComment();
+					self.handleSubmit();
 				}
 				$(target).closest("div").addClass('active');
-			});
-        } else {
-            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
+			})
+		} else {
+			let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter != f.toString(); });
 			self.setState(state => ({
 				upvotes: _upvotes,
 			}), () => {
 				self.handleSubmit();
 				$(target).closest("div").removeClass('active');
-			});
-        }
+			})
+		}
 	}
-	handleSubmitdownvotesComment(comment, event) {
+	handleSubmitDownvotes(event) {
+		const { downvotes, upvotes } = this.state;
         var f = new Fingerprint().get();
-        let self = this;
         let target = event.target;
-        if( _.isUndefined( _.find(_.get(comment, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
-            function setEditFunction() {
-                // Get the current 'global' time from an API using Promise
-                return new Promise((resolve, reject) => {
-                    setTimeout(function() {
-                        self.handleEdit(comment);
-                        true ? resolve('Success') : reject('Error');
-                    }, 2000);
-                })
-            }
-            setEditFunction()
-                .then(() => {
-                    self.setState(state => ({
-                        downvotes: [...state.downvotes, {downvoter: f.toString()}],
-                    }), () => {
-                        if( !_.isUndefined( _.find(_.get(comment, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
-                            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
-                            self.setState({
-                                upvotes: _upvotes,
-                            }, () => {
-                                self.handleSubmit();
-                            });
-                            $(target).closest("div").parent().find('div.upvotes').removeClass('active');
-                        } else {
-                            self.handleSubmit();
-                        }
-                        $(target).closest("div").addClass('active');
-                    });
-                    return true;
-                })
-                .catch(err => console.log('There was an error:' + err));
-        } else {
-            function setEditFunction() {
-                // Get the current 'global' time from an API using Promise
-                return new Promise((resolve, reject) => {
-                    setTimeout(function() {
-                        self.handleEdit(comment);
-                        true ? resolve('Success') : reject('Error');
-                    }, 2000);
-                })
-            }
-            setEditFunction()
-                .then(() => {
-                    let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
-                    self.setState(state => ({
-                        downvotes: _downvotes,
-                    }), () => {
-                        self.handleSubmit();
-                        $(target).closest("div").removeClass('active');
-                    });
-                    return true;
-                })
-                .catch(err => console.log('There was an error:' + err));
-        }
+		let self = this;
+		
+		if( _.isUndefined( _.find(downvotes, (d) => {return d.downvoter === f.toString()}) ) ) {
+			self.setState(state => ({
+				downvotes: [...state.downvotes, {downvoter: f.toString()}],
+			}), () => {
+				if( !_.isUndefined( _.find(upvotes, (u) => {return u.upvoter === f.toString()}) ) ) {
+					let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter != f.toString(); });
+					self.setState({
+						upvotes: _upvotes,
+					}, () => {
+						self.handleSubmit();
+					});
+					$(target).closest("div").parent().find('div.upvotes').removeClass('active');
+				} else {
+					self.handleSubmit();
+				}
+				$(target).closest("div").addClass('active');
+			})
+		} else {
+			let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter != f.toString(); });
+			self.setState(state => ({
+				downvotes: _downvotes,
+			}), () => {
+				self.handleSubmit();
+				$(target).closest("div").removeClass('active');
+			})
+		}
+	}
+	handleSubmitComments() {
+		const { _comment_id_ifEditing, comment ,_comment_parent_id, _comment_author, _comment_body, _comment_fingerprint, _comment_upvotes, _comment_downvotes } = this.state;
+		const self = this;
+		let _edited_comment = [];
+
+		if(_comment_author && _comment_body) {
+			if(_comment_id_ifEditing != null) {
+				_edited_comment = comment;
+				function setEditFunction() {
+					// Get the current 'global' time from an API using Promise
+					return new Promise((resolve, reject) => {
+						setTimeout(function() {
+							_edited_comment = _.map(_edited_comment, (_c) => {
+								if(_c._id === _comment_id_ifEditing) {
+									_c.author = _comment_author;
+									_c.body = _comment_body;
+									_c.fingerprint = _comment_fingerprint;
+									_c.upvotes = _comment_upvotes;
+									_c.downvotes = _comment_downvotes;
+								}
+								return _c;
+							});
+							true ? resolve('Success') : reject('Error');
+						}, 2000);
+					})
+				}
+				setEditFunction()
+					.then(() => {
+						self.setState(prevState => ({
+							comment : _edited_comment
+						}), () => {
+							function setEditFunction() {
+								// Get the current 'global' time from an API using Promise
+								return new Promise((resolve, reject) => {
+									setTimeout(function() {
+										self.handleSubmit();
+										true ? resolve('Success') : reject('Error');
+									}, 2000);
+								})
+							}
+							setEditFunction()
+								.then(() => {
+									self.setState({
+										_comment_parent_id: null,
+										_comment_author: '',
+										_comment_body: '',
+										_comment_upvotes: [],
+										_comment_downvotes: [],
+									})
+									return true;
+								})
+						});
+						return true;
+					})
+					.catch(err => console.log('There was an error:' + err));
+			} else {
+				self.setState(state => ({
+					comment: [...state.comment, {
+						parent_id: _comment_parent_id,
+						author: _comment_author,
+						body: _comment_body,
+						fingerprint: _comment_fingerprint,
+						_createdAt: moment().format(),
+						upvotes: _comment_upvotes,
+						downvotes: _comment_downvotes,
+					}],
+				}), () => {
+					function setEditFunction() {
+						// Get the current 'global' time from an API using Promise
+						return new Promise((resolve, reject) => {
+							setTimeout(function() {
+								self.handleSubmit();
+								true ? resolve('Success') : reject('Error');
+							}, 2000);
+						})
+					}
+					setEditFunction()
+						.then(() => {
+							self.setState({
+								_comment_parent_id: null,
+								_comment_author: '',
+								_comment_body: '',
+								_comment_upvotes: [],
+								_comment_downvotes: [],
+							})
+							return true;
+						})
+						.catch(err => console.log('There was an error:' + err));
+				});
+			}
+		} else {
+			$('#exampleModal_comment').modal('show');
+		}
+	}
+	handleSubmitupvotesComment(in_comment, event) {
+		const { comment } = this.state;
+		var f = new Fingerprint().get();
+		let self = this;
+		let _edited_comment = [];
+		
+		if( _.isUndefined( _.find(_.get(_.find(comment, {'_id': in_comment._id}), 'upvotes'), (_up) => {return _up.upvoter === f.toString()}) ) ) {
+			function setEditFunction() {
+				// Get the current 'global' time from an API using Promise
+				return new Promise((resolve, reject) => {
+					setTimeout(function() {
+						_edited_comment = comment;
+						_edited_comment = _.map(_edited_comment, (_c) => {
+							if(_c._id === in_comment._id) {
+								_c.upvotes.push({
+									upvoter: f.toString()
+								});
+								if(!_.isUndefined(_.find(_c.downvotes, {'downvoter': f.toString()}))) {
+									_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter != f.toString(); });
+								}
+							}
+							return _c;
+						});
+						true ? resolve('Success') : reject('Error');
+					}, 2000);
+				})
+			}
+			setEditFunction()
+				.then(() => {
+					self.setState(prevState => ({
+						comment : _edited_comment
+					}), () => {
+						self.handleSubmit();
+					});
+					return true;
+				})
+				.catch(err => console.log('There was an error:' + err));
+		} else {
+			function setEditFunction() {
+				return new Promise((resolve, reject) => {
+					setTimeout(function() {
+						_edited_comment = comment;
+						_edited_comment = _.map(_edited_comment, (_c) => {
+							if(_c._id === in_comment._id) {
+								_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter != f.toString(); });
+							}
+							return _c;
+						});
+						true ? resolve('Success') : reject('Error');
+					}, 2000);
+				})
+			}
+			setEditFunction()
+				.then(() => {
+					self.setState(prevState => ({
+						comment : _edited_comment
+					}), () => {
+						self.handleSubmit();
+					});
+					return true;
+				})
+				.catch(err => console.log('There was an error:' + err));
+		}
+	}
+	handleSubmitdownvotesComment(in_comment, event) {
+		const { comment } = this.state;
+		var f = new Fingerprint().get();
+		let self = this;
+		let _edited_comment = [];
+		
+		if( _.isUndefined( _.find(_.get(_.find(comment, {'_id': in_comment._id}), 'downvotes'), (_do) => {return _do.downvoter === f.toString()}) ) ) {
+			function setEditFunction() {
+				// Get the current 'global' time from an API using Promise
+				return new Promise((resolve, reject) => {
+					setTimeout(function() {
+						_edited_comment = comment;
+						_edited_comment = _.map(_edited_comment, (_c) => {
+							if(_c._id === in_comment._id) {
+								_c.downvotes.push({
+									downvoter: f.toString()
+								});
+								if(!_.isUndefined(_.find(_c.upvotes, {'upvoter': f.toString()}))) {
+									_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter != f.toString(); });
+								}
+							}
+							return _c;
+						});
+						true ? resolve('Success') : reject('Error');
+					}, 2000);
+				})
+			}
+			setEditFunction()
+				.then(() => {
+					self.setState(prevState => ({
+						comment : _edited_comment
+					}), () => {
+						self.handleSubmit();
+					});
+					return true;
+				})
+				.catch(err => console.log('There was an error:' + err));
+		} else {
+			function setEditFunction() {
+				return new Promise((resolve, reject) => {
+					setTimeout(function() {
+						_edited_comment = comment;
+						_edited_comment = _.map(_edited_comment, (_c) => {
+							if(_c._id === in_comment._id) {
+								_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter != f.toString(); });
+							}
+							return _c;
+						});
+						true ? resolve('Success') : reject('Error');
+					}, 2000);
+				})
+			}
+			setEditFunction()
+				.then(() => {
+					self.setState(prevState => ({
+						comment : _edited_comment
+					}), () => {
+						self.handleSubmit();
+					});
+					return true;
+				})
+				.catch(err => console.log('There was an error:' + err));
+		}
+	}
+	handleReply(_id) {
+        this.setState({
+            _comment_parent_id: _id
+        }, () => {
+            $('textarea._comment_body').focus();
+        });
+	}
+	handleEditComment(in_comment) {
+		this.setState({
+            _comment_id_ifEditing: in_comment._id,
+			_comment_parent_id: in_comment.parent_id,
+			_comment_author: in_comment.author,
+			_comment_body: in_comment.body,
+			_comment_fingerprint: in_comment.fingerprint,
+			_comment_upvotes: in_comment.upvotes,
+			_comment_downvotes: in_comment.downvotes,
+        }, () => {
+            $('textarea._comment_body').focus();
+        });
+	}
+	handleDeleteComment(_in_id) {
+		const self = this;
+		const { comment } = this.state;
+
+		self.setState(state => ({
+			comment: _.takeWhile(comment, (_c) => {return _c._id != _in_id}),
+		}), () => {
+			self.handleSubmit();
+		});
+	}
+    handleChangeField(key, event) {
+        this.setState({
+            [key]: event.target.value,
+        });
     }
-	handleSubmitupvotes() {
-		var fingerprint = new Fingerprint().get();
-
-		if( localStorage.getItem('email') ){
-			if( _.isUndefined(_.find(this.state.upvotes, {'upvoter': localStorage.getItem('email')})) ) {
-				this.setState(state => ({
-					upvotes: [...state.upvotes, {upvoter: localStorage.getItem('email')}],
-					upvotes_changed: true,
-				}));
-				if( !_.isUndefined(_.find(this.state.downvotes, {'downvoter': localStorage.getItem('email')})) ) {
-					let _new_downvote = _.takeWhile(this.state.downvotes, function(o) { return o.downvoter != localStorage.getItem('email'); });
-					this.setState(state => ({
-						downvotes: _new_downvote,
-						downvotes_changed: true,
-					}));
-					$('p.downvotes').removeClass('active');
-				}
-				$('p.upvotes').addClass('active');
-			} else {
-				let _new_upvote = _.takeWhile(this.state.upvotes, function(o) { return o.upvoter != localStorage.getItem('email'); });
-				this.setState(state => ({
-					upvotes: _new_upvote,
-					upvotes_changed: true,
-				}));
-				$('p.upvotes').removeClass('active');
-			}
-		} else {
-			if(_.isUndefined(_.find(this.state.upvotes, {'upvoter': fingerprint.toString()}))) {
-				this.setState(state => ({
-					upvotes: [...state.upvotes, {upvoter: fingerprint.toString()}],
-					upvotes_changed: true,
-				}));
-				if( !_.isUndefined(_.find(this.state.downvotes, {'downvoter': fingerprint.toString()})) ) {
-					let _new_downvote = _.takeWhile(this.state.downvotes, function(o) { return o.downvoter != fingerprint.toString(); });
-					this.setState(state => ({
-						downvotes: _new_downvote,
-						downvotes_changed: true,
-					}));
-					$('p.downvotes').removeClass('active');
-				}
-				$('p.upvotes').addClass('active');
-			} else {
-				let _new_upvote = _.takeWhile(this.state.upvotes, function(o) { return o.upvoter != fingerprint.toString(); });
-				this.setState(state => ({
-					upvotes: _new_upvote,
-					upvotes_changed: true,
-				}));
-				$('p.upvotes').removeClass('active');
-			}
-		}
-	}
-	handleSubmitdownvotes() {
-		var fingerprint = new Fingerprint().get();
-
-		if( localStorage.getItem('email') ){
-			if( _.isUndefined(_.find(this.state.downvotes, {'downvoter': localStorage.getItem('email')})) ) {
-				this.setState(state => ({
-					downvotes: [...state.downvotes, {downvoter: localStorage.getItem('email')}],
-					downvotes_changed: true,
-				}));
-				if( !_.isUndefined(_.find(this.state.upvotes, {'upvoter': localStorage.getItem('email')})) ) {
-					let _new_upvote = _.takeWhile(this.state.upvotes, function(o) { return o.upvoter != localStorage.getItem('email'); });
-					this.setState(state => ({
-						upvotes: _new_upvote,
-						upvotes_changed: true,
-					}));
-					$('p.upvotes').removeClass('active');
-				}
-				$('p.downvotes').addClass('active');
-			} else {
-				let _new_downvote = _.takeWhile(this.state.downvotes, function(o) { return o.downvoter != localStorage.getItem('email'); });
-				this.setState(state => ({
-					downvotes: _new_downvote,
-					downvotes_changed: true,
-				}));
-				$('p.downvotes').removeClass('active');
-			}
-		} else {
-			if(_.isUndefined(_.find(this.state.downvotes, {'downvoter': fingerprint.toString()}))) {
-				this.setState(state => ({
-					downvotes: [...state.downvotes, {downvoter: fingerprint.toString()}],
-					downvotes_changed: true,
-				}));
-				if( !_.isUndefined(_.find(this.state.upvotes, {'upvoter': fingerprint.toString()})) ) {
-					let _new_upvote = _.takeWhile(this.state.upvotes, function(o) { return o.upvoter != fingerprint.toString(); });
-					this.setState(state => ({
-						upvotes: _new_upvote,
-						upvotes_changed: true,
-					}));
-					$('p.upvotes').removeClass('active');
-				}
-				$('p.downvotes').addClass('active');
-			} else {
-				let _new_downvote = _.takeWhile(this.state.downvotes, function(o) { return o.downvoter != fingerprint.toString(); });
-				this.setState(state => ({
-					downvotes: _new_downvote,
-					downvotes_changed: true,
-				}));
-				$('p.downvotes').removeClass('active');
-			}
-		}
-	}
-	handleSubmitviews() {
-		var fingerprint = new Fingerprint().get();
-
-		//look for downvotes nd upvotes
-		if( localStorage.getItem('email') ) {
-			if( !_.isUndefined(_.find(this.state.upvotes, {'upvoter': localStorage.getItem('email')})) ) {
-				$('p.upvotes').addClass('active');
-			}
-			if( !_.isUndefined(_.find(this.state.downvotes, {'downvoter': localStorage.getItem('email')})) ) {
-				$('p.downvotes').addClass('active');
-			}
-			if(_.isUndefined(_.find(this.state.view, {'viewer': localStorage.getItem('email')}))) {
-				this.setState(state => ({
-					view: [...state.view, {viewer: localStorage.getItem('email'), _yes_or_no: true}],
-					view_changed: true,
-				}));
-			}
-		} else {
-			if( !_.isUndefined(_.find(this.state.upvotes, {'upvoter': fingerprint.toString()})) ) {
-				$('p.upvotes').addClass('active');
-			}
-			if( !_.isUndefined(_.find(this.state.downvotes, {'downvoter': fingerprint.toString()})) ) {
-				$('p.downvotes').addClass('active');
-			}
-			if(_.isUndefined(_.find(this.state.view, {'viewer': fingerprint.toString()}))) {
-				this.setState(state => ({
-					view: [...state.view, {viewer: fingerprint.toString(), _yes_or_no: true}],
-					view_changed: true,
-				}));
-			}
-		}
-	}
-	handleChangeField(key, event) {	
-		const val = event.target.value;
-		this.setState(state => ({
-			[key]: val,
-		}));
-	}
+	
 	handleJSONTOHTML(inputDelta) {
 		function randomIntFromInterval(min, max) { // min and max included 
 			return Math.floor(Math.random() * (max - min + 1) + min);
@@ -418,11 +502,11 @@ class Post extends React.Component {
                 $('.fixedHeaderContainer').removeClass('blog_header');
             }
         });
-    }
+	}
+	
     render() {
 		const { articles } = this.props;
-        const { match } = this.props;
-		const { comment_body, comment_author, comment_fingerprint } = this.state;
+        const { _id, title, body, author, categorie, tag, comment, _comment_author, _comment_body, _comment_fingerprint, upvotes, downvotes, view, createdAt, fingerprint } = this.state;
 		
 		return (
             <FullPage scrollMode={'normal'}>
@@ -431,19 +515,6 @@ class Post extends React.Component {
                 </Slide> */}
 				<Slide>
 					<section id='articles_post' className="active first_section_post">
-						<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div className="modal-dialog" role="document">
-								<div className="modal-content">
-									<div className="modal-body">
-										<a title="Close" className="modal-close" data-dismiss="modal">Close</a>
-										<h5 className="modal-title" id="exampleModalLabel">Voilà!</h5>
-										<div>How about you joins us, not only you can give a feedback to the post you're reading, but you can discover much more about out community.</div>
-										<div><small>Here</small></div>
-										<a className="togglebtn">👉 Sign In If you don't have an Account</a>
-									</div>
-								</div>
-							</div>
-						</div>
 						<div className="modal fade" id="exampleModal_comment" tabIndex="-1" role="dialog" aria-labelledby="exampleModal_commentLabel" aria-hidden="true">
 							<div className="modal-dialog" role="document">
 								<div className="modal-content">
@@ -459,36 +530,35 @@ class Post extends React.Component {
 								<ol className="breadcrumb">
 									<li className="breadcrumb-item"><a href="/">home</a></li>
 									<li className="breadcrumb-item"><a href="/blog">blog</a></li>
-									<li className="breadcrumb-item active" aria-current="page">{_.get(_.find(articles, {'_id': match.params.postId}), 'title')}</li>
+									<li className="breadcrumb-item active" aria-current="page">{title}</li>
 								</ol>
 							</nav>
-							<div className="shadow_title">{_.head(_.words(_.get(_.find(articles, {'_id': match.params.postId}), 'title')))}.</div>
-							<div className="shadow_letter">{this._FormatNumberLength(_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))+1, 2)}.</div>
+							<div className="shadow_title">{_.head(_.words(title))}.</div>
+							<div className="shadow_letter">{this._FormatNumberLength(_.indexOf(_.orderBy(articles, ['createdAt'], ['desc']), _.find(articles, {'_id': _id})), 2)}.</div>
 							<div id="box">
-								<h1>{_.get(_.find(articles, {'_id': match.params.postId}), 'title')}</h1>
-								<p className="text-muted author">by <b>{_.get(_.find(articles, {'_id': match.params.postId}), 'author')}</b>, {moment(new Date(_.get(_.find(articles, {'_id': match.params.postId}), 'createdAt'))).fromNow()}</p>
+								<h1>{title}</h1>
+								<p className="text-muted author">by <b>{author}</b>, {moment(new Date(createdAt)).fromNow()}</p>
 								<h6 className="text-muted body body_article">
 									{
-										this.handleJSONTOHTML(_.get(_.find(articles, {'_id': match.params.postId}), 'body'))
+										this.handleJSONTOHTML(body)
 									}
 								</h6>
 								<div className="comments_up_down">
-									<p className="text-muted views"><b>{_.size(_.get(_.find(articles, {'_id': match.params.postId}), 'view'))}</b><i className="fas fa-eye"></i></p>
-									<p className="text-muted comments"><b>{_.size(_.get(_.find(articles, {'_id': match.params.postId}), 'comment'))}</b> <a href="#comments-modal"><i className="fas fa-comment-alt"></i></a> </p>
-									<p className="text-muted upvotes"><b>{_.size(_.get(_.find(articles, {'_id': match.params.postId}), 'upvotes'))}</b> <button onClick={this.handleSubmitupvotes}><i className="fas fa-thumbs-up"></i></button> </p>
-									<p className="text-muted downvotes"><b>{_.size(_.get(_.find(articles, {'_id': match.params.postId}), 'downvotes'))}</b> <button onClick={this.handleSubmitdownvotes}><i className="fas fa-thumbs-down"></i></button> </p>
+									<p className="text-muted views"><b>{_.size(view)}</b><i className="fas fa-eye"></i></p>
+									<p className="text-muted comments"><b>{_.size(comment)}</b> <a href="#comments-modal"><i className="fas fa-comment-alt"></i></a> </p>
+									<div className={`text-muted upvotes ${_.isUndefined( _.find(upvotes, (upvote) => {return upvote.upvoter === fingerprint}) ) ? '' : 'active'}`}><b>{_.size(upvotes)}</b> <button onClick={(event) => this.handleSubmitUpvotes(event)}><i className="fas fa-thumbs-up"></i></button> </div>
+									<div className={`text-muted downvotes ${_.isUndefined( _.find(downvotes, (downvote) => {return downvote.downvoter === fingerprint}) ) ? '' : 'active'}`}><b>{_.size(downvotes)}</b> <button onClick={(event) => this.handleSubmitDownvotes(event)}><i className="fas fa-thumbs-down"></i></button> </div>
 								</div>
 							</div>
 							<div className="beforeorafter">
-								<a href={_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))-1], '_id', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), '_id'))} className="before_article">
+								<a href={_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': _id}))-1], '_id', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), '_id'))} className="before_article">
 									{
-									_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))-1], 'title', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), 'title'))
+									_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': _id}))-1], 'title', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), 'title'))
 									}.
 								</a>
-								<a href={_.get(
-									_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))+1], '_id', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), '_id'))} className="after_article">
+								<a href={_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': _id}))+1], '_id', _.get(_.last(_.orderBy(articles, ['view'], ['desc'])), '_id'))} className="after_article">
 									{
-									_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': match.params.postId}))+1], 'title', _.get(_.head(_.orderBy(articles, ['view'], ['desc'])), 'title'))
+									_.get(_.orderBy(articles, ['view'], ['desc'])[_.indexOf(_.orderBy(articles, ['view'], ['desc']), _.find(articles, {'_id': _id}))+1], 'title', _.get(_.head(_.orderBy(articles, ['view'], ['desc'])), 'title'))
 									}.
 								</a>
 							</div>
@@ -504,31 +574,31 @@ class Post extends React.Component {
 										<div className="row">
 											<div className="input-field col s12">
 												<textarea 
-													onChange={(ev) => this.handleChangeField('comment_body', ev)}
-													value={comment_body}
-													className="validate form-group-input materialize-textarea comment_body" 
-													id="comment_body" 
-													name="comment_body" 
+													onChange={(ev) => this.handleChangeField('_comment_body', ev)}
+													value={_comment_body}
+													className="validate form-group-input materialize-textarea _comment_body" 
+													id="_comment_body" 
+													name="_comment_body" 
 													required="required"/>
-												<label htmlFor='comment_body'>Leave a comment.</label>
+												<label htmlFor='_comment_body' className={_comment_body ? 'active' : ''}>Leave a comment.</label>
 												<div className="form-group-line textarea_line"></div>
 											</div>
 										</div>
 										<div className="row">
 											<div className="input-field col s6">
 												<input 
-													onChange={(ev) => this.handleChangeField('comment_author', ev)}
-													value={comment_author}
-													className="validate form-group-input comment_author" 
-													id="comment_author" 
+													onChange={(ev) => this.handleChangeField('_comment_author', ev)}
+													value={_comment_author}
+													className="validate form-group-input _comment_author" 
+													id="_comment_author" 
 													type="text" 
-													name="comment_author" 
+													name="_comment_author" 
 													required="required"/>
-												<label htmlFor='comment_author'>your name</label>
+												<label htmlFor='_comment_author' className={_comment_author ? 'active' : ''}>your name</label>
 												<div className="form-group-line"></div>
 											</div>
 											<div className="input-field col s6">
-												<button onClick={this.handleSubmitComment} className="btn btn-primary pull-right" type="submit">
+												<button onClick={(event) => this.handleSubmitComments(event)} className="btn btn-primary pull-right" type="submit">
 													<span>
 														<span>
 															<span data-attr-span="Leave a Comment.">
@@ -542,85 +612,89 @@ class Post extends React.Component {
 										<div id="comments-modal" className="comments-modal">
 											<div className="modal-inner">
 												<div className="modal-content">
-												{
-													_.isEmpty(_.get(_.find(articles, {'_id': match.params.postId}), 'comment')) 
-													? null 
-													: <>
 													{
-														_.orderBy(_.filter(_.get(_.find(articles, {'_id': match.params.postId}), 'comment'), { parent_id: null }), ['upvotes'], ['desc']).map((comment, index) => {
+														_.orderBy(_.filter(comment, { parent_id: null }), ['upvotes'], ['desc']).map((_c, _i) => {
 															return (
-																<div className={"card card_" + index} data-index={index+1}>
-																	<div className="shadow_title">{_.head(_.words(comment.body))}</div>
+																<div className={"card card_" + _i} data-index={_i+1}>
+																	<div className="shadow_title">{_.head(_.words(_c.body))}</div>
 																	<div className="card-body">
 																		<div className="top_row">
-																			<h6 className="author">by <b>{comment.author}</b></h6>
-																			<p className="text-muted fromNow">{moment(new Date(comment._createdAt)).fromNow()}</p>
+																			<h6 className="author">by <b>{_c.author}</b></h6>
+																			<p className="text-muted fromNow">{moment(new Date(_c._createdAt)).fromNow()}</p>
 																			<div className="up_down">
-																				<div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(comment, 'upvotes'), (upvote) => {return upvote.upvoter === comment_fingerprint}) ) ? '' : 'active'}`}>
-																					<b>{_.size(_.get(comment, 'upvotes'))}</b> 
-																					<button onClick={(ev) => this.handleSubmitupvotesComment(comment, ev)}>
+																				<div className={`text-muted upvotes ${_.isUndefined( _.find(_c.upvotes, (_up) => {return _up.upvoter === _comment_fingerprint}) ) ? '' : 'active'}`}>
+																					<b>{_.size(_c.upvotes)}</b> 
+																					<button onClick={(event) => this.handleSubmitupvotesComment(_c, event)}>
 																						<i className="fas fa-thumbs-up"></i>
 																					</button>
 																				</div>
-																				<div className={`text-muted downvotes ${_.isUndefined( _.find(_.get(comment, 'downvotes'), (downvote) => {return downvote.downvoter === comment_fingerprint}) ) ? '' : 'active'}`}>
-																					<b>{_.size(_.get(comment, 'downvotes'))}</b>
-																					<button onClick={(ev) => this.handleSubmitdownvotesComment(comment, ev)}>
+																				<div className={`text-muted downvotes ${_.isUndefined( _.find(_c.downvotes, (_do) => {return _do.downvoter === _comment_fingerprint}) ) ? '' : 'active'}`}>
+																					<b>{_.size(_.get(_c, 'downvotes'))}</b>
+																					<button onClick={(ev) => this.handleSubmitdownvotesComment(_c, ev)}>
 																						<i className="fas fa-thumbs-down"></i>
 																					</button>
 																				</div>
 																			</div>
 																		</div>
 																		<div className="middle_row">
-																			<h5>{comment.body}</h5>
+																			<h5>{_c.body}</h5>
 																		</div>
 																		<div className="bottom_row">
 																			<div className="crud">
 																				<i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
 																				<div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-																					<button onClick={() => this.handleReply(comment._id)} className="dropdown-item" type="button">Reply</button>
+																					<button onClick={() => this.handleReply(_c._id)} className="dropdown-item" type="button">Reply</button>
 																					{
-																						comment.fingerprint === comment_fingerprint 
-																						? <><button onClick={() => this.handleEdit(comment)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(comment._id)} className="dropdown-item">Delete</button></>
+																						_c.fingerprint === _comment_fingerprint 
+																						? <>
+																							<button onClick={() => this.handleEditComment(_c)} className="dropdown-item">Edit</button>
+																							<div className="dropdown-divider"></div>
+																							<button onClick={() => this.handleDeleteComment(_c._id)} className="dropdown-item">Delete</button>
+																						</>
 																						: ''
 																					}
 																				</div>
 																			</div>
 																		</div>
 																		{
-																			_.orderBy(_.reject(_.get(_.find(articles, {'_id': match.params.postId}), 'comment'), { parent_id: null }), ['upvotes'], ['desc']).map((comment_reply, index_reply) => {
-																				if(comment_reply.parent_id === comment._id)
+																			_.orderBy(_.reject(comment, { parent_id: null }), ['upvotes'], ['desc']).map((_c_reply, _i_reply) => {
+																				if(_c_reply.parent_id === _c._id)
 																					return (
-																						<div className={"card card_" + index_reply} data-index={index_reply+1}>
-																							<div className="shadow_title">{_.head(_.words(comment_reply.body))}</div>
+																						<div className={"card card_" + _i_reply} data-index={_i_reply+1}>
+																							<div className="shadow_title">{_.head(_.words(_c_reply.body))}</div>
 																							<div className="card-body">
 																								<div className="top_row">
-																									<h6 className="author">by <b>{comment_reply.author}</b></h6>
-																									<p className="text-muted fromNow">{moment(new Date(comment_reply._createdAt)).fromNow()}</p>
+																									<h6 className="author">by <b>{_c_reply.author}</b></h6>
+																									<p className="text-muted fromNow">{moment(new Date(_c_reply.createdAt)).fromNow()}</p>
 																									<div className="up_down">
-																										<div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(comment_reply, 'upvotes'), (upvote) => {return upvote.upvoter === comment_fingerprint}) ) ? '' : 'active'}`}>
-																											<b>{_.size(_.get(comment_reply, 'upvotes'))}</b> 
-																											<button onClick={(ev) => this.handleSubmitupvotesComment(comment_reply, ev)}>
+																										<div className={`text-muted upvotes ${_.isUndefined( _.find(_c_reply.upvotes, (_up_reply) => {return _up_reply.upvoter === _comment_fingerprint}) ) ? '' : 'active'}`}>
+																											<b>{_.size(_c_reply.upvotes)}</b> 
+																											<button onClick={(ev) => this.handleSubmitupvotesComment(_c_reply, ev)}>
 																												<i className="fas fa-thumbs-up"></i>
 																											</button>
 																										</div>
-																										<div className={`text-muted downvotes ${_.isUndefined( _.find(_.get(comment_reply, 'downvotes'), (downvote) => {return downvote.downvoter === comment_fingerprint}) ) ? '' : 'active'}`}>
-																											<b>{_.size(_.get(comment_reply, 'downvotes'))}</b>
-																											<button onClick={(ev) => this.handleSubmitdownvotesComment(comment_reply, ev)}>
+																										<div className={`text-muted downvotes ${_.isUndefined( _.find(_c_reply.downvotes, (_do_reply) => {return _do_reply.downvoter === _comment_fingerprint}) ) ? '' : 'active'}`}>
+																											<b>{_.size(_c_reply.downvotes)}</b>
+																											<button onClick={(ev) => this.handleSubmitdownvotesComment(_c_reply, ev)}>
 																												<i className="fas fa-thumbs-down"></i>
 																											</button>
 																										</div>
 																									</div>
 																								</div>
 																								<div className="middle_row">
-																									<h5>{comment_reply.body}</h5>
+																									<h5>{_c_reply.body}</h5>
 																								</div>
 																								<div className="bottom_row">
 																									<div className="crud">
 																										<i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
 																										<div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 																											{
-																												comment_reply.fingerprint === comment_fingerprint 
-																												? <><button onClick={() => this.handleEdit(comment_reply)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(comment_reply._id)} className="dropdown-item">Delete</button></>
+																												_c_reply.fingerprint === _comment_fingerprint 
+																												? <>
+																													<button onClick={() => this.handleEditComment(_c_reply)} className="dropdown-item">Edit</button>
+																													<div className="dropdown-divider"></div>
+																													<button onClick={() => this.handleDeleteComment(_c_reply._id)} className="dropdown-item">Delete</button>
+																												</>
 																												: ''
 																											}
 																										</div>
@@ -636,8 +710,6 @@ class Post extends React.Component {
 															)
 														})
 													}
-													</>
-												}
 												</div>
 											</div>
 										</div>

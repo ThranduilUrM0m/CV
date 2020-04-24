@@ -188,7 +188,7 @@ class Coffee extends React.Component {
             parent_id: testimony_id
         }, () => {
             $('input.author').focus();
-        })
+        });
     }
     handleSubmit(){
         const { onSubmitTestimony, testimonyToEdit, onEditTestimony } = this.props;
