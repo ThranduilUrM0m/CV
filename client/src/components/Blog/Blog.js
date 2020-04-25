@@ -302,7 +302,7 @@ class Blog extends React.Component {
 		const { scroll_mode, currentPage, todosPerPage, sort, timeframe, categorie, tags } = this.state;
 		
 		return (
-			<FullPage scrollMode={scroll_mode}>
+			<FullPage scrollMode={'normal'}>
 				<Slide>
 					<section className="active first_section_blog">
 						<span className="parallax-layer parallax-layer__1 l_name" data-parallax-direction="plus" data-parallax-deep="1000">Boutaleb<span className="outlined">Boutaleb</span>BoutalebBoutaleb</span>

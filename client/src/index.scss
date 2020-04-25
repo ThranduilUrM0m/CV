@@ -6841,7 +6841,7 @@ body, html {
 				&.right_part{
 					width: 60%;
 					position: relative;
-					i {
+					i:not(.dot) {
 						position: absolute;
 						top: 20%;
 						right: 20%;
@@ -6892,11 +6892,13 @@ body, html {
 						width: 100%;
 						height: 100%;
 						.shadow_title{
+							opacity: 0.25;
 							font-size: 8rem;
 							position: absolute;
 							color: lighten($color: $main-color, $amount: 10%);
 							top: 0;
 							left: 0;
+							transform: translate(-25%, 0);
 							line-height: initial;
     						white-space: nowrap;
 						}
@@ -6922,7 +6924,7 @@ body, html {
 								top: 50%;
 								left: 50%;
 								transform: translate(-50%, -50%);
-								width: 35%;
+								width: 35vw;
 								border: 0;
 								-webkit-transition: all 0.3s;
 								-moz-transition: all 0.3s;
@@ -7211,27 +7213,6 @@ body, html {
 						}
 					}
 				}
-			}
-			&::before {
-				content: '';
-				position: absolute;
-				width: 40%;
-				height: 5%;
-				bottom: 0%;
-				right: 0;
-				background-color: $main-color;
-				opacity: 0.5;
-			}
-			&::after {
-				content: '';
-				position: absolute;
-				width: 20%;
-				height: 7%;
-				bottom: 0;
-				right: 20%;
-				transform: translate(50%, 0);
-				background-color: darken($color: $main-color, $amount: 10);
-				opacity: 0.5;
 			}
 		}
 		.second_section_post{
@@ -8695,11 +8676,14 @@ body, html {
 					}
 					.some_text{
 						width: 60%;
-						margin-left: 10%;
-						margin-top: -10%;
-						position: relative;
+						position: absolute;
+						left: 20%;
+						top: 20%;
 						h1 {
 							font-weight: bold;
+						}
+						h2 {
+							font-size: 4.5rem;
 						}
 						.display-1 {
 							opacity: 0.2;
@@ -8988,6 +8972,16 @@ body, html {
 								}
 							}
 						}
+						.bg-pattern {
+							position: absolute;
+							top: 0;
+							right: 0;
+							width: 100vw;
+							height: 300px;
+							margin-top: 120px;
+							background: url('http://katehummer.com/resources/subtle-dots_x2.png');
+							z-index: -1;
+						}
 					}
 					.carousel-indicatorsslider_projects {
 						display: flex;
@@ -9137,27 +9131,6 @@ body, html {
 						}
 					}
 				}
-			}
-			&::before {
-				content: '';
-				position: absolute;
-				width: 40%;
-				height: 70%;
-				top: 0%;
-				right: 0;
-				background-color: $main-color;
-				opacity: 0.5;
-			}
-			&::after {
-				content: '';
-				position: absolute;
-				width: 20%;
-				height: 77%;
-				top: 0;
-				right: 20%;
-				transform: translate(50%, 0);
-				background-color: darken($color: $main-color, $amount: 10);
-				opacity: 0.5;
 			}
 		}
 		.third_section {

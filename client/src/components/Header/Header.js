@@ -42,14 +42,14 @@ class Header extends React.Component {
                         $('.nav-link').not('#'+index.id).removeClass('active');
                     }
                     break;
-                case "_coffee_link":
-                    if(_url === '/coffee'){
+                case "_minttea_link":
+                    if(_url === '/minttea'){
                         $('#'+index.id).addClass('active');
                         $('.nav-link').not('#'+index.id).removeClass('active');
                     }
                     break;
-                case "_faq_link":
-                    if(_url === '/faq'){
+                case "_contact_link":
+                    if(_url === '/contact'){
                         $('#'+index.id).addClass('active');
                         $('.nav-link').not('#'+index.id).removeClass('active');
                     }
@@ -256,8 +256,8 @@ class Header extends React.Component {
                     <li><span className="item item-1"><Link to='/' className="nav-link" id="_home_link"> Home. </Link></span></li>
                     <li><span className="item item-2"><Link to='/blog' className="nav-link" id="_blog_link"> Blog. </Link></span></li>
                     <li><span className="item item-3"><Link to='/about' className="nav-link" id="_about_link"> About Me. </Link></span></li>
-                    <li><span className="item item-4"><Link to='/coffee' className="nav-link" id="_coffee_link"> Mint Tea. </Link></span></li>
-                    <li><span className="item item-5"><Link to='/faq' className="nav-link" id="_faq_link"> Ask Me. </Link></span></li>
+                    <li><span className="item item-4"><Link to='/minttea' className="nav-link" id="_minttea_link"> Mint Tea. </Link></span></li>
+                    <li><span className="item item-5"><Link to='/contact' className="nav-link" id="_contact_link"> Contact Me. </Link></span></li>
                 </ul>
                 <div className="modal fade" id="signup_modal" tabIndex="-1" role="dialog" aria-labelledby="signup_modalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">

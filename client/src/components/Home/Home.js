@@ -402,6 +402,7 @@ class Home extends React.Component {
                                             <div className={"card card_" + index} data-title={_.head( article.title.split(" ") )} data-index={index+1}>
                                                 <div className="shadow_title">{(_.head( article.title.split(/[\s.]+/) ).length <= 2 ) ? _.head( article.title.split(/[\s.]+/) )+" "+_.nth(article.title.split(/[\s.]+/), 1) : _.head( article.title.split(/[\s.]+/) )}.</div>
                                                 <div className="card-body">
+                                                    <h2>{article.title}</h2>
                                                     <Link to={`/blog/${article._id}`}>
                                                         <button>
                                                             <span>
@@ -413,6 +414,7 @@ class Home extends React.Component {
                                                             </span>
                                                         </button>
                                                     </Link>
+                                                    <p className="text-muted author"><b>{_.size(article.view)}</b> Views <i className="fas fa-circle dot"></i> by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
                                                 </div>
                                             </div>
                                         )
@@ -455,9 +457,10 @@ class Home extends React.Component {
                             </div>
                             <div className="some_text">
                                 <h1 data-text="projects." className="display-1">projects.</h1>
-                                <p>Website and user <br/>interface <b className='web'>developer.</b></p>
+                                <h2>Hi.</h2>
+                                <p>I'm a Website and user <br/>interface <b className='web'>developer.</b></p>
                                 <p className="name">ZAKARIAE BOUTALEB</p>
-                                <p className="text">I Usually work on multiple projects, but feel free to reach out, and we can discuss how i can help.</p>
+                                <p className="text">I Usually work on multiple projects, but feel free to reach out, and we can discuss how i can help you.</p>
                             </div>
                         </div>
                         <div className="wrapper right_part">
@@ -478,9 +481,9 @@ class Home extends React.Component {
                                         )
                                     })
                                 }
+                                <div className="bg-pattern"></div>
                             </div>
                             <button onClick={() => this.handleClick('footer_to')} type="button">
-								<div className="button_border"></div>
                                 <span>
                                     <span>
                                         <span data-attr-span="Reach Out.">

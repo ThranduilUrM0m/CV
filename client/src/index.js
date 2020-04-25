@@ -15,8 +15,8 @@ import Home from './components/Home/Home';
 import Blog from './components/Blog/Blog';
 import Post from './components/Post/Post';
 import About from './components/About/About';
-import Coffee from './components/Coffee/Coffee';
-import FAQ from './components/FAQ/FAQ';
+import Minttea from './components/Minttea/Minttea';
+import ContactMe from './components/ContactMe/ContactMe';
 import Dashboard from './components/Dashboard/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import * as serviceWorker from './serviceWorker';
@@ -30,8 +30,8 @@ ReactDOM.render(
                     <Route exact path="/blog" component={Blog}/>
                     <Route path={`/blog/:postId`} component={Post}/>
                     <Route exact path='/about' component={About} />
-                    <Route exact path='/coffee' component={Coffee} />
-                    <Route exact path='/faq' component={FAQ} />
+                    <Route exact path='/minttea' component={Minttea} />
+                    <Route exact path='/contact' component={ContactMe} />
                     <PrivateRoute path='/dashboard' component={Dashboard} />
                     <Route component={NotFound}/>
                 </Switch>

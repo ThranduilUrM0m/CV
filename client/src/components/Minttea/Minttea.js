@@ -10,7 +10,7 @@ import 'bootstrap';
 
 var _ = require('lodash');
 
-class Coffee extends React.Component {
+class Minttea extends React.Component {
     constructor(props){
         super(props);
 
@@ -464,4 +464,4 @@ const mapDispatchToProps = dispatch => ({
 	setEditTestimony: testimony => dispatch({ type: 'SET_EDIT_TESTIMONY', testimony }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Coffee) 
+export default connect(mapStateToProps, mapDispatchToProps)(Minttea) 

@@ -10,7 +10,7 @@ import Footer from '../Footer/Footer';
 import * as $ from "jquery";
 import 'bootstrap';
 
-class FAQ extends React.Component {
+class ContactMe extends React.Component {
     constructor(props){
         super(props);
     }
@@ -42,4 +42,4 @@ class FAQ extends React.Component {
     }
 }
   
-export default FAQ
+export default ContactMe
