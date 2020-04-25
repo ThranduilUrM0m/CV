@@ -76,12 +76,25 @@ class Header extends React.Component {
                 });
             }
         }
-         
         // Attaching the event listener function to window's resize event
         window.addEventListener("resize", displayWindowSize);
-        
         // Calling the function for the first time
         displayWindowSize();
+
+        //make the header background slightly white on scroll
+        
+        if($(window).scrollTop() > 100) {
+            $('.fixedHeaderContainer').css("background-color", "rgba(white, 0.25)");
+        } else {
+            $('.fixedHeaderContainer').css("background-color", "rgba(white, 0)");
+        }
+        $(window).scroll(function() {
+            if($(window).scrollTop() > 100) {
+                $('.fixedHeaderContainer').css("background-color", "rgba(255, 255, 255, 0.85)");
+            } else {
+                $('.fixedHeaderContainer').css("background-color", "rgba(255, 255, 255, 0)");
+            }
+        });
     }
     _handleClickEvents() {
         let searchWrapper = document.querySelector('.search-wrapper'),
