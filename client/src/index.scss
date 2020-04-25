@@ -413,7 +413,7 @@ img {
 	z-index: 1050;
 }
 
-body, html {	
+body, html {
 	height: 100%;
 	background-color: rgba(0,0,0,0);
 	color: rgba(0,0,0,1);
@@ -426,8 +426,8 @@ body, html {
 		#social_media{
 			position: absolute;
 			left: 0;
-			bottom: 0;
-			height: 100%;
+			top: 0;
+			height: 100vh;
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
@@ -5588,7 +5588,8 @@ body, html {
 		.first_section_coffee {
 			position: relative;
 			width: 100%;
-			height: 100%;
+			height: fit-content;
+			min-height: 100vh;
 			padding: 0;
 			margin: 0 auto;
 			display: flex;
@@ -5596,8 +5597,9 @@ body, html {
 			.wrapper_full {
 				overflow: hidden;
 				position: relative;
-				height: 100%;
 				width: 100%;
+				height: 100%;
+				min-height: 100vh;
 				display: flex;
 				flex-direction: row;
 				justify-content: center;
@@ -5605,7 +5607,7 @@ body, html {
 					padding: 1rem;
 					&.card_buymecoffee {
 						width: 35%;
-						height: calc(100% - 10rem);
+						height: calc(100vh - 10rem);
 						border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
 						margin: 5rem 2rem 5rem calc(3.6rem + 5px);
 						box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.25);
@@ -5648,6 +5650,7 @@ body, html {
 							height: fit-content;
 							display: flex;
 							flex-direction: column;
+							justify-content: flex-end;
 							.row {
 								margin-right: 0;
 								margin-left: 0;
@@ -5695,12 +5698,10 @@ body, html {
 										width: calc(100% - 1rem);
 									}
 								}
-								&:nth-of-type(3) {
-									flex: 1;
-								}
 								&:last-of-type {
 									.input-field {
 										display: flex;
+										justify-content: space-between;
 										button {
 											-webkit-appearance: none;
 											border: none;
@@ -5716,7 +5717,7 @@ body, html {
 											span {
 												display: block;
 												position: relative;
-												line-height: 50px;
+												line-height: 3rem;
 												height: 100%;
 												cursor: pointer;
 											}
@@ -5817,7 +5818,7 @@ body, html {
 					}
 					&.card_coffesbought {
 						width: 65%;
-						height: 100%;
+						min-height: 100vh;
 						box-shadow: none;
 						margin: 0;
 						padding: 5rem 1rem 1rem 1rem;
@@ -5844,7 +5845,7 @@ body, html {
 											left: -2rem;
 										}
 										.card{
-											width: 35vw;
+											width: 100%;
 											height: fit-content;
 											margin: 0;
 											border: 0;
@@ -6260,7 +6261,7 @@ body, html {
 							span{
 								display: block;
 								position: relative;
-								line-height: 50px;
+								line-height: 3rem;
 								height: 100%;
 								cursor: pointer;
 							}
@@ -6597,7 +6598,7 @@ body, html {
 				#box {
 					width: 80vw;
 					border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
-					margin: 50vh auto 5vh auto;
+					margin: 50vh auto 2rem auto;
 					padding: 2.5rem;
 					display: flex;
 					flex-direction: column;
@@ -6969,7 +6970,7 @@ body, html {
 										span{
 											display: block;
 											position: relative;
-											line-height: 50px;
+											line-height: 3rem;
 											height: 100%;
 											cursor: pointer;
 										}
@@ -8041,7 +8042,7 @@ body, html {
 							span{
 								display: block;
 								position: relative;
-								line-height: 50px;
+								line-height: 3rem;
 								height: 100%;
 								padding: 0;
 								cursor: pointer;
@@ -9048,7 +9049,7 @@ body, html {
 						span{
 							display: block;
 							position: relative;
-							line-height: 50px;
+							line-height: 3rem;
 							height: 100%;
 							cursor: pointer;
 						}
@@ -9611,7 +9612,7 @@ body, html {
 											span{
 												display: block;
 												position: relative;
-												line-height: 50px;
+												line-height: 3rem;
 												height: 100%;
 												padding: 0;
 												cursor: pointer;
@@ -9907,6 +9908,51 @@ body, html {
 	}
 }
 
+@media only screen and (min-width: 1500px) {
+	.container-fluid {
+		.first_section_coffee {
+			.wrapper_full {
+				.card {
+					&.card_buymecoffee {
+						.card-body {
+							display: flex;
+							flex-direction: column;
+							h3 {
+								font-size: 5rem !important;
+							}
+							p {
+								font-size: 2rem !important;
+							}
+							.coffee_buyout {
+								.input-field {
+									div {
+										height: 8rem !important;
+									}
+								}
+							}
+							.mail_form {
+								flex: 1 !important;
+								.input-field {
+									margin: 0 0 1rem 0 !important;
+									input {
+										height: 4.5rem !important;
+									}
+									textarea {
+										min-height: 10rem !important;
+									}
+									label {
+										top: 1.5rem !important;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 /* 1024px devices */
 @media only screen and (max-width: 1024px) {
 	.container-fluid {
@@ -9945,6 +9991,43 @@ body, html {
 						.lorem {
 							margin-top: 0.25rem !important;
 							padding: 0 0 0 0 !important;
+						}
+					}
+				}
+			}
+		}
+		.first_section_coffee {
+			.wrapper_full {
+				.card {
+					&.card_buymecoffee {
+						.card-body {
+							display: flex;
+							flex-direction: column;
+							padding: 0.25rem !important;
+							h3 {
+								font-size: 1rem !important;
+							}
+							p {
+								font-size: x-small !important;
+							}
+							.coffee_buyout {
+								.input-field {
+									div {
+										height: 2rem !important;
+									}
+								}
+							}
+							.mail_form {
+								flex: 1 !important;
+							}
+						}
+					}
+					&.card_coffesbought {
+						& > .card-body {
+							padding: 0.25rem !important;
+							.testimonies-modal {
+								width: 100% !important;
+							}
 						}
 					}
 				}
@@ -10227,6 +10310,19 @@ body, html {
 				div {
 					h1 {
 						font-size: 2.5rem !important;
+					}
+				}
+			}
+		}
+		.first_section_coffee {
+			.wrapper_full {
+				.card {
+					&.card_buymecoffee {
+						width: 40% !important;
+						margin: 5rem 0 5rem 3.6rem !important;
+					}
+					&.card_coffesbought {
+						width: 60% !important;
 					}
 				}
 			}
@@ -10660,6 +10756,7 @@ body, html {
 								& > span {
 									&::after {
 										width: 100% !important;
+										height: 100% !important;
 									}
 								}
 							}
@@ -10691,6 +10788,78 @@ body, html {
 			.wrapper {
 				.caption {
 					display: none !important;
+				}
+			}
+		}
+		.first_section_post {
+			.wrapper_full {
+				nav {
+					top: 30vh !important;
+					width: 95% !important;
+    				line-height: 1.5rem !important;
+					.breadcrumb {
+						font-size: 0.5rem !important;
+					}
+				}
+				.shadow_title {
+					top: 30vh !important;
+					font-size: 6rem !important;
+				}
+				#box {
+					width: 95vw !important;
+					margin: 30vh auto 2rem auto !important;
+					& > h1:first-of-type {
+						font-size: 1.25rem !important;
+					}
+					.comments_up_down {
+						p {
+							margin-bottom: 0 !important;
+						}
+					}
+				}
+				.beforeorafter {
+					width: 65% !important;
+				}
+			}
+		}
+		.first_section_coffee {
+			.wrapper_full {
+				flex-direction: column !important;
+				.card {
+					&.card_buymecoffee {
+						width: calc(100% - 7.2rem) !important;
+						margin: 5rem 3.6rem 5rem 3.6rem !important;
+						.card-body {
+							h3 {
+								font-size: 1.5rem !important;
+							}
+							p {
+								font-size: small !important;
+							}
+							.coffee_buyout {
+								.input-field {
+									div {
+										height: 3rem !important;
+									}
+								}
+							}
+							button {
+								& > span {
+									& > span {
+										& > span {
+											&::after {
+												width: 100% !important;
+												height: 100% !important;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					&.card_coffesbought {
+						width: 100% !important;
+					}
 				}
 			}
 		}
@@ -10855,6 +11024,24 @@ body, html {
 					}
 					.btn-l {
 						right: 2.5rem !important;
+					}
+				}
+			}
+		}
+		.second_section_post {
+			.comment-modal {
+				width: 95% !important;
+				margin: 2.5rem auto !important;
+				.comments-modal {
+					width: 100% !important;
+					.modal-content {
+						padding: 0 !important;
+						.card {
+							padding: 0.5rem 0 !important;
+							.shadow_title {
+								color: rgba($color: black, $alpha: 0.5) !important;
+							}
+						}
 					}
 				}
 			}

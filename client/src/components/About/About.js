@@ -36,9 +36,6 @@ class About extends React.Component {
         .catch(function (error) {
             // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
         });
         $('.fixedHeaderContainer').removeClass('blog_header');
     }
@@ -84,21 +81,19 @@ class About extends React.Component {
             }, delta);
         };
     
-        window.onload = function() {
-            var elements = document.getElementsByClassName('typewrite');
-            for (var i=0; i<elements.length; i++) {
-                var toRotate = elements[i].getAttribute('data-type');
-                var period = elements[i].getAttribute('data-period');
-                if (toRotate) {
-                  new TxtType(elements[i], JSON.parse(toRotate), period);
-                }
+        var elements = document.getElementsByClassName('typewrite');
+        for (var i=0; i<elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+                new TxtType(elements[i], JSON.parse(toRotate), period);
             }
-            // INJECT CSS
-            var css = document.createElement("style");
-            css.type = "text/css";
-            css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #000}";
-            document.body.appendChild(css);
-        };
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #000}";
+        document.body.appendChild(css);
     }
     handleClick(href) {
         $('html,body').animate({scrollTop: $('#'+href).offset().top}, 200, function() {
