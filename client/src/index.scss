@@ -8850,14 +8850,14 @@ body, html {
 								margin-bottom: 1rem;
 							}
 						}
-						.shadow_title{
+						.shadow_title {
 							opacity: 0.2;
 							font-size: 8rem;
 							position: absolute;
 							left: -2rem;
 							color: cadetblue;
 						}
-						.index_card{
+						.index_card {
 							position: absolute;
 							right: 7.5%;
 							bottom: 2.5%;
@@ -8872,15 +8872,16 @@ body, html {
 							position: absolute;
 							right: 0;
 							bottom: 0;
-							height: 100%;
-							width: 100%;
+							height: fit-content;
+							width: fit-content;
 							margin: 0;
 							overflow: hidden;
 							transform: translate(10%, 20%);
 							font-size: 40vw;
+							line-height: 40vw;
 							font-weight: bold;
-							color: lighten($color: $main-color, $amount: 2);
 							cursor: default;
+							color: lighten($color: $main-color, $amount: 2);
 						}
 						.img-wrap{
 							position: absolute;
@@ -10300,35 +10301,58 @@ body, html {
 			}
 		}
 		.second_section {
+			flex-direction: column;
 			.wrapper {
 				width: 100% !important;
 				&.left_part {
-					position: absolute !important;
 					align-items: flex-end !important;
+					height: 60% !important;
 					.some_text {
-						margin-left: 40% !important;
-						h1 {
-							transform: unset !important;
-							top: -100% !important;
+						transform: translate(0, 0) !important;
+						.name {
+							p {
+								font-size: 3.5rem !important;
+								line-height: 3rem !important;
+							}
+							p:last-of-type {
+								transform: translate(8rem, 0) !important;
+								&::before {
+									width: 7rem !important;
+									height: 0.4rem !important;
+									transform: translate(-7rem, -50%) !important;
+								}
+							}
 						}
 						p {
-							&:first-of-type {
-								font-size: 1.25rem !important;
-							}
+							font-size: 2rem !important;
+							line-height: 2rem !important;
+							margin-bottom: 0.75rem !important;
 							&.text {
-								font-size: 0.75rem !important;
+								font-size: 1rem !important;
+								line-height: 1rem !important;
 							}
-							br {
-								display: none;
+						}
+						button {
+							& > span {
+								& > span {
+									& > span {
+										&::after {
+											width: 100%;
+										}
+									}
+								}
 							}
 						}
 					}
 				}
 				&.right_part {
+					height: 40% !important;
 					#slider_projects {
 						.img-wrap {
+							align-items: flex-end !important;
 							.card {
-								width: calc(80% - 9rem) !important;
+								width: calc(50% - 9rem) !important;
+								margin-bottom: 0 !important;
 								.card-body {
 									h2 {
 										transform: translateY(-10px) !important;
@@ -10375,31 +10399,17 @@ body, html {
 								}
 							}
 							.index_card {
-								right: unset !important;
-								left: 60% !important;
+								right: 5% !important;
+								bottom: 2% !important;
+								font-size: 3rem !important;
 							}
 						}
-					}
-					button {
-						& > span {
-							& > span {
-								& > span {
-									&::after {
-										width: 100% !important;
-									}
-								}
-							}
+						#controls {
+							top: 0 !important;
+							width: calc(40vh - 4rem) !important;
 						}
 					}
 				}
-			}
-			&::before {
-				width: 100% !important;
-			}
-			&::after {
-				width: 40% !important;
-				right: 20% !important;
-				transform: translate(0, 0) !important;
 			}
 		}
 		.second_section_blog {
@@ -10837,94 +10847,57 @@ body, html {
 		}
 		.second_section {
 			.wrapper {
-				width: 100% !important;
 				&.left_part {
-					position: absolute !important;
-					align-items: flex-end !important;
 					.some_text {
-						h1 {
-							transform: unset !important;
-							top: -100% !important;
+						transform: translate(0%, -5rem) !important;
+						.name {
+							p {
+								font-size: 3rem !important;
+								line-height: 2.5rem !important;
+							}
+							p:last-of-type {
+								transform: translate(7rem, 0) !important;
+								&::before {
+									width: 6rem !important;
+									height: 0.3rem !important;
+									transform: translate(-6rem, -50%) !important;
+								}
+							}
 						}
 						p {
-							display: none !important;
+							font-size: 1.25rem !important;
+							line-height: 1.25rem !important;
+							&.text {
+								font-size: 0.75rem !important;
+								line-height: 0.75rem !important;
+							}
+						}
+						button {
+							transform: translate(0, 0) !important;
+							& > span {
+								& > span {
+									& > span {
+										&::after {
+											width: 100% !important;
+										}
+									}
+								}
+							}
 						}
 					}
 				}
 				&.right_part {
 					#slider_projects {
+						.some_text {
+							top: 0 !important;
+						}
 						.img-wrap {
 							.card {
-								width: calc(100% - 9rem) !important;
-								.card-body {
-									h2 {
-										transform: translateY(-10px) !important;
-									}
-									p{
-										transform: translateY(10px) !important;
-									}
-									.border_effect {
-										&::before, &::after {
-											width: calc(100% + 0.2rem) !important;
-											height: calc(100% + 0.2rem) !important;
-											visibility: visible !important;
-										}
-									}
-									button {
-										& > span {
-											&::after {
-												width: 50% !important;
-												height: 100% !important;
-											}
-											&::before {
-												width: 50% !important;
-												height: 100% !important;
-											}
-											& > span {
-												&::after {
-													opacity: 1 !important;
-													border-bottom: .5rem solid $main-color !important;
-													width: calc(50%) !important;
-													height: 1px !important;
-												}
-												&::before {
-													opacity: 1 !important;
-													border-bottom: .5rem solid $main-color !important;
-													width: calc(50%) !important;
-													height: 1px !important;
-												}
-												& > span {
-													color:$color1 !important;
-												}
-											}
-										}
-									}
-								}
-							}
-							.index_card {
-								right: unset !important;
-								left: 80% !important;
-							}
-						}
-					}
-					button {
-						& > span {
-							& > span {
-								& > span {
-									&::after {
-										width: 100% !important;
-									}
-								}
+								width: 75% !important;
 							}
 						}
 					}
 				}
-			}
-			&::before {
-				display: none !important;
-			}
-			&::after {
-				display: none !important;
 			}
 		}
 		.second_section_blog {
