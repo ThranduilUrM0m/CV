@@ -129,6 +129,8 @@ class Home extends React.Component {
                         var caption = $(this).find('.card').data('index');
                         caption = FormatNumberLength(JSON.parse(caption), 2);
                         $(this).append('<p class="index_card">'+caption+'.</p>');
+                        if(source === 'slider_projects')
+                            $(this).append('<p class="index_card_shadow">'+caption+'</p>');
                     });
                     /* Controls */
                     container.append('<div id="controls"><a id="next">next.</a><a id="curr">curr.</a><a id="prev">prev.</a></div>');
@@ -313,8 +315,8 @@ class Home extends React.Component {
             var amountMovedX = ((width - e.pageX) * -1 / 12);
             var amountMovedY = ((height - e.pageY) * -1 / 12);
         
-            $('.fa-moon').css('marginLeft', amountMovedX);
-            $('.fa-moon').css('marginTop', amountMovedY);
+            $('.luna').css('marginLeft', amountMovedX);
+            $('.luna').css('marginTop', amountMovedY);
         });
         $('.second_section').mousemove(function(e){
             var width = $(this).width() / 2;
@@ -375,6 +377,65 @@ class Home extends React.Component {
                     <Form_Project />
                 </Slide> */}
                 <Slide>
+                    <section className="second_section">
+                        <div className="Hello">
+                            <div class="word w1">مرحبا</div>
+                            <div class="word w2">Welcome</div>
+                            <div class="word w3">Bienvenue</div>
+                            <div class="word w4">Chào mừng</div>
+                            <div class="word w5">Bienvenido</div>
+                        </div>
+                        <div className="wrapper left_part">
+                            <div className="pulsing_dots">
+                                <div className="p1"></div>
+                                <div className="p2"></div>
+                                <div className="p3"></div>
+                            </div>
+                            <div className="some_text">
+                                <div className="name">
+                                    <p>ZAKARIAE</p><p>BOUTALEB</p>
+                                </div>
+                                <p>Website and user interface developer.</p>
+                                <p>Based in <b className='web'>Morocco.</b></p>
+                                <p className="text">I Usually work on multiple projects, but feel free to reach out, and we can discuss how i can help you.</p>
+                                <button onClick={() => this.handleClick('footer_to')} type="button">
+                                    <span>
+                                        <span>
+                                            <span data-attr-span="Reach Out.">
+                                                Reach Out.
+                                            </span>
+                                        </span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div className="wrapper right_part">
+                            <div id="slider_projects">
+                                <div className="some_text">
+                                    <p>Some of My Projects.</p>
+                                </div>
+                                {
+                                    (_.orderBy(projects, ['view'], ['desc']).slice(0, 10)).map((project, index) => {
+                                        return (
+                                            <div className={"card card_" + index} data-title={project.title} data-index={index+1}>
+                                                <div className="card-body">
+                                                    <a href={project.link_to} target="_blank">
+                                                        <div className='image'>
+                                                            { this.handleJSONTOHTML(project.image) }
+                                                        </div>
+                                                    </a>
+                                                    <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                                <div className="bg-pattern"></div>
+                            </div>
+                        </div>
+                    </section>
+                </Slide>
+                <Slide>
                     <section className="active first_section">
                         <div className="wrapper left_part">
                             <div id="social_media">
@@ -389,7 +450,7 @@ class Home extends React.Component {
                             </div>
                         </div>
                         <div className="wrapper right_part">
-                            <i className="fas fa-moon"></i>
+                            <div className="luna"></div>
                             <div className="pulsing_dots">
                                 <div className="p1"></div>
                                 <div className="p2"></div>
@@ -421,77 +482,6 @@ class Home extends React.Component {
                                     })
                                 }
                             </div>
-                        </div>
-                    </section>
-                </Slide>
-                <Slide>
-                    <section className="second_section">
-                        <div className="wrapper left_part">
-                            <div className="circles">
-                                <div className="stars">
-                                    <div className="star-six"></div>
-                                    <div className="starround2"></div>
-                                    <div className="starround6"></div>
-                                </div>
-                                <div className="stars2">
-                                    <div className="starround2"></div>
-                                    <div className="moon"></div>
-                                </div>
-                                <div className="stars3">
-                                    <div className="starround4"></div>
-                                    <div className="starround2"></div>
-                                </div>
-                                <div className="stars4">
-                                    <div className="starround2"></div>
-                                    <div className="star-six"></div>
-                                </div>
-                                <div className="stars5">
-                                    <div className="starround4"></div>
-                                    <div className="starround2"></div>
-                                </div>
-                            </div>
-                            <div className="pulsing_dots">
-                                <div className="p1"></div>
-                                <div className="p2"></div>
-                                <div className="p3"></div>
-                            </div>
-                            <div className="some_text">
-                                <h1 data-text="projects." className="display-1">projects.</h1>
-                                <h2>Hi.</h2>
-                                <p>I'm a Website and user <br/>interface <b className='web'>developer.</b></p>
-                                <p className="name">ZAKARIAE BOUTALEB</p>
-                                <p className="text">I Usually work on multiple projects, but feel free to reach out, and we can discuss how i can help you.</p>
-                            </div>
-                        </div>
-                        <div className="wrapper right_part">
-                            <div id="slider_projects">
-                                {
-                                    (_.orderBy(projects, ['view'], ['desc']).slice(0, 10)).map((project, index) => {
-                                        return (
-                                            <div className={"card card_" + index} data-title={project.title} data-index={index+1}>
-                                                <div className="card-body">
-                                                    <a href={project.link_to} target="_blank">
-                                                        <div className='image'>
-                                                            { this.handleJSONTOHTML(project.image) }
-                                                        </div>
-                                                    </a>
-                                                    <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
-                                <div className="bg-pattern"></div>
-                            </div>
-                            <button onClick={() => this.handleClick('footer_to')} type="button">
-                                <span>
-                                    <span>
-                                        <span data-attr-span="Reach Out.">
-                                            Reach Out.
-                                        </span>
-                                    </span>
-                                </span>
-                            </button>
                         </div>
                     </section>
                 </Slide>

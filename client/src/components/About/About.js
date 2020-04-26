@@ -122,7 +122,7 @@ class About extends React.Component {
                                 
                             </div>
                             <div className="type">
-                                <p className="text-muted">by A <b>Creative</b> Soul</p>
+                                <p className="text-muted">by A Partisan du <b>"Less Is More"</b></p>
                                 <button onClick={() => this.handleClick('footer_to')} type="button">
                                     <span>
                                         <span>
@@ -144,6 +144,8 @@ class About extends React.Component {
                                 </div>
                                 <span className="lorem">
                                     <p>I'm an elemantary teacher indeed, & I'm also a multidisciplinary developer who learned to design at a very young age, to yarn people's stories visually, & now i specialize in responsive web apps and websites.</p>
+                                    <p>I concentrate on needs in order to come up with a product to be remembered.</p>
+                                    <p>I am now a <b>Freelancer</b> and if you would like to know more about me,</p>
                                     <p>How about you read something i wrote for you ?</p>
                                 </span>
                                 <Link to={`blog/${_.get(_.find(articles, {'title': 'about me'}), '_id')}`}>

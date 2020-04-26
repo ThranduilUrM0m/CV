@@ -236,10 +236,10 @@ class Header extends React.Component {
                             <a className="logoHolder" href="/">
                                 <img className="logo img-fluid" src={logo_to_show} alt="Risala"/>
                             </a>
-                            <div className="js-lang u-mb-15">
+                            {/* <div className="js-lang u-mb-15">
                                 <span className="js-fr">fr</span>
                                 <span className="js-en is-active">en</span>
-                            </div>
+                            </div> */}
                             <form className="search_form">
                                 <div className="search-wrapper">
                                     <input className="search-input" type="text" placeholder="Search"/>
