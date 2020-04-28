@@ -397,7 +397,7 @@ class Home extends React.Component {
                                 </div>
                                 <p>Website and user interface developer.</p>
                                 <p>Based in <b className='web'>Morocco.</b></p>
-                                <p className="text">I Usually work on multiple projects, but feel free to reach out, and we can discuss how i can help you.</p>
+                                <p className="text">Would you believe your eyes if 10 million fireflies lit up the world as you sleep.</p>
                                 <button onClick={() => this.handleClick('footer_to')} type="button">
                                     <span>
                                         <span>

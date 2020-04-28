@@ -339,7 +339,7 @@ class Footer extends React.Component {
                                 </div>
                                 <div>
                                     <i className="fas fa-map-marker-alt"></i>
-                                    <span>Marjane 1, 2<sup>e</sup> tranche, #51, Meknès, Maroc</span>
+                                    <span>Meknès, Maroc</span>
                                 </div>
                                 <div>
                                     <i className="fas fa-phone"></i>
