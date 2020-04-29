@@ -81,8 +81,6 @@ class Header extends React.Component {
         // Calling the function for the first time
         displayWindowSize();
 
-        //make the header background slightly white on scroll
-        
         if($(window).scrollTop() > 100) {
             $('.fixedHeaderContainer').css("background-color", "rgba(white, 0.25)");
         } else {
@@ -95,6 +93,11 @@ class Header extends React.Component {
                 $('.fixedHeaderContainer').css("background-color", "rgba(255, 255, 255, 0)");
             }
         });
+
+        
+        if(_url === "/login" || _url === "/signup") {
+            $('.fixedHeaderContainer').hide();
+        }
     }
     _handleClickEvents() {
         let searchWrapper = document.querySelector('.search-wrapper'),

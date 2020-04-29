@@ -22,17 +22,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    },
-    firstname: String,
-    lastname: String,
-    activated: Boolean,
-    messages: [{
-        author: String,
-        body: String,
-        date: Date,
-    }],
-    whoami: String,
-    school: {type: Schema.Types.ObjectId, ref: 'School', default: null}
+    }
 }, { timestamps: true });
   
 userSchema.methods = {

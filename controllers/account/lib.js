@@ -54,8 +54,8 @@ async function main(mail_username, mail_location, mail_email, mail_phone, mail_c
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 async function signup(req, res) {
-    const { signup_username, signup_password, signup_email, firstname, lastname, activated, messages, whoami, school } = req.body;
-    if (!signup_username || !signup_email || !signup_password) {
+    const { username, email, password } = req.body;
+    if (!username || !email || !password) {
         //Le cas où l'email ou bien le password ne serait pas soumit ou nul
         return res.status(400).json({
             text: "Requête invalide"
@@ -63,15 +63,9 @@ async function signup(req, res) {
     }
     // Création d'un objet user, dans lequel on hash le mot de passe
     const user = {
-        email: signup_email,
-        username: signup_username,
-        password: passwordHash.generate(signup_password),
-        firstname: firstname,
-        lastname: lastname,
-        activated: activated,
-        messages: messages,
-        whoami: whoami,
-        school: school,
+        username: username,
+        email: email,
+        password: passwordHash.generate(password),
     };
     // On check en base si l'utilisateur existe déjà
     try {
