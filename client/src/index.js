@@ -17,6 +17,8 @@ import Post from './components/Post/Post';
 import About from './components/About/About';
 import Minttea from './components/Minttea/Minttea';
 import ContactMe from './components/ContactMe/ContactMe';
+import Login from "./components/Login/Login.js";
+import Signup from "./components/Signup/Signup.js";
 import Dashboard from './components/Dashboard/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import * as serviceWorker from './serviceWorker';
@@ -26,14 +28,16 @@ ReactDOM.render(
         <Provider store={store}>
             <App>
                 <Switch>
-                    <Route exact path="/" component={Home}/>
-                    <Route exact path="/blog" component={Blog}/>
-                    <Route path={`/blog/:postId`} component={Post}/>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/blog" component={Blog} />
+                    <Route path={`/blog/:postId`} component={Post} />
                     <Route exact path='/about' component={About} />
                     <Route exact path='/minttea' component={Minttea} />
                     <Route exact path='/contact' component={ContactMe} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/signup" component={Signup} />
                     <PrivateRoute path='/dashboard' component={Dashboard} />
-                    <Route component={NotFound}/>
+                    <Route exact path='/404' component={NotFound}/>
                 </Switch>
             </App>
         </Provider>

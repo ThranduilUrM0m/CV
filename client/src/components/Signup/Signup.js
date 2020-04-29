@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl } from "react-bootstrap";
 import API from "../../utils/API";
 
-export class Signup extends React.Component {
+class Signup extends React.Component {
   state = {
     email: "",
     password: "",
@@ -30,7 +30,7 @@ export class Signup extends React.Component {
     return (
       <div className="Login">
         <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
+          <label>Email</label>
           <FormControl
             autoFocus
             type="email"
@@ -39,7 +39,7 @@ export class Signup extends React.Component {
           />
         </FormGroup>
         <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
+          <label>Password</label>
           <FormControl
             value={password}
             onChange={this.handleChange}
@@ -47,7 +47,7 @@ export class Signup extends React.Component {
           />
         </FormGroup>
         <FormGroup controlId="cpassword" bsSize="large">
-          <ControlLabel>Confirm Password</ControlLabel>
+          <label>Confirm Password</label>
           <FormControl
             value={cpassword}
             onChange={this.handleChange}
@@ -61,3 +61,5 @@ export class Signup extends React.Component {
     );
   }
 }
+
+export default Signup

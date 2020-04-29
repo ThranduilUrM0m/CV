@@ -6,10 +6,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => {
         var path = props.location.pathname;
         if(API.isAuth()===false){
-            return(<Redirect to='/' />)
+            return(<Redirect to='/login' />)
         }
         else{
-            return( <Component {...props} /> )
+            return(<Component {...props} /> )
         }
     }} />
 )
