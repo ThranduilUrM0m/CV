@@ -280,7 +280,7 @@ class Minttea extends React.Component {
                                     <div className="mail_form">
                                         <div className="row">
                                             <div className="input-field col s12">
-                                                <input 
+                                                <input
                                                     className="validate form-group-input author" 
                                                     id="author" 
                                                     type="text" 

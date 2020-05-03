@@ -1,12 +1,6 @@
 import React from "react";
 import API from "../../utils/API";
 import { FullPage, Slide } from 'react-full-page';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch
-} from 'react-router-dom';
 import 'whatwg-fetch';
 import * as $ from "jquery";
 import jQuery from 'jquery';

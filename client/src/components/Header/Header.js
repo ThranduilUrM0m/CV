@@ -95,7 +95,7 @@ class Header extends React.Component {
         });
 
         
-        if(_url === "/login" || _url === "/signup") {
+        if(_url === "/login" || _url === "/signup" || _url === "/dashboard") {
             $('.fixedHeaderContainer').hide();
         }
     }

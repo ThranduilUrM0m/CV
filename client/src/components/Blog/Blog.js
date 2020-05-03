@@ -33,7 +33,6 @@ class Blog extends React.Component {
 			categorie: '',
 			tags: '',
 		};
-		this.handleDelete = this.handleDelete.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleJSONTOHTMLIMAGE = this.handleJSONTOHTMLIMAGE.bind(this);
 		this._FormatNumberLength = this._FormatNumberLength.bind(this);
@@ -87,11 +86,6 @@ class Blog extends React.Component {
         window.addEventListener("resize", WindowSize);
 		WindowSize();
 	}
-	handleDelete(id) {
-		const { onDelete } = this.props;
-		return axios.delete(`/api/articles/${id}`)
-			.then(() => onDelete(id));
-	}
 	handleEdit(article) {
 		const { setEdit } = this.props;
 		setEdit(article);
@@ -110,6 +104,7 @@ class Blog extends React.Component {
 			paginationClickable: true,
 			centerInsufficientSlides: true,
 			spaceBetween: 0,
+            observer: true,
 			coverflowEffect: {
 				rotate: 0,
 				stretch: 0,
@@ -449,18 +444,18 @@ class Blog extends React.Component {
 											</div>
 											<div className="input-field col s3">
 												<Autocomplete
-													getItemValue={(item) => item}
-													wrapperStyle={{ position: 'relative', display: 'inline-block', width: '100%', height: '100%' }}
-													inputProps={{ id: 'tags', className: 'form-group-input tags', name: 'tags' }}
 													items={_.flattenDeep(_.map(articles, 'tag'))}
+													getItemValue={(item) => item}
+													inputProps={{ id: 'tags', className: 'form-group-input tags', name: 'tags' }}
+													shouldItemRender={(item, tags) => item.toLowerCase().indexOf(tags.toLowerCase()) > -1}
 													renderItem={(item, isHighlighted) =>
 														<div className={`item ${isHighlighted ? 'item-highlighted' : ''}`}>
 															{item}
 														</div>
 													}
 													value={tags}
-													onChange={ev => this.setState({ tags: ev.target.value })}
-													onSelect={tags => this.setState({ tags })}
+													onChange={(ev) => this.setState({ tags: ev.target.value })}
+													onSelect={(tags) => this.setState({ tags })}
 												/>
 												<label id="tags_label" htmlFor='tags' className={tags ? 'active' : ''}>tags</label>
 												<div className='form-group-line'></div>
@@ -487,8 +482,9 @@ class Blog extends React.Component {
 													}), (op_bytag) => {
 														if(!tags)
 															return true;
-														else 
-															return _.includes(op_bytag.tag, tags);
+														else {
+															return op_bytag.tag.some(x => x.includes(tags));
+														}
 													}), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((article, index) => {
 													return (
 														<li className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" key={index}>

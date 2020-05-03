@@ -160,13 +160,21 @@ class Form extends React.Component {
     
         return (
             <div className="wrapper_form">
-
-                <input
-                onChange={(ev) => this.handleChangeField('title', ev)}
-                value={title}
-                className="form-control my-3 title_article"
-                placeholder="Title"
-                />
+                <div className="row">
+                    <div className="input-field col s12">
+                        <input
+                            className="validate form-group-input title_article" 
+                            id="title_article" 
+                            type="text" 
+                            name="title_article" 
+                            required="required"
+                            value={title}
+                            onChange={(ev) => this.handleChangeField('title', ev)}
+                        />
+                        <label htmlFor='title_article' className={title ? 'active' : ''}>Title</label>
+                        <div className="form-group-line"></div>
+                    </div>
+                </div>
 
                 <ReactQuill id="editor"
                             value={body}
@@ -177,40 +185,67 @@ class Form extends React.Component {
                             modules={modules}
                             />
 
-                <ul className="tag_Container">
-                    {
-                        tag.map((item, i) =>
-                            <li key={i}>
-                                {item}
-                            </li>
-                        )
-                    }
-                    <input
-                    className="form-control my-3 tag_article"
-                    value={tagInput}
-                    onChange={(ev) => this.handleChangeField('tagInput', ev)}
-                    onKeyDown={(ev) => this.handleInputKeyDown('tag', ev)}
-                    placeholder="#"
-                    />
-                </ul>
+                <div className="row">
+                    <div className="input-field col s12">
+                        
+                        <ul className="tag_Container">
+                            {
+                                tag.map((item, i) =>
+                                    <li key={i}>
+                                        {item}
+                                    </li>
+                                )
+                            }
+                            <input
+                                className="validate form-group-input tag_article"
+                                value={tagInput}
+                                onChange={(ev) => this.handleChangeField('tagInput', ev)}
+                                onKeyDown={(ev) => this.handleInputKeyDown('tag', ev)}
+                                id="tag_article" 
+                                type="text" 
+                                name="tag_article"
+                            />
+                        </ul>
+                        <label htmlFor='tag_article' className={tag ? 'active' : ''}>Tags</label>
+                        <div className="form-group-line"></div>
+                    </div>
+                </div>
 
-                <input
-                onChange={(ev) => this.handleChangeField('author', ev)}
-                value={author}
-                className="form-control my-3 author_article"
-                placeholder="Author"
-                />
+                <div className="row">
+                    <div className="input-field col s12">
+                        <input
+                            className="validate form-group-input author_article" 
+                            id="author_article" 
+                            type="text" 
+                            name="author_article" 
+                            required="required"
+                            value={author}
+                            onChange={(ev) => this.handleChangeField('author', ev)}
+                        />
+                        <label htmlFor='author_article' className={author ? 'active' : ''}>Author</label>
+                        <div className="form-group-line"></div>
+                    </div>
+                </div>
 
-                <select 
-                    value={categorie} 
-                    onChange={(ev) => this.handleChangeField('categorie', ev)}
-                    className="form-control my-3 categorie"
-                >
-                    <option value="Education">Education</option>
-                    <option value="Design">Design</option>
-                    <option value="Community">Community</option>
-                    <option value="Tutorials">Tutorials</option>
-                </select>
+                <div className="row">
+                    <div className="input-field col s12">
+                        <select 
+                            value={categorie}
+                            onChange={(ev) => this.handleChangeField('categorie', ev)}
+                            className="form-group-input categorie_article" 
+                            id="categorie_article" 
+                            name="categorie_article"
+                        >
+                            <option value=""></option>
+                            <option value="Education">Education</option>
+                            <option value="Design">Design</option>
+                            <option value="Community">Community</option>
+                            <option value="Tutorials">Tutorials</option>
+                        </select>
+                        <label htmlFor='categorie_article' className={categorie ? 'active' : ''}>Categorie</label>
+                        <div className="form-group-line"></div>
+                    </div>
+                </div>
 
                 <button onClick={this.handleSubmit} className="btn btn-primary float-right submit_article">{articleToEdit ? 'Update' : 'Submit'}</button>
             </div>
