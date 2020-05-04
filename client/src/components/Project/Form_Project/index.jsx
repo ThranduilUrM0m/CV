@@ -158,13 +158,21 @@ class Form_Project extends React.Component {
     
         return (
             <div className="wrapper_form">
-
-                <input
-                onChange={(ev) => this.handleChangeField('title', ev)}
-                value={title}
-                className="form-control my-3 title_project"
-                placeholder="Title"
-                />
+                <div className="row">
+                    <div className="input-field col s12">
+                        <input
+                            className="validate form-group-input title_project" 
+                            id="title_project" 
+                            type="text" 
+                            name="title_project" 
+                            required="required"
+                            value={title}
+                            onChange={(ev) => this.handleChangeField('title', ev)}
+                        />
+                        <label htmlFor='title_project' className={title ? 'active' : ''}>Title</label>
+                        <div className="form-group-line"></div>
+                    </div>
+                </div>
 
                 <ReactQuill id="editor"
                             value={image}
@@ -175,36 +183,62 @@ class Form_Project extends React.Component {
                             modules={modules}
                             />
 
-                <ul className="tag_Container">
-                    {
-                        tag.map((item, i) =>
-                            <li key={i}>
-                                {item}
-                            </li>
-                        )
-                    }
-                    <input
-                    className="form-control my-3 tag_project"
-                    value={tagInput}
-                    onChange={(ev) => this.handleChangeField('tagInput', ev)}
-                    onKeyDown={(ev) => this.handleInputKeyDown('tag', ev)}
-                    placeholder="#"
-                    />
-                </ul>
+                <div className="row">
+                    <div className="input-field col s12">
+                        <ul className="tag_Container">
+                            {
+                                tag.map((item, i) =>
+                                    <li key={i}>
+                                        {item}
+                                    </li>
+                                )
+                            }
+                            <input
+                                className="validate form-group-input tag_project"
+                                value={tagInput}
+                                onChange={(ev) => this.handleChangeField('tagInput', ev)}
+                                onKeyDown={(ev) => this.handleInputKeyDown('tag', ev)}
+                                id="tag_project" 
+                                type="text" 
+                                name="tag_project"
+                            />
+                        </ul>
+                        <label htmlFor='tag_project' className={tag ? 'active' : ''}>Tags</label>
+                        <div className="form-group-line"></div>
+                    </div>
+                </div>
 
-                <input
-                onChange={(ev) => this.handleChangeField('author', ev)}
-                value={author}
-                className="form-control my-3 author_project"
-                placeholder="Author"
-                />
+                <div className="row">
+                    <div className="input-field col s12">
+                        <input
+                            className="validate form-group-input author_project" 
+                            id="author_project" 
+                            type="text" 
+                            name="author_project" 
+                            required="required"
+                            value={author}
+                            onChange={(ev) => this.handleChangeField('author', ev)}
+                        />
+                        <label htmlFor='author_project' className={author ? 'active' : ''}>Author</label>
+                        <div className="form-group-line"></div>
+                    </div>
+                </div>
 
-                <input
-                onChange={(ev) => this.handleChangeField('link_to', ev)}
-                value={link_to}
-                className="form-control my-3 link_to_project"
-                placeholder="Link"
-                />
+                <div className="row">
+                    <div className="input-field col s12">
+                        <input
+                            className="validate form-group-input link_to_project" 
+                            id="link_to_project" 
+                            type="text" 
+                            name="link_to_project" 
+                            required="required"
+                            value={link_to}
+                            onChange={(ev) => this.handleChangeField('link_to', ev)}
+                        />
+                        <label htmlFor='link_to_project' className={link_to ? 'active' : ''}>Author</label>
+                        <div className="form-group-line"></div>
+                    </div>
+                </div>
 
                 <button onClick={this.handleSubmit} className="btn btn-primary float-right submit_project">{projectToEdit ? 'Update' : 'Submit'}</button>
             </div>

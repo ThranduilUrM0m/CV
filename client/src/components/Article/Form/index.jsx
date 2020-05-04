@@ -187,7 +187,6 @@ class Form extends React.Component {
 
                 <div className="row">
                     <div className="input-field col s12">
-                        
                         <ul className="tag_Container">
                             {
                                 tag.map((item, i) =>
