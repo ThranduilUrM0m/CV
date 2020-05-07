@@ -1278,6 +1278,10 @@ body, html {
 					transform: none !important;
 					&.active {
 						transform: none !important;
+						font-size: .9rem !important;
+					}
+					i {
+						margin-right: .75rem;
 					}
 				}
 			}
