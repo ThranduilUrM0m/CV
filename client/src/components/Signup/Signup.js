@@ -11,6 +11,7 @@ import 'whatwg-fetch';
 import * as $ from "jquery";
 import jQuery from 'jquery';
 import 'bootstrap';
+import Fingerprint from 'fingerprintjs';
 
 class Signup extends React.Component {
 	constructor(props) {
@@ -19,22 +20,25 @@ class Signup extends React.Component {
             username: '',
             email: '',
             password: '',
-            confirm_password: '',
+			confirm_password: '',
 		};
         this.send_signup = this.send_signup.bind(this);
         this.handleChange = this.handleChange.bind(this);
 	}
     async send_signup() {
+		var f = new Fingerprint().get();
+		var _fingerprint = f.toString();
+		var _role = "normal";
         const { username, email, password, confirm_password } = this.state;
         if (!username || username.length === 0) return;
         if (!email || email.length === 0) return;
         if (!password || password.length === 0 || password !== confirm_password) return;
         try {
-            const { data } = await API.signup({ username, email, password });
+            const { data } = await API.signup({ username, email, password, _fingerprint, _role });
             localStorage.setItem("token", data.token);
             localStorage.setItem('email', data.email);
             localStorage.setItem('username', data.username);
-            window.location.reload();
+            window.location = "/dashboard";
         } catch (error) {
             console.error(error);
         }

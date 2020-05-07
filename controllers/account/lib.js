@@ -21,7 +21,7 @@ async function main(user_email) {
     let info = await transporter.sendMail({
         from: 'yassmineboutalebqlii@gmail.com', // sender address
         to: user_email, // list of receivers
-        subject: 'Hello ✔', // Subject line
+        subject: 'Hello ✔ and Welcome', // Subject line
         text: 'Hello world?', // plain text body
     });
 
@@ -54,8 +54,8 @@ async function main(mail_username, mail_location, mail_email, mail_phone, mail_c
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 async function signup(req, res) {
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
+    const { username, email, password, _fingerprint, _role } = req.body;
+    if (!username || !email || !password || !_fingerprint || !_role) {
         //Le cas où l'email ou bien le password ne serait pas soumit ou nul
         return res.status(400).json({
             text: "Requête invalide"
@@ -66,6 +66,8 @@ async function signup(req, res) {
         username: username,
         email: email,
         password: passwordHash.generate(password),
+        fingerprint: _fingerprint,
+        role: _role,
     };
     // On check en base si l'utilisateur existe déjà
     try {
@@ -93,6 +95,8 @@ async function signup(req, res) {
             text: "Succès",
             email: user.email,
             username: user.username,
+            fingerprint: user.fingerprint,
+            role: user.role,
             token: userObject.getToken()
         });
     } catch (error) {
@@ -127,12 +131,7 @@ async function update(req, res) {
         email: _user.email,
         username: _user.username,
         password: passwordHash.generate(_new_password),
-        firstname: _user.firstname,
-        lastname: _user.lastname,
-        activated: _user.activated,
-        messages: _user.messages,
-        whoami: _user.whoami,
-        school: _user.school,
+        fingerprint: _user.fingerprint,
     };
     try {
         // Sauvegarde de l'utilisateur en base
@@ -143,12 +142,7 @@ async function update(req, res) {
                     email : user.email, 
                     username : user.username,
                     password : user.password,
-                    firstname : user.firstname,
-                    lastname : user.lastname,
-                    activated : user.activated,
-                    messages : user.messages,
-                    whoami : user.whoami,
-                    school : user.school,
+                    fingerprint : user.fingerprint,
                 }
             },
             { upsert: true }

@@ -22,7 +22,9 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    fingerprint: String,
+    role: String,
 }, { timestamps: true });
   
 userSchema.methods = {

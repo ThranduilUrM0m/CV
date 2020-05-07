@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import ReactQuill, { Quill } from 'react-quill';
 import ImageResize from 'quill-image-resize-module';
+import API from "../../../utils/API";
 Quill.register('modules/ImageResize', ImageResize);
 
 var _ = require('lodash');
@@ -31,6 +32,7 @@ class Form_Project extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            _user: {},
             title: '',
             image: '',
             link_to: '',
@@ -47,6 +49,9 @@ class Form_Project extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputKeyDown = this.handleInputKeyDown.bind(this);
     }
+    componentDidMount() {
+        this.get_user();
+    }
     componentWillReceiveProps(nextProps) {
         if(nextProps.projectToEdit) {
             this.setState({
@@ -61,6 +66,18 @@ class Form_Project extends React.Component {
                 downvotes: nextProps.projectToEdit.downvotes,
                 view: nextProps.projectToEdit.view,
             });
+        }
+    }
+	async get_user() {
+        const self = this;
+        try {
+            const { data } = await API.get_user(localStorage.getItem('email'));
+			self.setState({
+                _user: data.user,
+                author: data.user.username,
+			});
+        } catch (error) {
+            console.error(error);
         }
     }
     handleSubmit() {
@@ -208,7 +225,7 @@ class Form_Project extends React.Component {
                     </div>
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                     <div className="input-field col s12">
                         <input
                             className="validate form-group-input author_project" 
@@ -222,7 +239,7 @@ class Form_Project extends React.Component {
                         <label htmlFor='author_project' className={author ? 'active' : ''}>Author</label>
                         <div className="form-group-line"></div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="row">
                     <div className="input-field col s12">

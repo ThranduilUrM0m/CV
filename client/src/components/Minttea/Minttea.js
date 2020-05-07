@@ -242,6 +242,11 @@ class Minttea extends React.Component {
         this.setState({
             [key]: event.target.value,
         });
+        if(key === 'is_private') {
+            this.setState({
+                [key]: event.target.checked,
+            })
+        }
     }
     render() {
         const { testimonyToEdit, testimonies } = this.props;
@@ -316,7 +321,8 @@ class Minttea extends React.Component {
                                                     name="is_private" 
                                                     required="required"
                                                     value={is_private}
-                                                    onChange={(ev) => this.handleChange('is_private', ev)}
+                                                    checked={is_private}
+                                                    onClick={(ev) => this.handleChange('is_private', ev)}
                                                 />
                                                 <label className="is_private" htmlFor="is_private">Private Message ?</label>
                                                 <button 
@@ -353,6 +359,7 @@ class Minttea extends React.Component {
                                                                     <h6 className="author">by <b>{testimony.author}</b></h6>
                                                                     <p className="text-muted fromNow">{moment(new Date(testimony.createdAt)).fromNow()}</p>
                                                                     <div className="up_down">
+                                                                        <p className="text-muted replies"><b>{_.size(_.filter(testimonies, {'parent_id': testimony._id}))}</b><i className="fas fa-reply-all"></i></p>
                                                                         <div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === fingerprint}) ) ? '' : 'active'}`}>
                                                                             <b>{_.size(_.get(testimony, 'upvotes'))}</b> 
                                                                             <button onClick={(ev) => this.handleSubmitupvotesTestimony(testimony, ev)}>
@@ -384,7 +391,7 @@ class Minttea extends React.Component {
                                                                     </div>
                                                                 </div>
                                                                 {
-                                                                    _.orderBy(_.reject(testimonies, { parent_id: null }), ['view'], ['desc']).map((testimony_reply, index_reply) => {
+                                                                    _.orderBy(_.reject(testimonies, { 'is_private': false, parent_id: null }), ['view'], ['desc']).map((testimony_reply, index_reply) => {
                                                                         if(testimony_reply.parent_id === testimony._id)
                                                                             return (
                                                                                 <div className={"card card_" + index_reply} data-index={index_reply+1}>
@@ -451,7 +458,6 @@ class Minttea extends React.Component {
 
 const mapStateToProps = state => ({
     testimonyToEdit: state.home.testimonyToEdit,
-
     testimonies: state.home.testimonies,
 });
 

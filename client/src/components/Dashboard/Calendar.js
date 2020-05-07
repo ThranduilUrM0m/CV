@@ -25,7 +25,7 @@ class Calendar extends React.Component {
             <div className="header row flex-middle">
                 <div className="col col-start">
                     <span className='p'>
-                        { moment(this.state.currentMonth).format('MMMM YYYY') }
+                        { moment(this.state.currentMonth).format('MMMM, YYYY') }
                     </span>
                 </div>
                 <div className="col col-center" onClick={this.prevMonth}>
@@ -129,6 +129,7 @@ class Calendar extends React.Component {
     render() {
         return (
             <div className="calendar">
+                <h4>Calendar.</h4>
                 {this.renderHeader()}
                 {this.renderDays()}
                 {this.renderCells()}

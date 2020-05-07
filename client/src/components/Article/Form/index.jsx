@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import ReactQuill, { Quill } from 'react-quill';
 import ImageResize from 'quill-image-resize-module';
+import API from "../../../utils/API";
 Quill.register('modules/ImageResize', ImageResize);
 
 var _ = require('lodash');
@@ -31,6 +32,7 @@ class Form extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            _user: {},
             title: '',
             body: '',
             author: '',
@@ -46,6 +48,9 @@ class Form extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputKeyDown = this.handleInputKeyDown.bind(this);
+    }
+    componentDidMount() {
+        this.get_user();
     }
     componentWillReceiveProps(nextProps) {
         if(nextProps.articleToEdit) {
@@ -63,10 +68,23 @@ class Form extends React.Component {
             });
         }
     }
+	async get_user() {
+        const self = this;
+        try {
+            const { data } = await API.get_user(localStorage.getItem('email'));
+			self.setState({
+                _user: data.user,
+                author: data.user.username,
+			});
+        } catch (error) {
+            console.error(error);
+        }
+    }
     handleSubmit(){
         const { onSubmit, articleToEdit, onEdit } = this.props;
         const { title, body, author, categorie, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
         const self = this;
+        console.log(author);
         if(!articleToEdit) {
             return axios.post('/api/articles', {
                 title,
@@ -210,7 +228,7 @@ class Form extends React.Component {
                     </div>
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                     <div className="input-field col s12">
                         <input
                             className="validate form-group-input author_article" 
@@ -224,7 +242,7 @@ class Form extends React.Component {
                         <label htmlFor='author_article' className={author ? 'active' : ''}>Author</label>
                         <div className="form-group-line"></div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="row">
                     <div className="input-field col s12">
