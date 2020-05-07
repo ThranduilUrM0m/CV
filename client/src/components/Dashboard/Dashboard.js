@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Form } from '../Article';
 import { Form_Project } from '../Project';
 import Calendar from './Calendar';
+import Account from './Account';
 import Autocomplete from 'react-autocomplete';
 import { connect } from 'react-redux';
 import {
@@ -71,6 +72,7 @@ class Dashboard extends React.Component {
 		let self = this;
         
         document.getElementById('first_section_dashboard').parentElement.style.height = 'initial';
+        document.getElementById('first_section_dashboard').parentElement.style.minHeight = '100%';
 
 		axios('/api/articles')
         .then(function (response) {
@@ -464,7 +466,7 @@ class Dashboard extends React.Component {
                                             <h2>Dashboard</h2>
                                             <div className="name">{_user.email}</div>
                                         </div>
-                                        <a className="logout" href="" onClick={() => this.disconnect()}><i className="fas fa-door-open"></i></a>
+                                        <a className="logout" href="" onClick={() => this.disconnect()}><p className="text-muted">{_user.username}</p><i className="fas fa-door-open"></i></a>
                                     </div>
 									<ul className="cards">
                                         <li className="cards__item">
@@ -777,8 +779,38 @@ class Dashboard extends React.Component {
                                     </ul>
 								</div>
 								<div className="settings_pane tab-pane" id="2a">
-									SETTINGS
-								</div>
+                                    <div className="top_roof">
+                                        <div className="left_roof">
+                                            <h2>Settings</h2>
+                                            <div className="name">{_user.email}</div>
+                                        </div>
+                                        <a className="logout" href="" onClick={() => this.disconnect()}><p className="text-muted">{_user.username}</p><i className="fas fa-door-open"></i></a>
+                                    </div>
+                                    <ul className="forms">
+                                        <li className="forms__item">
+                                            <div className="card">
+                                                <div className="card__content">
+                                                    <div className="_account_pane _pane">
+                                                        <div className="_account_content _content">
+                                                            <div className="_account_head">
+                                                                <h4>Account Settings.</h4>
+                                                                <p className="text-muted">Here you can change the email address you use and password</p>
+                                                            </div>
+                                                            <div className="_account_data data_container">
+                                                                <Account/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li className="forms__item">
+                                            <div className="card">
+                                                
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
 							</div>
                             
                             <div className="_article_modal modal _modal fade" id="_article_modal" tabIndex="-1" role="dialog" aria-labelledby="_article_modalLabel" aria-hidden="true">
@@ -1611,7 +1643,20 @@ class Dashboard extends React.Component {
                                     </div>
                                 </div>
                             </div>
-						</div>
+						
+                            <div className="modal fade" id="edit_modal" tabIndex="-1" role="dialog" aria-labelledby="edit_modalLabel" aria-hidden="true">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                        <div className="modal-body">
+                                            <a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                            <h5 className="modal-title" id="edit_modalLabel">Hey!</h5>
+                                            <div>Your Informations has been updated, we've sent you details to your email, we love you.</div>
+                                            <div><small>Thanks {localStorage.getItem('username')}</small></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 					</section>
 				</Slide>
 			</FullPage>

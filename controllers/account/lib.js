@@ -119,19 +119,25 @@ async function send_mail(req, res) {
     }
 }
 async function update(req, res) {
-    const { _user, _new_password, _old_email } = req.body;
-    if (!_user.username || !_user.email || !_user.password) {
+    const { _user, _old_username, _old_email, _current_password, _new_password } = req.body;
+    if (!_user.username || !_user.email) {
         //Le cas où l'email ou bien le password ne serait pas soumit ou nul
         return res.status(400).json({
             text: "Requête invalide"
         });
     }
+    if(!passwordHash.verify(_current_password, _user.password)) {
+        return res.status(400).json({
+            text: "Password Invalid"
+        });
+    }
     // Création d'un objet user, dans lequel on hash le mot de passe
     const user = {
-        email: _user.email,
         username: _user.username,
+        email: _user.email,
         password: passwordHash.generate(_new_password),
-        fingerprint: _user.fingerprint,
+        fingerprint: _user._fingerprint,
+        role: _user._role,
     };
     try {
         // Sauvegarde de l'utilisateur en base
@@ -139,10 +145,11 @@ async function update(req, res) {
             { email : _old_email },
             {
                 $set : {
-                    email : user.email, 
                     username : user.username,
+                    email : user.email, 
                     password : user.password,
                     fingerprint : user.fingerprint,
+                    role: user._role,
                 }
             },
             { upsert: true }
