@@ -240,7 +240,7 @@ class Form extends React.Component {
                 </div>
 
                 <div className="row">
-                    <div className="input-field col s12">
+                    <div className="input-field col s12 checkbox_hide">
                         <input
                             className="validate form-group-input author__hide" 
                             id="author__hide" 
@@ -251,7 +251,7 @@ class Form extends React.Component {
                             checked={_hide}
                             onClick={(ev) => this.handleChangeField('_hide', ev)}
                         />
-                        <label className={_hide ? 'active' : ''} htmlFor="author__hide"><i className={_hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></label>
+                        <label className={_hide ? 'active' : ''} htmlFor="author__hide"><i className={_hide ? 'far fa-eye-slash' : 'far fa-eye'}></i>Hide Article ?</label>
                     </div>
                 </div>
 

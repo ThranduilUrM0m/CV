@@ -389,7 +389,6 @@ class Dashboard extends React.Component {
 			}
 			function _initEvents() {
 				element.click(function() {
-                    console.log('MOK');
 					if ( !modal.hasClass(expandedClass) ) {
 						modal.addClass(expandedClass, 500);
 						wrapper.classList.add(hasExpandedClass);

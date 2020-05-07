@@ -1268,6 +1268,13 @@ body, html {
 				margin-top: 0 !important;
 				margin-bottom: 0.5rem !important;
 			}
+			.checkbox_hide {
+				display: flex;
+				align-items: center;
+				input[type="checkbox"] {
+					display: none;
+				}
+			}
 		}
 		.first_section_dashboard {
 			position: relative;
@@ -1678,8 +1685,7 @@ body, html {
 										margin-right: .75rem;
 										margin-bottom: 0;
 										font-size: small;
-										display: flex;
-										align-items: flex-end;
+										line-height: 1;
 									}
 									&:hover {
 										color: black;
@@ -2230,8 +2236,7 @@ body, html {
 										margin-right: .75rem;
 										margin-bottom: 0;
 										font-size: small;
-										display: flex;
-										align-items: flex-end;
+										line-height: 1;
 									}
 									&:hover {
 										color: black;
