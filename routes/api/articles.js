@@ -117,6 +117,7 @@ router.patch('/:id', (req, res, next) => {
   if(typeof body.view !== 'undefined') {
     req.article.view = body.view;
   }
+  
   return req.article.save()
     .then(() => res.json({ article: req.article.toJSON() }))
     .catch(next);

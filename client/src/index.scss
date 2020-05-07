@@ -1272,7 +1272,13 @@ body, html {
 				display: flex;
 				align-items: center;
 				input[type="checkbox"] {
-					display: none;
+					display: none !important;
+				}
+				label {
+					transform: none !important;
+					&.active {
+						transform: none !important;
+					}
 				}
 			}
 		}

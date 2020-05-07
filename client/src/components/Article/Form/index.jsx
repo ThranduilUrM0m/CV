@@ -150,6 +150,9 @@ class Form extends React.Component {
                         downvotes: [],
                         view: [],
                     })
+                }).catch(function (error) {
+                    // handle error
+                    console.log(error);
                 });
         }
     }
