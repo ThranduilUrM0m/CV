@@ -4,11 +4,9 @@ const { Schema } = mongoose;
 const ProjectsSchema = new Schema({
     title: String,
     image: String,
-    brand: String,
     link_to: String,
     author: String,
-    date_: Date,
-    categorie: String,
+    _hide: Boolean,
     tag: [String],
     comment: [{
         author: String,

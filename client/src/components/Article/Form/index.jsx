@@ -37,6 +37,7 @@ class Form extends React.Component {
             body: '',
             author: '',
             categorie: '',
+            _hide: false,
             tag: [],
             tagInput: '',
             comment: [],
@@ -59,6 +60,7 @@ class Form extends React.Component {
                 body: nextProps.articleToEdit.body,
                 author: nextProps.articleToEdit.author,
                 categorie: nextProps.articleToEdit.categorie,
+                _hide: nextProps.articleToEdit._hide,
                 tag: nextProps.articleToEdit.tag,
                 tagInput: nextProps.articleToEdit.tagInput,
                 comment: nextProps.articleToEdit.comment,
@@ -82,15 +84,16 @@ class Form extends React.Component {
     }
     handleSubmit(){
         const { onSubmit, articleToEdit, onEdit } = this.props;
-        const { title, body, author, categorie, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
+        const { title, body, author, categorie, _hide, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
         const self = this;
-        console.log(author);
+        
         if(!articleToEdit) {
             return axios.post('/api/articles', {
                 title,
                 body,
                 author,
                 categorie,
+                _hide,
                 tag,
                 comment,
                 upvotes,
@@ -106,6 +109,7 @@ class Form extends React.Component {
                         body: '',
                         author: '',
                         categorie: '',
+                        _hide: false,
                         tag: [],
                         tagInput: '',
                         comment: [],
@@ -122,6 +126,7 @@ class Form extends React.Component {
                 body,
                 author,
                 categorie,
+                _hide,
                 tag,
                 comment,
                 upvotes,
@@ -137,6 +142,7 @@ class Form extends React.Component {
                         body: '',
                         author: '',
                         categorie: '',
+                        _hide: false,
                         tag: [],
                         tagInput: '',
                         comment: [],
@@ -151,6 +157,11 @@ class Form extends React.Component {
         this.setState({
             [key]: event.target.value,
         });
+        if(key === '_hide') {
+            this.setState({
+                [key]: event.target.checked,
+            })
+        }
     }
     handleChange(value) {
         this.setState({
@@ -174,7 +185,7 @@ class Form extends React.Component {
     }
     render() {
         const { articleToEdit } = this.props;
-        const { title, body, author, categorie, tag, tagInput } = this.state;
+        const { title, body, author, categorie, _hide, tag, tagInput } = this.state;
     
         return (
             <div className="wrapper_form">
@@ -228,21 +239,21 @@ class Form extends React.Component {
                     </div>
                 </div>
 
-                {/* <div className="row">
+                <div className="row">
                     <div className="input-field col s12">
                         <input
-                            className="validate form-group-input author_article" 
-                            id="author_article" 
-                            type="text" 
-                            name="author_article" 
+                            className="validate form-group-input author__hide" 
+                            id="author__hide" 
+                            type="checkbox"
+                            name="author__hide" 
                             required="required"
-                            value={author}
-                            onChange={(ev) => this.handleChangeField('author', ev)}
+                            value={_hide}
+                            checked={_hide}
+                            onClick={(ev) => this.handleChangeField('_hide', ev)}
                         />
-                        <label htmlFor='author_article' className={author ? 'active' : ''}>Author</label>
-                        <div className="form-group-line"></div>
+                        <label className={_hide ? 'active' : ''} htmlFor="author__hide"><i className={_hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></label>
                     </div>
-                </div> */}
+                </div>
 
                 <div className="row">
                     <div className="input-field col s12">

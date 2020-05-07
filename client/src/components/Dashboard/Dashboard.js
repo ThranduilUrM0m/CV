@@ -474,7 +474,7 @@ class Dashboard extends React.Component {
                                                         <div className="_articles_header _header">
                                                             <div className="title_search input-field">
                                                                 <Autocomplete
-                                                                    items={_.map(articles, 'title')}
+                                                                    items={_.map(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), 'title')}
                                                                     getItemValue={(item) => item}
                                                                     inputProps={{ id: 'title', className: 'form-group-input title', name: 'title' }}
                                                                     shouldItemRender={(item, title) => item.toLowerCase().indexOf(title.toLowerCase()) > -1}
@@ -506,7 +506,7 @@ class Dashboard extends React.Component {
 																<div className="articles_slider_wrapper swiper-container">
 																	<div className="articles_slider_wrapper_cards swiper-wrapper">
 																		{
-																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
+																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author })), function(o) { 
                                                                                 if(timeframe === 'Today')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                                                 if(timeframe === 'This_Past_Week')
@@ -536,6 +536,7 @@ class Dashboard extends React.Component {
                                                                                                     <h2>{article.title}</h2>
                                                                                                     <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
                                                                                                     <p className="categorie">{article.categorie}</p>
+                                                                                                    <p className="categorie"><i className={article._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></p>
                                                                                                     <br/>
                                                                                                     <div className="dropdown">
                                                                                                         <span className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -584,7 +585,7 @@ class Dashboard extends React.Component {
                                                         <div className="_projects_header _header">
                                                             <div className="title_search input-field">
                                                                 <Autocomplete
-                                                                    items={_.map(projects, 'title')}
+                                                                    items={_.map(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), 'title')}
                                                                     getItemValue={(item) => item}
                                                                     inputProps={{ id: 'title_projects', className: 'form-group-input title_projects', name: 'title_projects' }}
                                                                     shouldItemRender={(item, title_projects) => item.toLowerCase().indexOf(title_projects.toLowerCase()) > -1}
@@ -616,7 +617,7 @@ class Dashboard extends React.Component {
 																<div className="projects_slider_wrapper swiper-container">
 																	<div className="projects_slider_wrapper_cards swiper-wrapper">
 																		{
-																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(projects, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(projects, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(projects, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(projects, ['createdAt'], ['desc']) : projects), function(o) { 
+																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author })), function(o) { 
                                                                                 if(timeframe === 'Today')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                                                 if(timeframe === 'This_Past_Week')
@@ -645,6 +646,7 @@ class Dashboard extends React.Component {
                                                                                                 <div className="card-body">
                                                                                                     <h2>{project.title}</h2>
                                                                                                     <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
+                                                                                                    <p className="categorie"><i className={project._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></p>
                                                                                                     <br/>
                                                                                                     <div className="dropdown">
                                                                                                         <span className="dropdown-toggle" id="dropdownMenuButton_project" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -803,6 +805,7 @@ class Dashboard extends React.Component {
 									                    <h6 className="author">by <b>{_article.author}</b></h6>
                                                         <p className="text-muted fromNow">{moment(new Date(_article.createdAt)).fromNow()}</p>
                                                         <div className="up_down">
+                                                            <p className="text-muted comments"><i className={_article._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></p>
                                                             <p className="text-muted comments"><b>{_.size(_.get(_article, 'comment'))}</b><i className="fas fa-comment-alt"></i></p>
 									                        <div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(_article, 'upvotes'), (upvote) => {return upvote.upvoter === _user.fingerprint}) ) ? '' : 'active'}`}>
                                                                 <b>{_.size(_.get(_article, 'upvotes'))}</b> 
@@ -836,7 +839,7 @@ class Dashboard extends React.Component {
                                                     Showing&nbsp;
                                                     <strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>  
                                                     &nbsp;to&nbsp;
-                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : articles), function(o) { 
+                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -859,7 +862,7 @@ class Dashboard extends React.Component {
                                                                 return _.includes(op_bytag.tag, tags);
                                                         }) ))}</strong>
                                                     &nbsp;of&nbsp;
-                                                    <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
+                                                    <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -942,7 +945,7 @@ class Dashboard extends React.Component {
                                                 </div>
                                                 <div className="input-field col s3">
                                                     <Autocomplete
-                                                        items={_.flattenDeep(_.map(articles, 'tag'))}
+                                                        items={_.flattenDeep(_.map(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), 'tag'))}
                                                         getItemValue={(item) => item}
                                                         inputProps={{ id: 'tags', className: 'form-group-input tags', name: 'tags' }}
                                                         shouldItemRender={(item, tags) => item.toLowerCase().indexOf(tags.toLowerCase()) > -1}
@@ -961,7 +964,7 @@ class Dashboard extends React.Component {
                                             </div>
                                             <ul id="page">
                                                 {
-                                                    _.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
+                                                    _.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author })), function(o) { 
                                                         if(timeframe === 'Today')
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                         if(timeframe === 'This_Past_Week')
@@ -992,6 +995,7 @@ class Dashboard extends React.Component {
                                                                         <div className="text">
                                                                             <div className="cat_drop">
                                                                                 <p className="categorie">{article.categorie}</p>
+                                                                                <p className="categorie"><i className={article._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></p>
                                                                                 <div className="dropdown">
                                                                                     <span className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                         <i className="fas fa-ellipsis-h"></i>
@@ -1047,7 +1051,7 @@ class Dashboard extends React.Component {
                                             </ul>
                                             <ul id="page-numbers">
                                                 {
-                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(articles, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(articles, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(articles, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(articles, ['createdAt'], ['desc']) : articles), function(o) { 
+                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return _a._hide === false || _user.role === 'admin' || _user.username === _a.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1106,7 +1110,7 @@ class Dashboard extends React.Component {
                                                     Showing&nbsp;
                                                     <strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>  
                                                     &nbsp;to&nbsp;
-                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(projects, ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(projects, ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(projects, ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(projects, ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : projects), function(o) { 
+                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1129,7 +1133,7 @@ class Dashboard extends React.Component {
                                                                 return _.includes(op_bytag.tag, tags);
                                                         }) ))}</strong>
                                                     &nbsp;of&nbsp;
-                                                    <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(projects, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(projects, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(projects, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(projects, ['createdAt'], ['desc']) : projects), function(o) { 
+                                                    <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1212,7 +1216,7 @@ class Dashboard extends React.Component {
                                                 </div>
                                                 <div className="input-field col s3">
                                                     <Autocomplete
-                                                        items={_.flattenDeep(_.map(projects, 'tag'))}
+                                                        items={_.flattenDeep(_.map(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), 'tag'))}
                                                         getItemValue={(item) => item}
                                                         inputProps={{ id: 'tags', className: 'form-group-input tags', name: 'tags' }}
                                                         shouldItemRender={(item, tags) => item.toLowerCase().indexOf(tags.toLowerCase()) > -1}
@@ -1231,7 +1235,7 @@ class Dashboard extends React.Component {
                                             </div>
                                             <ul id="page">
                                                 {
-                                                    _.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(projects, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(projects, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(projects, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(projects, ['createdAt'], ['desc']) : projects), function(o) { 
+                                                    _.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author })), function(o) { 
                                                         if(timeframe === 'Today')
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                         if(timeframe === 'This_Past_Week')
@@ -1281,6 +1285,7 @@ class Dashboard extends React.Component {
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            <p className="categorie"><i className={project._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></p>
                                                                             <ul className="text-muted tags">
                                                                                 {
                                                                                     project.tag.map((t, i) => {
@@ -1316,7 +1321,7 @@ class Dashboard extends React.Component {
                                             </ul>
                                             <ul id="page-numbers">
                                                 {
-                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(projects, ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(projects, ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(projects, ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(projects, ['createdAt'], ['desc']) : projects), function(o) { 
+                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return _p._hide === false || _user.role === 'admin' || _user.username === _p.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')

@@ -37,6 +37,7 @@ class Form_Project extends React.Component {
             image: '',
             link_to: '',
             author: '',
+            _hide: false,
             tag: [],
             tagInput: '',
             comment: [],
@@ -59,6 +60,7 @@ class Form_Project extends React.Component {
                 image: nextProps.projectToEdit.image,
                 link_to: nextProps.projectToEdit.link_to,
                 author: nextProps.projectToEdit.author,
+                _hide: nextProps.projectToEdit._hide,
                 tag: nextProps.projectToEdit.tag,
                 tagInput: nextProps.projectToEdit.tagInput,
                 comment: nextProps.projectToEdit.comment,
@@ -82,7 +84,7 @@ class Form_Project extends React.Component {
     }
     handleSubmit() {
         const { onSubmitProject, projectToEdit, onEditProject } = this.props;
-        const { title, image, link_to, author, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
+        const { title, image, link_to, author, _hide, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
         const self = this;
         if(!projectToEdit) {
             return axios.post('/api/projects', {
@@ -90,6 +92,7 @@ class Form_Project extends React.Component {
                 image,
                 link_to,
                 author,
+                _hide,
                 tag,
                 comment,
                 upvotes,
@@ -105,6 +108,7 @@ class Form_Project extends React.Component {
                         image: '',
                         link_to: '',
                         author: '',
+                        _hide: false,
                         tag: [],
                         tagInput: '',
                         comment: [],
@@ -119,6 +123,7 @@ class Form_Project extends React.Component {
                 image,
                 link_to,
                 author,
+                _hide,
                 tag,
                 comment,
                 upvotes,
@@ -134,6 +139,7 @@ class Form_Project extends React.Component {
                         image: '',
                         link_to: '',
                         author: '',
+                        _hide: false,
                         tag: [],
                         tagInput: '',
                         comment: [],
@@ -148,6 +154,11 @@ class Form_Project extends React.Component {
         this.setState({
             [key]: event.target.value,
         });
+        if(key === '_hide') {
+            this.setState({
+                [key]: event.target.checked,
+            })
+        }
     }
     handleChange(value) {
         this.setState({
@@ -171,7 +182,7 @@ class Form_Project extends React.Component {
     }
     render() {
         const { projectToEdit } = this.props;
-        const { title, image, link_to, author, tag, tagInput } = this.state;
+        const { title, image, link_to, author, _hide, tag, tagInput } = this.state;
     
         return (
             <div className="wrapper_form">
@@ -225,21 +236,21 @@ class Form_Project extends React.Component {
                     </div>
                 </div>
 
-                {/* <div className="row">
+                <div className="row">
                     <div className="input-field col s12">
                         <input
-                            className="validate form-group-input author_project" 
-                            id="author_project" 
-                            type="text" 
-                            name="author_project" 
+                            className="validate form-group-input author__hide" 
+                            id="author__hide" 
+                            type="checkbox"
+                            name="author__hide" 
                             required="required"
-                            value={author}
-                            onChange={(ev) => this.handleChangeField('author', ev)}
+                            value={_hide}
+                            checked={_hide}
+                            onClick={(ev) => this.handleChangeField('_hide', ev)}
                         />
-                        <label htmlFor='author_project' className={author ? 'active' : ''}>Author</label>
-                        <div className="form-group-line"></div>
+                        <label className={_hide ? 'active' : ''} htmlFor="author__hide"><i className={_hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></label>
                     </div>
-                </div> */}
+                </div>
 
                 <div className="row">
                     <div className="input-field col s12">

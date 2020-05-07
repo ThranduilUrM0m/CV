@@ -265,7 +265,7 @@ class Footer extends React.Component {
                             <h6>Latest.</h6>
                             <ul>
                                 {
-                                    (_.orderBy(articles, ['createdAt'], ['desc']).slice(0, 3)).map((article, index) => {
+                                    (_.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['createdAt'], ['desc']).slice(0, 3)).map((article, index) => {
                                         return (
                                             <li>
                                                 <Link to={`/blog/${article._id}`}>
@@ -282,7 +282,7 @@ class Footer extends React.Component {
                             <h6>Most viewed.</h6>
                             <ul>
                                 {
-                                    (_.orderBy(articles, ['view'], ['desc']).slice(0, 3)).map((article, index) => {
+                                    (_.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['view'], ['desc']).slice(0, 3)).map((article, index) => {
                                         return (
                                             <li>
                                                 <Link to={`/blog/${article._id}`}>
@@ -299,7 +299,7 @@ class Footer extends React.Component {
                             <h6>Most commented.</h6>
                             <ul>
                                 {
-                                    (_.orderBy(articles, ['comment'], ['desc']).slice(0, 3)).map((article, index) => {
+                                    (_.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['comment'], ['desc']).slice(0, 3)).map((article, index) => {
                                         return (
                                             <li>
                                                 <Link to={`/blog/${article._id}`}>
@@ -316,7 +316,7 @@ class Footer extends React.Component {
                             <h6>Latest Projects.</h6>
                             <ul>
                                 {
-                                    (_.orderBy(projects, ['createdAt'], ['asc']).slice(0, 3)).map((project, index) => {
+                                    (_.orderBy(_.filter(projects, (_p) => { return _p._hide === false }), ['createdAt'], ['asc']).slice(0, 3)).map((project, index) => {
                                         return (
                                             <li>
                                                 <Link to={`${project.link_to}`}>

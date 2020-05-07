@@ -20,14 +20,6 @@ router.post('/', (req, res, next) => {
       },
     });
   }
-  
-  if(!body.brand) {
-    return res.status(422).json({
-      errors: {
-        brand: 'is required',
-      },
-    });
-  }
 
   if(!body.link_to) {
     return res.status(422).json({
@@ -45,18 +37,10 @@ router.post('/', (req, res, next) => {
     });
   }
   
-  if(!body.date_) {
+  if(!body._hide) {
     return res.status(422).json({
       errors: {
-        date_: 'is required',
-      },
-    });
-  }
-  
-  if(!body.categorie) {
-    return res.status(422).json({
-      errors: {
-        categorie: 'is required',
+        _hide: 'is required',
       },
     });
   }
@@ -98,28 +82,20 @@ router.patch('/:id', (req, res, next) => {
     req.project.title = body.title;
   }
 
-  if(typeof body.author !== 'undefined') {
-    req.project.author = body.author;
+  if(typeof body.image !== 'undefined') {
+    req.project.image = body.image;
   }
 
   if(typeof body.link_to !== 'undefined') {
     req.project.link_to = body.link_to;
   }
 
-  if(typeof body.date_ !== 'undefined') {
-    req.project.date_ = body.date_;
+  if(typeof body.author !== 'undefined') {
+    req.project.author = body.author;
   }
 
-  if(typeof body.categorie !== 'undefined') {
-    req.project.categorie = body.categorie;
-  }
-
-  if(typeof body.image !== 'undefined') {
-    req.project.image = body.image;
-  }
-
-  if(typeof body.brand !== 'undefined') {
-    req.project.brand = body.brand;
+  if(typeof body._hide !== 'undefined') {
+    req.project._hide = body._hide;
   }
 
   if(typeof body.tag !== 'undefined') {

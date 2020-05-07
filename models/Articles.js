@@ -7,6 +7,7 @@ const ArticlesSchema = new Schema({
   body: String,
   author: String,
   categorie: String,
+  _hide: Boolean,
   tag: [String],
   comment: [{
     parent_id: mongoose.Types.ObjectId,

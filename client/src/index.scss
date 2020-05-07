@@ -2605,21 +2605,22 @@ body, html {
 													flex-direction: column;
 													height: calc(50% + 1.25rem);
 													padding-top: 1rem;
+													.categorie {
+														text-align: -webkit-right;
+														font-size: small;
+														color: black;
+														border: 1px solid black;
+														padding: 0.2rem 0.5rem;
+														margin-bottom: .25rem;
+														margin-right: .25rem;
+														width: fit-content;
+													}
 													.cat_drop {
 														display: flex;
-														justify-content: space-between;
-														.categorie {
-															text-align: -webkit-right;
-															font-size: small;
-															color: black;
-															border: 1px solid black;
-															padding: 0.2rem 0.5rem;
-															margin-bottom: 0.25rem;
-															width: fit-content;
-														}
 														.dropdown {
 															text-align: right;
 															height: fit-content;
+															margin-left: auto;
 															span {
 																cursor: pointer;
 																i {
