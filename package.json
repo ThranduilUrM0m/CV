@@ -10,6 +10,7 @@
     "license": "ISC",
     "dependencies": {
         "body-parser": "*",
+        "cluster": "^0.7.7",
         "cors": "*",
         "css-doodle": "*",
         "errorhandler": "*",
@@ -19,7 +20,8 @@
         "mongoose": "*",
         "morgan": "*",
         "nodemailer": "*",
-        "password-hash": "*"
+        "password-hash": "*",
+        "throng": "*"
     },
     "devDependencies": {
         "concurrently": "*",
