@@ -9,7 +9,6 @@ Quill.register('modules/ImageResize', ImageResize);
 Quill.register("modules/imageUploader", ImageUploader);
 
 var _ = require('lodash');
-
 const modules = {
     ImageResize: {
         displaySize: true
@@ -19,15 +18,11 @@ const modules = {
             return new Promise((resolve, reject) => {
                 const formData = new FormData();
                 formData.append("image", file);
-                formData.append("upload_preset", "n6sin3my");
 
                 fetch(
-                    "https://api.cloudinary.com/v1_1/hlgo5eqeo/image/upload",
+                    "https://api.imgbb.com/1/upload?key=9706800c95076c894e2699f44dbc5b45",
                     {
                         method: "POST",
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
                         body: formData
                     }
                 )
@@ -150,7 +145,7 @@ class Form extends React.Component {
                         view: [],
                     })
                 }).catch(error => {
-                    console.log(error)
+                    console.log(error.response)
                 });
         } else {
             return axios.patch(`/api/articles/${articleToEdit._id}`, {

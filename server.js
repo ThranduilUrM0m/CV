@@ -54,6 +54,7 @@ const setUpExpress = () => {
 
     //On définit notre objet express nommé app
     const app = express();
+    app.use(cors());
 
     //Connexion à la base de donnée
     mongoose.Promise = global.Promise;
@@ -71,7 +72,6 @@ const setUpExpress = () => {
 
     app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
     app.use(bodyParser.json({ limit: '50mb' }));
-    app.use(cors());
     app.use(require('morgan')('dev'));
     app.use(session({ secret: 'boutaleb', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
