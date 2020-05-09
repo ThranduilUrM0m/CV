@@ -19,18 +19,21 @@ const modules = {
             return new Promise((resolve, reject) => {
                 const formData = new FormData();
                 formData.append("image", file);
-                formData.append('upload_preset', 'n6sin3my');
+                formData.append("upload_preset", "n6sin3my");
 
-                axios({
-                    url: "https://api.cloudinary.com/v1_1/hlgo5eqeo/upload",
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    data: formData
-                })
+                fetch(
+                    "https://api.cloudinary.com/v1_1/hlgo5eqeo/image/upload",
+                    {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    }
+                )
                 .then(response => response.json())
                 .then(result => {
+                    console.log(result);
                     resolve(result.data.url);
                 })
                 .catch(error => {
