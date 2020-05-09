@@ -2,14 +2,41 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import ReactQuill, { Quill } from 'react-quill';
-import ImageResize from 'quill-image-resize-module';
 import API from "../../../utils/API";
+import ImageResize from 'quill-image-resize-module';
+import ImageUploader from "quill-image-uploader";
 Quill.register('modules/ImageResize', ImageResize);
+Quill.register("modules/imageUploader", ImageUploader);
 
 var _ = require('lodash');
 const modules = {
     ImageResize: {
         displaySize: true
+    },
+    imageUploader: {
+        upload: file => {
+            return new Promise((resolve, reject) => {
+                const formData = new FormData();
+                formData.append("image", file);
+
+                fetch(
+                    "https://api.imgbb.com/1/upload?key=9706800c95076c894e2699f44dbc5b45",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                )
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result);
+                    resolve(result.data.url);
+                })
+                .catch(error => {
+                    reject("Upload failed");
+                    console.error("Error:", error);
+                });
+            });
+        }
     },
     toolbar: [
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -19,7 +46,7 @@ const modules = {
         [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
         [{ 'align': [] }],
         ['blockquote', 'code-block'],
-        ['link', 'image', 'video'],                                        // image and link
+        ['link', 'image'],                                        // image and link
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
         [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent

@@ -46,7 +46,7 @@ const modules = {
         [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
         [{ 'align': [] }],
         ['blockquote', 'code-block'],
-        ['link', 'image', 'video'],                                        // image and link
+        ['link', 'image'],                                        // image and link
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
         [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
