@@ -2,14 +2,42 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import ReactQuill, { Quill } from 'react-quill';
-import ImageResize from 'quill-image-resize-module';
 import API from "../../../utils/API";
+import ImageResize from 'quill-image-resize-module';
+import ImageUploader from "quill-image-uploader";
 Quill.register('modules/ImageResize', ImageResize);
+Quill.register("modules/imageUploader", ImageUploader);
 
 var _ = require('lodash');
+
 const modules = {
     ImageResize: {
         displaySize: true
+    },
+    imageUploader: {
+        upload: file => {
+            return new Promise((resolve, reject) => {
+                const formData = new FormData();
+                formData.append("image", file);
+
+                fetch(
+                    "https://api.imgbb.com/1/upload?key=d36eb6591370ae7f9089d85875e56b22",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                )
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result);
+                    resolve(result.data.url);
+                })
+                .catch(error => {
+                    reject("Upload failed");
+                    console.error("Error:", error);
+                });
+            });
+        }
     },
     toolbar: [
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -118,7 +146,7 @@ class Form extends React.Component {
                         view: [],
                     })
                 }).catch(error => {
-                    console.log(error.response)
+                    console.log(error)
                 });
         } else {
             return axios.patch(`/api/articles/${articleToEdit._id}`, {
