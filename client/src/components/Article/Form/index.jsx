@@ -19,17 +19,18 @@ const modules = {
             return new Promise((resolve, reject) => {
                 const formData = new FormData();
                 formData.append("image", file);
+                formData.append('upload_preset', 'n6sin3my');
 
-                fetch(
-                    "https://api.imgbb.com/1/upload?key=d36eb6591370ae7f9089d85875e56b22",
-                    {
-                        method: "POST",
-                        body: formData
-                    }
-                )
+                axios({
+                    url: "https://api.cloudinary.com/v1_1/hlgo5eqeo/upload",
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data: formData
+                })
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result);
                     resolve(result.data.url);
                 })
                 .catch(error => {
