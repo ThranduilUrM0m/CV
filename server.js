@@ -5,7 +5,6 @@ const session = require('express-session');
 const cors = require('cors');
 const errorHandler = require('errorhandler');
 const mongoose = require('mongoose');
-
 const cluster = require('cluster');
 let workers = [];
 
