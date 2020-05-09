@@ -415,7 +415,7 @@ class Home extends React.Component {
                                     <p>Some of My Projects.</p>
                                 </div>
                                 {
-                                    (_.orderBy(_.filter(projects, (_p) => { return _p._hide === false }), ['view'], ['desc']).slice(0, 10)).map((project, index) => {
+                                    (_.orderBy(_.filter(projects, (_p) => { return !_p._hide }), ['view'], ['desc']).slice(0, 10)).map((project, index) => {
                                         return (
                                             <div className={"card card_" + index} data-title={project.title} data-index={index+1}>
                                                 <div className="card-body">
@@ -458,7 +458,7 @@ class Home extends React.Component {
                             </div>
                             <div id="slider">
                                 {
-                                    (_.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['view'], ['desc']).slice(0, 10)).map((article, index) => {
+                                    (_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).slice(0, 10)).map((article, index) => {
                                         return (
                                             <div className={"card card_" + index} data-title={_.head( article.title.split(" ") )} data-index={index+1}>
                                                 <div className="shadow_title">{(_.head( article.title.split(/[\s.]+/) ).length <= 2 ) ? _.head( article.title.split(/[\s.]+/) )+" "+_.nth(article.title.split(/[\s.]+/), 1) : _.head( article.title.split(/[\s.]+/) )}.</div>

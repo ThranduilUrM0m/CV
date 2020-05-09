@@ -338,7 +338,7 @@ class Blog extends React.Component {
 												Showing&nbsp;
 												<strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>  
 												&nbsp;to&nbsp;
-												<strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(articles, (_a) => { return _a._hide === false })), function(o) { 
+												<strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(articles, (_a) => { return !_a._hide })), function(o) { 
 													if(timeframe === 'Today') 
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
 													if(timeframe === 'This_Past_Week')
@@ -361,7 +361,7 @@ class Blog extends React.Component {
 															return _.includes(op_bytag.tag, tags);
 													}) ))}</strong>
 												&nbsp;of&nbsp;
-												<strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return _a._hide === false })), function(o) { 
+												<strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function(o) { 
 													if(timeframe === 'Today') 
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
 													if(timeframe === 'This_Past_Week')
@@ -444,7 +444,7 @@ class Blog extends React.Component {
 											</div>
 											<div className="input-field col s3">
 												<Autocomplete
-													items={_.flattenDeep(_.map(_.filter(articles, (_a) => { return _a._hide === false }), 'tag'))}
+													items={_.flattenDeep(_.map(_.filter(articles, (_a) => { return !_a._hide }), 'tag'))}
 													getItemValue={(item) => item}
 													inputProps={{ id: 'tags', className: 'form-group-input tags', name: 'tags' }}
 													shouldItemRender={(item, tags) => item.toLowerCase().indexOf(tags.toLowerCase()) > -1}
@@ -463,7 +463,7 @@ class Blog extends React.Component {
 										</div>
 										<ul id="page">
 											{
-												_.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return _a._hide === false })), function(o) { 
+												_.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function(o) { 
 													if(timeframe === 'Today')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
 													if(timeframe === 'This_Past_Week')
@@ -529,7 +529,7 @@ class Blog extends React.Component {
 										</ul>
 										<ul id="page-numbers">
 											{
-												([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return _a._hide === false })), function(o) { 
+												([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function(o) { 
 													if(timeframe === 'Today') 
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
 													if(timeframe === 'This_Past_Week')
@@ -588,7 +588,7 @@ class Blog extends React.Component {
 								<div className="articles_slider_wrapper swiper-container">
 									<div className="articles_slider_wrapper_cards swiper-wrapper">
 										{
-											_.orderBy(_.filter(articles, (_a) => { return _a._hide === false }), ['view'], ['desc']).map((article, index) => {
+											_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).map((article, index) => {
 												return (
 													<div className="articles_slider_wrapper_cards_item swiper-slide" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="articles_slider_wrapper_cards_item" key={index}>
 														<div className='article_item'>
