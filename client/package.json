@@ -40,7 +40,7 @@
     "quill": "*",
     "quill-image-resize-module": "*",
     "quill-image-upload": "*",
-    "quill-image-uploader": "^1.2.1",
+    "quill-image-uploader": "*",
     "rc-calendar": "*",
     "react": "*",
     "react-autocomplete": "*",
