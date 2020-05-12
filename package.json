@@ -20,8 +20,7 @@
         "mongoose": "*",
         "morgan": "*",
         "nodemailer": "*",
-        "password-hash": "*",
-        "throng": "*"
+        "password-hash": "*"
     },
     "devDependencies": {
         "concurrently": "*",

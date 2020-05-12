@@ -39,7 +39,6 @@
     "prop-types": "*",
     "quill": "*",
     "quill-image-resize-module": "*",
-    "quill-image-upload": "*",
     "quill-image-uploader": "*",
     "rc-calendar": "*",
     "react": "*",

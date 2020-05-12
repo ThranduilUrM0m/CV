@@ -36,8 +36,8 @@ ReactDOM.render(
                     <Route exact path='/contact' component={ContactMe} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />
+                    <Route exact path="/404" component={NotFound} />
                     <PrivateRoute path='/dashboard' component={Dashboard} />
-                    <Route exact path='/404' component={NotFound}/>
                 </Switch>
             </App>
         </Provider>

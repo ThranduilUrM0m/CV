@@ -351,30 +351,30 @@ class Header extends React.Component {
                         <div className="search-results">
                             <ul id="page">
                                 {
-                                    _.slice(_.filter(_.filter(articles, (_a) => { return !_a._hide && _search_value != '' }), (_article) => {
-                                        return _.includes(_article.title, _search_value) || _.includes(_article.author, _search_value) || _.includes(_article.categorie, _search_value) || _article.tag.some(x => x.includes(_search_value));
-                                    }), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((article, index) => {
+                                    _.slice(_.filter(_.filter(_.union(articles, projects), (_a) => { return !_a._hide && _search_value != '' }), (_ap) => {
+                                        return _.includes(_ap.title, _search_value) || _.includes(_ap.author, _search_value) || _.includes(_ap.categorie, _search_value) || _ap.tag.some(x => x.includes(_search_value));
+                                    }), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((ap, index) => {
                                         return (
-                                            <li className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" key={index}>
-                                                <div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
+                                            <li className="article_card article_anchor" data-name={ moment(ap.createdAt).format("YYYY Do MM") } id="article_card" key={index}>
+                                                <div className={"col card card_" + index} data-title={_.snakeCase(ap.title)} data-index={_.add(index,1)}>
                                                     <div className="card-body">
                                                         <div className="text">
-                                                            <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
-                                                            <figure>{this.handleJSONTOHTMLIMAGE(article.body, index)}</figure>
-                                                            <h4>{article.title}</h4>
-                                                            <Link to={`blog/${article._id}`}>
+                                                            <p className="text-muted author">by <b>{ap.author}</b>, {moment(new Date(ap.createdAt)).fromNow()}</p>
+                                                            <figure>{this.handleJSONTOHTMLIMAGE(ap.body, index)}</figure>
+                                                            <h4>{ap.title}</h4>
+                                                            <a href={ap.categorie ? `blog/${ap._id}` : ap.link_to} target={!ap.categorie ? "_blank" : ''}>
                                                                 <div className="readmore">
                                                                     <button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
                                                                         <div className="line line-1"></div>
                                                                         <div className="line line-2"></div>
                                                                     </button>
                                                                 </div>
-                                                            </Link>
+                                                            </a>
                                                             <div className="comments_up_down">
-                                                                <p className="text-muted views"><b>{_.size(article.view)}</b><i className="fas fa-eye"></i></p>
-                                                                <p className="text-muted comments"><b>{_.size(article.comment)}</b> <i className="fas fa-comment-alt"></i></p>
-                                                                <p className="text-muted upvotes"><b>{_.size(article.upvotes)}</b> <i className="fas fa-thumbs-up"></i></p>
-                                                                <p className="text-muted downvotes"><b>{_.size(article.downvotes)}</b> <i className="fas fa-thumbs-down"></i></p>
+                                                                <p className="text-muted views"><b>{_.size(ap.view)}</b><i className="fas fa-eye"></i></p>
+                                                                <p className="text-muted comments"><b>{_.size(ap.comment)}</b> <i className="fas fa-comment-alt"></i></p>
+                                                                <p className="text-muted upvotes"><b>{_.size(ap.upvotes)}</b> <i className="fas fa-thumbs-up"></i></p>
+                                                                <p className="text-muted downvotes"><b>{_.size(ap.downvotes)}</b> <i className="fas fa-thumbs-down"></i></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -386,8 +386,8 @@ class Header extends React.Component {
                             </ul>
                             <ul id="page-numbers">
                                 {
-                                    ([...Array(Math.ceil(_.filter(_.filter(articles, (_a) => { return !_a._hide && _search_value != '' }), (_article) => {
-                                        return _.includes(_article.title, _search_value) || _.includes(_article.author, _search_value) || _.includes(_article.categorie, _search_value) || _article.tag.some(x => x.includes(_search_value));
+                                    ([...Array(Math.ceil(_.filter(_.filter(articles, (_a) => { return !_a._hide && _search_value != '' }), (_ap) => {
+                                        return _.includes(_ap.title, _search_value) || _.includes(_ap.author, _search_value) || _.includes(_ap.categorie, _search_value) || _ap.tag.some(x => x.includes(_search_value));
                                     }).length / todosPerPage)).keys()]).map(number => {
                                         return (
                                             <li
@@ -408,9 +408,9 @@ class Header extends React.Component {
                             <div className="togglebtn">👉 May we suggest?</div>
                             <ul className="text-muted tags">
                                 {
-                                    _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment', 'upvotes', 'view'], ['desc', 'desc', 'desc']).map((_article, _index) => {
+                                    _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment', 'upvotes', 'view'], ['desc', 'desc', 'desc']).map((_ap, _index) => {
                                         return (
-                                            _article.tag.map((t, i) => {
+                                            _ap.tag.map((t, i) => {
                                                 return (
                                                     <li className="tag_item" onClick={() => { this.setState({_search_value: t}); }}>{t}</li>
                                                 )
