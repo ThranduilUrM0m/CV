@@ -3,10 +3,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
-import { Link } from 'react-router-dom';
 import 'whatwg-fetch';
 import Fingerprint from 'fingerprintjs';
-import { Form } from '../Article';
 import Footer from '../Footer/Footer';
 import * as $ from "jquery";
 import 'bootstrap';
@@ -147,7 +145,7 @@ class Post extends React.Component {
 				upvotes: [...state.upvotes, {upvoter: f.toString()}],
 			}), () => {
 				if( !_.isUndefined( _.find(downvotes, (d) => {return d.downvoter === f.toString()}) ) ) {
-					let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter != f.toString(); });
+					let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter !== f.toString(); });
 					self.setState({
 						downvotes: _downvotes,
 					}, () => {
@@ -160,7 +158,7 @@ class Post extends React.Component {
 				$(target).closest("div").addClass('active');
 			})
 		} else {
-			let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter != f.toString(); });
+			let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter !== f.toString(); });
 			self.setState(state => ({
 				upvotes: _upvotes,
 			}), () => {
@@ -180,7 +178,7 @@ class Post extends React.Component {
 				downvotes: [...state.downvotes, {downvoter: f.toString()}],
 			}), () => {
 				if( !_.isUndefined( _.find(upvotes, (u) => {return u.upvoter === f.toString()}) ) ) {
-					let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter != f.toString(); });
+					let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter !== f.toString(); });
 					self.setState({
 						upvotes: _upvotes,
 					}, () => {
@@ -193,7 +191,7 @@ class Post extends React.Component {
 				$(target).closest("div").addClass('active');
 			})
 		} else {
-			let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter != f.toString(); });
+			let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter !== f.toString(); });
 			self.setState(state => ({
 				downvotes: _downvotes,
 			}), () => {
@@ -208,7 +206,7 @@ class Post extends React.Component {
 		let _edited_comment = [];
 
 		if(_comment_author && _comment_body) {
-			if(_comment_id_ifEditing != null) {
+			if(_comment_id_ifEditing !== null) {
 				_edited_comment = comment;
 				function setEditFunction() {
 					// Get the current 'global' time from an API using Promise
@@ -314,7 +312,7 @@ class Post extends React.Component {
 									upvoter: f.toString()
 								});
 								if(!_.isUndefined(_.find(_c.downvotes, {'downvoter': f.toString()}))) {
-									_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter != f.toString(); });
+									_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter !== f.toString(); });
 								}
 							}
 							return _c;
@@ -340,7 +338,7 @@ class Post extends React.Component {
 						_edited_comment = comment;
 						_edited_comment = _.map(_edited_comment, (_c) => {
 							if(_c._id === in_comment._id) {
-								_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter != f.toString(); });
+								_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter !== f.toString(); });
 							}
 							return _c;
 						});
@@ -378,7 +376,7 @@ class Post extends React.Component {
 									downvoter: f.toString()
 								});
 								if(!_.isUndefined(_.find(_c.upvotes, {'upvoter': f.toString()}))) {
-									_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter != f.toString(); });
+									_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter !== f.toString(); });
 								}
 							}
 							return _c;
@@ -404,7 +402,7 @@ class Post extends React.Component {
 						_edited_comment = comment;
 						_edited_comment = _.map(_edited_comment, (_c) => {
 							if(_c._id === in_comment._id) {
-								_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter != f.toString(); });
+								_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter !== f.toString(); });
 							}
 							return _c;
 						});
@@ -449,7 +447,7 @@ class Post extends React.Component {
 		const { comment } = this.state;
 
 		self.setState(state => ({
-			comment: _.takeWhile(comment, (_c) => {return _c._id != _in_id}),
+			comment: _.takeWhile(comment, (_c) => {return _c._id !== _in_id}),
 		}), () => {
 			self.handleSubmit();
 		});
@@ -461,9 +459,6 @@ class Post extends React.Component {
     }
 	
 	handleJSONTOHTML(inputDelta) {
-		function randomIntFromInterval(min, max) { // min and max included 
-			return Math.floor(Math.random() * (max - min + 1) + min);
-		}
 		function runAfterElementExists(jquery_selector, callback){
 			var checker = window.setInterval(function() {
 			if (jquery_selector) {
@@ -496,7 +491,7 @@ class Post extends React.Component {
 	}
     _handleScroll(){
         $(window).scroll(function() {
-            if ($(document).height() - $(window).height() - $(window).scrollTop() == 0){
+            if ($(document).height() - $(window).height() - $(window).scrollTop() === 0){
                 $('.fixedHeaderContainer').addClass('blog_header');
             }
             else{
@@ -507,7 +502,7 @@ class Post extends React.Component {
 	
     render() {
 		const { articles } = this.props;
-        const { _id, title, body, author, categorie, tag, comment, _comment_author, _comment_body, _comment_fingerprint, upvotes, downvotes, view, createdAt, fingerprint } = this.state;
+        const { _id, title, body, author, comment, _comment_author, _comment_body, _comment_fingerprint, upvotes, downvotes, view, createdAt, fingerprint } = this.state;
 		
 		return (
             <FullPage scrollMode={'normal'}>
@@ -520,8 +515,8 @@ class Post extends React.Component {
 							<div className="modal-dialog" role="document">
 								<div className="modal-content">
 									<div className="modal-body">
-										<a title="Close" className="modal-close" data-dismiss="modal">Close</a>
-										<div>👉 Please provide your name and the content of ur msg.</div>
+										<a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
+										<div><span role="img" aria-label="sheep">👉</span> Please provide your name and the content of ur msg.</div>
 									</div>
 								</div>
 							</div>

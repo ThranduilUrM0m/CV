@@ -6,7 +6,6 @@ import './index.scss';
 import {
     BrowserRouter as Router,
     Route,
-    Link,
     Switch
 } from 'react-router-dom';
 import App from './components/App/App';

@@ -4,14 +4,7 @@ import moment from 'moment';
 import Footer from '../Footer/Footer';
 import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch
-} from 'react-router-dom';
-import { Form } from '../Article';
-import { Form_Project } from '../Project';
+import { Link } from 'react-router-dom';
 import 'whatwg-fetch';
 import * as $ from "jquery";
 import jQuery from 'jquery';
@@ -140,7 +133,6 @@ class Home extends React.Component {
                     container.after('<ol class="nav carousel-indicators'+container.attr('id')+'"></ol>');
                     var nav = $(".nav.carousel-indicators"+container.attr('id'));
                     this.imgs.each(function(){
-                        var caption = $(this).find('img').attr('title');
                         nav.append('<li></li>');
                     });
                     this.bullets = nav.find("li");
@@ -168,13 +160,13 @@ class Home extends React.Component {
                         container.find('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
 
                         //if the index one is the last one, u need to go to the first one again, sinn just +1
-                        if(this.imgs.last().index() != index)
+                        if(this.imgs.last().index() !== index)
                             container.find('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
                         else
                             container.find('#next').text(this.imgs.first().find('.shadow_title').text());
 
                         //if the index one is the first one, u need to go to the last one again, sinn just -1
-                        if(index != 0) 
+                        if(index !== 0) 
                             container.find('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
                         else
                             container.find('#prev').text(this.imgs.last().find('.shadow_title').text());
@@ -201,13 +193,13 @@ class Home extends React.Component {
                         container.find('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
 
                         //if the index one is the last one, u need to go to the first one again, sinn just +1
-                        if(this.imgs.last().index() != index)
+                        if(this.imgs.last().index() !== index)
                             container.find('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
                         else
                             container.find('#next').text(this.imgs.first().find('.shadow_title').text());
 
                         //if the index one is the first one, u need to go to the last one again, sinn just -1
-                        if(index != 0) 
+                        if(index !== 0) 
                             container.find('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
                         else
                             container.find('#prev').text(this.imgs.last().find('.shadow_title').text());
@@ -370,20 +362,14 @@ class Home extends React.Component {
         const { articles, projects } = this.props;
         return (
             <FullPage>
-                {/* <Slide>
-                    <Form />
-                </Slide> */}
-                {/* <Slide>
-                    <Form_Project />
-                </Slide> */}
                 <Slide>
                     <section className="second_section">
                         <div className="Hello">
-                            <div class="word w1">مرحبا</div>
-                            <div class="word w2">Welcome</div>
-                            <div class="word w3">Bienvenue</div>
-                            <div class="word w4">Chào mừng</div>
-                            <div class="word w5">Bienvenido</div>
+                            <div className="word w1">مرحبا</div>
+                            <div className="word w2">Welcome</div>
+                            <div className="word w3">Bienvenue</div>
+                            <div className="word w4">Chào mừng</div>
+                            <div className="word w5">Bienvenido</div>
                         </div>
                         <div className="wrapper left_part">
                             <div className="pulsing_dots">
@@ -419,7 +405,7 @@ class Home extends React.Component {
                                         return (
                                             <div className={"card card_" + index} data-title={project.title} data-index={index+1}>
                                                 <div className="card-body">
-                                                    <a href={project.link_to} target="_blank">
+                                                    <a href={project.link_to} target="_blank" rel="noopener noreferrer">
                                                         <div className='image'>
                                                             { this.handleJSONTOHTML(project.image) }
                                                         </div>
@@ -440,10 +426,10 @@ class Home extends React.Component {
                         <div className="wrapper left_part">
                             <div id="social_media">
                                 <div className="icons_gatherer">
-                                    <a href="#" className="icon-button github"><i className="fab fa-github"></i><span></span></a>
-                                    <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                    <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-                                    <a href="#" className="icon-button scroll">
+                                    <a href="# " className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                    <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                    <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                    <a href="# " className="icon-button scroll">
                                         
                                     </a>
                                 </div>

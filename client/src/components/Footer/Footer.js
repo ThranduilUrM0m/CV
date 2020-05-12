@@ -2,12 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import 'whatwg-fetch';
 import API from '../../utils/API';
 import * as $ from "jquery";
@@ -84,9 +79,9 @@ class Footer extends React.Component {
     _handleMouseMove() {
         $('.footer').mousemove(function(e){
             var width = $(this).width() / 2;
-            var height = $(this).height() / 2;
+            //var height = $(this).height() / 2;
             var amountMovedX = ((width - e.pageX) * 1 / 64);
-            var amountMovedY = ((height - e.pageY) * 1 / 64);
+            //var amountMovedY = ((height - e.pageY) * 1 / 64);
             
             $('.before').css('right', amountMovedX);
             //$('.before').css('top', amountMovedY);
@@ -248,12 +243,10 @@ class Footer extends React.Component {
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-body">
-                                <a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
                                 <h5 className="modal-title" id="mailSentModalLabel">Voilà!</h5>
                                 <div>Your mail was sent, we thank you for trusting us, we'll reach out to you before you even know it.</div>
                                 <div>How about you joins us, not only you can give a feedback to the post you're reading, but you can discover much more about out community.</div>
-                                <div><small>Here</small></div>
-                                <a className="togglebtn">👉 Sign In If you don't have an Account</a>
                             </div>
                         </div>
                     </div>
@@ -267,7 +260,7 @@ class Footer extends React.Component {
                                 {
                                     (_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']).slice(0, 3)).map((article, index) => {
                                         return (
-                                            <li>
+                                            <li key={index}>
                                                 <Link to={`/blog/${article._id}`}>
                                                     <span>{article.title}</span>
                                                     <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
@@ -284,7 +277,7 @@ class Footer extends React.Component {
                                 {
                                     (_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).slice(0, 3)).map((article, index) => {
                                         return (
-                                            <li>
+                                            <li key={index}>
                                                 <Link to={`/blog/${article._id}`}>
                                                     <span>{article.title}</span>
                                                     <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
@@ -301,7 +294,7 @@ class Footer extends React.Component {
                                 {
                                     (_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']).slice(0, 3)).map((article, index) => {
                                         return (
-                                            <li>
+                                            <li key={index}>
                                                 <Link to={`/blog/${article._id}`}>
                                                     <span>{article.title}</span>
                                                     <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
@@ -318,7 +311,7 @@ class Footer extends React.Component {
                                 {
                                     (_.orderBy(_.filter(projects, (_p) => { return !_p._hide }), ['createdAt'], ['asc']).slice(0, 3)).map((project, index) => {
                                         return (
-                                            <li>
+                                            <li key={index}>
                                                 <Link to={`${project.link_to}`}>
                                                     <span>{project.title}</span>
                                                     <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
@@ -446,13 +439,13 @@ class Footer extends React.Component {
                         <span className="push-left">
                             <ul className="list-inline">
                                 <li className="list-inline-item">
-                                    <a href="#">Instagram</a>
+                                    <a href="# ">Instagram</a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <a href="#">Facebook</a>
+                                    <a href="# ">Facebook</a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <a href="#">Github</a>
+                                    <a href="# ">Github</a>
                                 </li>
                                 <li className="list-inline-item">
                                     <i className="far fa-copyright"></i>
@@ -463,10 +456,10 @@ class Footer extends React.Component {
                         <span className="push-right">
                             <ul className="list-inline">
                                 <li className="list-inline-item">
-                                    <a href="#">Legal Notice</a>
+                                    <a href="# ">Legal Notice</a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <a href="#">Newsroom</a>
+                                    <a href="# ">Newsroom</a>
                                 </li>
                                 <li className="list-inline-item">
                                     <span className="name">Zakariae.</span>

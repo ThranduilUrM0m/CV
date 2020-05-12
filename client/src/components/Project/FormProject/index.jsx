@@ -55,7 +55,7 @@ const modules = {
     ],
 }
 
-class Form_Project extends React.Component {
+class FormProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -111,7 +111,7 @@ class Form_Project extends React.Component {
     }
     handleSubmit() {
         const { onSubmitProject, projectToEdit, onEditProject } = this.props;
-        const { title, image, link_to, author, _hide, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
+        const { title, image, link_to, author, _hide, tag, comment, upvotes, downvotes, view } = this.state;
         const self = this;
         if(!projectToEdit) {
             return axios.post('/api/projects', {
@@ -209,7 +209,7 @@ class Form_Project extends React.Component {
     }
     render() {
         const { projectToEdit } = this.props;
-        const { title, image, link_to, author, _hide, tag, tagInput } = this.state;
+        const { title, image, link_to, _hide, tag, tagInput } = this.state;
     
         return (
             <div className="wrapper_form">
@@ -312,4 +312,4 @@ const mapStateToProps = state => ({
     projectToEdit: state.home.projectToEdit,
 }) 
   
-export default connect(mapStateToProps, mapDispatchToProps)(Form_Project) 
+export default connect(mapStateToProps, mapDispatchToProps)(FormProject) 

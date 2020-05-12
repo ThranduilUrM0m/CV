@@ -76,7 +76,7 @@ class Minttea extends React.Component {
                         upvotes: [...state.upvotes, {upvoter: f.toString()}],
                     }), () => {
                         if( !_.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
-                            let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
+                            let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter !== f.toString(); });
                             self.setState({
                                 downvotes: _downvotes,
                             }, () => {
@@ -103,7 +103,7 @@ class Minttea extends React.Component {
             }
             setEditFunction()
                 .then(() => {
-                    let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
+                    let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter !== f.toString(); });
                     self.setState(state => ({
                         upvotes: _upvotes,
                     }), () => {
@@ -135,7 +135,7 @@ class Minttea extends React.Component {
                         downvotes: [...state.downvotes, {downvoter: f.toString()}],
                     }), () => {
                         if( !_.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
-                            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
+                            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter !== f.toString(); });
                             self.setState({
                                 upvotes: _upvotes,
                             }, () => {
@@ -162,7 +162,7 @@ class Minttea extends React.Component {
             }
             setEditFunction()
                 .then(() => {
-                    let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
+                    let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter !== f.toString(); });
                     self.setState(state => ({
                         downvotes: _downvotes,
                     }), () => {
@@ -250,7 +250,7 @@ class Minttea extends React.Component {
     }
     render() {
         const { testimonyToEdit, testimonies } = this.props;
-        const { parent_id, body, author, is_private, fingerprint } = this.state;
+        const { body, author, is_private, fingerprint } = this.state;
         return(
             <FullPage scrollMode='normal'>
 				<Slide>
@@ -258,10 +258,10 @@ class Minttea extends React.Component {
                         <div className="wrapper_full">
 							<div id="social_media">
                                 <div className="icons_gatherer">
-                                    <a href="#" className="icon-button github"><i className="fab fa-github"></i><span></span></a>
-                                    <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                    <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-                                    <a href="#" className="icon-button scroll">
+                                    <a href="# " className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                    <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                    <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                    <a href="# " className="icon-button scroll">
                                         
                                     </a>
                                 </div>
@@ -433,6 +433,7 @@ class Minttea extends React.Component {
                                                                                     </div>
                                                                                 </div>
                                                                             )
+                                                                        return true;
                                                                     })
                                                                 }
                                                             </div>

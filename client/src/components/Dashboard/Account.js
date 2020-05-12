@@ -1,6 +1,4 @@
 import React from "react";
-import axios from 'axios';
-import { connect } from 'react-redux';
 import 'whatwg-fetch';
 import API from '../../utils/API';
 import $ from 'jquery';
@@ -45,7 +43,7 @@ class Account extends React.Component {
         if (!_user.email || _user.email.length === 0) return;
         if (_new_password){
             if(!_current_password || !_confirm_password) return;
-            if(_new_password != _confirm_password) return;
+            if(_new_password !== _confirm_password) return;
         }
         try {
             const { data } = await API.update({ _user, _old_username, _old_email, _current_password, _new_password });

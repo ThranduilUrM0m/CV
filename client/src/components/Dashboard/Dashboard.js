@@ -3,23 +3,17 @@ import axios from 'axios';
 import Swiper from 'swiper';
 import moment from 'moment';
 import { Form } from '../Article';
-import { Form_Project } from '../Project';
+import { FormProject } from '../Project';
 import Calendar from './Calendar';
 import Account from './Account';
 import Autocomplete from 'react-autocomplete';
 import { connect } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import API from "../../utils/API";
 import { FullPage, Slide } from 'react-full-page';
 import Clock from 'react-live-clock';
 import 'whatwg-fetch';
 import * as $ from "jquery";
-import jQuery from 'jquery';
 import 'bootstrap';
 
 var _ = require('lodash');
@@ -219,7 +213,7 @@ class Dashboard extends React.Component {
         }
     }
 	_handleDrag(source) {
-        if(source != 'testimonies_slider_wrapper')
+        if(source !== 'testimonies_slider_wrapper')
             var mySwiper = new Swiper ('.'+source+'.swiper-container', {
                 // Optional parameters
                 effect: 'coverflow',
@@ -316,9 +310,6 @@ class Dashboard extends React.Component {
 		});
     }
     handleJSONTOHTML(inputDelta) {
-		function randomIntFromInterval(min, max) { // min and max included 
-			return Math.floor(Math.random() * (max - min + 1) + min);
-		}
 		function runAfterElementExists(jquery_selector, callback){
 			var checker = window.setInterval(function() {
 			if (jquery_selector) {
@@ -425,8 +416,8 @@ class Dashboard extends React.Component {
 	}
 	render() {
         //if user choose to update than close nd add, he'll eventually be updating, so wtf
-		const { _user, title, title_projects, sort, timeframe, categorie, _article, _project, _testimony, currentPage, todosPerPage, tags } = this.state;
-        const { articles, projects, testimonies, match } = this.props;
+		const { _user, title, title_projects, sort, timeframe, categorie, _article, _testimony, currentPage, todosPerPage, tags } = this.state;
+        const { articles, projects, testimonies } = this.props;
 		return (
 			<FullPage scrollMode={'normal'}>
 				<Slide>
@@ -465,7 +456,7 @@ class Dashboard extends React.Component {
                                             <h2>Dashboard</h2>
                                             <div className="name">{_user.email}</div>
                                         </div>
-                                        <a className="logout" href="" onClick={() => this.disconnect()}><p className="text-muted">{_user.username}</p><i className="fas fa-door-open"></i></a>
+                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">{_user.username}</p><i className="fas fa-door-open"></i></a>
                                     </div>
 									<ul className="cards">
                                         <li className="cards__item">
@@ -548,13 +539,13 @@ class Dashboard extends React.Component {
                                                                                                                 if(_user.role === "admin" || _user.username === article.author) {
                                                                                                                     return (
                                                                                                                         <>
-                                                                                                                            <a className="dropdown-item edit" href="" data-toggle="modal" data-target="#_article_modal" onClick={() => this.handleEditArticle(article)}><i className="fas fa-edit"></i></a>
-                                                                                                                            <a className="dropdown-item delete" href="" onClick={() => this.handleDeleteArticle(article._id)}><i className="far fa-trash-alt"></i></a>
+                                                                                                                            <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_article_modal" onClick={() => this.handleEditArticle(article)}><i className="fas fa-edit"></i></a>
+                                                                                                                            <a href="# " className="dropdown-item delete" onClick={() => this.handleDeleteArticle(article._id)}><i className="far fa-trash-alt"></i></a>
                                                                                                                         </>
                                                                                                                     )
                                                                                                                 }
                                                                                                             })()}
-                                                                                                            <a className="dropdown-item _view" href="" onClick={() => { this.setState({_article : article}); }} data-id={article._id} data-toggle="modal" data-target="#_article_modal_view"><i className="fas fa-expand-alt"></i></a>
+                                                                                                            <a href="# " className="dropdown-item _view" onClick={() => { this.setState({_article : article}); }} data-id={article._id} data-toggle="modal" data-target="#_article_modal_view"><i className="fas fa-expand-alt"></i></a>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div className="comments_up_down">
@@ -658,13 +649,13 @@ class Dashboard extends React.Component {
                                                                                                                 if(_user.role === "admin" || _user.username === project.author) {
                                                                                                                     return (
                                                                                                                         <>
-                                                                                                                            <a className="dropdown-item edit" href="" data-toggle="modal" data-target="#_project_modal" onClick={() => this.handleEditProject(project)}><i className="fas fa-edit"></i></a>
-                                                                                                                            <a className="dropdown-item delete" href="" onClick={() => this.handleDeleteProject(project._id)}><i className="far fa-trash-alt"></i></a>
+                                                                                                                            <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_project_modal" onClick={() => this.handleEditProject(project)}><i className="fas fa-edit"></i></a>
+                                                                                                                            <a href="# " className="dropdown-item delete" onClick={() => this.handleDeleteProject(project._id)}><i className="far fa-trash-alt"></i></a>
                                                                                                                         </>
                                                                                                                     )
                                                                                                                 }
                                                                                                             })()}
-                                                                                                            <a className="dropdown-item _view" href={project.link_to} target="_blank"><i className="fas fa-expand-alt"></i></a>
+                                                                                                            <a className="dropdown-item _view" href={project.link_to} target="_blank" rel="noopener noreferrer"><i className="fas fa-expand-alt"></i></a>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div className="comments_up_down">
@@ -709,7 +700,7 @@ class Dashboard extends React.Component {
 																<div className="testimonies_slider_wrapper swiper-container">
 																	<div className="testimonies_slider_wrapper_cards swiper-wrapper">
 																		{
-																			_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' })), function(o) { 
+																			_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' })), function(o) { 
                                                                                 if(timeframe === 'Today')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                                                 if(timeframe === 'This_Past_Week')
@@ -740,11 +731,11 @@ class Dashboard extends React.Component {
                                                                                                                 {(() => {
                                                                                                                     if(_user.role === "admin" || _user.username === testimony.author) {
                                                                                                                         return (
-                                                                                                                            <a className="dropdown-item delete" href="" onClick={() => this.handleDeleteTestimony(testimony._id)}><i className="far fa-trash-alt"></i></a>
+                                                                                                                            <a href="# " className="dropdown-item delete" onClick={() => this.handleDeleteTestimony(testimony._id)}><i className="far fa-trash-alt"></i></a>
                                                                                                                         )
                                                                                                                     }
                                                                                                                 })()}
-                                                                                                                 <a className="dropdown-item _view" href="" onClick={() => { this.setState({_testimony : testimony}); }} data-id={testimony._id} data-toggle="modal" data-target="#_testimony_modal"><i className="fas fa-expand-alt"></i></a>
+                                                                                                                <a href="# " className="dropdown-item _view" onClick={() => { this.setState({_testimony : testimony}); }} data-id={testimony._id} data-toggle="modal" data-target="#_testimony_modal"><i className="fas fa-expand-alt"></i></a>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -783,7 +774,7 @@ class Dashboard extends React.Component {
                                             <h2>Settings</h2>
                                             <div className="name">{_user.email}</div>
                                         </div>
-                                        <a className="logout" href="" onClick={() => this.disconnect()}><p className="text-muted">{_user.username}</p><i className="fas fa-door-open"></i></a>
+                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">{_user.username}</p><i className="fas fa-door-open"></i></a>
                                     </div>
                                     <ul className="forms">
                                         <li className="forms__item">
@@ -816,7 +807,7 @@ class Dashboard extends React.Component {
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                         <div className="modal-body">
-                                            <a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                            <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
                                             <Form />
                                         </div>
                                     </div>
@@ -826,7 +817,7 @@ class Dashboard extends React.Component {
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                         <div className="modal-body">
-                                            <a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                            <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
                                             <div className="card">
                                                 <div className="shadow_title">{_.head(_.words(_article.body))}</div>
                                                 <div className="card-body">
@@ -920,7 +911,7 @@ class Dashboard extends React.Component {
                                                 </h5>
                                                 <div>
                                                     <span className="filter" onClick={(event) => this.handleShowFilter(event)}><i className="fas fa-sliders-h"></i></span>
-                                                    <a title="Close" className="modal-close" id="modal-close" data-dismiss="modal">Close</a>
+                                                    <a href="# " title="Close" className="modal-close" id="modal-close" data-dismiss="modal">Close</a>
                                                 </div>
                                             </div>
                                             <div className="modal-top-filter">
@@ -1036,13 +1027,13 @@ class Dashboard extends React.Component {
                                                                                             if(_user.role === "admin" || _user.username === article.author) {
                                                                                                 return (
                                                                                                     <>
-                                                                                                        <a className="dropdown-item edit" href="" data-toggle="modal" data-target="#_article_modal" onClick={() => this.handleEditArticle(article)}><i className="fas fa-edit"></i></a>
-                                                                                                        <a className="dropdown-item delete" href="" onClick={() => this.handleDeleteArticle(article._id)}><i className="far fa-trash-alt"></i></a>
+                                                                                                        <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_article_modal" onClick={() => this.handleEditArticle(article)}><i className="fas fa-edit"></i></a>
+                                                                                                        <a href="# " className="dropdown-item delete" onClick={() => this.handleDeleteArticle(article._id)}><i className="far fa-trash-alt"></i></a>
                                                                                                     </>
                                                                                                 )
                                                                                             }
                                                                                         })()}
-                                                                                        <a className="dropdown-item _view" href="" onClick={() => { this.setState({_article : article}); }} data-id={article._id} data-toggle="modal" data-target="#_article_modal_view"><i className="fas fa-expand-alt"></i></a>
+                                                                                        <a href="# " className="dropdown-item _view" onClick={() => { this.setState({_article : article}); }} data-id={article._id} data-toggle="modal" data-target="#_article_modal_view"><i className="fas fa-expand-alt"></i></a>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1126,8 +1117,8 @@ class Dashboard extends React.Component {
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                         <div className="modal-body">
-                                            <a title="Close" className="modal-close" data-dismiss="modal">Close</a>
-                                            <Form_Project />
+                                            <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                            <FormProject />
                                         </div>
                                     </div>
                                 </div>
@@ -1191,7 +1182,7 @@ class Dashboard extends React.Component {
                                                 </h5>
                                                 <div>
                                                     <span className="filter" onClick={(event) => this.handleShowFilter(event)}><i className="fas fa-sliders-h"></i></span>
-                                                    <a title="Close" className="modal-close" id="modal-close" data-dismiss="modal">Close</a>
+                                                    <a href="# " title="Close" className="modal-close" id="modal-close" data-dismiss="modal">Close</a>
                                                 </div>
                                             </div>
                                             <div className="modal-top-filter">
@@ -1306,13 +1297,13 @@ class Dashboard extends React.Component {
                                                                                             if(_user.role === "admin" || _user.username === project.author) {
                                                                                                 return (
                                                                                                     <>
-                                                                                                        <a className="dropdown-item edit" href="" data-toggle="modal" data-target="#_project_modal" onClick={() => this.handleEditProject(project)}><i className="fas fa-edit"></i></a>
-                                                                                                        <a className="dropdown-item delete" href="" onClick={() => this.handleDeleteProject(project._id)}><i className="far fa-trash-alt"></i></a>
+                                                                                                        <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_project_modal" onClick={() => this.handleEditProject(project)}><i className="fas fa-edit"></i></a>
+                                                                                                        <a href="# " className="dropdown-item delete" onClick={() => this.handleDeleteProject(project._id)}><i className="far fa-trash-alt"></i></a>
                                                                                                     </>
                                                                                                 )
                                                                                             }
                                                                                         })()}
-                                                                                        <a className="dropdown-item _view" href={project.link_to} target="_blank"><i className="fas fa-expand-alt"></i></a>
+                                                                                        <a className="dropdown-item _view" href={project.link_to} target="_blank" rel="noopener noreferrer"><i className="fas fa-expand-alt"></i></a>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1326,7 +1317,7 @@ class Dashboard extends React.Component {
                                                                                     })
                                                                                 }
                                                                             </ul>
-                                                                            <a href={project.link_to} target="_blank">
+                                                                            <a href={project.link_to} target="_blank" rel="noopener noreferrer">
                                                                                 <div className="readmore">
                                                                                     <button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
                                                                                         <div className="line line-1"></div>
@@ -1396,7 +1387,7 @@ class Dashboard extends React.Component {
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                         <div className="modal-body">
-                                            <a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                            <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
                                             <div className="card">
                                                 <div className="shadow_title">{_.head(_.words(_testimony.body))}</div>
                                                 <div className="card-body">
@@ -1469,7 +1460,7 @@ class Dashboard extends React.Component {
                                                     Showing&nbsp;
                                                     <strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>  
                                                     &nbsp;to&nbsp;
-                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' })), function(o) { 
+                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1482,7 +1473,7 @@ class Dashboard extends React.Component {
                                                             return true;
                                                         })))}</strong>
                                                     &nbsp;of&nbsp;
-                                                    <strong>{_.toNumber(_.size(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' })), function(o) { 
+                                                    <strong>{_.toNumber(_.size(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1499,7 +1490,7 @@ class Dashboard extends React.Component {
                                                 </h5>
                                                 <div>
                                                     <span className="filter" onClick={(event) => this.handleShowFilter(event)}><i className="fas fa-sliders-h"></i></span>
-                                                    <a title="Close" className="modal-close" id="modal-close" data-dismiss="modal">Close</a>
+                                                    <a href="# " title="Close" className="modal-close" id="modal-close" data-dismiss="modal">Close</a>
                                                 </div>
                                             </div>
                                             <div className="modal-top-filter">
@@ -1539,7 +1530,7 @@ class Dashboard extends React.Component {
                                             </div>
                                             <ul id="page">
                                                 {
-                                                    _.slice(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' || _user.role == 'admin' }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' })), function(o) { 
+                                                    _.slice(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' || _user.role === 'admin' }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' })), function(o) { 
                                                         if(timeframe === 'Today')
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                         if(timeframe === 'This_Past_Week')
@@ -1569,11 +1560,11 @@ class Dashboard extends React.Component {
                                                                                     {(() => {
                                                                                         if(_user.role === "admin" || _user.username === testimony.author) {
                                                                                             return (
-                                                                                                <a className="dropdown-item delete" href="" onClick={() => this.handleDeleteTestimony(testimony._id)}><i className="far fa-trash-alt"></i></a>
+                                                                                                <a href="# " className="dropdown-item delete" onClick={() => this.handleDeleteTestimony(testimony._id)}><i className="far fa-trash-alt"></i></a>
                                                                                             )
                                                                                         }
                                                                                     })()}
-                                                                                    <a className="dropdown-item _view" href="" onClick={() => { this.setState({_testimony : testimony}); }} data-id={testimony._id} data-toggle="modal" data-target="#_testimony_modal"><i className="fas fa-expand-alt"></i></a>
+                                                                                    <a href="# " className="dropdown-item _view" onClick={() => { this.setState({_testimony : testimony}); }} data-id={testimony._id} data-toggle="modal" data-target="#_testimony_modal"><i className="fas fa-expand-alt"></i></a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1603,7 +1594,7 @@ class Dashboard extends React.Component {
                                             </ul>
                                             <ul id="page-numbers">
                                                 {
-                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role == 'admin' })), function(o) { 
+                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _user.role === 'admin' })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1647,7 +1638,7 @@ class Dashboard extends React.Component {
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                         <div className="modal-body">
-                                            <a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                            <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
                                             <h5 className="modal-title" id="edit_modalLabel">Hey!</h5>
                                             <div>Your Informations has been updated, we've sent you details to your email, we love you.</div>
                                             <div><small>Thanks {localStorage.getItem('username')}</small></div>

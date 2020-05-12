@@ -2,8 +2,6 @@ import React from "react";
 import API from "../../utils/API";
 import { FullPage, Slide } from 'react-full-page';
 import 'whatwg-fetch';
-import * as $ from "jquery";
-import jQuery from 'jquery';
 import 'bootstrap';
 
 class Login extends React.Component {

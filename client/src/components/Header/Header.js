@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../../logo.svg';
 import favicon from '../../favicon.svg';
-import API from '../../utils/API';
 import * as $ from "jquery";
 import 'bootstrap';
 
@@ -99,6 +98,7 @@ class Header extends React.Component {
                 default:
                     console.log("Désolé, nous n'avons plus.");
             }
+            return;
         });
         
         function displayWindowSize(){
@@ -180,7 +180,7 @@ class Header extends React.Component {
             searchIcon.classList.remove('active');
             searchActivated = !searchActivated;
 
-            if($(".login").css('display') != 'none'){
+            if($(".login").css('display') !== 'none'){
                 $(".login").toggle(400);
             }
 
@@ -223,7 +223,7 @@ class Header extends React.Component {
         $('.overlay_menu').click(function(){
             $('.overlay_menu').toggleClass('overlay_menu--is-closed');
 
-            if($(".login").css('display') != 'none'){
+            if($(".login").css('display') !== 'none'){
                 $(".login").toggle(400);
             }
             
@@ -293,7 +293,6 @@ class Header extends React.Component {
 		return r;
 	}
     handleSearch() {
-        let self = this;
         $('.search-input').on('focusin', function() {
             $('#search-modal').addClass('active');
         });
@@ -351,7 +350,7 @@ class Header extends React.Component {
                         <div className="search-results">
                             <ul id="page">
                                 {
-                                    _.slice(_.filter(_.filter(_.union(articles, projects), (_a) => { return !_a._hide && _search_value != '' }), (_ap) => {
+                                    _.slice(_.filter(_.filter(_.union(articles, projects), (_a) => { return !_a._hide && _search_value !== '' }), (_ap) => {
                                         return _.includes(_ap.title, _search_value) || _.includes(_ap.author, _search_value) || _.includes(_ap.categorie, _search_value) || _ap.tag.some(x => x.includes(_search_value));
                                     }), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((ap, index) => {
                                         return (
@@ -386,7 +385,7 @@ class Header extends React.Component {
                             </ul>
                             <ul id="page-numbers">
                                 {
-                                    ([...Array(Math.ceil(_.filter(_.filter(articles, (_a) => { return !_a._hide && _search_value != '' }), (_ap) => {
+                                    ([...Array(Math.ceil(_.filter(_.filter(articles, (_a) => { return !_a._hide && _search_value !== '' }), (_ap) => {
                                         return _.includes(_ap.title, _search_value) || _.includes(_ap.author, _search_value) || _.includes(_ap.categorie, _search_value) || _ap.tag.some(x => x.includes(_search_value));
                                     }).length / todosPerPage)).keys()]).map(number => {
                                         return (
@@ -405,14 +404,14 @@ class Header extends React.Component {
                         </div>
                         <div className="search-suggestions">
                             <div><small>Here</small></div>
-                            <div className="togglebtn">👉 May we suggest?</div>
+                            <div className="togglebtn"><span role="img" aria-label="sheep">👉</span> May we suggest?</div>
                             <ul className="text-muted tags">
                                 {
                                     _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment', 'upvotes', 'view'], ['desc', 'desc', 'desc']).map((_ap, _index) => {
                                         return (
                                             _ap.tag.map((t, i) => {
                                                 return (
-                                                    <li className="tag_item" onClick={() => { this.setState({_search_value: t}); }}>{t}</li>
+                                                    <li key={_index+'_'+i} className="tag_item" onClick={() => { this.setState({_search_value: t}); }}>{t}</li>
                                                 )
                                             })
                                         )

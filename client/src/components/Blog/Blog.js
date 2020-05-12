@@ -5,12 +5,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import 'whatwg-fetch';
 import Footer from '../Footer/Footer';
 import * as $ from "jquery";
@@ -22,7 +17,6 @@ class Blog extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			scroll_mode: 'full-page',
 			currentPage: 1,
           	todosPerPage: 6,
 			currentCard: 0,
@@ -166,8 +160,7 @@ class Blog extends React.Component {
 		});
 		
 		//socials
-		let items = document.querySelectorAll(".socials-item-icon"),
-			self = this;
+		let items = document.querySelectorAll(".socials-item-icon");
 		items.forEach((item, index) => {
 			item.addEventListener("mousemove", mouseMove);
 			item.addEventListener("mouseleave", mouseLeave);
@@ -261,9 +254,6 @@ class Blog extends React.Component {
 						wrapper.classList.add(hasExpandedClass);
 						document.getElementById('second_section_blog').parentElement.style.height = 'initial';
 						$('.fixedHeaderContainer').toggleClass('blog_header');
-						self.setState({
-							scroll_mode: 'normal'
-						});
 						//to edit the focus of the tags input in filter modal, because the label is not directly after it, it's after the autocomplete object
 						$('.modal-top-filter input.tags').focus(() => {
 							$('.modal-top-filter label#tags_label').toggleClass('active');
@@ -294,7 +284,7 @@ class Blog extends React.Component {
     }
 	render() {
 		const { articles, match } = this.props;
-		const { scroll_mode, currentPage, todosPerPage, sort, timeframe, categorie, tags } = this.state;
+		const { currentPage, todosPerPage, sort, timeframe, categorie, tags } = this.state;
 		
 		return (
 			<FullPage scrollMode={'normal'}>
@@ -309,10 +299,10 @@ class Blog extends React.Component {
 							</div>
 							<div id="social_media">
                                 <div className="icons_gatherer">
-                                    <a href="#" className="icon-button github"><i className="fab fa-github"></i><span></span></a>
-                                    <a href="#" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                    <a href="#" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-                                    <a href="#" className="icon-button scroll">
+                                    <a href="# " className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                    <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                    <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                    <a href="# " className="icon-button scroll">
                                         
                                     </a>
                                 </div>
@@ -388,7 +378,7 @@ class Blog extends React.Component {
 											</h5>
 											<div>
 												<span className="filter" onClick={(event) => this.handleShowFilter(event)}><i className="fas fa-sliders-h"></i></span>
-												<a title="Close" className="modal-close" id="modal-close" data-dismiss="modal">Close</a>
+												<a href="# " title="Close" className="modal-close" id="modal-close" data-dismiss="modal">Close</a>
 											</div>
 										</div>
 										<div className="modal-top-filter">

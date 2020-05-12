@@ -111,7 +111,7 @@ class Form extends React.Component {
     }
     handleSubmit(){
         const { onSubmit, articleToEdit, onEdit } = this.props;
-        const { title, body, author, categorie, _hide, tag, tagInput, comment, upvotes, downvotes, view } = this.state;
+        const { title, body, author, categorie, _hide, tag, comment, upvotes, downvotes, view } = this.state;
         const self = this;
         
         if(!articleToEdit) {
@@ -215,7 +215,7 @@ class Form extends React.Component {
     }
     render() {
         const { articleToEdit } = this.props;
-        const { title, body, author, categorie, _hide, tag, tagInput } = this.state;
+        const { title, body, categorie, _hide, tag, tagInput } = this.state;
     
         return (
             <div className="wrapper_form">
