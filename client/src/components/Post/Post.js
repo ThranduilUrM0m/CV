@@ -70,7 +70,7 @@ class Post extends React.Component {
 					return new Promise((resolve, reject) => {
 						setTimeout(function() {
 							onLoad(res.data);
-							self.handleEdit(_.find(res.data.articles, {'_id': match.params.postId}));
+							self.handleEdit(_.find(res.data.articles, {'_id': self.props.location.state.article._id}));
 							true ? resolve('Success') : reject('Error');
 						}, 2000);
 					})
@@ -125,7 +125,7 @@ class Post extends React.Component {
 		const f = new Fingerprint().get();
 		const { view } = this.state;
 		const self = this;
-		
+
 		if( _.isUndefined( _.find(view, (v) => {return v.viewer === f.toString()}) ) ) {
 			self.setState(state => ({
 				view: [...state.view, {viewer: f.toString()}],
