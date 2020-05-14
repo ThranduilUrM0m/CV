@@ -611,7 +611,7 @@ class Post extends React.Component {
 													{
 														_.orderBy(_.filter(comment, { parent_id: null }), ['upvotes'], ['desc']).map((_c, _i) => {
 															return (
-																<div className={"card card_" + _i} data-index={_i+1}>
+																<div key={_i} className={"card card_" + _i} data-index={_i+1}>
 																	<div className="shadow_title">{_.head(_.words(_c.body))}</div>
 																	<div className="card-body">
 																		<div className="top_row">
@@ -656,7 +656,7 @@ class Post extends React.Component {
 																			_.orderBy(_.reject(comment, { parent_id: null }), ['upvotes'], ['desc']).map((_c_reply, _i_reply) => {
 																				if(_c_reply.parent_id === _c._id)
 																					return (
-																						<div className={"card card_" + _i_reply} data-index={_i_reply+1}>
+																						<div key={_i_reply+'_'+_i} className={"card card_" + _i_reply} data-index={_i_reply+1}>
 																							<div className="shadow_title">{_.head(_.words(_c_reply.body))}</div>
 																							<div className="card-body">
 																								<div className="top_row">

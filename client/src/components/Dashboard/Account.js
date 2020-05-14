@@ -9,7 +9,10 @@ class Account extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            _user: {},
+            _user: {
+                username: '',
+                email: '',
+            },
             _old_username: '',
             _old_email: '',
             _current_password: '',
