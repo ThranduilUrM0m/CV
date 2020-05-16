@@ -3,32 +3,36 @@ import API from "../../utils/API";
 import { FullPage, Slide } from 'react-full-page';
 import 'whatwg-fetch';
 import 'bootstrap';
+import * as $ from "jquery";
 
 class Login extends React.Component {
 	constructor(props) {
 		super(props);
         this.state = {
 			email: '',
-			password: ''
+			password: '',
+			modal_msg: ''
 		};
         this.send_login = this.send_login.bind(this);
         this.handleChange = this.handleChange.bind(this);
 	}
 	async send_login() {
+		let self = this;
         const { email, password } = this.state;
-        if (!email || email.length === 0) return;
-        if (!password || password.length === 0) return;
-        try {
-            const { data } = await API.login(email, password);
-
-            localStorage.setItem("token", data.token);
-            localStorage.setItem('email', data.email);
-            localStorage.setItem('username', data.username);
-
-            window.location = "/dashboard";
-        } catch (error) {
-            console.error(error);
-        }
+        await API.login(email, password)
+		.then((res) => {
+			localStorage.setItem("token", res.data.token);
+			localStorage.setItem('email', res.data.email);
+			localStorage.setItem('username', res.data.username);
+			window.location = "/dashboard";
+		})
+		.catch((error) => {
+			self.setState({
+				modal_msg: error.response.data.text
+			}, () => {
+				$('#login_modal').modal('toggle');
+			});
+		});
     }
 	handleChange(event) {
 		this.setState({
@@ -36,12 +40,23 @@ class Login extends React.Component {
 		});
 	}
 	render() {
-		const { email, password } = this.state;
+		const { email, password, modal_msg } = this.state;
 		return (
 			<FullPage>
 				<Slide>
 					<section className="first_section_login">
 						<div className="wrapper_full">
+							<div className="modal fade" id="login_modal" tabIndex="-1" role="dialog" aria-labelledby="signup_modalLabel" aria-hidden="true">
+								<div className="modal-dialog" role="document">
+									<div className="modal-content">
+										<div className="modal-body">
+											<a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+											<h5 className="modal-title" id="signup_modalLabel">Hello!</h5>
+											<div>{modal_msg}</div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div className="Sidebar">
 								<div className="wrap">
 									<div className="Head_Login">

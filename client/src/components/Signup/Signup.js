@@ -4,6 +4,7 @@ import { FullPage, Slide } from 'react-full-page';
 import 'whatwg-fetch';
 import 'bootstrap';
 import Fingerprint from 'fingerprintjs';
+import * as $ from "jquery";
 
 class Signup extends React.Component {
 	constructor(props) {
@@ -13,26 +14,41 @@ class Signup extends React.Component {
             email: '',
             password: '',
 			confirm_password: '',
+			modal_msg: '',
 		};
         this.send_signup = this.send_signup.bind(this);
         this.handleChange = this.handleChange.bind(this);
 	}
     async send_signup() {
+		let self = this;
 		var f = new Fingerprint().get();
 		var _fingerprint = f.toString();
-		var _role = "normal";
+		var _role = ["normal"];
         const { username, email, password, confirm_password } = this.state;
-        if (!username || username.length === 0) return;
-        if (!email || email.length === 0) return;
-        if (!password || password.length === 0 || password !== confirm_password) return;
         try {
-            const { data } = await API.signup({ username, email, password, _fingerprint, _role });
-            localStorage.setItem("token", data.token);
-            localStorage.setItem('email', data.email);
-            localStorage.setItem('username', data.username);
-            window.location = "/dashboard";
+			if (password !== confirm_password) throw { text: 'Please check your password confirmation'};
+			await API.signup({ username, email, password, _fingerprint, _role })
+			.then((res) => {
+				self.setState({
+					modal_msg: res.data.text
+				}, () => {
+					$('#signup_modal').modal('toggle');
+				});
+			})
+			.catch((error) => {
+				self.setState({
+					modal_msg: error.response.data.text
+				}, () => {
+					$('#signup_modal').modal('toggle');
+				});
+			});
         } catch (error) {
-            console.error(error);
+			//console.log(error.response);
+			self.setState({
+				modal_msg: JSON.stringify(error)
+			}, () => {
+				$('#signup_modal').modal('toggle');
+			});
         }
     }
 	handleChange(event) {
@@ -41,12 +57,23 @@ class Signup extends React.Component {
 		});
 	}
 	render() {
-		const { username, email, password, confirm_password } = this.state;
+		const { username, email, password, confirm_password, modal_msg } = this.state;
 		return (
 			<FullPage>
 				<Slide>
 					<section className="first_section_signup">
 						<div className="wrapper_full">
+							<div className="modal fade" id="signup_modal" tabIndex="-1" role="dialog" aria-labelledby="signup_modalLabel" aria-hidden="true">
+								<div className="modal-dialog" role="document">
+									<div className="modal-content">
+										<div className="modal-body">
+											<a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+											<h5 className="modal-title" id="signup_modalLabel">Hello!</h5>
+											<div>{modal_msg}</div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div className="Content">
 
 							</div>

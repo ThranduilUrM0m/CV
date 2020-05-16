@@ -23,6 +23,9 @@ export default {
     send_mail: function(send) {
         return axios.post(`${burl}/user/send_mail`, send, { headers: headers });
     },
+    confirmation: function(send) {
+        return axios.post(`${burl}/user/confirmation`, send, { headers: headers });
+    },
     update: function(send) {
         return axios.patch(
             `${burl}/user/update`, 

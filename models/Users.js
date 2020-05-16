@@ -23,10 +23,16 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    passwordResetToken: String,
+    passwordResetExpires: Date,
     fingerprint: String,
-    role: String,
+    roles: [{ type: 'String' }],
+    isVerified: { 
+        type: Boolean, 
+        default: false 
+    },
 }, { timestamps: true });
-  
+
 userSchema.methods = {
     authenticate: function (password) {
         return passwordHash.verify(password, this.password);

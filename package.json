@@ -13,6 +13,7 @@
         "cluster": "*",
         "cors": "*",
         "css-doodle": "*",
+        "dotenv": "*",
         "errorhandler": "*",
         "express": "*",
         "express-session": "*",

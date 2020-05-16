@@ -1,43 +1,32 @@
 const User = require('../../models/Users.js');
+const Token = require('../../models/Tokens.js');
 const passwordHash = require("password-hash");
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+require('dotenv').config()
 
-async function main(user_email) {
-    // Generate test SMTP service account from ethereal.email
-    // Only needed if you don't have a real mail account for testing
-    
-    //let testAccount = await nodemailer.createTestAccount();
-
-    // create reusable transporter object using the default SMTP transport
+async function verification_email(user_email, text) {
     let transporter = nodemailer.createTransport({
-        service: 'gmail', // true for 465, false for other ports
+        service: 'gmail',
         auth: {
-            user: 'yassmineboutalebqlii@gmail.com', // generated ethereal user
-            pass: '[1234abcd]' // generated ethereal password
+            user: process.env.EMAIL, // generated ethereal user
+            pass: process.env.PASSWORD // generated ethereal password
         }
     });
-
-    // send mail with defined transport object
     let info = await transporter.sendMail({
         from: 'yassmineboutalebqlii@gmail.com', // sender address
         to: user_email, // list of receivers
         subject: 'Hello ✔ and Welcome', // Subject line
-        text: 'Hello world?', // plain text body
+        text: text, // plain text body
     });
-
     console.log('Message sent: %s', info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-    // Preview only available when sending through an Ethereal account
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 async function main(mail_username, mail_location, mail_email, mail_phone, mail_content) {
     let transporter = nodemailer.createTransport({
-        service: 'gmail', // true for 465, false for other ports
+        service: 'gmail',
         auth: {
-            user: 'yassmineboutalebqlii@gmail.com', // generated ethereal user
-            pass: '[1234abcd]' // generated ethereal password
+            user: process.env.EMAIL, // generated ethereal user
+            pass: process.env.PASSWORD // generated ethereal password
         }
     });
     // send mail with defined transport object
@@ -48,59 +37,51 @@ async function main(mail_username, mail_location, mail_email, mail_phone, mail_c
         text: mail_content, // plain text body
     });
     console.log('Message sent: %s', info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-    // Preview only available when sending through an Ethereal account
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 async function signup(req, res) {
     const { username, email, password, _fingerprint, _role } = req.body;
-    if (!username || !email || !password || !_fingerprint || !_role) {
-        //Le cas où l'email ou bien le password ne serait pas soumit ou nul
-        return res.status(400).json({
-            text: "Requête invalide"
-        });
-    }
-    // Création d'un objet user, dans lequel on hash le mot de passe
-    const user = {
-        username: username,
-        email: email,
-        password: passwordHash.generate(password),
-        fingerprint: _fingerprint,
-        role: _role,
-    };
-    // On check en base si l'utilisateur existe déjà
     try {
+        if (!username || !email || !password || !_fingerprint || !_role) {
+            return res.status(400).json({
+                text: "It looks like some information about u, wasn't correctly submitted, please retry."
+            });
+        }
+        const user = {
+            username: username,
+            email: email,
+            password: passwordHash.generate(password),
+            fingerprint: _fingerprint,
+            role: _role,
+        };
         const findUserByEmail = await User.findOne({
             email: user.email
         });
         const findUserByUsername = await User.findOne({
             username: user.username
         });
-        if (findUserByEmail || findUserByUsername) {
+        if (findUserByEmail) {
             return res.status(400).json({
-                text: "L'utilisateur existe déjà"
+                text: "This Email exists already can u, please submit another Email."
             });
         }
-    } catch (error) {
-        return res.status(500).json({ error });
-    }
-
-    try {
+        if (findUserByUsername) {
+            return res.status(400).json({
+                text: "This Username exists already can u, please submit another Username."
+            });
+        }
+        
         // Sauvegarde de l'utilisateur en base
         const userData = new User(user);
         const userObject = await userData.save();
-        main(user.email).catch(console.error);
+        // Create a verification token for this user
+        var token = new Token({ _userId: userData._id, token: crypto.randomBytes(16).toString('hex') });
+        const tokenObject = await token.save();
+        //send mail
+        verification_email(userData.email, 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n');
         return res.status(200).json({
-            text: "Succès",
-            email: user.email,
-            username: user.username,
-            fingerprint: user.fingerprint,
-            role: user.role,
-            token: userObject.getToken()
+            text: "And that's it, only thing left is verify your email. \nWe have sent you an email verification."
         });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({ error });
     }
 }
@@ -165,30 +146,35 @@ async function update(req, res) {
 }
 async function login(req, res) {
     const { password, email } = req.body;
-    if (!email || !password) {
-        //Le cas où l'email ou bien le password ne serait pas soumit ou nul
-        return res.status(400).json({
-            text: "Requête invalide"
-        });
-    }
+    
     try {
+        if (!email || !password) {
+            //Le cas où l'email ou bien le password ne serait pas soumit ou nul
+            return res.status(400).json({
+                text: "Please fill out both email and password."
+            });
+        }
         // On check si l'utilisateur existe en base
         const findUser = await User.findOne({ 
             email 
         });
         if (!findUser)
             return res.status(401).json({
-                text: "L'utilisateur n'existe pas"
+                text: "Verify your email, this account is not registred."
             });
         if (!findUser.authenticate(password))
             return res.status(401).json({
-                text: "Mot de passe incorrect"
+                text: "Incorrect Password."
+            });
+        if(!findUser.isVerified)
+            return res.status(401).json({
+                text: "Your account has not been verified. Please check your inbox for a verification email that was sent to you."
             });
         return res.status(200).json({
             token: findUser.getToken(),
             email: findUser.email,
             username: findUser.username,
-            text: "Authentification réussi"
+            text: "Authentification successful."
         });
     } catch (error) {
         return res.status(500).json({
@@ -222,9 +208,55 @@ async function get_user(req, res) {
         });
     }
 }
+async function confirmationPost(req, res, next) {
+    console.log('REACHED CONFIRMATION');
+    // Find a matching token
+    Token.findOne({ token: req.body.token }, function (err, token) {
+        if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
+ 
+        // If we found a token, find a matching user
+        User.findOne({ _id: token._userId, email: req.body.email }, function (err, user) {
+            if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
+            if (user.isVerified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
+ 
+            // Verify and save the user
+            user.isVerified = true;
+            user.save(function (err) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+                res.status(200).send("The account has been verified. Please log in.");
+            });
+        });
+    });
+}
+async function resendTokenPost(req, res, next) {
+ 
+    User.findOne({ email: req.body.email }, function (err, user) {
+        if (!user) return res.status(400).send({ msg: 'We were unable to find a user with that email.' });
+        if (user.isVerified) return res.status(400).send({ msg: 'This account has already been verified. Please log in.' });
+ 
+        // Create a verification token, save it, and send email
+        var token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+ 
+        // Save the token
+        token.save(function (err) {
+            if (err) { return res.status(500).send({ msg: err.message }); }
+ 
+            // Send the email
+            var transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
+            var mailOptions = { from: 'no-reply@codemoto.io', to: user.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
+            transporter.sendMail(mailOptions, function (err) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+                res.status(200).send('A verification email has been sent to ' + user.email + '.');
+            });
+        });
+ 
+    });
+}
 
 exports.get_user = get_user;
 exports.login = login;
 exports.signup = signup;
 exports.send_mail = send_mail;
 exports.update = update;
+exports.confirmationPost = confirmationPost;
+exports.resendTokenPost = resendTokenPost;
