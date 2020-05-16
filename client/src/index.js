@@ -20,6 +20,7 @@ import Login from "./components/Login/Login.js";
 import Signup from "./components/Signup/Signup.js";
 import Dashboard from './components/Dashboard/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import Confirmation from './components/Confirmation/Confirmation';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
@@ -35,6 +36,7 @@ ReactDOM.render(
                     <Route exact path='/contact' component={ContactMe} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />
+                    <Route path={`/confirmation/:token_id`} component={Confirmation} />
                     <Route exact path="/404" component={NotFound} />
                     <PrivateRoute path='/dashboard' component={Dashboard} />
                 </Switch>
