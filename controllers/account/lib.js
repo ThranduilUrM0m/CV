@@ -101,26 +101,24 @@ async function send_mail(req, res) {
 }
 async function update(req, res) {
     const { _user, _old_username, _old_email, _current_password, _new_password } = req.body;
-    if (!_user.username || !_user.email) {
-        //Le cas où l'email ou bien le password ne serait pas soumit ou nul
-        return res.status(400).json({
-            text: "Requête invalide"
-        });
-    }
-    if(!passwordHash.verify(_current_password, _user.password)) {
-        return res.status(400).json({
-            text: "Password Invalid"
-        });
-    }
-    // Création d'un objet user, dans lequel on hash le mot de passe
-    const user = {
-        username: _user.username,
-        email: _user.email,
-        password: passwordHash.generate(_new_password),
-        fingerprint: _user._fingerprint,
-        role: _user._role,
-    };
     try {
+        if (!_user.username || !_user.email) {
+            //Le cas où l'email ou bien le password ne serait pas soumit ou nul
+            return res.status(400).json({
+                text: "It looks like some information about u, wasn't correctly submitted, please retry."
+            });
+        }
+        if(!passwordHash.verify(_current_password, _user.password)) {
+            return res.status(400).json({
+                text: "Password Invalid"
+            });
+        }
+        // Création d'un objet user, dans lequel on hash le mot de passe
+        const user = {
+            username: _user.username,
+            email: _user.email,
+            password: passwordHash.generate(_new_password),
+        };
         // Sauvegarde de l'utilisateur en base
         const findUser = await User.findOneAndUpdate(
             { email : _old_email },
@@ -128,19 +126,37 @@ async function update(req, res) {
                 $set : {
                     username : user.username,
                     email : user.email, 
-                    password : user.password,
-                    fingerprint : user.fingerprint,
-                    role: user._role,
+                    password : user.password
                 }
             },
             { upsert: true }
         );
         //main(user.email).catch(console.error);
         return res.status(200).json({
-            text: "Succès",
+            text: "User updated successfully.",
         });
     } catch (error) {
-        console.log(error);
+        return res.status(500).json({ error });
+    }
+}
+async function update_roles(req, res) {
+    const { _user_toEdit_username, _user_toEdit_roles } = req.body;
+    try {
+        // Sauvegarde de l'utilisateur en base
+        const findUser = await User.findOneAndUpdate(
+            { username : _user_toEdit_username },
+            {
+                $set : {
+                    roles: _user_toEdit_roles,
+                }
+            },
+            { upsert: true }
+        );
+        //main(user.email).catch(console.error);
+        return res.status(200).json({
+            text: "User updated successfully.",
+        });
+    } catch (error) {
         return res.status(500).json({ error });
     }
 }
@@ -208,6 +224,23 @@ async function get_user(req, res) {
         });
     }
 }
+async function get_users(req, res) {
+    try {
+        // On check si l'utilisateur existe en base
+        const findUsers = await User.find();
+        if (!findUsers)
+            return res.status(401).json({
+                text: "No users found."
+            });
+        return res.status(200).json({
+            users: findUsers
+        });
+    } catch (error) {
+        return res.status(500).json({
+            error
+        });
+    }
+}
 async function confirmationPost(req, res, next) {
     // Find a matching token
     Token.findOne({ token: req.body.token }, function (err, token) {
@@ -253,9 +286,11 @@ async function resendTokenPost(req, res, next) {
 }
 
 exports.get_user = get_user;
+exports.get_users = get_users;
 exports.login = login;
 exports.signup = signup;
 exports.send_mail = send_mail;
 exports.update = update;
+exports.update_roles = update_roles;
 exports.confirmationPost = confirmationPost;
 exports.resendTokenPost = resendTokenPost;

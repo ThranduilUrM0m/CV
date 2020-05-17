@@ -26,6 +26,9 @@ class Dashboard extends React.Component {
         
 		this.state = {
             _user: {},
+            _users: [],
+            _user_toEdit_username: '',
+            _user_toEdit_roles: '',
             currentPage: 1,
           	todosPerPage: 6,
 			currentCard: 0,
@@ -40,9 +43,13 @@ class Dashboard extends React.Component {
             _article: {},
             _project: {},
             _testimony: {},
+            modal_msg: ''
         };
 
 		this.disconnect = this.disconnect.bind(this);
+		this.get_users = this.get_users.bind(this);
+		this.get_user = this.get_user.bind(this);
+		this.send_user = this.send_user.bind(this);
         this._handleDrag = this._handleDrag.bind(this);
 		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
 		this.handleJSONTOHTMLIMAGE = this.handleJSONTOHTMLIMAGE.bind(this);
@@ -61,8 +68,12 @@ class Dashboard extends React.Component {
 		this.handleEditTestimony = this.handleEditTestimony.bind(this);
         this.handleDeleteTestimony = this.handleDeleteTestimony.bind(this);
         
+		this.handleEditUser = this.handleEditUser.bind(this);
+        this.handleDeleteUser = this.handleDeleteUser.bind(this);
+        
 		this.handleChange = this.handleChange.bind(this);
         this.handleChangeField = this.handleChangeField.bind(this);
+        this.handleChangeFieldUser = this.handleChangeFieldUser.bind(this);
 	}
 	componentDidMount() {
 		const { onLoad, onLoadProject, onLoadTestimony } = this.props;
@@ -154,7 +165,7 @@ class Dashboard extends React.Component {
         });
 		
 		//to get the user object
-		this.get_user();
+        this.get_user();
 
 		//when hovered on the nav
 		$('.nav').hover(
@@ -202,20 +213,86 @@ class Dashboard extends React.Component {
         
         this._handleTimeFit();
 	}
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.userToEdit) {
+            this.setState({
+                _user_toEdit_username: nextProps.userToEdit.username,
+                _user_toEdit_roles: nextProps.userToEdit.roles,
+            });
+        }
+    }
 	disconnect() {
 		API.logout();
 		window.location = "/login";
-	}
+    }
+    async get_users() {
+        const self = this;
+        const { _user } = this.state;
+        if(_.includes(_user.roles, 'admin')) {
+            await API.get_users()
+            .then((res) => {
+                self.setState({
+                    _users: res.data.users,
+                });
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        } else {
+            self.setState(prevState => ({
+                _users: [...prevState._users, _user]
+            }));
+        }
+    }
 	async get_user() {
         const self = this;
+        await API.get_user(localStorage.getItem('email'))
+            .then((res) => {
+                self.setState({
+                    _user: res.data.user,
+                }, () => {
+                    self.get_users();
+                });
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }
+    async send_user() {
+        let self = this;
+        const { _user_toEdit_username, _user_toEdit_roles } = this.state;
+        
         try {
-            const { data } = await API.get_user(localStorage.getItem('email'));
-			self.setState({
-				_user: data.user,
-			});
+            await API.update_roles({ _user_toEdit_username, _user_toEdit_roles })
+            .then((res) => {
+                self.setState({
+                    modal_msg: res.data.text
+                }, () => {
+                    self.get_users();
+                    $('#edit_modal').modal('toggle');
+                })
+            })
+            .catch((error) => {
+                self.setState({
+					modal_msg: error.response.data.text
+				}, () => {
+					$('#edit_modal_error_roles').modal('toggle');
+				});
+            });
         } catch (error) {
-            console.error(error);
+            self.setState({
+				modal_msg: JSON.stringify(error)
+			}, () => {
+				$('#edit_modal_error_roles').modal('toggle');
+			});
         }
+    }
+    handleEditUser(user) {
+        const { setEditUser } = this.props;
+        setEditUser(user);
+    }
+    handleDeleteUser(_id) {
+
     }
 	_handleDrag(source) {
         if(source !== 'testimonies_slider_wrapper')
@@ -369,6 +446,11 @@ class Dashboard extends React.Component {
     handleChangeField(key, event) {
         this.setState({ [key]: event.target.value });
     }
+    handleChangeFieldUser(key, event) {
+        this.setState({
+            [key]: event.target.value,
+        });
+    }
 	_handleModal(trigger, modal_target) {
 		const self = this;
 		var Boxlayout = function() {
@@ -422,7 +504,6 @@ class Dashboard extends React.Component {
     _handleTimeFit() {
         (function(window, $) {
             "use strict";
-            console.log('AHAH');
             var counter = 0,
               $headCache = $('head'),
               oldBigText = window.BigText,
@@ -709,7 +790,7 @@ class Dashboard extends React.Component {
     }
 	render() {
         //if user choose to update than close nd add, he'll eventually be updating, so wtf
-		const { _user, title, title_projects, sort, timeframe, categorie, _article, _testimony, currentPage, todosPerPage, tags } = this.state;
+		const { _user, _users, title, title_projects, sort, timeframe, categorie, _article, _testimony, currentPage, todosPerPage, tags, _user_toEdit_username, _user_toEdit_roles, modal_msg } = this.state;
         const { articles, projects, testimonies } = this.props;
 		return (
 			<FullPage scrollMode={'normal'}>
@@ -751,7 +832,6 @@ class Dashboard extends React.Component {
 										/>
 									</div>
 								</div>
-                                <Calendar/>
                             </div>
 							<div className="after"></div>
 							
@@ -772,7 +852,7 @@ class Dashboard extends React.Component {
                                                         <div className="_articles_header _header">
                                                             <div className="title_search input-field">
                                                                 <Autocomplete
-                                                                    items={_.map(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), 'title')}
+                                                                    items={_.map(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), 'title')}
                                                                     getItemValue={(item) => item}
                                                                     inputProps={{ id: 'title', className: 'form-group-input title', name: 'title' }}
                                                                     shouldItemRender={(item, title) => item.toLowerCase().indexOf(title.toLowerCase()) > -1}
@@ -810,7 +890,7 @@ class Dashboard extends React.Component {
 																<div className="articles_slider_wrapper swiper-container">
 																	<div className="articles_slider_wrapper_cards swiper-wrapper">
 																		{
-																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author })), function(o) { 
+																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author })), function(o) { 
                                                                                 if(timeframe === 'Today')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                                                 if(timeframe === 'This_Past_Week')
@@ -848,7 +928,7 @@ class Dashboard extends React.Component {
                                                                                                         </span>
                                                                                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                                                             {(() => {
-                                                                                                                if(_.includes(_user.role, 'admin') || _user.username === article.author) {
+                                                                                                                if(_.includes(_user.roles, 'admin') || _user.username === article.author) {
                                                                                                                     return (
                                                                                                                         <>
                                                                                                                             <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_article_modal" onClick={() => this.handleEditArticle(article)}><i className="fas fa-edit"></i></a>
@@ -889,7 +969,7 @@ class Dashboard extends React.Component {
                                                         <div className="_projects_header _header">
                                                             <div className="title_search input-field">
                                                                 <Autocomplete
-                                                                    items={_.map(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), 'title')}
+                                                                    items={_.map(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), 'title')}
                                                                     getItemValue={(item) => item}
                                                                     inputProps={{ id: 'title_projects', className: 'form-group-input title_projects', name: 'title_projects' }}
                                                                     shouldItemRender={(item, title_projects) => item.toLowerCase().indexOf(title_projects.toLowerCase()) > -1}
@@ -921,7 +1001,7 @@ class Dashboard extends React.Component {
 																<div className="projects_slider_wrapper swiper-container">
 																	<div className="projects_slider_wrapper_cards swiper-wrapper">
 																		{
-																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author })), function(o) { 
+																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author })), function(o) { 
                                                                                 if(timeframe === 'Today')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                                                 if(timeframe === 'This_Past_Week')
@@ -958,7 +1038,7 @@ class Dashboard extends React.Component {
                                                                                                         </span>
                                                                                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton_project">
                                                                                                             {(() => {
-                                                                                                                if(_user.role === "admin" || _user.username === project.author) {
+                                                                                                                if(_.includes(_user.roles, 'admin') || _user.username === project.author) {
                                                                                                                     return (
                                                                                                                         <>
                                                                                                                             <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_project_modal" onClick={() => this.handleEditProject(project)}><i className="fas fa-edit"></i></a>
@@ -995,6 +1075,17 @@ class Dashboard extends React.Component {
                                         <li className="cards__item">
                                             <div className="card">
                                                 <div className="card__content">
+                                                    <div className="_calendat_pane _pane">
+                                                        <div className="_calendar_content _content">
+                                                            <Calendar/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li className="cards__item">
+                                            <div className="card">
+                                                <div className="card__content">
                                                     <div className="_testimonies_pane _pane">
                                                         <div className="_testimonies_content _content">
                                                             <div className="_testimonies_head">
@@ -1012,7 +1103,7 @@ class Dashboard extends React.Component {
 																<div className="testimonies_slider_wrapper swiper-container">
 																	<div className="testimonies_slider_wrapper_cards swiper-wrapper">
 																		{
-																			_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') })), function(o) { 
+																			_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') })), function(o) { 
                                                                                 if(timeframe === 'Today')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                                                 if(timeframe === 'This_Past_Week')
@@ -1041,7 +1132,7 @@ class Dashboard extends React.Component {
                                                                                                             </span>
                                                                                                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton_testimonies">
                                                                                                                 {(() => {
-                                                                                                                    if(_user.role === "admin" || _user.username === testimony.author) {
+                                                                                                                    if(_.includes(_user.roles, 'admin') || _user.username === testimony.author) {
                                                                                                                         return (
                                                                                                                             <a href="# " className="dropdown-item delete" onClick={() => this.handleDeleteTestimony(testimony._id)}><i className="far fa-trash-alt"></i></a>
                                                                                                                         )
@@ -1086,7 +1177,7 @@ class Dashboard extends React.Component {
                                             <h2>Settings</h2>
                                             <div className="name">{_user.email}</div>
                                         </div>
-                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">{_user.username}</p><i className="fas fa-door-open"></i></a>
+                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-door-open"></i></a>
                                     </div>
                                     <ul className="forms">
                                         <li className="forms__item">
@@ -1108,7 +1199,60 @@ class Dashboard extends React.Component {
                                         </li>
                                         <li className="forms__item">
                                             <div className="card">
-                                                
+                                                <div className="card__content">
+                                                    <div className="_accoutns_pane _pane">
+                                                        <div className="_accounts_content _content">
+                                                            <div className="_accounts_head">
+                                                                <h4>Accounts.</h4>
+                                                            </div>
+                                                            <div className="_accounts_data data_container">
+                                                                <table className="accounts_list table table-striped">
+                                                                    <thead>
+                                                                        <tr className="accounts_list_header">
+                                                                            <th>Username</th>
+                                                                            <th>Email</th>
+                                                                            <th>Fingerprint</th>
+                                                                            <th>Created At</th>
+                                                                            <th>Roles</th>
+                                                                            <th className="_empty"></th>
+                                                                            <th className="_empty"></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    {
+                                                                        _.orderBy(_users, ['createdAt'], ['desc']).map((_u, index) => {
+                                                                            return (
+                                                                                <tr className={`user_card user_anchor ${_u._id === _user._id ? 'active' : ''}`}>
+                                                                                    <td>{_u.username}</td>
+                                                                                    <td>{_u.email}</td>
+                                                                                    <td>{_u.fingerprint}</td>
+                                                                                    <td>{moment(_u.createdAt).format('MMM DD, YYYY')}</td>
+                                                                                    <td>{_.isEmpty(_u.roles) ? 'pending...' : _u.roles}</td>
+                                                                                    <td className="dropdown">
+                                                                                        <span className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i className="fas fa-ellipsis-h"></i>
+                                                                                        </span>
+                                                                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                                            {(() => {
+                                                                                                if(_.includes(_user.roles, 'admin')) {
+                                                                                                    return (
+                                                                                                        <a className="dropdown-item" href="" data-toggle="modal" data-target="#_user_modal" onClick={() => this.handleEditUser(_u)}>Edit User.</a>
+                                                                                                    )
+                                                                                                }
+                                                                                            })()}
+                                                                                            <a className="dropdown-item" href="" onClick={() => this.handleDeleteUser(_u._id)}>Delete User.</a>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </li>
                                     </ul>
@@ -1173,7 +1317,7 @@ class Dashboard extends React.Component {
                                                     Showing&nbsp;
                                                     <strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>  
                                                     &nbsp;to&nbsp;
-                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author })), function(o) { 
+                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1196,7 +1340,7 @@ class Dashboard extends React.Component {
                                                                 return _.includes(op_bytag.tag, tags);
                                                         }) ))}</strong>
                                                     &nbsp;of&nbsp;
-                                                    <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author })), function(o) { 
+                                                    <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1279,7 +1423,7 @@ class Dashboard extends React.Component {
                                                 </div>
                                                 <div className="input-field col s3">
                                                     <Autocomplete
-                                                        items={_.flattenDeep(_.map(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), 'tag'))}
+                                                        items={_.flattenDeep(_.map(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), 'tag'))}
                                                         getItemValue={(item) => item}
                                                         inputProps={{ id: 'tags', className: 'form-group-input tags', name: 'tags' }}
                                                         shouldItemRender={(item, tags) => item.toLowerCase().indexOf(tags.toLowerCase()) > -1}
@@ -1298,7 +1442,7 @@ class Dashboard extends React.Component {
                                             </div>
                                             <ul id="page">
                                                 {
-                                                    _.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author })), function(o) { 
+                                                    _.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author })), function(o) { 
                                                         if(timeframe === 'Today')
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                         if(timeframe === 'This_Past_Week')
@@ -1336,7 +1480,7 @@ class Dashboard extends React.Component {
                                                                                     </span>
                                                                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                                         {(() => {
-                                                                                            if(_user.role === "admin" || _user.username === article.author) {
+                                                                                            if(_.includes(_user.roles, 'admin') || _user.username === article.author) {
                                                                                                 return (
                                                                                                     <>
                                                                                                         <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_article_modal" onClick={() => this.handleEditArticle(article)}><i className="fas fa-edit"></i></a>
@@ -1385,7 +1529,7 @@ class Dashboard extends React.Component {
                                             </ul>
                                             <ul id="page-numbers">
                                                 {
-                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.role, 'admin') || _user.username === _a.author })), function(o) { 
+                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1444,7 +1588,7 @@ class Dashboard extends React.Component {
                                                     Showing&nbsp;
                                                     <strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>  
                                                     &nbsp;to&nbsp;
-                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author })), function(o) { 
+                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1467,7 +1611,7 @@ class Dashboard extends React.Component {
                                                                 return _.includes(op_bytag.tag, tags);
                                                         }) ))}</strong>
                                                     &nbsp;of&nbsp;
-                                                    <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author })), function(o) { 
+                                                    <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1550,7 +1694,7 @@ class Dashboard extends React.Component {
                                                 </div>
                                                 <div className="input-field col s3">
                                                     <Autocomplete
-                                                        items={_.flattenDeep(_.map(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), 'tag'))}
+                                                        items={_.flattenDeep(_.map(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), 'tag'))}
                                                         getItemValue={(item) => item}
                                                         inputProps={{ id: 'tags', className: 'form-group-input tags', name: 'tags' }}
                                                         shouldItemRender={(item, tags) => item.toLowerCase().indexOf(tags.toLowerCase()) > -1}
@@ -1569,7 +1713,7 @@ class Dashboard extends React.Component {
                                             </div>
                                             <ul id="page">
                                                 {
-                                                    _.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author })), function(o) { 
+                                                    _.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author })), function(o) { 
                                                         if(timeframe === 'Today')
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                         if(timeframe === 'This_Past_Week')
@@ -1606,7 +1750,7 @@ class Dashboard extends React.Component {
                                                                                     </span>
                                                                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton_project">
                                                                                         {(() => {
-                                                                                            if(_user.role === "admin" || _user.username === project.author) {
+                                                                                            if(_.includes(_user.roles, 'admin') || _user.username === project.author) {
                                                                                                 return (
                                                                                                     <>
                                                                                                         <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_project_modal" onClick={() => this.handleEditProject(project)}><i className="fas fa-edit"></i></a>
@@ -1655,7 +1799,7 @@ class Dashboard extends React.Component {
                                             </ul>
                                             <ul id="page-numbers">
                                                 {
-                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.role, 'admin') || _user.username === _p.author })), function(o) { 
+                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1772,7 +1916,7 @@ class Dashboard extends React.Component {
                                                     Showing&nbsp;
                                                     <strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>  
                                                     &nbsp;to&nbsp;
-                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') })), function(o) { 
+                                                    <strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1785,7 +1929,7 @@ class Dashboard extends React.Component {
                                                             return true;
                                                         })))}</strong>
                                                     &nbsp;of&nbsp;
-                                                    <strong>{_.toNumber(_.size(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') })), function(o) { 
+                                                    <strong>{_.toNumber(_.size(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1842,7 +1986,7 @@ class Dashboard extends React.Component {
                                             </div>
                                             <ul id="page">
                                                 {
-                                                    _.slice(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') || _.includes(_user.role, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') })), function(o) { 
+                                                    _.slice(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') || _.includes(_user.roles, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') })), function(o) { 
                                                         if(timeframe === 'Today')
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
                                                         if(timeframe === 'This_Past_Week')
@@ -1870,7 +2014,7 @@ class Dashboard extends React.Component {
                                                                                 </span>
                                                                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton_testimonies">
                                                                                     {(() => {
-                                                                                        if(_user.role === "admin" || _user.username === testimony.author) {
+                                                                                        if(_.includes(_user.roles, 'admin') || _user.username === testimony.author) {
                                                                                             return (
                                                                                                 <a href="# " className="dropdown-item delete" onClick={() => this.handleDeleteTestimony(testimony._id)}><i className="far fa-trash-alt"></i></a>
                                                                                             )
@@ -1906,7 +2050,7 @@ class Dashboard extends React.Component {
                                             </ul>
                                             <ul id="page-numbers">
                                                 {
-                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.role, 'admin') })), function(o) { 
+                                                    ([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') })), function(o) { 
                                                         if(timeframe === 'Today') 
                                                             return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
                                                         if(timeframe === 'This_Past_Week')
@@ -1946,6 +2090,37 @@ class Dashboard extends React.Component {
                                 </div>
                             </div>
 						
+                            <div className="_user_modal modal fade" id="_user_modal" tabIndex="-1" role="dialog" aria-labelledby="_user_modalLabel" aria-hidden="true">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                        <div className="modal-body">
+                                            <a title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                            <h5 className="modal-title" id="_user_modalLabel">Changing roles for {_user_toEdit_username}!</h5>
+                                            <div className="wrapper_form_user">
+                                                <div className="row">
+                                                    <div className="input-field col s12">
+                                                        <select 
+                                                            value={_user_toEdit_roles}
+                                                            onChange={(ev) => this.handleChangeFieldUser('_user_toEdit_roles', ev)}
+                                                            className="form-group-input _user_toEdit_roles" 
+                                                            id="_user_toEdit_roles" 
+                                                            name="_user_toEdit_roles"
+                                                        >
+                                                            <option value=""></option>
+                                                            <option value="Write">Write</option>
+                                                            <option value="Admin">Admin</option>
+                                                        </select>
+                                                        <label htmlFor='_user_toEdit_roles' className={_user_toEdit_roles ? 'active' : ''}>Roles</label>
+                                                        <div className="form-group-line"></div>
+                                                    </div>
+                                                </div>
+                                                <button onClick={(ev) => this.send_user(_user_toEdit_username)} className="btn btn-primary float-right">Update.</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                    
                             <div className="modal fade" id="edit_modal" tabIndex="-1" role="dialog" aria-labelledby="edit_modalLabel" aria-hidden="true">
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
@@ -1953,6 +2128,18 @@ class Dashboard extends React.Component {
                                             <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
                                             <h5 className="modal-title" id="edit_modalLabel">Hey!</h5>
                                             <div>Your Informations has been updated, we've sent you details to your email, we love you.</div>
+                                            <div><small>Thanks {localStorage.getItem('username')}</small></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal fade" id="edit_modal_error_roles" tabIndex="-1" role="dialog" aria-labelledby="edit_modal_error_rolesLabel" aria-hidden="true">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                        <div className="modal-body">
+                                            <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                            <h5 className="modal-title" id="edit_modal_error_rolesLabel">Hey!</h5>
+                                            <div>{ modal_msg }</div>
                                             <div><small>Thanks {localStorage.getItem('username')}</small></div>
                                         </div>
                                     </div>
@@ -1970,12 +2157,16 @@ const mapStateToProps = state => ({
     articles: state.home.articles,
     projects: state.home.projects,
     testimonies: state.home.testimonies,
+    
+    userToEdit: state.home.userToEdit,
 });
 
 const mapDispatchToProps = dispatch => ({
     onLoad: data => dispatch({ type: 'HOME_PAGE_LOADED', data }),
     onDelete: id => dispatch({ type: 'DELETE_ARTICLE', id }),
     setEdit: article => dispatch({ type: 'SET_EDIT', article }),
+    
+    setEditUser: user => dispatch({ type: 'SET_EDIT_USER', user }),
     
     onLoadProject: data => dispatch({ type: 'PROJECT_PAGE_LOADED', data }),
     onDeleteProject: id => dispatch({ type: 'DELETE_PROJECT', id }),

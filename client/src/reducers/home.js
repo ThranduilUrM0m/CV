@@ -5,6 +5,7 @@ export default (state={
         projects: [],
         testimonies: [],
         user: {},
+        users: [],
     }, action) => {
     switch(action.type) {
         //ARTICLE

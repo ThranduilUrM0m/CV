@@ -18,6 +18,7 @@ class Account extends React.Component {
             _current_password: '',
             _new_password: '',
             _confirm_password: '',
+            modal_msg: '',
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.get_user = this.get_user.bind(this);
@@ -41,18 +42,36 @@ class Account extends React.Component {
         }
     }
     async send_user() {
+        let self = this;
         const { _user, _old_username, _old_email, _current_password, _new_password, _confirm_password } = this.state;
-        if (!_user.username || _user.username.length === 0) return;
-        if (!_user.email || _user.email.length === 0) return;
-        if (_new_password){
-            if(!_current_password || !_confirm_password) return;
-            if(_new_password !== _confirm_password) return;
-        }
+        
         try {
-            const { data } = await API.update({ _user, _old_username, _old_email, _current_password, _new_password });
-            $('#edit_modal').modal('toggle');
+            if (_new_password){
+                if(!_current_password || !_confirm_password) throw { text: 'Please fill out your old password and confirm it, if you have forgotten your password, please do contact the admin'};
+                if(_new_password !== _confirm_password) throw { text: 'Please check your password confirmation'};
+            }
+            await API.update({ _user, _old_username, _old_email, _current_password, _new_password })
+            .then((res) => {
+                self.setState({
+                    modal_msg: res.data.text
+                }, () => {
+                    self.get_user();
+                    $('#edit_modal').modal('toggle');
+                })
+            })
+            .catch((error) => {
+                self.setState({
+					modal_msg: error.response.data.text
+				}, () => {
+					$('#edit_modal_error').modal('toggle');
+				});
+            });
         } catch (error) {
-            console.error(error);
+            self.setState({
+				modal_msg: JSON.stringify(error)
+			}, () => {
+				$('#edit_modal_error').modal('toggle');
+			});
         }
     }
     handleChangeField(key, event) {
@@ -84,9 +103,21 @@ class Account extends React.Component {
         return _.ceil(count, 0);
     }
     render() {
-        const { _user, _current_password, _new_password, _confirm_password } = this.state;
+        const { _user, _current_password, _new_password, _confirm_password, modal_msg } = this.state;
         return (
             <>
+                <div className="modal fade" id="edit_modal_error" tabIndex="-1" role="dialog" aria-labelledby="edit_modal_errorLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                <h5 className="modal-title" id="edit_modal_errorLabel">Hey!</h5>
+                                <div>{ modal_msg }</div>
+                                <div><small>Thanks {localStorage.getItem('username')}</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="_form">
                     <div className="modal-content_user">
                         <div className='row'>
@@ -154,7 +185,7 @@ class Account extends React.Component {
                                 value={_confirm_password} 
                                 onChange={(ev) => this.handleChangeField('_confirm_password', ev)}
                                 />
-                                <label htmlFor='_confirm_password' className={_confirm_password ? 'active' : ''}>Password</label>
+                                <label htmlFor='_confirm_password' className={_confirm_password ? 'active' : ''}>Confirm Password</label>
                                 <div className="form-group-line"></div>
                             </div>
                         </div>
