@@ -30,7 +30,6 @@ class Home extends React.Component {
         .then(function (response) {
             // handle success
             onLoad(response.data);
-
             function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
                 //if one or more elements have been yielded by jquery
@@ -42,10 +41,8 @@ class Home extends React.Component {
                     callback();
                 }}, 200); //I usually check 5 times per second
             }
-            //this is an example place in your code where you would like to
-            //start checking whether the target element exists
-            //I have used a class below, but you can use any jQuery selector
-            runAfterElementExists(".first_section .card_"+(response.data.articles.length-1), function() {
+            runAfterElementExists(".first_section .card_"+(_.size(_.filter(response.data.articles, { '_hide': false }))), function() {
+                console.log('slider');
                 self._handleSlider('slider');
             });
         })
@@ -61,7 +58,6 @@ class Home extends React.Component {
         .then(function (response) {
             // handle success
             onLoadProject(response.data);
-
             function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
                 //if one or more elements have been yielded by jquery
@@ -73,10 +69,8 @@ class Home extends React.Component {
                     callback();
                 }}, 200); //I usually check 5 times per second
             }
-            //this is an example place in your code where you would like to
-            //start checking whether the target element exists
-            //I have used a class below, but you can use any jQuery selector
-            runAfterElementExists(".second_section .card_"+(response.data.projects.length-1), function() {
+            runAfterElementExists(".second_section .card_"+(_.size(_.filter(response.data.projects, { '_hide': false }))), function() {
+                console.log('slider_projects');
                 self._handleSlider('slider_projects');
             });
         })
@@ -403,7 +397,7 @@ class Home extends React.Component {
                                 {
                                     (_.orderBy(_.filter(projects, (_p) => { return !_p._hide }), ['view'], ['desc']).slice(0, 10)).map((project, index) => {
                                         return (
-                                            <div className={"card card_" + index} data-title={project.title} data-index={index+1}>
+                                            <div className={"card card_" + (index+1)} data-title={project.title} data-index={index+1}>
                                                 <div className="card-body">
                                                     <a href={project.link_to} target="_blank" rel="noopener noreferrer">
                                                         <div className='image'>
@@ -422,7 +416,7 @@ class Home extends React.Component {
                     </section>
                 </Slide>
                 <Slide>
-                    <section className="active first_section">
+                    <section className="first_section">
                         <div className="wrapper left_part">
                             <div id="social_media">
                                 <div className="icons_gatherer">
@@ -446,7 +440,7 @@ class Home extends React.Component {
                                 {
                                     (_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).slice(0, 10)).map((article, index) => {
                                         return (
-                                            <div className={"card card_" + index} data-title={_.head( article.title.split(" ") )} data-index={index+1}>
+                                            <div className={"card card_" + (index+1)} data-title={_.head( article.title.split(" ") )} data-index={index+1}>
                                                 <div className="shadow_title">{(_.head( article.title.split(/[\s.]+/) ).length <= 2 ) ? _.head( article.title.split(/[\s.]+/) )+" "+_.nth(article.title.split(/[\s.]+/), 1) : _.head( article.title.split(/[\s.]+/) )}.</div>
                                                 <div className="card-body">
                                                     <h2>{article.title}</h2>
