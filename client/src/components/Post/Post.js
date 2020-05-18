@@ -83,7 +83,7 @@ class Post extends React.Component {
 					.catch(err => console.log('There was an error:' + err));
 			});
 	}
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.articleToEdit) {
 			this.setState({
 				_id: nextProps.articleToEdit._id,

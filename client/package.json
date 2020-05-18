@@ -26,6 +26,7 @@
     "@testing-library/user-event": "*",
     "@types/jquery": "*",
     "axios": "*",
+    "axios-progress-bar": "*",
     "babel-polyfill": "*",
     "bootstrap": "*",
     "fingerprintjs": "*",

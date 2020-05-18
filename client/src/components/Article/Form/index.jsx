@@ -80,7 +80,7 @@ class Form extends React.Component {
     componentDidMount() {
         this.get_user();
     }
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.articleToEdit) {
             this.setState({
                 title: nextProps.articleToEdit.title,
@@ -94,6 +94,20 @@ class Form extends React.Component {
                 upvotes: nextProps.articleToEdit.upvotes,
                 downvotes: nextProps.articleToEdit.downvotes,
                 view: nextProps.articleToEdit.view,
+            });
+        } else {
+            this.setState({
+                title: '',
+                body: '',
+                author: '',
+                categorie: '',
+                _hide: false,
+                tag: [],
+                tagInput: '',
+                comment: [],
+                upvotes: [],
+                downvotes: [],
+                view: [],
             });
         }
     }

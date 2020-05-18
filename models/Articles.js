@@ -41,6 +41,7 @@ ArticlesSchema.methods.toJSON = function() {
     body: this.body,
     author: this.author,
     categorie: this.categorie,
+    _hide: this._hide,
     tag: this.tag,
     comment: this.comment,
     upvotes: this.upvotes,

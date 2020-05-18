@@ -43,7 +43,7 @@ class Minttea extends React.Component {
             onLoadTestimony(response.data);
         });
     }
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.testimonyToEdit) {
             this.setState({
                 parent_id: nextProps.testimonyToEdit.parent_id,

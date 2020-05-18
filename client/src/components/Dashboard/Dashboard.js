@@ -43,7 +43,7 @@ class Dashboard extends React.Component {
             _article: {},
             _project: {},
             _testimony: {},
-            modal_msg: ''
+            modal_msg: '',
         };
 
 		this.disconnect = this.disconnect.bind(this);
@@ -59,9 +59,11 @@ class Dashboard extends React.Component {
         this._handleTimeFit = this._handleTimeFit.bind(this);
         this.handleShowFilter = this.handleShowFilter.bind(this);
         
+		this.handleAddArticle = this.handleAddArticle.bind(this);
 		this.handleEditArticle = this.handleEditArticle.bind(this);
         this.handleDeleteArticle = this.handleDeleteArticle.bind(this);
         
+		this.handleAddProject = this.handleAddProject.bind(this);
 		this.handleEditProject = this.handleEditProject.bind(this);
         this.handleDeleteProject = this.handleDeleteProject.bind(this);
         
@@ -85,6 +87,7 @@ class Dashboard extends React.Component {
 		axios('/api/articles')
         .then(function (response) {
             // handle success
+            console.log(response.data);
 			onLoad(response.data);
 			function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
@@ -210,10 +213,10 @@ class Dashboard extends React.Component {
 		this._handleModal('_article_modal_trigger', '_all_article_modal_view');
 		this._handleModal('_project_modal_trigger', '_all_project_modal_view');
         this._handleModal('_testimony_modal_trigger', '_all_testimony_modal_view');
-        
+
         this._handleTimeFit();
 	}
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.userToEdit) {
             this.setState({
                 _user_toEdit_username: nextProps.userToEdit.username,
@@ -359,6 +362,10 @@ class Dashboard extends React.Component {
                 scrollbar: '.'+source+' .swiper-scrollbar',
             });
     }
+    handleAddArticle() {
+        const { setEdit } = this.props;
+        setEdit();
+    }
     handleEditArticle(article) {
         const { setEdit } = this.props;
         setEdit(article);
@@ -367,6 +374,10 @@ class Dashboard extends React.Component {
         const { onDelete } = this.props;
 		return axios.delete(`/api/articles/${_id}`)
 			.then(() => onDelete(_id));
+    }
+    handleAddProject() {
+        const { setEditProject } = this.props;
+        setEditProject();
     }
     handleEditProject(project) {
         const { setEditProject } = this.props;
@@ -799,6 +810,7 @@ class Dashboard extends React.Component {
 						<div className="wrapper_full">
 							<div className="nav nav-pills flex-column">
 								<ul className="settings_dashboard">
+									<li><a href="/" className="nav_link">Home</a></li>
 									<li><a href="#1a" className="nav_link active" data-toggle="tab">Dashboard</a></li>
 									<li><a href="#2a" className="nav_link" data-toggle="tab">Settings</a></li>
 								</ul>
@@ -876,9 +888,9 @@ class Dashboard extends React.Component {
                                                                 <div className="dropdown-menu _filter_form" aria-labelledby="dropdownMenuButton">
                                                                     <button className="dropdown-item show_more _show_articles btn-primary" id='_article_modal_trigger' data-toggle="modal" data-target="#_all_article_modal_view"><i className="fas fa-expand-arrows-alt"></i></button>
                                                                     {(() => {
-                                                                        if(!_.isEmpty(_user.role)) {
+                                                                        if(!_.isEmpty(_user.roles)) {
                                                                             return (
-                                                                                <button className="dropdown-item add _add_article btn-primary" data-toggle="modal" data-target="#_article_modal"><i className="fas fa-plus"></i></button>
+                                                                                <button className="dropdown-item add _add_article btn-primary" data-toggle="modal" data-target="#_article_modal" onClick={() => this.handleAddArticle()}><i className="fas fa-plus"></i></button>
                                                                             )
                                                                         }
                                                                     })()}
@@ -920,7 +932,7 @@ class Dashboard extends React.Component {
                                                                                                     <h2>{article.title}</h2>
                                                                                                     <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
                                                                                                     <p className="categorie">{article.categorie}</p>
-                                                                                                    <p className="categorie"><i className={article._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></p>
+                                                                                                    <p className="categorie"><i className={article._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i> {JSON.stringify(article)}</p>
                                                                                                     <br/>
                                                                                                     <div className="dropdown">
                                                                                                         <span className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -992,7 +1004,13 @@ class Dashboard extends React.Component {
                                                                 </span>
                                                                 <div className="dropdown-menu _filter_form" aria-labelledby="dropdownMenuButton_projects">
                                                                     <button className="dropdown-item show_more _show_projects btn-primary" id='_project_modal_trigger' data-toggle="modal" data-target="#_all_project_modal_view"><i className="fas fa-expand-arrows-alt"></i></button>
-                                                                    <button className="dropdown-item add _add_project btn-primary" data-toggle="modal" data-target="#_project_modal"><i className="fas fa-plus"></i></button>
+                                                                    {(() => {
+                                                                        if(!_.isEmpty(_user.roles)) {
+                                                                            return (
+                                                                                <button className="dropdown-item add _add_project btn-primary" data-toggle="modal" data-target="#_project_modal"  onClick={() => this.handleAddProject()}><i className="fas fa-plus"></i></button>
+                                                                            )
+                                                                        }
+                                                                    })()}
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { loadProgressBar } from 'axios-progress-bar';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,6 +8,7 @@ import logo from '../../logo.svg';
 import favicon from '../../favicon.svg';
 import * as $ from "jquery";
 import 'bootstrap';
+import 'axios-progress-bar/dist/nprogress.css';
 
 const _ = require('lodash');
 
@@ -28,6 +30,7 @@ class Header extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
     componentDidMount() {
+        loadProgressBar();
         const { onLoad, onLoadProject } = this.props;
 
         this._handleClickEvents();

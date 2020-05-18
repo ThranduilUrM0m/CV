@@ -2397,6 +2397,7 @@ body, html {
 																	padding: .75rem !important;
 																	&.is_private {
 																		.card {
+																			padding-left: 1rem;
 																			border-left: 0.25rem solid $calendar-red;
 																		}
 																	}

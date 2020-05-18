@@ -80,7 +80,7 @@ class FormProject extends React.Component {
     componentDidMount() {
         this.get_user();
     }
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.projectToEdit) {
             this.setState({
                 title: nextProps.projectToEdit.title,
@@ -94,6 +94,20 @@ class FormProject extends React.Component {
                 upvotes: nextProps.projectToEdit.upvotes,
                 downvotes: nextProps.projectToEdit.downvotes,
                 view: nextProps.projectToEdit.view,
+            });
+        } else {
+            this.setState({
+                title: '',
+                image: '',
+                link_to: '',
+                author: '',
+                _hide: false,
+                tag: [],
+                tagInput: '',
+                comment: [],
+                upvotes: {},
+                downvotes: {},
+                view: [],
             });
         }
     }
@@ -113,6 +127,7 @@ class FormProject extends React.Component {
         const { onSubmitProject, projectToEdit, onEditProject } = this.props;
         const { title, image, link_to, author, _hide, tag, comment, upvotes, downvotes, view } = this.state;
         const self = this;
+
         if(!projectToEdit) {
             return axios.post('/api/projects', {
                 title,
@@ -143,6 +158,8 @@ class FormProject extends React.Component {
                         downvotes: {},
                         view: [],
                     })
+                }).catch(error => {
+                    console.log(error.response)
                 });
         } else {
             return axios.patch(`/api/projects/${projectToEdit._id}`, {
@@ -174,6 +191,9 @@ class FormProject extends React.Component {
                         downvotes: {},
                         view: [],
                     })
+                }).catch(function (error) {
+                    // handle error
+                    console.log(error);
                 });
         }
     }
@@ -304,7 +324,8 @@ class FormProject extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
     onSubmitProject: data => dispatch({ type: 'SUBMIT_PROJECT', data }),
-	onLoadProject: data => dispatch({ type: 'PROJECT_PAGE_LOADED', data }),
+    onEditProject: data => dispatch({ type: 'EDIT_PROJECT', data }),
+    onLoadProject: data => dispatch({ type: 'PROJECT_PAGE_LOADED', data }),
 	onDeleteProject: id => dispatch({ type: 'DELETE_PROJECT', id }),
 	setEditProject: project => dispatch({ type: 'SET_EDIT', project }),
 }) 
