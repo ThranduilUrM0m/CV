@@ -87,7 +87,6 @@ class Dashboard extends React.Component {
 		axios('/api/articles')
         .then(function (response) {
             // handle success
-            console.log(response.data);
 			onLoad(response.data);
 			function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
@@ -932,7 +931,7 @@ class Dashboard extends React.Component {
                                                                                                     <h2>{article.title}</h2>
                                                                                                     <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
                                                                                                     <p className="categorie">{article.categorie}</p>
-                                                                                                    <p className="categorie"><i className={article._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i> {JSON.stringify(article)}</p>
+                                                                                                    <p className="categorie"><i className={article._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></p>
                                                                                                     <br/>
                                                                                                     <div className="dropdown">
                                                                                                         <span className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

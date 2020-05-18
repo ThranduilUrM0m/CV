@@ -361,7 +361,7 @@ class Home extends React.Component {
     render() {
         const { articles, projects } = this.props;
         return (
-            <FullPage>
+            <FullPage scrollMode={'normal'}>
                 <Slide>
                     <section className="second_section">
                         <div className="Hello">

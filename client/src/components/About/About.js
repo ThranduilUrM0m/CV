@@ -94,7 +94,7 @@ class About extends React.Component {
     render() {
 		const { articles } = this.props;
         return(
-            <FullPage>
+            <FullPage scrollMode={'normal'}>
 				<Slide>
 					<section className="first_section_about">
                         <div id="social_media">

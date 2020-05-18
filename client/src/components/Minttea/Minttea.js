@@ -252,7 +252,7 @@ class Minttea extends React.Component {
         const { testimonyToEdit, testimonies } = this.props;
         const { body, author, is_private, fingerprint } = this.state;
         return(
-            <FullPage scrollMode='normal'>
+            <FullPage scrollMode={'normal'}>
 				<Slide>
 					<section className="active first_section_coffee">
                         <div className="wrapper_full">

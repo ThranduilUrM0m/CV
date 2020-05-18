@@ -69,16 +69,6 @@ class Blog extends React.Component {
         .then(function () {
             // always executed
 		});
-
-		function WindowSize(){
-            if ($(window).width() <= 425) {
-                $('span.attr').attr("data-attr-span","");
-            } else {
-                $('span.attr').attr("data-attr-span",'View All.' );
-            }
-        }
-        window.addEventListener("resize", WindowSize);
-		WindowSize();
 	}
 	handleEdit(article) {
 		const { setEdit } = this.props;
@@ -89,7 +79,6 @@ class Blog extends React.Component {
 			// Optional parameters
 			effect: 'coverflow',
 			direction: 'horizontal',
-			dynamicBullets: true,
 			grabCursor: true,
 			loop: true,
 			slidesPerView: 'auto',
@@ -98,7 +87,10 @@ class Blog extends React.Component {
 			paginationClickable: true,
 			centerInsufficientSlides: true,
 			spaceBetween: 0,
+			autoResize: false,
             observer: true,
+			watchOverflow: true,
+			variableWidth : true,
 			coverflowEffect: {
 				rotate: 0,
 				stretch: 0,
@@ -110,6 +102,7 @@ class Blog extends React.Component {
 			// If we need pagination
 			pagination: {
 			  el: '.swiper-pagination',
+			  dynamicBullets: true,
 			},
 			// Navigation arrows
 			navigation: {
@@ -493,7 +486,14 @@ class Blog extends React.Component {
 																				})
 																			}
 																		</ul>
-																		<Link to={`${match.url}/${article._id}`}>
+																		<Link 
+																			to={
+																				{
+																					pathname: '/blog/'+article.title, 
+																					state : {article}
+																				}
+																			}
+																		>
 																			<div className="readmore">
 																				<button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
 																					<div className="line line-1"></div>
@@ -586,19 +586,18 @@ class Blog extends React.Component {
 																<div className="shadow_title">{_.head(_.words(article.title))}</div>
 																<div className="shadow_letter">{_.head(_.head(_.words(article.title)))}</div>
 																<div className="card-body">
-																	<h2>{article.title}</h2>
+																	<figure>{this.handleJSONTOHTMLIMAGE(article.body, index)}</figure>
 																	<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
+																	<h3>{article.title}</h3>
 																	<p className="categorie">{article.categorie}</p>
-																	<ul className="text-muted tags">
-																		{
-																			article.tag.map((t, i) => {
-																				return (
-																					<li className="tag_item">{t}</li>
-																				)
-																			})
+																	<Link
+																		to={
+																			{
+																				pathname: '/blog/'+article.title, 
+																				state : {article}
+																			}
 																		}
-																	</ul>
-																	<Link to={`${match.url}/${article._id}`}>
+																	>
 																		<div className="readmore">
 																			<button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
 																				<div className="line line-1"></div>
@@ -606,7 +605,6 @@ class Blog extends React.Component {
 																			</button>
 																		</div>
 																	</Link>
-																	<br/>
 																	<div className="comments_up_down">
 																		<p className="text-muted views"><b>{_.size(article.view)}</b><i className="fas fa-eye"></i></p>
 																		<p className="text-muted comments"><b>{_.size(article.comment)}</b> <i className="fas fa-comment-alt"></i></p>
