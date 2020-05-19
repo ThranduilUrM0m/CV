@@ -9,6 +9,54 @@ import Fingerprint from 'fingerprintjs';
 import Footer from '../Footer/Footer';
 import * as $ from "jquery";
 import 'bootstrap';
+import {
+	FacebookShareCount,
+	PinterestShareCount,
+	VKShareCount,
+	OKShareCount,
+	RedditShareCount,
+	TumblrShareCount,
+	FacebookShareButton,
+	FacebookMessengerShareButton,
+	FacebookMessengerIcon,
+	LinkedinShareButton,
+	TwitterShareButton,
+	PinterestShareButton,
+	VKShareButton,
+	OKShareButton,
+	TelegramShareButton,
+	WhatsappShareButton,
+	RedditShareButton,
+	EmailShareButton,
+	TumblrShareButton,
+	LivejournalShareButton,
+	MailruShareButton,
+	ViberShareButton,
+	WorkplaceShareButton,
+	LineShareButton,
+	WeiboShareButton,
+	PocketShareButton,
+	InstapaperShareButton,
+	FacebookIcon,
+	TwitterIcon,
+	LinkedinIcon,
+	PinterestIcon,
+	VKIcon,
+	OKIcon,
+	TelegramIcon,
+	WhatsappIcon,
+	RedditIcon,
+	TumblrIcon,
+	MailruIcon,
+	EmailIcon,
+	LivejournalIcon,
+	ViberIcon,
+	WorkplaceIcon,
+	LineIcon,
+	PocketIcon,
+	InstapaperIcon,
+	WeiboIcon,
+} from "react-share";
 
 var _ = require('lodash');
 
@@ -519,7 +567,7 @@ class Post extends React.Component {
     render() {
 		const { articles } = this.props;
         const { _user, _id, title, body, author, comment, _comment_author, _comment_body, _comment_fingerprint, upvotes, downvotes, view, createdAt, fingerprint } = this.state;
-		
+		const shareUrl = window.location.href;
 		return (
             <FullPage scrollMode={'normal'}>
 				<Slide>
@@ -530,6 +578,59 @@ class Post extends React.Component {
 									<div className="modal-body">
 										<a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
 										<div><span role="img" aria-label="sheep">👉</span> Please provide your name and the content of ur msg.</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className="modal fade" id="shareModal" tabIndex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+							<div className="modal-dialog" role="document">
+								<div className="modal-content">
+									<div className="modal-body">
+										<a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
+										<div>
+											<FacebookShareButton
+												url={shareUrl}
+												className="Demo__some-network__share-button"
+											>
+												<FacebookIcon size={32} round />
+											</FacebookShareButton>
+											<FacebookMessengerShareButton
+												url={shareUrl}
+												appId="521270401588372"
+												className="Demo__some-network__share-button"
+											>
+												<FacebookMessengerIcon size={32} round />
+											</FacebookMessengerShareButton>
+											<TwitterShareButton
+												url={shareUrl}
+												className="Demo__some-network__share-button"
+											>
+												<TwitterIcon size={32} round />
+											</TwitterShareButton>
+											<WhatsappShareButton
+												url={shareUrl}
+												separator=":: "
+												className="Demo__some-network__share-button"
+											>
+												<WhatsappIcon size={32} round />
+											</WhatsappShareButton>
+											<LinkedinShareButton url={shareUrl} className="Demo__some-network__share-button">
+												<LinkedinIcon size={32} round />
+											</LinkedinShareButton>
+											<PinterestShareButton
+												url={String(window.location)}
+												className="Demo__some-network__share-button"
+											>
+												<PinterestIcon size={32} round />
+											</PinterestShareButton>
+											<EmailShareButton
+												url={shareUrl}
+												body="body"
+												className="Demo__some-network__share-button"
+											>
+												<EmailIcon size={32} round />
+											</EmailShareButton>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -557,6 +658,7 @@ class Post extends React.Component {
 									<p className="text-muted comments"><b>{_.size(comment)}</b> <a href="#comments-modal"><i className="fas fa-comment-alt"></i></a> </p>
 									<div className={`text-muted upvotes ${_.isUndefined( _.find(upvotes, (upvote) => {return upvote.upvoter === fingerprint}) ) ? '' : 'active'}`}><b>{_.size(upvotes)}</b> <button onClick={(event) => this.handleSubmitUpvotes(event)}><i className="fas fa-thumbs-up"></i></button> </div>
 									<div className={`text-muted downvotes ${_.isUndefined( _.find(downvotes, (downvote) => {return downvote.downvoter === fingerprint}) ) ? '' : 'active'}`}><b>{_.size(downvotes)}</b> <button onClick={(event) => this.handleSubmitDownvotes(event)}><i className="fas fa-thumbs-down"></i></button> </div>
+									<div className="text-muted share"> <button data-toggle="modal" data-target="#shareModal"><i className="fas fa-share"></i></button> </div>
 								</div>
 							</div>
 							<div className="beforeorafter">

@@ -54,6 +54,7 @@
     "react-router": "*",
     "react-router-dom": "*",
     "react-scripts": "*",
+    "react-share": "^4.1.0",
     "redux": "*",
     "serve": "*",
     "swiper": "*",

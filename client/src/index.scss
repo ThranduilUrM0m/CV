@@ -5509,7 +5509,7 @@ body, html {
 								color: #20232a;
 							}
 						}
-						.upvotes, .downvotes, .comments {
+						.upvotes, .downvotes, .comments, .share {
 							margin-left: 1rem;
 							text-align: -webkit-right;
 							font-size: small;
@@ -5527,6 +5527,11 @@ body, html {
 								button {
 									color: $softLightGradient;
 								}
+							}
+						}
+						.share {
+							i {
+								color: $main-color;
 							}
 						}
 						i {
