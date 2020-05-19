@@ -42,7 +42,6 @@ class Home extends React.Component {
                 }}, 200); //I usually check 5 times per second
             }
             runAfterElementExists(".first_section .card_"+(_.size(_.filter(response.data.articles, { '_hide': false }))), function() {
-                console.log('slider');
                 self._handleSlider('slider');
             });
         })
@@ -70,7 +69,6 @@ class Home extends React.Component {
                 }}, 200); //I usually check 5 times per second
             }
             runAfterElementExists(".second_section .card_"+(_.size(_.filter(response.data.projects, { '_hide': false }))), function() {
-                console.log('slider_projects');
                 self._handleSlider('slider_projects');
             });
         })
@@ -366,6 +364,16 @@ class Home extends React.Component {
                             <div className="word w5">Bienvenido</div>
                         </div>
                         <div className="wrapper left_part">
+                            <div id="social_media">
+                                <div className="icons_gatherer">
+                                    <a href="# " className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                    <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                    <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                    <a href="# " className="icon-button scroll">
+                                        
+                                    </a>
+                                </div>
+                            </div>
                             <div className="pulsing_dots">
                                 <div className="p1"></div>
                                 <div className="p2"></div>
@@ -418,16 +426,7 @@ class Home extends React.Component {
                 <Slide>
                     <section className="first_section">
                         <div className="wrapper left_part">
-                            <div id="social_media">
-                                <div className="icons_gatherer">
-                                    <a href="# " className="icon-button github"><i className="fab fa-github"></i><span></span></a>
-                                    <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                    <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-                                    <a href="# " className="icon-button scroll">
-                                        
-                                    </a>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div className="wrapper right_part">
                             <div className="luna"></div>

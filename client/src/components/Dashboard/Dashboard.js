@@ -921,7 +921,7 @@ class Dashboard extends React.Component {
                                                                                     if(!title)
                                                                                         return true;
                                                                                     else
-                                                                                        return _.includes(op_byTitle.title.toLowerCase(), title.toLowerCase());
+                                                                                        return _.split(_.lowerCase(title), ' ').some(_t => _.lowerCase(op_byTitle.title).includes(_t));
                                                                                 }).map((article, index) => {
                                                                                 return (
                                                                                     <div className="articles_slider_wrapper_cards_item swiper-slide" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="articles_slider_wrapper_cards_item" key={index}>
@@ -1038,7 +1038,7 @@ class Dashboard extends React.Component {
                                                                                     if(!title)
                                                                                         return true;
                                                                                     else
-                                                                                        return _.includes(op_byTitle.title.toLowerCase(), title_projects.toLowerCase());
+                                                                                        return _.split(_.lowerCase(title_projects), ' ').some(_t => _.lowerCase(op_byTitle.title).includes(_t));
                                                                                 }).map((project, index) => {
                                                                                 return (
                                                                                     <div className="projects_slider_wrapper_cards_item swiper-slide" data-name={ moment(project.createdAt).format("YYYY Do MM") } id="projects_slider_wrapper_cards_item" key={index}>
@@ -1353,8 +1353,8 @@ class Dashboard extends React.Component {
                                                         }), (op_bytag) => {
                                                             if(!tags)
                                                                 return true;
-                                                            else 
-                                                                return _.includes(op_bytag.tag, tags);
+                                                            else
+															    return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                                         }) ))}</strong>
                                                     &nbsp;of&nbsp;
                                                     <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author })), function(o) { 
@@ -1376,8 +1376,8 @@ class Dashboard extends React.Component {
                                                         }), (op_bytag) => {
                                                             if(!tags)
                                                                 return true;
-                                                            else 
-                                                                return _.includes(op_bytag.tag, tags);
+                                                            else
+															    return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                                         })))}
                                                     </strong> 
                                                     &nbsp;articles.
@@ -1478,9 +1478,8 @@ class Dashboard extends React.Component {
                                                         }), (op_bytag) => {
                                                             if(!tags)
                                                                 return true;
-                                                            else {
-                                                                return op_bytag.tag.some(x => x.includes(tags));
-                                                            }
+                                                            else
+															    return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                                         }), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((article, index) => {
                                                         return (
                                                             <li className="article_card _card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" key={index}>
@@ -1566,7 +1565,7 @@ class Dashboard extends React.Component {
                                                             if(!tags)
                                                                 return true;
                                                             else 
-                                                                return _.includes(op_bytag.tag, tags);
+                                                                return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                                         }).length / todosPerPage)).keys()]).map(number => {
                                                         return (
                                                             <li
@@ -1625,7 +1624,7 @@ class Dashboard extends React.Component {
                                                             if(!tags)
                                                                 return true;
                                                             else 
-                                                                return _.includes(op_bytag.tag, tags);
+															    return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                                         }) ))}</strong>
                                                     &nbsp;of&nbsp;
                                                     <strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author })), function(o) { 
@@ -1647,8 +1646,8 @@ class Dashboard extends React.Component {
                                                         }), (op_bytag) => {
                                                             if(!tags)
                                                                 return true;
-                                                            else 
-                                                                return _.includes(op_bytag.tag, tags);
+                                                            else
+															    return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                                         })))}
                                                     </strong> 
                                                     &nbsp;projects.
@@ -1749,9 +1748,8 @@ class Dashboard extends React.Component {
                                                         }), (op_bytag) => {
                                                             if(!tags)
                                                                 return true;
-                                                            else {
-                                                                return op_bytag.tag.some(x => x.includes(tags));
-                                                            }
+                                                            else
+															    return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                                         }), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((project, index) => {
                                                         return (
                                                             <li className="project_card _card project_anchor" data-name={ moment(project.createdAt).format("YYYY Do MM") } id="project_card" key={index}>
@@ -1836,7 +1834,7 @@ class Dashboard extends React.Component {
                                                             if(!tags)
                                                                 return true;
                                                             else 
-                                                                return _.includes(op_bytag.tag, tags);
+                                                                return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                                         }).length / todosPerPage)).keys()]).map(number => {
                                                         return (
                                                             <li

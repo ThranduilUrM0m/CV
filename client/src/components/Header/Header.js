@@ -354,7 +354,7 @@ class Header extends React.Component {
                             <ul id="page">
                                 {
                                     _.slice(_.filter(_.filter(_.union(articles, projects), (_a) => { return !_a._hide && _search_value !== '' }), (_ap) => {
-                                        return _.includes(_ap.title, _search_value) || _.includes(_ap.author, _search_value) || _.includes(_ap.categorie, _search_value) || _ap.tag.some(x => x.includes(_search_value));
+                                        return _.split(_.lowerCase(_search_value), ' ').some(_s_v => _.lowerCase(_ap.title).includes(_s_v)) || _.split(_.lowerCase(_search_value), ' ').some(_s_v => _.lowerCase(_ap.author).includes(_s_v)) || _ap.tag.some(x => _.split(_.lowerCase(_search_value), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                     }), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((ap, index) => {
                                         return (
                                             <li className="article_card article_anchor" data-name={ moment(ap.createdAt).format("YYYY Do MM") } id="article_card" key={index}>

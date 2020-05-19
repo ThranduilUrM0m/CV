@@ -121,8 +121,8 @@ class Blog extends React.Component {
 			};
 			this.init = function() {
 				var self = this,
-					parallaxWrappers = document.querySelectorAll(this.nameSpaces.wrapper);
-				  for(var i = 0; i < parallaxWrappers.length; i++){
+				parallaxWrappers = document.querySelectorAll(this.nameSpaces.wrapper);
+				for(var i = 0; i < parallaxWrappers.length; i++){
 					(function(i){
 						parallaxWrappers[i].addEventListener('mousemove', function(e){
 							var x = e.clientX,
@@ -130,27 +130,25 @@ class Blog extends React.Component {
 								layers = parallaxWrappers[i].querySelectorAll(self.nameSpaces.layers);
 							for(var j = 0; j < layers.length; j++){
 					(function(j){
-					  var deep = layers[j].getAttribute(self.nameSpaces.deep),
-						  disallow = layers[j].getAttribute('data-parallax-disallow'),
-						  direction = layers[j].getAttribute('data-parallax-direction'),
-						  itemX = (disallow && disallow === 'x') ? 0 : x / deep,
-						  itemY = (disallow && disallow === 'y') ? 0 : y / deep;
-						  itemX = (direction && direction === 'minus') ? -itemX : itemX;
-						  itemY = (direction && direction === 'plus') ? -itemY : itemY;
-						  if(disallow && disallow === 'both') return;
-						  layers[j].style.transform = 'translateX(' + itemX + '%) translateY(' + itemY + '%)';
+					var deep = layers[j].getAttribute(self.nameSpaces.deep),
+						disallow = layers[j].getAttribute('data-parallax-disallow'),
+						direction = layers[j].getAttribute('data-parallax-direction'),
+						itemX = (disallow && disallow === 'x') ? 0 : x / deep,
+						itemY = (disallow && disallow === 'y') ? 0 : y / deep;
+						itemX = (direction && direction === 'minus') ? -itemX : itemX;
+						itemY = (direction && direction === 'plus') ? -itemY : itemY;
+						if(disallow && disallow === 'both') return;
+						layers[j].style.transform = 'translateX(' + itemX + '%) translateY(' + itemY + '%)';
 					})(j);  
 							}
 						})
 					})(i);
-				  }
+				}
 			};
 			this.init();
 			return this;
 		}
-		window.addEventListener('load', function(){
-			new Parallax();
-		});
+		new Parallax();
 		
 		//socials
 		let items = document.querySelectorAll(".socials-item-icon");
@@ -341,7 +339,7 @@ class Blog extends React.Component {
 														if(!tags)
 															return true;
 														else 
-															return _.includes(op_bytag.tag, tags);
+															return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
 													}) ))}</strong>
 												&nbsp;of&nbsp;
 												<strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function(o) { 
@@ -364,7 +362,7 @@ class Blog extends React.Component {
 														if(!tags)
 															return true;
 														else 
-															return _.includes(op_bytag.tag, tags);
+															return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
 													})))}
 												</strong> 
 												&nbsp;articles.
@@ -465,9 +463,8 @@ class Blog extends React.Component {
 													}), (op_bytag) => {
 														if(!tags)
 															return true;
-														else {
-															return op_bytag.tag.some(x => x.includes(tags));
-														}
+														else
+															return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
 													}), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((article, index) => {
 													return (
 														<li className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" key={index}>
@@ -539,7 +536,7 @@ class Blog extends React.Component {
 														if(!tags)
 															return true;
 														else 
-															return _.includes(op_bytag.tag, tags);
+															return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
 													}).length / todosPerPage)).keys()]).map(number => {
 													return (
 														<li
