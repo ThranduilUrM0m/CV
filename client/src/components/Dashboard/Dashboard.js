@@ -1295,12 +1295,12 @@ class Dashboard extends React.Component {
                                                 <div className="shadow_title">{_.head(_.words(_article.body))}</div>
                                                 <div className="card-body">
                                                     <div className="top_row">
-                                                        <p className="text-muted views"><b>{_.size(_article.view)}</b><i className="fas fa-eye"></i> Views</p>
-                                                        <i className="fas fa-circle dot"></i>
-									                    <h6 className="author">by <b>{_article.author}</b></h6>
+                                                        <h6 className="author">by <b>{_article.author}</b></h6>
                                                         <p className="text-muted fromNow">{moment(new Date(_article.createdAt)).fromNow()}</p>
+                                                        <i className="fas fa-circle dot"></i>
+									                    <p className="text-muted views"><i className={_article._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i><b>{_article._hide ? 'Not Visible to audience.' : 'Visible to audience.'}</b></p>
                                                         <div className="up_down">
-                                                            <p className="text-muted comments"><i className={_article._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></p>
+                                                            <p className="text-muted comments"><b>{_.size(_article.view)}</b><i className="fas fa-eye"></i></p>
                                                             <p className="text-muted comments"><b>{_.size(_.get(_article, 'comment'))}</b><i className="fas fa-comment-alt"></i></p>
 									                        <div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(_article, 'upvotes'), (upvote) => {return upvote.upvoter === _user.fingerprint}) ) ? '' : 'active'}`}>
                                                                 <b>{_.size(_.get(_article, 'upvotes'))}</b> 

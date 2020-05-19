@@ -2563,7 +2563,6 @@ body, html {
 														.col-center {
 															justify-content: center;
 															text-align: center;
-															z-index: 9999;
 														}
 														.col-end {
 															justify-content: flex-end;
@@ -3015,6 +3014,7 @@ body, html {
 												}
 												i.dot {
 													align-self: center;
+													margin-left: 1rem;
 													margin-right: .5rem;
 												}
 												.fromNow {

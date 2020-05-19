@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import API from "../../utils/API";
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
@@ -17,6 +18,7 @@ class Post extends React.Component {
 
         var f = new Fingerprint().get();
 		this.state = {
+            _user: {},
 			_id: '',
 			title: '',
 			body: '',
@@ -60,6 +62,8 @@ class Post extends React.Component {
 		document.getElementById('comments_post').parentElement.style.height = 'initial';
 		this._handleMouseMove();
 		this._handleScroll();
+		//to get the user object
+        this.get_user();
 
 		const { onLoad, match } = this.props;
 		const self = this;
@@ -83,6 +87,18 @@ class Post extends React.Component {
 					.catch(err => console.log('There was an error:' + err));
 			});
 	}
+	async get_user() {
+        const self = this;
+        await API.get_user(localStorage.getItem('email'))
+            .then((res) => {
+                self.setState({
+                    _user: res.data.user,
+                });
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }
 	UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.articleToEdit) {
 			this.setState({
@@ -502,13 +518,10 @@ class Post extends React.Component {
 	
     render() {
 		const { articles } = this.props;
-        const { _id, title, body, author, comment, _comment_author, _comment_body, _comment_fingerprint, upvotes, downvotes, view, createdAt, fingerprint } = this.state;
+        const { _user, _id, title, body, author, comment, _comment_author, _comment_body, _comment_fingerprint, upvotes, downvotes, view, createdAt, fingerprint } = this.state;
 		
 		return (
             <FullPage scrollMode={'normal'}>
-				{/* <Slide>
-                    <Form />
-                </Slide> */}
 				<Slide>
 					<section id='articles_post' className="active first_section_post">
 						<div className="modal fade" id="exampleModal_comment" tabIndex="-1" role="dialog" aria-labelledby="exampleModal_commentLabel" aria-hidden="true">
@@ -641,7 +654,7 @@ class Post extends React.Component {
 																				<div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 																					<button onClick={() => this.handleReply(_c._id)} className="dropdown-item" type="button">Reply</button>
 																					{
-																						_c.fingerprint === _comment_fingerprint 
+																						_c.fingerprint === _comment_fingerprint || _.includes(_user.roles, 'admin')
 																						? <>
 																							<button onClick={() => this.handleEditComment(_c)} className="dropdown-item">Edit</button>
 																							<div className="dropdown-divider"></div>
@@ -680,22 +693,22 @@ class Post extends React.Component {
 																								<div className="middle_row">
 																									<h5>{_c_reply.body}</h5>
 																								</div>
-																								<div className="bottom_row">
-																									<div className="crud">
-																										<i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
-																										<div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-																											{
-																												_c_reply.fingerprint === _comment_fingerprint 
-																												? <>
-																													<button onClick={() => this.handleEditComment(_c_reply)} className="dropdown-item">Edit</button>
-																													<div className="dropdown-divider"></div>
-																													<button onClick={() => this.handleDeleteComment(_c_reply._id)} className="dropdown-item">Delete</button>
-																												</>
-																												: ''
-																											}
+																								{
+																									_c_reply.fingerprint === _comment_fingerprint || _.includes(_user.roles, 'admin')
+																									? 
+																									<div className="bottom_row">
+																										<div className="crud">
+																											<i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
+																											<div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+																												<button onClick={() => this.handleEditComment(_c_reply)} className="dropdown-item">Edit</button>
+																												<div className="dropdown-divider"></div>
+																												<button onClick={() => this.handleDeleteComment(_c_reply._id)} className="dropdown-item">Delete</button>
+																											</div>
 																										</div>
 																									</div>
-																								</div>
+																									: 
+																									''
+																								}
 																							</div>
 																						</div>
 																					)
