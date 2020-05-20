@@ -863,6 +863,7 @@ class Dashboard extends React.Component {
                                         <div className="left_roof">
                                             <h2>Dashboard</h2>
                                             <div className="name">{_user.email}</div>
+                                            
                                         </div>
                                         <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
                                     </div>

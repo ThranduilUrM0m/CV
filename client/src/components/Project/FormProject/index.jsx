@@ -285,18 +285,21 @@ class FormProject extends React.Component {
 
                 <div className="row">
                     <div className="input-field col s12 checkbox_hide">
-                        <input
-                            className="validate form-group-input author__hide" 
-                            id="author__hide" 
-                            type="checkbox"
-                            name="author__hide" 
-                            required="required"
-                            value={_hide}
-                            checked={_hide}
-                            onChange={(ev) => this.handleChangeField('_hide', ev)}
-                            onClick={(ev) => this.handleChangeField('_hide', ev)}
-                        />
-                        <label className={_hide ? 'active' : ''} htmlFor="author__hide"><i className={_hide ? 'far fa-eye-slash' : 'far fa-eye'}></i>Hide Project ?</label>
+                        <p>
+                            <label>
+                                <input 
+                                className="validate form-group-input author__hide" 
+                                id="author__hide" 
+                                type="checkbox"
+                                name="author__hide" 
+                                required="required"
+                                value={_hide}
+                                checked={_hide}
+                                onChange={(ev) => this.handleChangeField('_hide', ev)}
+                                />
+                                <span><i className={_hide ? 'far fa-eye-slash' : 'far fa-eye'}></i>Hide Project ?</span>
+                            </label>
+                        </p>
                     </div>
                 </div>
 
