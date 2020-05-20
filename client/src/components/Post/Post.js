@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { loadProgressBar } from 'axios-progress-bar';
 import API from "../../utils/API";
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -9,6 +10,7 @@ import Fingerprint from 'fingerprintjs';
 import Footer from '../Footer/Footer';
 import * as $ from "jquery";
 import 'bootstrap';
+import 'axios-progress-bar/dist/nprogress.css';
 import {
 	FacebookShareCount,
 	PinterestShareCount,
@@ -106,6 +108,7 @@ class Post extends React.Component {
         this._handleScroll = this._handleScroll.bind(this);
 	}
 	componentDidMount() {
+        loadProgressBar();
 		document.getElementById('articles_post').parentElement.style.height = 'initial';
 		document.getElementById('comments_post').parentElement.style.height = 'initial';
 		this._handleMouseMove();
@@ -209,7 +212,7 @@ class Post extends React.Component {
 				upvotes: [...state.upvotes, {upvoter: f.toString()}],
 			}), () => {
 				if( !_.isUndefined( _.find(downvotes, (d) => {return d.downvoter === f.toString()}) ) ) {
-					let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter !== f.toString(); });
+					let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter != f.toString(); });
 					self.setState({
 						downvotes: _downvotes,
 					}, () => {
@@ -222,7 +225,7 @@ class Post extends React.Component {
 				$(target).closest("div").addClass('active');
 			})
 		} else {
-			let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter !== f.toString(); });
+			let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter != f.toString(); });
 			self.setState(state => ({
 				upvotes: _upvotes,
 			}), () => {
@@ -242,7 +245,7 @@ class Post extends React.Component {
 				downvotes: [...state.downvotes, {downvoter: f.toString()}],
 			}), () => {
 				if( !_.isUndefined( _.find(upvotes, (u) => {return u.upvoter === f.toString()}) ) ) {
-					let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter !== f.toString(); });
+					let _upvotes = _.takeWhile(upvotes, function(u) { return u.upvoter != f.toString(); });
 					self.setState({
 						upvotes: _upvotes,
 					}, () => {
@@ -255,7 +258,7 @@ class Post extends React.Component {
 				$(target).closest("div").addClass('active');
 			})
 		} else {
-			let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter !== f.toString(); });
+			let _downvotes = _.takeWhile(downvotes, function(d) { return d.downvoter != f.toString(); });
 			self.setState(state => ({
 				downvotes: _downvotes,
 			}), () => {
@@ -270,7 +273,7 @@ class Post extends React.Component {
 		let _edited_comment = [];
 
 		if(_comment_author && _comment_body) {
-			if(_comment_id_ifEditing !== null) {
+			if(_comment_id_ifEditing != null) {
 				_edited_comment = comment;
 				function setEditFunction() {
 					// Get the current 'global' time from an API using Promise
@@ -376,7 +379,7 @@ class Post extends React.Component {
 									upvoter: f.toString()
 								});
 								if(!_.isUndefined(_.find(_c.downvotes, {'downvoter': f.toString()}))) {
-									_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter !== f.toString(); });
+									_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter != f.toString(); });
 								}
 							}
 							return _c;
@@ -402,7 +405,7 @@ class Post extends React.Component {
 						_edited_comment = comment;
 						_edited_comment = _.map(_edited_comment, (_c) => {
 							if(_c._id === in_comment._id) {
-								_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter !== f.toString(); });
+								_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter != f.toString(); });
 							}
 							return _c;
 						});
@@ -440,7 +443,7 @@ class Post extends React.Component {
 									downvoter: f.toString()
 								});
 								if(!_.isUndefined(_.find(_c.upvotes, {'upvoter': f.toString()}))) {
-									_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter !== f.toString(); });
+									_c.upvotes = _.takeWhile(_c.upvotes, function(u) { return u.upvoter != f.toString(); });
 								}
 							}
 							return _c;
@@ -466,7 +469,7 @@ class Post extends React.Component {
 						_edited_comment = comment;
 						_edited_comment = _.map(_edited_comment, (_c) => {
 							if(_c._id === in_comment._id) {
-								_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter !== f.toString(); });
+								_c.downvotes = _.takeWhile(_c.downvotes, function(d) { return d.downvoter != f.toString(); });
 							}
 							return _c;
 						});
@@ -511,7 +514,7 @@ class Post extends React.Component {
 		const { comment } = this.state;
 
 		self.setState(state => ({
-			comment: _.takeWhile(comment, (_c) => {return _c._id !== _in_id}),
+			comment: _.takeWhile(comment, (_c) => { return _c._id != _in_id }),
 		}), () => {
 			self.handleSubmit();
 		});

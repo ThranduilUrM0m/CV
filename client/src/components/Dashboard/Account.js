@@ -48,7 +48,7 @@ class Account extends React.Component {
         try {
             if (_new_password){
                 if(!_current_password || !_confirm_password) throw { text: 'Please fill out your old password and confirm it, if you have forgotten your password, please do contact the admin'};
-                if(_new_password !== _confirm_password) throw { text: 'Please check your password confirmation'};
+                if(_new_password != _confirm_password) throw { text: 'Please check your password confirmation'};
             }
             await API.update({ _user, _old_username, _old_email, _current_password, _new_password })
             .then((res) => {
@@ -85,7 +85,7 @@ class Account extends React.Component {
         var count = 0;
         let total = 0;
         Object.keys(user).forEach(function(key,index) {
-            if(key !== '_id' && key !== 'activated' && key !== 'messages' && key !== 'createdAt' && key !== 'updatedAt' && key !== '__v'){
+            if(key != '_id' && key != 'activated' && key != 'messages' && key != 'createdAt' && key != 'updatedAt' && key != '__v'){
                 total += 1;
                 count += (!user[key] ? 0 : 1);
             }
@@ -97,7 +97,7 @@ class Account extends React.Component {
     _progress_total(user) {
         var count = 0;
         Object.keys(user).forEach(function(key,index) {
-            if(key !== '_id' && key !== 'activated' && key !== 'messages' && key !== 'createdAt' && key !== 'updatedAt' && key !== '__v')
+            if(key != '_id' && key != 'activated' && key != 'messages' && key != 'createdAt' && key != 'updatedAt' && key != '__v')
                 count += 1;
         });
         return _.ceil(count, 0);

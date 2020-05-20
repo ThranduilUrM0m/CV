@@ -26,7 +26,7 @@ class Signup extends React.Component {
 		var _role = ["normal"];
         const { username, email, password, confirm_password } = this.state;
         try {
-			if (password !== confirm_password) throw { text: 'Please check your password confirmation'};
+			if (password != confirm_password) throw { text: 'Please check your password confirmation'};
 			await API.signup({ username, email, password, _fingerprint, _role })
 			.then((res) => {
 				self.setState({

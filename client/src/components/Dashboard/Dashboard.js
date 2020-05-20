@@ -322,7 +322,7 @@ class Dashboard extends React.Component {
 
     }
 	_handleDrag(source) {
-        if(source !== 'testimonies_slider_wrapper')
+        if(source != 'testimonies_slider_wrapper')
             var mySwiper = new Swiper ('.'+source+'.swiper-container', {
                 // Optional parameters
                 effect: 'coverflow',
@@ -751,7 +751,7 @@ class Dashboard extends React.Component {
                         }
           
                         lineMax = BigText.testLineDimensions($line, maxWidth, 'font-size', newFontSize + j*intervals[m], intervals[m], 'px', lineMax);
-                        if(typeof lineMax !== 'number') {
+                        if(typeof lineMax != 'number') {
                           newFontSize = lineMax.size;
           
                           if(lineMax.match === 'exact') {
@@ -790,7 +790,7 @@ class Dashboard extends React.Component {
           
                     for(var m=1, n=3; m<n; m+=interval) {
                       maxWordSpacing = BigText.testLineDimensions($line, maxWidth, 'word-spacing', m, interval, 'px', maxWordSpacing);
-                      if(typeof maxWordSpacing !== 'number') {
+                      if(typeof maxWordSpacing != 'number') {
                         wordSpacing = maxWordSpacing.size;
                         break;
                       }

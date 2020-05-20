@@ -152,13 +152,13 @@ class Home extends React.Component {
                         container.find('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
 
                         //if the index one is the last one, u need to go to the first one again, sinn just +1
-                        if(this.imgs.last().index() !== index)
+                        if(this.imgs.last().index() != index)
                             container.find('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
                         else
                             container.find('#next').text(this.imgs.first().find('.shadow_title').text());
 
                         //if the index one is the first one, u need to go to the last one again, sinn just -1
-                        if(index !== 0) 
+                        if(index != 0) 
                             container.find('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
                         else
                             container.find('#prev').text(this.imgs.last().find('.shadow_title').text());
@@ -185,13 +185,13 @@ class Home extends React.Component {
                         container.find('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
 
                         //if the index one is the last one, u need to go to the first one again, sinn just +1
-                        if(this.imgs.last().index() !== index)
+                        if(this.imgs.last().index() != index)
                             container.find('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
                         else
                             container.find('#next').text(this.imgs.first().find('.shadow_title').text());
 
                         //if the index one is the first one, u need to go to the last one again, sinn just -1
-                        if(index !== 0) 
+                        if(index != 0) 
                             container.find('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
                         else
                             container.find('#prev').text(this.imgs.last().find('.shadow_title').text());
@@ -207,11 +207,11 @@ class Home extends React.Component {
                     this.next = function() {
                         var index = this.getCurrentIndex();
                         if (index < this.imgCount) {
-                            if (block !== true) {
+                            if (block != true) {
                                 this.goNext(index + 1); // Go next
                             }
                         } else {
-                            if (block !== true) {
+                            if (block != true) {
                                 this.goNext(0); // If last go first 
                             }
                         }
@@ -220,11 +220,11 @@ class Home extends React.Component {
                     this.prev = function() {
                         var index = this.getCurrentIndex();
                         if (index > 0) {
-                            if (block !== true) {
+                            if (block != true) {
                                 this.goPrev(index - 1); // Go previous 
                             }
                         } else {
-                            if (block !== true) {
+                            if (block != true) {
                                 this.goPrev(this.imgCount); // If first go last     
                             }
                         }

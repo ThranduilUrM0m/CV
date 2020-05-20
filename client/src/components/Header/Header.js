@@ -183,7 +183,7 @@ class Header extends React.Component {
             searchIcon.classList.remove('active');
             searchActivated = !searchActivated;
 
-            if($(".login").css('display') !== 'none'){
+            if($(".login").css('display') != 'none'){
                 $(".login").toggle(400);
             }
 
@@ -226,7 +226,7 @@ class Header extends React.Component {
         $('.overlay_menu').click(function(){
             $('.overlay_menu').toggleClass('overlay_menu--is-closed');
 
-            if($(".login").css('display') !== 'none'){
+            if($(".login").css('display') != 'none'){
                 $(".login").toggle(400);
             }
             
@@ -353,7 +353,7 @@ class Header extends React.Component {
                         <div className="search-results">
                             <ul id="page">
                                 {
-                                    _.slice(_.filter(_.filter(_.union(articles, projects), (_a) => { return !_a._hide && _search_value !== '' }), (_ap) => {
+                                    _.slice(_.filter(_.filter(_.union(articles, projects), (_a) => { return !_a._hide && _search_value != '' }), (_ap) => {
                                         return _.split(_.lowerCase(_search_value), ' ').some(_s_v => _.lowerCase(_ap.title).includes(_s_v)) || _.split(_.lowerCase(_search_value), ' ').some(_s_v => _.lowerCase(_ap.author).includes(_s_v)) || _ap.tag.some(x => _.split(_.lowerCase(_search_value), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
                                     }), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((ap, index) => {
                                         return (
@@ -388,7 +388,7 @@ class Header extends React.Component {
                             </ul>
                             <ul id="page-numbers">
                                 {
-                                    ([...Array(Math.ceil(_.filter(_.filter(articles, (_a) => { return !_a._hide && _search_value !== '' }), (_ap) => {
+                                    ([...Array(Math.ceil(_.filter(_.filter(articles, (_a) => { return !_a._hide && _search_value != '' }), (_ap) => {
                                         return _.includes(_ap.title, _search_value) || _.includes(_ap.author, _search_value) || _.includes(_ap.categorie, _search_value) || _ap.tag.some(x => x.includes(_search_value));
                                     }).length / todosPerPage)).keys()]).map(number => {
                                         return (

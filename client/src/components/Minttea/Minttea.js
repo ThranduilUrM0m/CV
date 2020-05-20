@@ -76,7 +76,7 @@ class Minttea extends React.Component {
                         upvotes: [...state.upvotes, {upvoter: f.toString()}],
                     }), () => {
                         if( !_.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
-                            let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter !== f.toString(); });
+                            let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
                             self.setState({
                                 downvotes: _downvotes,
                             }, () => {
@@ -103,7 +103,7 @@ class Minttea extends React.Component {
             }
             setEditFunction()
                 .then(() => {
-                    let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter !== f.toString(); });
+                    let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
                     self.setState(state => ({
                         upvotes: _upvotes,
                     }), () => {
@@ -135,7 +135,7 @@ class Minttea extends React.Component {
                         downvotes: [...state.downvotes, {downvoter: f.toString()}],
                     }), () => {
                         if( !_.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
-                            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter !== f.toString(); });
+                            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
                             self.setState({
                                 upvotes: _upvotes,
                             }, () => {
@@ -162,7 +162,7 @@ class Minttea extends React.Component {
             }
             setEditFunction()
                 .then(() => {
-                    let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter !== f.toString(); });
+                    let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
                     self.setState(state => ({
                         downvotes: _downvotes,
                     }), () => {
