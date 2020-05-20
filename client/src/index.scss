@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
 @import url('https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap');
 @import "~bootstrap/scss/bootstrap";
-@import url('https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/materialize/.97.5/css/materialize.min.css');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
@@ -38,7 +38,7 @@ $background-color-light-4: #bbdefb;
 $background-color-light-3: #90caf9;
 $background-color-main: #2196f3;
 $background-color-dark: #1e88e5;
-$animation-delay: 0.5s;
+$animation-delay: .5s;
 
 $size: 5rem;
 $itemBg1: #453178;
@@ -48,7 +48,7 @@ $itemBg4: #7ed6df;
 $liteBg: #e1e8ee;
 $warmWhite: #e9eced;
 $color1: rgba(41, 41, 41, 1);
-$color1Faded: rgba(41, 41, 41, 0.2);
+$color1Faded: rgba(41, 41, 41, .2);
 $green: #4CAF50;
 $mainFont: 'Roboto', sans-serif;
 $mainColor: #333;
@@ -59,13 +59,13 @@ $lightGradient: lighten($color: $Gradient, $amount: 50);
 $softLightGradient: lighten($color: $Gradient, $amount: 10);
 
 $arrow-width: 1rem;
-$arrow-height: ($arrow-width * 0.3);
+$arrow-height: ($arrow-width * .3);
 $arrow-angle: 25deg;
 $transition-speed: 300ms;
 
 $slack-size: 1rem;
 $duration: 2s;
-$dot-diameter: 0.25rem;
+$dot-diameter: .25rem;
 $slack-angle: 15deg;
 
 $textColor--active: #f1f1f1;
@@ -175,7 +175,7 @@ $strips-angle:45deg;//90deg;
 }
 @-webkit-keyframes pulse {
 	from {
-	  	box-shadow: 0 0 0 0 rgba($color1, 0.4);
+	  	box-shadow: 0 0 0 0 rgba($color1, .4);
 	}
 	to {
 	  	box-shadow: 0 0 0 45px rgba($color1, 0);
@@ -183,7 +183,7 @@ $strips-angle:45deg;//90deg;
 }
 @keyframes pulse {
 	from {
-	  	box-shadow: 0 0 0 0 rgba($color1, 0.4);
+	  	box-shadow: 0 0 0 0 rgba($color1, .4);
 	}
 	to {
 	  	box-shadow: 0 0 0 45px rgba($color1, 0);
@@ -360,26 +360,26 @@ $strips-angle:45deg;//90deg;
 @keyframes orbit {
 	50% {
 		left: 53rem;
-		opacity: 0.5
+		opacity: .5
 	}
 	51% {
 	  	opacity: 0;
 	}
 	100% {
-		opacity: 0.8;
+		opacity: .8;
 		left: -13rem;
 	}
 }
 @keyframes orbitrev {
 	50% {
 		left: -4rem;
-		opacity: 0.5
+		opacity: .5
 	}
 	51% {
 	  	opacity: 0;
 	}
 	100% {
-		opacity: 0.8;
+		opacity: .8;
 		left: 40rem;
 	}
 }
@@ -407,11 +407,11 @@ img {
 	input, select {
 		height: 2rem;
 		color: $color1;
-		margin: 0 0 0.5rem 0;
+		margin: 0 0 .5rem 0;
 	}
 	label {
 		top: 0;
-		font-size: 0.9rem;
+		font-size: .9rem;
 		&.active{
 			-webkit-transform: translateY(-50%);
 			transform: translateY(-50%);
@@ -444,14 +444,14 @@ img {
 
 .form-group-line {
 	position: absolute;
-	bottom: 0.5rem;
-    left: 0.75rem;
+	bottom: .5rem;
+    left: .75rem;
 	width: 0%;
 	height: 2px;
 	background-color: $green;
 	z-index: 1;
 	transform: translatex(-0%);
-	transition: all 0.3s ease;
+	transition: all .3s ease;
 }
 .input-field:hover{
 	.form-group-line{
@@ -461,7 +461,7 @@ img {
 }
 .form-group-input:focus ~ .form-group-line,
 .form-group-input:valid ~ .form-group-line {
-	animation: input2 0.5s 1 ease;
+	animation: input2 .5s 1 ease;
 	width: 100%;
 }
 
@@ -536,7 +536,7 @@ body, html {
 							transform: translate(-50%, 0);
 							width: 1.3rem;
 							height: calc(100% - 10px);
-							border: 0.2rem solid #000;
+							border: .2rem solid #000;
 							border-radius: 1.3rem;
 						}
 						&::after {
@@ -545,11 +545,11 @@ body, html {
 							top: 10px;
 							left: 50%;
 							transform: translate(-50%, 0);
-							width: 0.3rem;
-							height: 0.3rem;
-							border-radius: 0.3rem;
+							width: .3rem;
+							height: .3rem;
+							border-radius: .3rem;
 							background: #000;
-							animation: scroll 0.5s infinite ease-in-out;
+							animation: scroll .5s infinite ease-in-out;
 						}
 					}
 					&.instagram, &.facebook, &.github {
@@ -562,10 +562,10 @@ body, html {
 							line-height: 2.6rem;
 							background: none;
 							color: #000;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
+							-webkit-transition: all .3s;
+								-moz-transition: all .3s;
+								-o-transition: all .3s;
+									transition: all .3s;
 							z-index: 10;
 						}
 						span {
@@ -577,10 +577,10 @@ body, html {
 							left: 50%;
 							border-radius: 0;
 							margin: 0;
-							-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-								-o-transition: all 0.3s;
-									transition: all 0.3s;
+							-webkit-transition: all .3s;
+								-moz-transition: all .3s;
+								-o-transition: all .3s;
+									transition: all .3s;
 						}
 					}
 					&:hover {
@@ -604,7 +604,7 @@ body, html {
 				&::before{
 					position: absolute;
 					content: "";
-					width: 0.1rem;
+					width: .1rem;
 					height: 10rem;
 					left: 50%;
 					transform: translate(-50%, -120%);
@@ -614,10 +614,10 @@ body, html {
 			}
 		}
 		.fixedHeaderContainer {
-			-webkit-transition: all 0.3s;
-			-moz-transition: all 0.3s;
-				-o-transition: all 0.3s;
-				transition: all 0.3s;
+			-webkit-transition: all .3s;
+			-moz-transition: all .3s;
+				-o-transition: all .3s;
+				transition: all .3s;
 			color: #fff;
 			min-height: 50px;
 			padding: 0;
@@ -642,7 +642,7 @@ body, html {
 						height: 1.5rem;
 						z-index: 10000;
 						margin-left: 2.5rem;
-						transform: scale(0.8);
+						transform: scale(.8);
 						img {
 							height: 100%;
 						}
@@ -653,7 +653,7 @@ body, html {
 						position: relative;
 						&::before{
 							width: calc(20rem - 2.5rem);
-							height: 0.15rem;
+							height: .15rem;
 							position: absolute;
 							display: inline-block;
 							content: "";
@@ -671,7 +671,7 @@ body, html {
 							transition: .2s ease-out;
 							.form-group-input:focus ~ .form-group-line,
 							.form-group-input:valid ~ .form-group-line {
-								animation: input3 0.5s 1 ease;
+								animation: input3 .5s 1 ease;
 								width: 100%;
 							}
 							input{
@@ -709,10 +709,10 @@ body, html {
 								transform-origin: center;
 								margin: 0;
 								position: absolute;
-								-webkit-transition: all 0.3s;
-									-moz-transition: all 0.3s;
-										-o-transition: all 0.3s;
-										transition: all 0.3s;
+								-webkit-transition: all .3s;
+									-moz-transition: all .3s;
+										-o-transition: all .3s;
+										transition: all .3s;
 								background-color: $main-color;
 							}
 							.search{
@@ -726,12 +726,12 @@ body, html {
 								width: 1rem;
 								height: 1rem;
 								border-radius: 100%;
-								border: 0.15rem solid black;
+								border: .15rem solid black;
 								cursor: pointer;
-								-webkit-transition: all 0.3s;
-									-moz-transition: all 0.3s;
-										-o-transition: all 0.3s;
-										transition: all 0.3s;
+								-webkit-transition: all .3s;
+									-moz-transition: all .3s;
+										-o-transition: all .3s;
+										transition: all .3s;
 								&:before,
 								&:after {
 									content: '';
@@ -739,39 +739,39 @@ body, html {
 									display: block;
 								}
 								&:before {
-									width: 0.5rem;
-									height: 0.15rem;
-									right: -0.5rem;
-									top: -0.5rem;
+									width: .5rem;
+									height: .15rem;
+									right: -.5rem;
+									top: -.5rem;
 									transform-origin: right;
 									-webkit-transform: rotate(-45deg);
 									-moz-transform: rotate(-45deg);
 									-o-transform: rotate(-45deg);
 									-ms-transform: rotate(-45deg);
 									transform: rotate(-45deg);
-									-webkit-transition: all 0.2s ease;
-									-moz-transition: all 0.2s ease;
-									-o-transition: all 0.2s ease;
-									-ms-transition: all 0.2s ease;
-									transition: all 0.2s ease;
+									-webkit-transition: all .2s ease;
+									-moz-transition: all .2s ease;
+									-o-transition: all .2s ease;
+									-ms-transition: all .2s ease;
+									transition: all .2s ease;
 								}
 								&:after {
-									width: 0.5rem;
-									height: 0.15rem;
+									width: .5rem;
+									height: .15rem;
 									background: black;
-									right: -0.5rem;
-									bottom: -0.5rem;
+									right: -.5rem;
+									bottom: -.5rem;
 									transform-origin: right;
 									-webkit-transform: rotate(45deg);
 									-moz-transform: rotate(45deg);
 									-o-transform: rotate(45deg);
 									-ms-transform: rotate(45deg);
 									transform: rotate(45deg);
-									-webkit-transition: all 0.2s ease;
-									-moz-transition: all 0.2s ease;
-									-o-transition: all 0.2s ease;
-									-ms-transition: all 0.2s ease;
-									transition: all 0.2s ease;
+									-webkit-transition: all .2s ease;
+									-moz-transition: all .2s ease;
+									-o-transition: all .2s ease;
+									-ms-transition: all .2s ease;
+									transition: all .2s ease;
 								}
 								&.active {
 									border-color: $liteBg;
@@ -804,7 +804,7 @@ body, html {
 								}
 							}
 							&.focused {
-								width: 20.2rem;
+								width: 2.2rem;
 								input {
 									padding: 0 2.6rem 0 1rem;
 									transform: scale(1);
@@ -844,10 +844,10 @@ body, html {
 						display: flex;
 						align-items: center;
 						justify-content: center;
-						-webkit-transition: all 0.3s;
-						-moz-transition: all 0.3s;
-							-o-transition: all 0.3s;
-							transition: all 0.3s;
+						-webkit-transition: all .3s;
+						-moz-transition: all .3s;
+							-o-transition: all .3s;
+							transition: all .3s;
 						svg {
 							z-index: 999;
 							filter: drop-shadow( 2px 2px 10px rgba(0,0,0,.2) );
@@ -856,7 +856,7 @@ body, html {
 							g{
 								transform: translate(-25%, -25%);
 								line {
-									transition: transform 0.5s ease;
+									transition: transform .5s ease;
 									&.one {
 										transform: rotate(0deg);
 									}
@@ -882,7 +882,7 @@ body, html {
 							}
 						}
 						&:hover{
-							box-shadow: 1rem 1rem 0.5rem -1.25rem rgba(0, 0, 0, 0.6);
+							box-shadow: 1rem 1rem .5rem -1.25rem rgba(0, 0, 0, .6);
 						}
 					}
 				}
@@ -904,7 +904,7 @@ body, html {
 								}
 								.search {
 									color: black;
-									border: 0.2rem solid white;
+									border: .2rem solid white;
 									&:after {
 										background: white;
 									}
@@ -926,10 +926,10 @@ body, html {
 									margin: 0;
 									position: absolute;
 									top: 50%;
-									-webkit-transition: all 0.3s;
-										-moz-transition: all 0.3s;
-											-o-transition: all 0.3s;
-											transition: all 0.3s;
+									-webkit-transition: all .3s;
+										-moz-transition: all .3s;
+											-o-transition: all .3s;
+											transition: all .3s;
 									width: 0;
 									background-color: $main-color;
 								}
@@ -956,7 +956,7 @@ body, html {
 								-webkit-filter: drop-shadow( 2px 2px 10px rgba(255,255,255,.2) );
 							}
 							&:hover{
-								box-shadow: 1rem 1rem 0.5rem -1.25rem rgba(255,255,255, 0.6);
+								box-shadow: 1rem 1rem .5rem -1.25rem rgba(255,255,255, .6);
 							}
 						}
 					}
@@ -1009,7 +1009,7 @@ body, html {
 							padding: .75rem;
 							margin-bottom: 1.25rem;
 							* {
-								transition: all 0.6s ease-out 0s;
+								transition: all .6s ease-out 0s;
 							}
 							.card {
 								background: #fff;
@@ -1049,15 +1049,15 @@ body, html {
 											font-size: small;
 											color: black;
 											border: 1px solid black;
-											padding: 0.2rem 0.5rem;
-											margin-bottom: 0.25rem;
+											padding: .2rem .5rem;
+											margin-bottom: .25rem;
 											width: fit-content;
 										}
 										h4 {
 											color: black;
 											text-align: center;
 											letter-spacing: 0;
-											transition: all 0.15s ease 0s;
+											transition: all .15s ease 0s;
 											position: relative;
 											z-index: 10;
 											margin: 0;
@@ -1167,7 +1167,7 @@ body, html {
 											justify-content: center;
 											width: 100%;
 											margin-top: .5rem;
-											border-top: .1rem solid rgba($color: black, $alpha: 0.25);
+											border-top: .1rem solid rgba($color: black, $alpha: .25);
 											.views, .upvotes, .downvotes, .comments {
 												margin-left: 1rem;
 												text-align: -webkit-right;
@@ -1175,14 +1175,14 @@ body, html {
 												margin-bottom: .25rem;
 												margin-top: .25rem;
 												i{
-													padding-left: 0.25rem;
+													padding-left: .25rem;
 												}
 											}
 										}
 									}
 								}
 								&:hover {
-									box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.75);
+									box-shadow: 5px 5px 20px 0px rgba(0,0,0,.75);
 								}
 							}
 						}
@@ -1200,7 +1200,7 @@ body, html {
 							display: block;
 							border-radius: 1rem;
 							background: #062744;
-							opacity: 0.2;
+							opacity: .2;
 							transition: all .3s;
 							margin: .25rem;
 							border: none;
@@ -1211,9 +1211,9 @@ body, html {
 								width: 2rem;
 								opacity: 1;
 								background: $main-color;
-								box-shadow: 0px 0px 20px rgba($main-color, 0.3);
+								box-shadow: 0px 0px 20px rgba($main-color, .3);
 								.shadow_page {
-									opacity: 0.25;
+									opacity: .25;
 								}
 							}
 							.shadow_page {
@@ -1242,7 +1242,7 @@ body, html {
 						display: flex;
 						flex-direction: initial;
 						align-items: flex-start;
-						margin-top: 0.5rem;
+						margin-top: .5rem;
 						flex: auto;
 						li {
 							cursor: pointer;
@@ -1264,8 +1264,8 @@ body, html {
 			height: 100vh;
 			width: 100vw;
 			background: black;
-			transition: opacity 0.3s ease 0s;
-			opacity: 0.9;
+			transition: opacity .3s ease 0s;
+			opacity: .9;
 			display: initial;
 			z-index: 9999;
 			&--is-closed{
@@ -1287,7 +1287,7 @@ body, html {
 			width: 40%;
 			height: 100%;
 			background: white;
-			box-shadow: 1rem 0rem 2rem -1rem rgba(0, 0, 0, 0.5);
+			box-shadow: 1rem 0rem 2rem -1rem rgba(0, 0, 0, .5);
 			li{
 				width: 50%;
 				height: fit-content;
@@ -1310,10 +1310,10 @@ body, html {
 						margin: 0;
 						padding: 0;
 						color: $color1;
-						-webkit-transition: all 0.3s ease-in-out;
-						-moz-transition: all 0.3s ease-in-out;
-						-o-transition: all 0.3s ease-in-out;
-						transition: all 0.3s ease-in-out;
+						-webkit-transition: all .3s ease-in-out;
+						-moz-transition: all .3s ease-in-out;
+						-o-transition: all .3s ease-in-out;
+						transition: all .3s ease-in-out;
 						padding: 0;
 						display: flex;
 						align-items: center;
@@ -1324,10 +1324,10 @@ body, html {
 							font-size: 2rem;
 							&::after{
 								width: 15rem;
-								height: 0.75rem;
-								bottom: 0.5rem;
+								height: .75rem;
+								bottom: .5rem;
 								background: $main-color;
-								opacity: 0.8;
+								opacity: .8;
 								-ms-filter: none;
 								-webkit-filter: none;
 										filter: none;
@@ -1340,36 +1340,36 @@ body, html {
 							position: absolute;
 							width: 100%;
 							height: 100%;
-							background: rgba($main-color, 0.05);
+							background: rgba($main-color, .05);
 							clip-path: circle(10% at 150% 50%);
 							transition: clip-path .5s ease-in-out;
 						}
 						&::after{
 							content: '';
 							width: 4rem;
-							height: 0.75rem;
+							height: .75rem;
 							background: $main-color;
 							display: block;
 							position: absolute;
-							bottom: 0.25rem;
+							bottom: .25rem;
 							opacity: 0;
 							-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 							filter: alpha(opacity=0);
 							-webkit-transform: translateX(100px);
 							transform: translateX(100px);
-							transition: all 0.2s ease-in-out;
+							transition: all .2s ease-in-out;
 						}
 					}
 					&:hover{
 						.nav-link:not(.active){
 							color: black;
-							box-shadow: 0 0 2px rgba(white, 0.1);
+							box-shadow: 0 0 2px rgba(white, .1);
 							&::before {
 								clip-path: circle(100%);
 							}
 							&::after{
-								opacity: 0.8;
-								bottom: 0.25rem;
+								opacity: .8;
+								bottom: .25rem;
 								-ms-filter: none;
 								-webkit-filter: none;
 										filter: none;
@@ -1464,9 +1464,9 @@ body, html {
 			left: 50%;
 			top: 50%;
 			transform: translate(-50%, -50%);
-			border: 0.5rem solid #e3e2e3;
+			border: .5rem solid #e3e2e3;
 			background: #fff;
-			padding: 0.5rem 2.5rem 1rem 2.5rem;
+			padding: .5rem 2.5rem 1rem 2.5rem;
 			display: flex;
 			flex-direction: column;
 			input{
@@ -1478,7 +1478,7 @@ body, html {
 			}
 			.title_article{
 				margin-top: 0 !important;
-				margin-bottom: 0.5rem !important;
+				margin-bottom: .5rem !important;
 			}
 			#editor {
 				overflow: hidden;
@@ -1536,7 +1536,7 @@ body, html {
 				color:white;
 			}
 			.tag_Container {
-				margin-bottom: 0.5rem !important;
+				margin-bottom: .5rem !important;
 				display: flex;
 				align-items: center;
 				li {
@@ -1560,7 +1560,7 @@ body, html {
 			}
 			.author_article {
 				margin-top: 0 !important;
-				margin-bottom: 0.5rem !important;
+				margin-bottom: .5rem !important;
 			}
 			.checkbox_hide {
 				display: flex;
@@ -1785,79 +1785,90 @@ body, html {
 				.nav {
 					position: relative;
 					display: flex;
-					margin: 0.5rem;
-					width: 35%;
+					margin: .5rem;
+					width: 28%;
 					height: auto;
 					background: white;
-					box-shadow: 1rem 0rem 2rem -1rem rgba(0, 0, 0, 0.5);
+					box-shadow: 1rem 0rem 2rem -1rem rgba(0, 0, 0, .5);
 					-webkit-clip-path: inset(0 calc(100% - 5rem) 0 0);
 					clip-path: inset(0 calc(100% - 5rem) 0 0);
 					transition: all .1s ease-out;
 					z-index: 9998;
+					.logoHolder {
+						border: 0;
+						color: white;
+						height: 1.5rem;
+						margin: 1rem 3.5rem 1rem 3.5rem;
+						transform-origin: left;
+						transform: scale(.8);
+						img {
+							height: 100%;
+						}
+					}
+					.user_info {
+						margin: 1rem 3.5rem 1rem 3.5rem;
+						display: flex;
+						justify-content: space-between;
+						h4 {
+							margin-bottom: 0;
+						}
+						.user_logo {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							color: $main-color;
+							font-weight: bold;
+							width: 5rem;
+							height: 5rem;
+							border-radius: .75rem;
+							margin-bottom: 1.25rem;
+							background: white;
+							box-shadow: 0.25rem 0.25rem 1rem -.5rem rgba(0, 0, 0, 0.5);
+						}
+					}
 					.settings_dashboard {
 						display: flex;
-						flex-direction: row;
-						align-items: baseline;
-						justify-content: flex-end;
-						margin: 1.25rem 5rem;
-						li {
+						flex-direction: column;
+						margin: 1.25rem 3.5rem;
+						li:not(.not_link) {
 							position: relative;
-							margin: 1.25rem;
-							&::before {
-								content: '';
-								position: absolute;
-								border-radius: 0.2rem;
-								width: 0.2rem;
-								height: 0.2rem;
-								left: 50%;
-								top: 0;
-								background-color: $main-color;
-								transform: translate(-50%, 1.25rem);
-								transition: all 0.2s ease-out;
-							}
-							&:hover {
+							font-size: 1rem;
+							margin: .75rem 0;
+							a{
+								position: relative;
+								display: block;
+								text-decoration: none;
+								padding-left: 3rem;
+								&.active {
+									&::before {
+										width: 3rem;
+									}
+								}
 								&::before {
-									width: 150%;
+									content: '';
+									position: absolute;
+									border-radius: .2rem;
+									width: 0;
+									height: .2rem;
+									left: 1.5rem;
+									bottom: 0;
+									background-color: $main-color;
+									transform: translate(-50%, .25rem);
+									transition: all .2s ease-out;
+								}
+								i {
+									position: absolute;
+									left: 1.5rem;
+									top: 50%;
+									transform: translate(-50%, -50%);
 								}
 							}
 						}
-					}
-					.hello {
-						display: flex;
-						flex-direction: row;
-						align-items: baseline;
-						margin: 5rem 5rem 0 5rem;
-						p {
-							font-size: 1.5rem;
-							font-weight: 500;
-						}
-						h3 {
-							margin-left: 0.75rem;
-							font-size: 2rem;
-							font-weight: 900;
-						}
-						* {
-							margin-bottom: 0;
-						}
-					}
-					.timeanddatenow {
-						position: relative;
-						margin: 0 5rem;
-						width: 5vw;
-						.datenow {
-							color: rgba(0, 0, 0, 0.5);
-							text-align: center;
-							line-height: 1;
-							font-size: 1em;
-							font-weight: bold;
-						}
-						.timenow {
-							color: rgba(0, 0, 0, 0.5);
-							text-align: center;
-							line-height: 1;
-							font-size: 1em;
-							font-weight: bold;
-							margin: 0 .5 0 0;
+						.not_link {
+							font-size: .75rem;
+							p {
+								margin: 1.25rem 0 0 0;
+							}
 						}
 					}
 					&:hover{
@@ -1867,11 +1878,11 @@ body, html {
 				}
 				.after {
 					position: absolute;
-					width: 0.25rem;
+					width: .25rem;
 					height: 3.5rem;
 					top: 50%;
 					left: 5rem;
-					transform: translate(0.75rem, -50%);
+					transform: translate(.75rem, -50%);
 					background-color: white;
 					transition: all .1s ease-out;
 				}
@@ -1880,51 +1891,51 @@ body, html {
 					height: 100%;
 					top: 0;
 					left: 0;
-					margin-left: calc(calc(35% - 6.75rem) * -1);
+					margin-left: calc(calc(28vw - 6.75rem) * -1);
 					padding: 1.25rem;
 					.tab-pane {
 						height: fit-content;
-						&.dashboard_pane {
+						.top_roof {
+							display: flex;
 							height: fit-content;
-							.top_roof {
+							width: 100%;
+							align-items: flex-start;
+							a {
+								margin-left: auto;
+								margin-right: 1.25rem;
+								color: rgba(0, 0, 0, .5);
+								transition: all .2s ease-out;
 								display: flex;
-								height: fit-content;
-								width: 100%;
-								align-items: flex-start;
-								a {
-									margin-left: auto;
-									margin-right: 1.25rem;
-									color: rgba(0, 0, 0, 0.5);
-									transition: all 0.2s ease-out;
-									display: flex;
-									align-items: flex-end;
-									text-decoration: none;
-									p {
-										margin-right: .75rem;
-										margin-bottom: 0;
-										font-size: small;
-										line-height: 1;
-									}
-									&:hover {
-										color: black;
-									}
+								align-items: flex-end;
+								text-decoration: none;
+								p {
+									margin-right: .75rem;
+									margin-bottom: 0;
+									font-size: small;
+									line-height: 1;
 								}
-								.left_roof {
-									display: flex;
-									flex-direction: column;
-									justify-content: flex-start;
-									align-items: flex-start;
-									margin-right: auto;
-									h2 {
-										font-weight: bold;
-									}
-									.name {
-										font-size: .75rem;
-										color: rgba(0, 0, 0, 0.5);
-									}
+								&:hover {
+									color: black;
 								}
 							}
+							.left_roof {
+								display: flex;
+								flex-direction: column;
+								justify-content: flex-start;
+								align-items: flex-start;
+								margin-right: auto;
+								h2 {
+									font-weight: bold;
+								}
+								.name {
+									font-size: .75rem;
+									color: rgba(0, 0, 0, .5);
+								}
+							}
+						}
+						&.dashboard_pane {
 							.cards {
+								position: relative;
 								display: flex;
 								flex-wrap: wrap;
 								list-style: none;
@@ -1932,6 +1943,19 @@ body, html {
 								padding: 0;
 								height: auto;
 								width: 100%;
+								.timeanddatenow {
+									position: absolute;
+									right: 0;
+									margin: 1rem;
+									width: 5vw;
+									.datenow {
+										color: rgba(0, 0, 0, .5);
+										text-align: center;
+										line-height: 1;
+										font-size: .8em;
+										font-weight: bold;
+									}
+								}
 								&__item {
 									display: flex;
 									padding: 1rem;
@@ -1942,8 +1966,8 @@ body, html {
 									min-height: 5rem;
 									.card {
 										background: white;
-										border-radius: 0.25rem;
-										box-shadow: 1rem 2rem 2rem -1rem rgba(0, 0, 0, 0.25);
+										border-radius: .25rem;
+										box-shadow: 1rem 2rem 2rem -1rem rgba(0, 0, 0, .25);
 										display: flex;
 										flex-direction: column;
 										overflow: hidden;
@@ -1976,7 +2000,7 @@ body, html {
 													.title_search {
 														&.input-field {
 															position: relative;
-															margin: 0 0 0.5rem 0;
+															margin: 0 0 .5rem 0;
 															padding: 0;
 															& > div {
 																width: 100%;
@@ -1984,7 +2008,7 @@ body, html {
 																	position: absolute;
 																	max-height: 25vh !important;
 																	border: 1px solid $main-color !important;
-																	padding: 0.25rem !important;
+																	padding: .25rem !important;
 																	font-size: 1rem !important;
 																	margin: 0 auto !important;
 																	background-color: #fff !important;
@@ -1993,7 +2017,7 @@ body, html {
 																	.item {
 																		cursor: pointer !important;
 																		line-height: 1 !important;
-																		padding: 0.5rem 0.75rem !important;
+																		padding: .5rem .75rem !important;
 																		white-space: nowrap;
 																	}
 																}
@@ -2020,7 +2044,7 @@ body, html {
 																transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
 															}
 															label {
-																opacity: 0.1;
+																opacity: .1;
 																font-size: 3rem;
 																line-height: 3rem;
 																font-weight: 600;
@@ -2041,7 +2065,7 @@ body, html {
 															}
 															.form-group-input:focus ~ .form-group-line,
 															.form-group-input:valid ~ .form-group-line {
-																animation: input3 0.5s 1 ease;
+																animation: input3 .5s 1 ease;
 																width: calc(100% - 1.5rem);
 															}
 														}
@@ -2081,18 +2105,18 @@ body, html {
 															.dropdown-item {
 																width: 2.5rem;
 																height: 2.5rem;
-																padding: 0.25rem;
+																padding: .25rem;
 																display: flex;
 																justify-content: center;
 																align-items: center;
 																&.add {
-																	transition: all 0.25s ease-out;
+																	transition: all .25s ease-out;
 																	&:hover {
 																		color: $green;
 																	}
 																}
 																&.show_more {
-																	transition: all 0.25s ease-out;
+																	transition: all .25s ease-out;
 																	&:hover {
 																		color: $main-color;
 																	}
@@ -2134,7 +2158,7 @@ body, html {
 																		padding: .25rem .75rem;
 																		height: 100%;
 																		margin: 0;
-																		transition: 0.2s ease-out;
+																		transition: .2s ease-out;
 																		.card:not(.card_testimonies) {
 																			background-color: #e2e2e5;
 																		}
@@ -2146,7 +2170,7 @@ body, html {
 																			margin: 0;
 																			border-radius: 0;
 																			* {
-																				transition: all 0.2s ease-out;
+																				transition: all .2s ease-out;
 																			}
 																			.card-body {
 																				position: relative;
@@ -2197,7 +2221,7 @@ body, html {
 																					font-size: small;
 																					color: white;
 																					border: 1px solid white;
-																					padding: 0.2rem 0.5rem;
+																					padding: .2rem .5rem;
 																					width: fit-content;
 																				}
 																				.dropdown {
@@ -2229,7 +2253,7 @@ body, html {
 																						.dropdown-item {
 																							width: 2.5rem;
 																							height: 2.5rem;
-																							padding: 0.25rem;
+																							padding: .25rem;
 																							display: flex;
 																							justify-content: center;
 																							align-items: center;
@@ -2261,7 +2285,7 @@ body, html {
 																						font-size: xx-small;
 																						flex: 1;
 																						i {
-																							padding-left: 0.25rem;
+																							padding-left: .25rem;
 																						}
 																					}
 																					.replies {
@@ -2269,7 +2293,7 @@ body, html {
 																						text-align: -webkit-right;
 																						font-size: x-small;
 																						i{
-																							padding-left: 0.25rem;
+																							padding-left: .25rem;
 																						}
 																					}
 																					.comments {
@@ -2277,7 +2301,7 @@ body, html {
 																						text-align: -webkit-right;
 																						font-size: x-small;
 																						i{
-																							padding-left: 0.25rem;
+																							padding-left: .25rem;
 																						}
 																					}
 																					.upvotes {
@@ -2285,7 +2309,7 @@ body, html {
 																						text-align: -webkit-right;
 																						font-size: x-small;
 																						i{
-																							padding-left: 0.25rem;
+																							padding-left: .25rem;
 																						}
 																					}
 																					.downvotes {
@@ -2293,7 +2317,7 @@ body, html {
 																						text-align: -webkit-right;
 																						font-size: x-small;
 																						i{
-																							padding-left: 0.25rem;
+																							padding-left: .25rem;
 																						}
 																					}
 																				}
@@ -2371,18 +2395,18 @@ body, html {
 																	.dropdown-item {
 																		width: 2.5rem;
 																		height: 2.5rem;
-																		padding: 0.25rem;
+																		padding: .25rem;
 																		display: flex;
 																		justify-content: center;
 																		align-items: center;
 																		&.add {
-																			transition: all 0.25s ease-out;
+																			transition: all .25s ease-out;
 																			&:hover {
 																				color: $green;
 																			}
 																		}
 																		&.show_more {
-																			transition: all 0.25s ease-out;
+																			transition: all .25s ease-out;
 																			&:hover {
 																				color: $main-color;
 																			}
@@ -2399,7 +2423,7 @@ body, html {
 																	&.is_private {
 																		.card {
 																			padding-left: 1rem;
-																			border-left: 0.25rem solid $calendar-red;
+																			border-left: .25rem solid $calendar-red;
 																		}
 																	}
 																}
@@ -2411,9 +2435,9 @@ body, html {
 																		.dropdown {
 																			& > span {
 																				display: flex;
-																				line-height: 0.5;
+																				line-height: .5;
 																				* {
-																					line-height: 0.5;
+																					line-height: .5;
 																				}
 																			}
 																			.dropdown-menu {
@@ -2482,14 +2506,14 @@ body, html {
 																position: relative;
 																float: left;
 																font-size: small;
-																margin-right: 0.75rem;
+																margin-right: .75rem;
 																.calendar_icon {
 																	background: #ccc;
 																	text-align: center;
 
-																	-moz-border-radius: 0.25rem;
-																	-webkit-border-radius: 0.25rem;
-																	border-radius: 0.25rem;
+																	-moz-border-radius: .25rem;
+																	-webkit-border-radius: .25rem;
+																	border-radius: .25rem;
 
 																	padding-top: 5px;
 																	width: 3rem;
@@ -2501,44 +2525,44 @@ body, html {
 																	margin: 0;
 																	.a{
 																		text-transform: uppercase;
-																		padding: 0.15rem 0.25rem 0 0.25rem;
+																		padding: .15rem .25rem 0 .25rem;
 																	}
 																	.b{
 																		background: #ccc;
-																		padding: 0 0.25rem 0.15rem 0.25rem;
-																		-moz-border-radius: 0.25rem;
-																		-webkit-border-radius: 0.25rem;
-																		border-radius: 0.25rem;
+																		padding: 0 .25rem .15rem .25rem;
+																		-moz-border-radius: .25rem;
+																		-webkit-border-radius: .25rem;
+																		border-radius: .25rem;
 
 																		&::before, &::after {
 																			content:'';
 																			float:left;
 																			position:absolute;
-																			top: -0.25rem;
-																			width: 0.25rem;
-																			height: 0.25rem;
+																			top: -.25rem;
+																			width: .25rem;
+																			height: .25rem;
 																			background: #ccc;
 																			
 																			z-index:2;
 
-																			-moz-border-radius: 0.25rem;
-																			-webkit-border-radius: 0.25rem;
-																			border-radius: 0.25rem;
+																			-moz-border-radius: .25rem;
+																			-webkit-border-radius: .25rem;
+																			border-radius: .25rem;
 																		}
 																		&:before{
-																			left: 0.45rem;
+																			left: .45rem;
 																		}
 																		&:after{
-																			right: 0.45rem;
+																			right: .45rem;
 																		}
 																	}
 																	&::before, &::after {
 																		content:'';
 																		float: left;
 																		position: absolute;
-																		top: 0.2rem;	
-																		width: 0.4rem;
-																		height: 0.4rem;
+																		top: .2rem;	
+																		width: .4rem;
+																		height: .4rem;
 																		background: #f9f9f9;
 																		z-index:1;
 																		-moz-border-radius: 100%;
@@ -2549,10 +2573,10 @@ body, html {
 																		box-shadow:0 1px 1px #fff;
 																	}
 																	&:before{
-																		left: 0.4rem;
+																		left: .4rem;
 																	}
 																	&:after{
-																		right: 0.4rem;
+																		right: .4rem;
 																	}
 																}
 															}
@@ -2578,7 +2602,7 @@ body, html {
 															.header {
 																font-weight: normal;
 																font-size: 1rem;
-																padding: 0.25rem 0;
+																padding: .25rem 0;
 																margin: 0;
 																.icon {
 																	cursor: pointer;
@@ -2610,13 +2634,13 @@ body, html {
 																	height: 2rem;
 																	overflow: hidden;
 																	cursor: pointer;
-																	transition: 0.25s ease-out;
+																	transition: .25s ease-out;
 																	text-align: center;
 																	&:hover {
 																		background: $bg-color;
-																		transition: 0.5s ease-out;
+																		transition: .5s ease-out;
 																		.bg {
-																			opacity: 0.05;
+																			opacity: .05;
 																			transition: .5s ease-in;
 																		}
 																	}
@@ -2648,15 +2672,15 @@ body, html {
 																		top: 50%;
 																		left: 50%;
 																		transform: translate(-50%, 100%);
-																		height: 0.5rem;
-																		width: 0.5rem;
+																		height: .5rem;
+																		width: .5rem;
 																		background-color: $main-color;
 																		border-radius: 50%;
 																		display: inline-block;
 																		z-index: -1;
 																	}
 																	.bg  {
-																		opacity: 0.15;
+																		opacity: .15;
 																		transition: .5s ease-in;
 																	}
 																}
@@ -2667,22 +2691,22 @@ body, html {
 																		top: 100%;
 																		left: 50%;
 																		transform: translate(-50%, -120%);
-																		height: 0.5rem;
-																		width: 0.5rem;
+																		height: .5rem;
+																		width: .5rem;
 																		background-color: $green;
 																		border-radius: 50%;
 																		display: inline-block;
 																	}
 																	.bg  {
-																		opacity: 0.15;
+																		opacity: .15;
 																		transition: .5s ease-in;
 																	}
 																}
 																.event {
 																	color: $itemBg1;
-																	background-color: rgba($itemBg1, 0.2);
+																	background-color: rgba($itemBg1, .2);
 																	.bg  {
-																		opacity: 0.15;
+																		opacity: .15;
 																		transition: .5s ease-in;
 																	}
 																}
@@ -2714,45 +2738,6 @@ body, html {
 							}
 						}
 						&.settings_pane {
-							height: fit-content;
-							.top_roof {
-								display: flex;
-								height: fit-content;
-								width: 100%;
-								align-items: flex-start;
-								a {
-									margin-left: auto;
-									margin-right: 1.25rem;
-									color: rgba(0, 0, 0, 0.5);
-									transition: all 0.2s ease-out;
-									display: flex;
-									align-items: flex-end;
-									text-decoration: none;
-									p {
-										margin-right: .75rem;
-										margin-bottom: 0;
-										font-size: small;
-										line-height: 1;
-									}
-									&:hover {
-										color: black;
-									}
-								}
-								.left_roof {
-									display: flex;
-									flex-direction: column;
-									justify-content: flex-start;
-									align-items: flex-start;
-									margin-right: auto;
-									h2 {
-										font-weight: bold;
-									}
-									.name {
-										font-size: .75rem;
-										color: rgba(0, 0, 0, 0.5);
-									}
-								}
-							}
 							.forms {
 								display: flex;
 								flex-wrap: wrap;
@@ -2769,8 +2754,8 @@ body, html {
 									min-height: 5rem;
 									.card {
 										background: white;
-										border-radius: 0.25rem;
-										box-shadow: 1rem 2rem 2rem -1rem rgba(0, 0, 0, 0.25);
+										border-radius: .25rem;
+										box-shadow: 1rem 2rem 2rem -1rem rgba(0, 0, 0, .25);
 										display: flex;
 										flex-direction: column;
 										overflow: hidden;
@@ -2812,7 +2797,7 @@ body, html {
 																	margin-bottom: 1rem;
 																	.input-field {
 																		position: relative;
-																		margin: 0 0 0.5rem 0;
+																		margin: 0 0 .5rem 0;
 																		&.s12, &.s6, &.s3 {
 																			input {
 																				color: $color1;
@@ -2834,12 +2819,12 @@ body, html {
 																		}
 																		.form-group-line {
 																			position: absolute;
-																			bottom: 0.5rem;
-																			left: 0.75rem;
+																			bottom: .5rem;
+																			left: .75rem;
 																		}
 																		.form-group-input:focus ~ .form-group-line,
 																		.form-group-input:valid ~ .form-group-line {
-																			animation: input3 0.5s 1 ease;
+																			animation: input3 .5s 1 ease;
 																			width: calc(100% - 1.5rem);
 																		}
 																	}
@@ -2847,7 +2832,7 @@ body, html {
 																button {
 																	color: black;
 																	background: none;
-																	border: solid 0.05rem black;
+																	border: solid .05rem black;
 																	display: inline-block;
 																	position: relative;
 																	border-radius: 0;
@@ -2857,10 +2842,10 @@ body, html {
 																	&:focus {
 																		outline: none;
 																		&:before {
-																			transition: all 0.7s ease;
+																			transition: all .7s ease;
 																			content: "";
 																			position: absolute;
-																			background: rgba(255, 255, 255, 0.2);
+																			background: rgba(255, 255, 255, .2);
 																			z-index: 99;
 																			left: 15%;
 																			right: 15%;
@@ -2879,7 +2864,7 @@ body, html {
 																		height: 100%;
 																	}
 																	circle {
-																		fill: rgba(255, 255, 255, 0.2);
+																		fill: rgba(255, 255, 255, .2);
 																	}
 																}
 															}
@@ -2888,7 +2873,7 @@ body, html {
 															position: relative;
 															thead {
 																th {
-																	color: rgba(0, 0, 0, 0.5);
+																	color: rgba(0, 0, 0, .5);
 																	font-weight: initial;
 																	cursor: pointer;
 																	position: relative;
@@ -2971,7 +2956,7 @@ body, html {
 										margin: 0 0 15px;
 									}
 									.shadow_title{
-										opacity: 0.1;
+										opacity: .1;
 										font-size: 5rem;
 										position: absolute;
 										font-weight: bolder;
@@ -2982,14 +2967,14 @@ body, html {
 										height: fit-content;
 										margin: 0;
 										border: 0;
-										-webkit-transition: all 0.3s;
-										-moz-transition: all 0.3s;
-											-o-transition: all 0.3s;
-											transition: all 0.3s;
+										-webkit-transition: all .3s;
+										-moz-transition: all .3s;
+											-o-transition: all .3s;
+											transition: all .3s;
 										box-shadow: none;
 										.card-body {
 											position: relative;
-											border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+											border: .5rem solid lighten($color: $liteBg_gray, $amount: 1);
 											display: flex;
 											flex-direction: column;
 											.top_row {
@@ -3036,7 +3021,7 @@ body, html {
 															font: inherit;
 														}
 														i{
-															padding-left: 0.25rem;
+															padding-left: .25rem;
 														}
 														&.active {
 															button {
@@ -3045,7 +3030,7 @@ body, html {
 														}
 													}
 													i {
-														margin-left: 0.5rem;
+														margin-left: .5rem;
 														margin-bottom: 0;
 													}
 												}
@@ -3060,8 +3045,8 @@ body, html {
 												font-size: small;
 												color: black;
 												border: 1px solid black;
-												padding: 0.2rem 0.5rem;
-												margin-bottom: 0.25rem;
+												padding: .2rem .5rem;
+												margin-bottom: .25rem;
 												width: fit-content;
 											}
 											.bottom_row {
@@ -3088,7 +3073,7 @@ body, html {
 										.row {
 											.input-field {
 												position: relative;
-												margin: 0 0 0.5rem 0;
+												margin: 0 0 .5rem 0;
 												select {
 													display: initial;
 													background-color: transparent;
@@ -3119,12 +3104,12 @@ body, html {
 												}
 												.form-group-line {
 													position: absolute;
-													bottom: 0.5rem;
-													left: 0.75rem;
+													bottom: .5rem;
+													left: .75rem;
 												}
 												.form-group-input:focus ~ .form-group-line,
 												.form-group-input:valid ~ .form-group-line {
-													animation: input3 0.5s 1 ease;
+													animation: input3 .5s 1 ease;
 													width: calc(100% - 1.5rem);
 												}
 											}
@@ -3139,7 +3124,7 @@ body, html {
 											margin-bottom: 0 !important;
 											.input-field {
 												position: relative;
-												margin: 0 0 0.5rem 0;
+												margin: 0 0 .5rem 0;
 												ul {
 													border-bottom: 1px solid lighten($color: #9e9e9e, $amount: 10);
 												}
@@ -3173,12 +3158,12 @@ body, html {
 												}
 												.form-group-line {
 													position: absolute;
-													bottom: 0.5rem;
-													left: 0.75rem;
+													bottom: .5rem;
+													left: .75rem;
 												}
 												.form-group-input:focus ~ .form-group-line,
 												.form-group-input:valid ~ .form-group-line {
-													animation: input3 0.5s 1 ease;
+													animation: input3 .5s 1 ease;
 													width: calc(100% - 1.5rem);
 												}
 											}
@@ -3238,9 +3223,9 @@ body, html {
 											top: 50%;
 											left: 50%;
 											transform: translate(-50%, -50%);
-											background: rgba($color: $main-color, $alpha: 0.25);
+											background: rgba($color: $main-color, $alpha: .25);
 											border-radius: 100%;
-											transition: all 0.5s ease-in-out;
+											transition: all .5s ease-in-out;
 										}
 										&.expand {
 											&::before {
@@ -3268,7 +3253,7 @@ body, html {
 									}
 									.input-field {
 										position: relative;
-										margin: 0 0 0.5rem 0;
+										margin: 0 0 .5rem 0;
 										& > div {
 											width: 100%;
 											& > div {
@@ -3279,7 +3264,7 @@ body, html {
 												transform: translate(.75rem, 0) !important;
 												max-height: 25vh !important;
 												border: 1px solid $main-color !important;
-												padding: 0.25rem !important;
+												padding: .25rem !important;
 												font-size: 1rem !important;
 												margin: 0 auto !important;
 												background-color: #fff !important;
@@ -3288,7 +3273,7 @@ body, html {
 												.item {
 													cursor: pointer !important;
 													line-height: 1 !important;
-													padding: 0.5rem 0.75rem !important;
+													padding: .5rem .75rem !important;
 													white-space: nowrap;
 												}
 											}
@@ -3323,12 +3308,12 @@ body, html {
 										}
 										.form-group-line {
 											position: absolute;
-											bottom: 0.5rem;
-											left: 0.75rem;
+											bottom: .5rem;
+											left: .75rem;
 										}
 										.form-group-input:focus ~ .form-group-line,
 										.form-group-input:valid ~ .form-group-line {
-											animation: input3 0.5s 1 ease;
+											animation: input3 .5s 1 ease;
 											width: calc(100% - 1.5rem);
 										}
 									}
@@ -3339,7 +3324,7 @@ body, html {
 									display: flex;
 									flex-wrap: wrap;
 									margin: 0 auto;
-									border-top: 0.1rem solid rgba($color: #aaa, $alpha: 0.25);
+									border-top: .1rem solid rgba($color: #aaa, $alpha: .25);
 									padding-top: 1.25rem;
 									._card:not(.testimony_card){
 										position: relative;
@@ -3348,7 +3333,7 @@ body, html {
 										height: 65vh;
 										padding: 0 10px;
 										margin-bottom: 1.25rem;
-										transition: 0.5s;
+										transition: .5s;
 										.card {
 											background: #fff;
 											border: 0;
@@ -3356,9 +3341,9 @@ body, html {
 											overflow: hidden;
 											padding: 0;
 											margin: 0;
-											transition: all 0.6s ease 0s;
+											transition: all .6s ease 0s;
 											* {
-												transition: all 0.6s ease 0s;
+												transition: all .6s ease 0s;
 											}
 											&-body {
 												position: relative;
@@ -3388,7 +3373,7 @@ body, html {
 														font-size: small;
 														color: black;
 														border: 1px solid black;
-														padding: 0.2rem 0.5rem;
+														padding: .2rem .5rem;
 														margin-bottom: .25rem;
 														margin-right: .25rem;
 														width: fit-content;
@@ -3428,18 +3413,18 @@ body, html {
 																.dropdown-item {
 																	width: 2.5rem;
 																	height: 2.5rem;
-																	padding: 0.25rem;
+																	padding: .25rem;
 																	display: flex;
 																	justify-content: center;
 																	align-items: center;
 																	&.add {
-																		transition: all 0.25s ease-out;
+																		transition: all .25s ease-out;
 																		&:hover {
 																			color: $green;
 																		}
 																	}
 																	&.show_more {
-																		transition: all 0.25s ease-out;
+																		transition: all .25s ease-out;
 																		&:hover {
 																			color: $main-color;
 																		}
@@ -3452,7 +3437,7 @@ body, html {
 														color: black;
 														text-align: -webkit-left;
 														letter-spacing: 0;
-														transition: all 0.15s ease 0s;
+														transition: all .15s ease 0s;
 														position: relative;
 														z-index: 10;
 														margin: 0;
@@ -3465,7 +3450,7 @@ body, html {
 														display: flex;
 														flex-direction: initial;
 														align-items: flex-start;
-														margin-top: 0.5rem;
+														margin-top: .5rem;
 														flex: auto;
 														overflow-x: hidden;
 														li {
@@ -3583,18 +3568,18 @@ body, html {
 															text-align: -webkit-left;
 															font-size: xx-small;
 															flex: 1;
-															margin-bottom: 0.25rem;
+															margin-bottom: .25rem;
 															i{
-																padding-left: 0.25rem;
+																padding-left: .25rem;
 															}
 														}
 														.upvotes, .downvotes, .comments {
 															margin-left: 1rem;
 															text-align: -webkit-right;
 															font-size: x-small;
-															margin-bottom: 0.25rem;
+															margin-bottom: .25rem;
 															i{
-																padding-left: 0.25rem;
+																padding-left: .25rem;
 															}
 														}
 													}
@@ -3606,7 +3591,7 @@ body, html {
 												}
 											}
 											&:hover {
-												box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.75);
+												box-shadow: 5px 5px 20px 0px rgba(0,0,0,.75);
 											}
 										}
 									}
@@ -3617,7 +3602,7 @@ body, html {
 										height: 50vh;
 										padding: 0 10px;
 										margin-bottom: 1.25rem;
-										transition: 0.5s;
+										transition: .5s;
 										.card{
 											background: #fff;
 											border: 0;
@@ -3625,10 +3610,10 @@ body, html {
 											overflow: hidden;
 											padding: 0;
 											margin: 0;
-											transition: all 0.6s ease 0s;
+											transition: all .6s ease 0s;
 											.card-body {
 												position: relative;
-												border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+												border: .5rem solid lighten($color: $liteBg_gray, $amount: 1);
 												display: flex;
 												flex-direction: column;
 												._heads_up {
@@ -3681,18 +3666,18 @@ body, html {
 															.dropdown-item {
 																width: 2.5rem;
 																height: 2.5rem;
-																padding: 0.25rem;
+																padding: .25rem;
 																display: flex;
 																justify-content: center;
 																align-items: center;
 																&.add {
-																	transition: all 0.25s ease-out;
+																	transition: all .25s ease-out;
 																	&:hover {
 																		color: $green;
 																	}
 																}
 																&.show_more {
-																	transition: all 0.25s ease-out;
+																	transition: all .25s ease-out;
 																	&:hover {
 																		color: $main-color;
 																	}
@@ -3717,8 +3702,8 @@ body, html {
 													font-size: small;
 													color: black;
 													border: 1px solid black;
-													padding: 0.2rem 0.5rem;
-													margin-bottom: 0.25rem;
+													padding: .2rem .5rem;
+													margin-bottom: .25rem;
 													width: fit-content;
 												}
 												._testy_body {
@@ -3741,7 +3726,7 @@ body, html {
 														font-size: xx-small;
 														flex: 1;
 														i {
-															padding-left: 0.25rem;
+															padding-left: .25rem;
 														}
 													}
 													.replies {
@@ -3749,7 +3734,7 @@ body, html {
 														text-align: -webkit-right;
 														font-size: x-small;
 														i{
-															padding-left: 0.25rem;
+															padding-left: .25rem;
 														}
 													}
 													.comments {
@@ -3757,7 +3742,7 @@ body, html {
 														text-align: -webkit-right;
 														font-size: x-small;
 														i{
-															padding-left: 0.25rem;
+															padding-left: .25rem;
 														}
 													}
 													.upvotes {
@@ -3765,7 +3750,7 @@ body, html {
 														text-align: -webkit-right;
 														font-size: x-small;
 														i{
-															padding-left: 0.25rem;
+															padding-left: .25rem;
 														}
 													}
 													.downvotes {
@@ -3773,7 +3758,7 @@ body, html {
 														text-align: -webkit-right;
 														font-size: x-small;
 														i{
-															padding-left: 0.25rem;
+															padding-left: .25rem;
 														}
 													}
 												}
@@ -3797,7 +3782,7 @@ body, html {
 										display: block;
 										border-radius: 1rem;
 										background: #062744;
-										opacity: 0.2;
+										opacity: .2;
 										transition: all .3s;
 										margin: .25rem;
 										border: none;
@@ -3808,9 +3793,9 @@ body, html {
 											width: 2rem;
 											opacity: 1;
 											background: $main-color;
-											box-shadow: 0px 0px 20px rgba($main-color, 0.3);
+											box-shadow: 0px 0px 20px rgba($main-color, .3);
 											.shadow_page {
-												opacity: 0.25;
+												opacity: .25;
 											}
 										}
 										.shadow_page {
@@ -3848,15 +3833,19 @@ body, html {
 				justify-content: center;
 				align-items: center;
 				.Sidebar {
+					position: absolute;
 					width: calc(50% - 2.5rem);
 					height: calc(100% - 2.5rem);
 					padding: 1.25rem;
 					margin: 1.25rem;
+					top: 0;
+					right: 0;
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
 					align-items: center;
-					background-color: #e2e2e5;
+					background-color: white;
+					box-shadow: inset .5rem .5rem 1.75rem -1rem rgba(0, 0, 0, 0.5);
 					div.wrap {
 						position: relative;
 						height: fit-content;
@@ -3865,7 +3854,7 @@ body, html {
 						flex-direction: column;
 						justify-content: center;
 						align-items: center;
-						background-color: #e2e2e5;
+						background-color: white;
 						.Head_Signup {
 							width: calc(100% + 5rem);
 							display: flex;
@@ -3886,7 +3875,7 @@ body, html {
 									&::before {
 										content: '';
 										position: absolute;
-										width: 0.2rem;
+										width: .2rem;
 										height: 100%;
 										left: 0;
 										top: 0;
@@ -3902,12 +3891,12 @@ body, html {
 										content: '';
 										position: absolute;
 										width: 100%;
-										height: 0.2rem;
+										height: .2rem;
 										left: 0;
 										top: 0;
 										background-color: $main-color;
 										transform: translate(0, 1.25rem);
-										transition: all 0.2s ease-out;
+										transition: all .2s ease-out;
 									}
 									&:hover {
 										&::before {
@@ -3931,7 +3920,7 @@ body, html {
 							height: fit-content;
 							padding: 2rem 1.5rem 0 1.5rem;
 							background: #474A59;
-							box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+							box-shadow: .5rem .5rem 1.75rem -1rem rgba(0, 0, 0, 0.5);
 							z-index: 1;
 							.row {
 								margin-right: 0;
@@ -3939,7 +3928,7 @@ body, html {
 								margin-bottom: 1rem;
 								.input-field {
 									position: relative;
-									margin: 0 0 0.5rem 0;
+									margin: 0 0 .5rem 0;
 									&.s12, &.s6 {
 										input {
 											color: $color1;
@@ -3961,12 +3950,12 @@ body, html {
 									}
 									.form-group-line {
 										position: absolute;
-										bottom: 0.5rem;
-										left: 0.75rem;
+										bottom: .5rem;
+										left: .75rem;
 									}
 									.form-group-input:focus ~ .form-group-line,
 									.form-group-input:valid ~ .form-group-line {
-										animation: input3 0.5s 1 ease;
+										animation: input3 .5s 1 ease;
 										width: calc(100% - 1.5rem);
 									}
 								}
@@ -3993,7 +3982,7 @@ body, html {
 										& > span {
 											& > span {
 												& > span{
-													transition: color 0.15s ease-out 0.3s;
+													transition: color .15s ease-out .3s;
 													color: transparent;
 													&::after{
 														position: absolute;
@@ -4009,7 +3998,7 @@ body, html {
 														overflow: hidden;
 														display: flex;
 														justify-content: center;
-														transition: width 0.2s;
+														transition: width .2s;
 													}
 												}
 												&::before{
@@ -4041,7 +4030,7 @@ body, html {
 												border: 1px solid $color1;
 												border-right: none;
 												border-bottom: none;
-												transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+												transition: width .15s ease-out, height .15s ease-out .15s;
 											}
 											&::after {
 												content:'';
@@ -4053,7 +4042,7 @@ body, html {
 												border: 1px solid $color1;
 												border-left: none;
 												border-bottom: none;
-												transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+												transition: width .15s ease-out, height .15s ease-out .15s;
 											}
 										}
 										&:hover{
@@ -4087,14 +4076,14 @@ body, html {
 												border-bottom: 1px solid $color1 !important;
 												width: calc(50%) !important;
 												height: 1px !important;
-												transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s !important;
+												transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
 											}
 											&::before {
 												opacity: 1 !important;
 												border-bottom: 1px solid $color1 !important;
 												width: calc(50%) !important;
 												height: 1px !important;
-												transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s !important;
+												transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
 											}
 											& > span {
 												color:$color1 !important;
@@ -4123,6 +4112,7 @@ body, html {
 							top: 0;
 							left: 50%;
 							transform: translate(-50%, 0);
+							box-shadow: .5rem .5rem 1.75rem -1rem rgba(0, 0, 0, 0.5);
 						}
 					}
 				}
@@ -4130,10 +4120,13 @@ body, html {
 					width: 50%;
 					height: 100%;
 					padding: 5rem 1.25rem;
-					background-image: url("https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bf884ad570b50659c5fa2dc2cfb20ecf&auto=format&fit=crop&w=1000&q=100");
+					/* background-image: url("https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bf884ad570b50659c5fa2dc2cfb20ecf&auto=format&fit=crop&w=1000&q=100");
 					background-size: cover;
 					background-position: right bottom;
-					background-repeat: no-repeat;
+					background-repeat: no-repeat; */
+
+					background-color: #FF3CAC;
+					background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);					
 				}
 			}
 		}
@@ -4153,15 +4146,19 @@ body, html {
 				justify-content: center;
 				align-items: center;
 				.Sidebar {
+					position: absolute;
 					width: calc(50% - 2.5rem);
 					height: calc(100% - 2.5rem);
 					padding: 1.25rem;
 					margin: 1.25rem;
+					top: 0;
+					left: 0;
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
 					align-items: center;
-					background-color: #e2e2e5;
+					background-color: white;
+					box-shadow: inset .5rem .5rem 1.75rem -1rem rgba(0, 0, 0, 0.5);
 					div.wrap {
 						position: relative;
 						height: fit-content;
@@ -4170,7 +4167,7 @@ body, html {
 						flex-direction: column;
 						justify-content: center;
 						align-items: center;
-						background-color: #e2e2e5;
+						background-color: white;
 						.Head_Login {
 							width: calc(100% + 5rem);
 							display: flex;
@@ -4191,7 +4188,7 @@ body, html {
 									&::before {
 										content: '';
 										position: absolute;
-										width: 0.2rem;
+										width: .2rem;
 										height: 100%;
 										left: 0;
 										top: 0;
@@ -4207,12 +4204,12 @@ body, html {
 										content: '';
 										position: absolute;
 										width: 100%;
-										height: 0.2rem;
+										height: .2rem;
 										left: 0;
 										top: 0;
 										background-color: $main-color;
 										transform: translate(0, 1.25rem);
-										transition: all 0.2s ease-out;
+										transition: all .2s ease-out;
 									}
 									&:hover {
 										&::before {
@@ -4236,7 +4233,7 @@ body, html {
 							height: fit-content;
 							padding: 2rem 1.5rem 0 1.5rem;
 							background: #474A59;
-							box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+							box-shadow: .5rem .5rem 1.75rem -1rem rgba(0, 0, 0, 0.5);
 							z-index: 1;
 							.row {
 								margin-right: 0;
@@ -4244,7 +4241,7 @@ body, html {
 								margin-bottom: 1rem;
 								.input-field {
 									position: relative;
-									margin: 0 0 0.5rem 0;
+									margin: 0 0 .5rem 0;
 									&.s12 {
 										input {
 											color: $color1;
@@ -4266,12 +4263,12 @@ body, html {
 									}
 									.form-group-line {
 										position: absolute;
-										bottom: 0.5rem;
-										left: 0.75rem;
+										bottom: .5rem;
+										left: .75rem;
 									}
 									.form-group-input:focus ~ .form-group-line,
 									.form-group-input:valid ~ .form-group-line {
-										animation: input3 0.5s 1 ease;
+										animation: input3 .5s 1 ease;
 										width: calc(100% - 1.5rem);
 									}
 								}
@@ -4298,7 +4295,7 @@ body, html {
 										& > span {
 											& > span {
 												& > span{
-													transition: color 0.15s ease-out 0.3s;
+													transition: color .15s ease-out .3s;
 													color: transparent;
 													&::after{
 														position: absolute;
@@ -4314,7 +4311,7 @@ body, html {
 														overflow: hidden;
 														display: flex;
 														justify-content: center;
-														transition: width 0.2s;
+														transition: width .2s;
 													}
 												}
 												&::before{
@@ -4346,7 +4343,7 @@ body, html {
 												border: 1px solid $color1;
 												border-right: none;
 												border-bottom: none;
-												transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+												transition: width .15s ease-out, height .15s ease-out .15s;
 											}
 											&::after {
 												content:'';
@@ -4358,7 +4355,7 @@ body, html {
 												border: 1px solid $color1;
 												border-left: none;
 												border-bottom: none;
-												transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+												transition: width .15s ease-out, height .15s ease-out .15s;
 											}
 										}
 										&:hover{
@@ -4392,14 +4389,14 @@ body, html {
 												border-bottom: 1px solid $color1 !important;
 												width: calc(50%) !important;
 												height: 1px !important;
-												transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s !important;
+												transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
 											}
 											&::before {
 												opacity: 1 !important;
 												border-bottom: 1px solid $color1 !important;
 												width: calc(50%) !important;
 												height: 1px !important;
-												transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s !important;
+												transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
 											}
 											& > span {
 												color:$color1 !important;
@@ -4428,17 +4425,16 @@ body, html {
 							top: 0;
 							left: 50%;
 							transform: translate(-50%, 0);
+							box-shadow: .5rem .5rem 1.75rem -1rem rgba(0, 0, 0, 0.5);
 						}
 					}
 				}
 				.Content {
-					width: 50%;
+					width: 100%;
 					height: 100%;
 					padding: 5rem 1.25rem;
-					background-image: url("https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bf884ad570b50659c5fa2dc2cfb20ecf&auto=format&fit=crop&w=1000&q=100");
-					background-size: cover;
-					background-position: right bottom;
-					background-repeat: no-repeat;
+					background-color: #FF3CAC;
+					background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
 				}
 			}
 		}
@@ -4451,7 +4447,7 @@ body, html {
 			margin: 0 auto;
 			display: flex;
 			flex-wrap: wrap;
-			border: 0.5rem solid $color1;
+			border: .5rem solid $color1;
 			.wrapper_full {
 				position: relative;
 				width: 100%;
@@ -4488,10 +4484,10 @@ body, html {
 					&.card_buymecoffee {
 						width: 35%;
 						height: calc(100vh - 10rem);
-						border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+						border: .5rem solid lighten($color: $liteBg_gray, $amount: 1);
 						margin: 5rem 2rem 5rem calc(3.6rem + 5px);
-						box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.25);
-						transition: all 0.6s ease 0s;
+						box-shadow: 5px 5px 20px 0px rgba(0,0,0,.25);
+						transition: all .6s ease 0s;
 						line-height: 0;
 						p {
 							line-height: initial;
@@ -4506,14 +4502,14 @@ body, html {
 								margin-bottom: 0;
 								.input-field {
 									position: relative;
-									margin: 0 0 0.5rem 0;
+									margin: 0 0 .5rem 0;
 									padding: 0 !important;
 									div {
 										display: flex;
 										flex-direction: row;
 										align-items: center;
 										height: 4rem;
-										margin-bottom: 0.5rem;
+										margin-bottom: .5rem;
 										span:nth-of-type(1) {
 											height: 100%;
 											width: 25%;
@@ -4537,10 +4533,10 @@ body, html {
 								margin-bottom: 0;
 								.input-field {
 									position: relative;
-									margin: 0 0 0.5rem 0;
+									margin: 0 0 .5rem 0;
 									padding: 0 !important;
 									input:not([type='checkbox']), textarea {
-										border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+										border: .5rem solid lighten($color: $liteBg_gray, $amount: 1);
 										width: calc(100% - 1rem);
 									}
 									input[type='checkbox'] {
@@ -4549,7 +4545,7 @@ body, html {
 									}
 									textarea {
 										padding: 0;
-										margin-bottom: 0.5rem;
+										margin-bottom: .5rem;
 										min-height: 6rem;
 									}
 									label:not(.is_private) {
@@ -4570,11 +4566,11 @@ body, html {
 									.form-group-line {
 										position: absolute;
 										bottom: 1rem;
-										left: 0.5rem;
+										left: .5rem;
 									}
 									.form-group-input:focus ~ .form-group-line,
 									.form-group-input:valid ~ .form-group-line {
-										animation: input3 0.5s 1 ease;
+										animation: input3 .5s 1 ease;
 										width: calc(100% - 1rem);
 									}
 								}
@@ -4590,7 +4586,7 @@ body, html {
 											width: 15rem;
 											height: 3rem;
 											font-size: 1.2rem;
-											margin-left: 0.25rem;
+											margin-left: .25rem;
 											padding: 0;
 											outline: none;
 											z-index: 10;
@@ -4604,7 +4600,7 @@ body, html {
 											& > span {
 												& > span {
 													& > span{
-														transition: color 0.15s ease-out 0.3s;
+														transition: color .15s ease-out .3s;
 														color: transparent;
 														&::after{
 															position: absolute;
@@ -4621,7 +4617,7 @@ body, html {
 															overflow: hidden;
 															display: flex;
 															justify-content: center;
-															transition: all 0.2s;
+															transition: all .2s;
 														}
 													}
 													&::before{
@@ -4655,7 +4651,7 @@ body, html {
 													border: .5rem solid $main-color;
 													border-right: none;
 													border-bottom: none;
-													transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+													transition: height .15s ease-out, width .15s ease-out .15s;
 												}
 												&::after {
 													content:'';
@@ -4667,14 +4663,14 @@ body, html {
 													border: .5rem solid $main-color;
 													border-left: none;
 													border-bottom: none;
-													transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+													transition: height .15s ease-out, width .15s ease-out .15s;
 												}
 											}
 											&:hover{
 												.button_border {
 													width: 100%;
 													height: 100%;
-													box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, 0.15);
+													box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, .15);
 												}
 												& > span {
 													& > span {
@@ -4693,7 +4689,7 @@ body, html {
 							}
 						}
 						&:hover {
-							box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
+							box-shadow: 5px 5px 20px 0px rgba(0,0,0,.5);
 						}
 					}
 					&.card_coffesbought {
@@ -4715,10 +4711,10 @@ body, html {
 										background: transparent;
 										border-radius: 0;
 										border: 0;
-										padding: 0.5rem;
+										padding: .5rem;
 										box-shadow: none;
 										.shadow_title{
-											opacity: 0.1;
+											opacity: .1;
 											font-size: 5rem;
 											position: absolute;
 											font-weight: bolder;
@@ -4729,14 +4725,14 @@ body, html {
 											height: fit-content;
 											margin: 0;
 											border: 0;
-											-webkit-transition: all 0.3s;
-											-moz-transition: all 0.3s;
-												-o-transition: all 0.3s;
-												transition: all 0.3s;
+											-webkit-transition: all .3s;
+											-moz-transition: all .3s;
+												-o-transition: all .3s;
+												transition: all .3s;
 											box-shadow: none;
 											.card-body {
 												position: relative;
-												border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+												border: .5rem solid lighten($color: $liteBg_gray, $amount: 1);
 												display: flex;
 												flex-direction: column;
 												.top_row {
@@ -4767,7 +4763,7 @@ body, html {
 																font: inherit;
 															}
 															i{
-																padding-left: 0.25rem;
+																padding-left: .25rem;
 															}
 															&.active {
 																button {
@@ -4776,7 +4772,7 @@ body, html {
 															}
 														}
 														i {
-															margin-left: 0.5rem;
+															margin-left: .5rem;
 															margin-bottom: 0;
 														}
 													}
@@ -4845,7 +4841,7 @@ body, html {
 			margin: 0 auto;
 			display: flex;
 			flex-wrap: wrap;
-			border: 0.5rem solid $color1;
+			border: .5rem solid $color1;
 			.wrapper_full {
 				position: relative;
 				width: 100%;
@@ -4860,13 +4856,13 @@ body, html {
 					width: 100%;
 					height: 100%;
 					.shadow_title{
-						opacity: 0.1;
+						opacity: .1;
 						font-size: 5rem;
 						position: absolute;
 						left: -2rem;
 					}
 					.index_card{
-						opacity: 0.1;
+						opacity: .1;
 						position: absolute;
 						left: 50%;
 						bottom: 10%;
@@ -4889,19 +4885,19 @@ body, html {
 							min-height: 50vh;
 							padding: 2.6rem;
 							border: 0;
-							-webkit-transition: all 0.3s;
-							-moz-transition: all 0.3s;
-							-o-transition: all 0.3s;
-							transition: all 0.3s;
+							-webkit-transition: all .3s;
+							-moz-transition: all .3s;
+							-o-transition: all .3s;
+							transition: all .3s;
 							box-shadow: none;
-							border: 0.5rem solid #292929;
+							border: .5rem solid #292929;
 							.card-body {
 								position: relative;
 								._from {
 									width: 50%;
 									margin-left: auto;
 									margin-bottom: 1rem;
-									transition: all 0.15s ease 0s; 
+									transition: all .15s ease 0s; 
 									p{
 										margin: 0;
 									}
@@ -4909,7 +4905,7 @@ body, html {
 								._to {
 									width: 50%;
 									margin-bottom: 1rem;
-									transition: all 0.15s ease 0s; 
+									transition: all .15s ease 0s; 
 									p{
 										margin: 0;
 									}
@@ -4924,14 +4920,14 @@ body, html {
 									width: 50%;
 									margin-left: auto;
 									margin-bottom: 1rem;
-									transition: all 0.15s ease 0s; 
+									transition: all .15s ease 0s; 
 									p{
 										font-size: x-small;
 										margin: 0;
 									}
 								}
 								p{
-									transition: all 0.15s ease 0s; 
+									transition: all .15s ease 0s; 
 									position: relative;
 									z-index: 10;
 									text-align: left;
@@ -4950,11 +4946,11 @@ body, html {
 									filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a29ca9', endColorstr='#95909b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 									content: '';
 									opacity: 0;
-									transition: opacity 0.9s ease 0s; 
+									transition: opacity .9s ease 0s; 
 								}
 								&:hover {
 									&::after{
-										opacity: 0.4;
+										opacity: .4;
 									}
 								}
 							}
@@ -4968,7 +4964,7 @@ body, html {
 								height: 30vw;
 								left: 50%;
 								top: 50%;
-								opacity: 0.05;
+								opacity: .05;
 								transform: translate(0, -50%);
 								background:url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 16c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm0-2c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zm33.414-6l5.95-5.95L45.95.636 40 6.586 34.05.636 32.636 2.05 38.586 8l-5.95 5.95 1.414 1.414L40 9.414l5.95 5.95 1.414-1.414L41.414 8zM40 48c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm0-2c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zM9.414 40l5.95-5.95-1.414-1.414L8 38.586l-5.95-5.95L.636 34.05 6.586 40l-5.95 5.95 1.414 1.414L8 41.414l5.95 5.95 1.414-1.414L9.414 40z' fill='%23000000' fill-rule='evenodd'/%3E%3C/svg%3E") repeat;
 							}
@@ -4982,7 +4978,7 @@ body, html {
 										transform: translateY(10px);
 									}
 									&::after{
-										opacity: 0.4;
+										opacity: .4;
 									}
 								}
 							}
@@ -4991,7 +4987,7 @@ body, html {
 								font-size: xx-small;
 							}
 							.body{
-								border-left: 0.05rem solid black;
+								border-left: .05rem solid black;
 								padding-left: 1rem;
 							}
 						}
@@ -5019,7 +5015,7 @@ body, html {
 								content: "";
 								background: black;
 								width: 5rem;
-								height: 0.1rem;
+								height: .1rem;
 								top: 50%;
 								left: 55%;
 								margin-left: -6rem; 
@@ -5033,7 +5029,7 @@ body, html {
 								content: "";
 								background: black;
 								width: 5rem;
-								height: 0.1rem;
+								height: .1rem;
 								top: 50%;
 								right: 55%;
 								margin-right: -6rem;
@@ -5048,9 +5044,9 @@ body, html {
 						border-bottom: none;
 						opacity: 1;
 						background-color:  black;
-						margin-left: -0.2rem;
-						margin-right: -0.2rem;
-						height: 0.2rem;
+						margin-left: -.2rem;
+						margin-right: -.2rem;
+						height: .2rem;
 						&:after {
 							content: "";
 							display: block;
@@ -5058,16 +5054,16 @@ body, html {
 							height: 100%;
 							-webkit-transform: scale(0);
 									transform: scale(0);
-							transition: -webkit-transform 0.3s ease;
-							transition: transform 0.3s ease;
-							transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+							transition: -webkit-transform .3s ease;
+							transition: transform .3s ease;
+							transition: transform .3s ease, -webkit-transform .3s ease;
 						}
 						transition-property: all;
-						transition-duration: 0.2s;
+						transition-duration: .2s;
 						cursor: default;
 					}
 					li.current{
-						height: 0.4rem;
+						height: .4rem;
 						transform: translateY(-50%);
 					}
 				}
@@ -5085,7 +5081,7 @@ body, html {
 			overflow: hidden;
 			.shadowHi {
 				position: absolute;
-				opacity: 0.1;
+				opacity: .1;
 				width: 38vw;
 				height: 38vw;
 				top: 0;
@@ -5148,7 +5144,7 @@ body, html {
 							& > span {
 								& > span {
 									& > span{
-										transition: color 0.15s ease-out 0.3s;
+										transition: color .15s ease-out .3s;
 										color: transparent;
 										&::after{
 											position: absolute;
@@ -5164,7 +5160,7 @@ body, html {
 											overflow: hidden;
 											display: flex;
 											justify-content: center;
-											transition: all 0.2s;
+											transition: all .2s;
 										}
 									}
 									&::before{
@@ -5198,7 +5194,7 @@ body, html {
 									border: .5rem solid $main-color;
 									border-right: none;
 									border-bottom: none;
-									transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+									transition: height .15s ease-out, width .15s ease-out .15s;
 								}
 								&::after {
 									content:'';
@@ -5210,14 +5206,14 @@ body, html {
 									border: .5rem solid $main-color;
 									border-left: none;
 									border-bottom: none;
-									transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+									transition: height .15s ease-out, width .15s ease-out .15s;
 								}
 							}
 							&:hover{
 								.button_border {
 									width: 100%;
 									height: 100%;
-									box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, 0.15);
+									box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, .15);
 								}
 								& > span {
 									& > span {
@@ -5256,7 +5252,7 @@ body, html {
 						.lorem {
 							flex: 100%;
 							text-align: left;
-							font-size: 0.8rem;
+							font-size: .8rem;
 							padding: 0 10rem 0 0;
 							margin-top: 2rem;
 						}
@@ -5364,7 +5360,7 @@ body, html {
 				position: absolute;
 				width: 5rem;
 				height: 5rem;
-				border: 0.5rem solid $main-color;
+				border: .5rem solid $main-color;
 				bottom: 10%;
 				right: 40%;
 				transform: translate(50%, 0);
@@ -5375,12 +5371,12 @@ body, html {
 				position: absolute;
 				width: 5.5rem;
 				height: 5.5rem;
-				border: 0.5rem solid white;
+				border: .5rem solid white;
 				background: $main-color;
 				bottom: calc(10% - 1rem);
 				right: calc(40% + 1rem);
 				transform: translate(50%, 0);
-				opacity: 0.2;
+				opacity: .2;
 				z-index: -2;
 			}
 		}
@@ -5447,20 +5443,20 @@ body, html {
 						margin: 0;
 						padding: 0 1rem;
 						a {
-							color: rgba($color: $main-color, $alpha: 0.8);
+							color: rgba($color: $main-color, $alpha: .8);
 							&:hover {
 								color: $main-color;
 							}
 						}
 						& >li+li:before {
 							padding: 0 1rem;
-							color: rgba($color: $purple, $alpha: 0.5);
+							color: rgba($color: $purple, $alpha: .5);
 							content: "→";
 						}
 					}
 				}
 				.shadow_title {
-					opacity: 0.8;
+					opacity: .8;
 					font-size: 10rem;
 					position: absolute;
 					left: 50%;
@@ -5469,7 +5465,7 @@ body, html {
 					font-family: 'Abril Fatface', cursive;
 				}
 				.shadow_letter {
-					opacity: 0.1;
+					opacity: .1;
 					font-size: 20rem;
 					position: absolute;
 					right: 0;
@@ -5477,7 +5473,7 @@ body, html {
 				}
 				#box {
 					width: 80vw;
-					border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+					border: .5rem solid lighten($color: $liteBg_gray, $amount: 1);
 					margin: 50vh auto 2rem auto;
 					padding: 2.5rem;
 					display: flex;
@@ -5521,7 +5517,7 @@ body, html {
 								font: inherit;
 							}
 							i{
-								padding-left: 0.25rem;
+								padding-left: .25rem;
 							}
 							&.active {
 								button {
@@ -5535,7 +5531,7 @@ body, html {
 							}
 						}
 						i {
-							margin-left: 0.5rem;
+							margin-left: .5rem;
 							margin-bottom: 0;
 						}
 					}
@@ -5559,7 +5555,7 @@ body, html {
 							text-shadow: 0px 0px 1px rgba(0,0,0,1);
 						}
 						&.before_article{
-							font-size: 0.8rem;
+							font-size: .8rem;
 							color: $text-color;
 							cursor: pointer;
 							&::before {
@@ -5567,13 +5563,13 @@ body, html {
 								content: "";
 								background: $text-color;
 								width: 2rem;
-								height: 0.1rem;
+								height: .1rem;
 								top: 50%;
 								transform: translate(-200%, -50%);
 							}
 						}
 						&.after_article{
-							font-size: 0.8rem;
+							font-size: .8rem;
 							color: $text-color;
 							cursor: pointer;
 							&::after {
@@ -5581,7 +5577,7 @@ body, html {
 								content: "";
 								background: $text-color;
 								width: 2rem;
-								height: 0.1rem;
+								height: .1rem;
 								top: 50%;
 								transform: translate(100%, -50%);
 							}
@@ -5602,14 +5598,14 @@ body, html {
 			overflow: hidden;
 			.f_name, .l_name {
 				position: absolute;
-				opacity: 0.2;
+				opacity: .2;
 				color: white;
 				font-size: 8rem;
 				line-height: 6rem;
 				z-index: 1;
 				.outlined {
 					color: transparent;
-					-webkit-text-stroke: 0.1rem white;
+					-webkit-text-stroke: .1rem white;
 				}
 			}
 			.f_name {
@@ -5636,8 +5632,8 @@ body, html {
 						left: 0;
 						width: 20vw;
 						height: 25vh;
-						font-size: 0.8rem;
-						line-height: 0.8rem;
+						font-size: .8rem;
+						line-height: .8rem;
 						transform: translate(50%, 0);
 						padding: 0 2rem;
 						display: flex;
@@ -5664,8 +5660,8 @@ body, html {
 						right: 0;
 						width: 25vw;
 						height: 25vh;
-						font-size: 0.8rem;
-						line-height: 0.8rem;
+						font-size: .8rem;
+						line-height: .8rem;
 						transform: translate(-50%, 0);
 						padding: 0 4rem;
 						display: flex;
@@ -5784,7 +5780,7 @@ body, html {
 						.shadow_title{
 							position: absolute;
 							font-family: 'Abril Fatface', cursive;
-							opacity: 0.25;
+							opacity: .25;
 							font-size: 8rem;
 							color: lighten($color: $main-color, $amount: 10%);
 							top: 0;
@@ -5817,22 +5813,22 @@ body, html {
 								transform: translate(-50%, -50%);
 								width: 35vw;
 								border: 0;
-								-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-									-o-transition: all 0.3s;
-									transition: all 0.3s;
+								-webkit-transition: all .3s;
+								-moz-transition: all .3s;
+									-o-transition: all .3s;
+									transition: all .3s;
 								box-shadow: none;
 								.card-body {
 									position: relative;
 									h2{
 										color:$color1;
 										letter-spacing: 0;
-										transition: all 0.15s ease 0s; 
+										transition: all .15s ease 0s; 
 										position: relative;
 										z-index: 10;
 									}
 									p{
-										transition: all 0.15s ease 0s; 
+										transition: all .15s ease 0s; 
 										position: relative;
 										z-index: 10;
 									}
@@ -5853,11 +5849,11 @@ body, html {
 											position: absolute;
 											width: 95%;
 											height: 95%;
-											padding: 0.5rem;
+											padding: .5rem;
 											border: 1px solid $main-color;
-											opacity: 0.5;
-											left: -0.5rem;
-											top: -0.5rem;
+											opacity: .5;
+											left: -.5rem;
+											top: -.5rem;
 											transition: all 200ms ease-in-out;
 										}
 										span{
@@ -5870,7 +5866,7 @@ body, html {
 										& > span {
 											& > span {
 												& > span{
-													transition: color 0.15s ease-out 0.3s;
+													transition: color .15s ease-out .3s;
 													color: transparent;
 													&::after{
 														position: absolute;
@@ -5886,7 +5882,7 @@ body, html {
 														overflow: hidden;
 														display: flex;
 														justify-content: center;
-														transition: width 0.2s;
+														transition: width .2s;
 													}
 												}
 												&::before{
@@ -5918,7 +5914,7 @@ body, html {
 												border: .5rem solid $main-color;
 												border-right: none;
 												border-bottom: none;
-												transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+												transition: height .15s ease-out, width .15s ease-out .15s;
 											}
 											&::after {
 												content:'';
@@ -5930,14 +5926,14 @@ body, html {
 												border: .5rem solid $main-color;
 												border-left: none;
 												border-bottom: none;
-												transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+												transition: height .15s ease-out, width .15s ease-out .15s;
 											}
 										}
 										&:hover{
 											.button_border {
 												width: 100%;
 												height: 100%;
-												box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, 0.15);
+												box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, .15);
 											}
 											& > span {
 												& > span {
@@ -5963,7 +5959,7 @@ body, html {
 										background: linear-gradient(135deg, lighten($color: $main-color, $amount: 2) 0%,lighten($color: $main-color, $amount: 0) 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 										content: '';
 										opacity: 0;
-										transition: opacity 0.9s ease 0s; 
+										transition: opacity .9s ease 0s; 
 									}
 									&:hover {
 										h2 {
@@ -5973,19 +5969,19 @@ body, html {
 											transform: translateY(10px);
 										}
 										&::after{
-											opacity: 0.4;
+											opacity: .4;
 										}
 										button {
 											& > span {
 												&::after {
 													width: 50%;
 													height: 100%;
-													transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+													transition: width .15s ease-out, height .15s ease-out .15s;
 												}
 												&::before {
 													width: 50%;
 													height: 100%;
-													transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+													transition: width .15s ease-out, height .15s ease-out .15s;
 												}
 												& > span {
 													&::after {
@@ -5993,14 +5989,14 @@ body, html {
 														border-bottom: .5rem solid $main-color;
 														width: calc(50%);
 														height: 1px;
-														transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+														transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 													}
 													&::before {
 														opacity: 1;
 														border-bottom: .5rem solid $main-color;
 														width: calc(50%);
 														height: 1px;
-														transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+														transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 													}
 													& > span {
 														color:$color1;
@@ -6018,7 +6014,7 @@ body, html {
 									font-size: xx-small;
 								}
 								.body{
-									border-left: 0.05rem solid black;
+									border-left: .05rem solid black;
 									padding-left: 1rem;
 								}
 							}
@@ -6043,7 +6039,7 @@ body, html {
 								}
 							}
 							#prev{
-								font-size: 0.8rem;
+								font-size: .8rem;
 								color: $text-color;
 								cursor: pointer;
 								&::before {
@@ -6051,14 +6047,14 @@ body, html {
 									content: "";
 									background: $text-color;
 									width: 1rem;
-									height: 0.1rem;
+									height: .1rem;
 									left: -1rem;
 									top: 50%;
     								transform: translateY(-50%);
 								}
 							}
 							#next{
-								font-size: 0.8rem;
+								font-size: .8rem;
 								color: $text-color;
 								cursor: pointer;
 								&::after {
@@ -6066,7 +6062,7 @@ body, html {
 									content: "";
 									background: $text-color;
 									width: 1rem;
-									height: 0.1rem;
+									height: .1rem;
 									top: 50%;
     								transform: translateY(-50%);
 								}
@@ -6088,7 +6084,7 @@ body, html {
 							display: block;
 							border-radius: 1rem;
 							background: #062744;
-							opacity: 0.2;
+							opacity: .2;
 							transition: all .3s;
 							margin: .25rem;
 							border: none;
@@ -6100,7 +6096,7 @@ body, html {
 							width: 2rem;
 							opacity: 1;
 							background: $main-color;
-							box-shadow: 0px 0px 20px rgba($main-color, 0.3);
+							box-shadow: 0px 0px 20px rgba($main-color, .3);
 						}
 					}
 				}
@@ -6124,7 +6120,7 @@ body, html {
 					width: 80%;
 					margin: 5rem auto;
 					z-index: 500;
-					border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+					border: .5rem solid lighten($color: $liteBg_gray, $amount: 1);
 					.modal-inner {
 						display: flex;
 						.modal-content {
@@ -6142,7 +6138,7 @@ body, html {
 								margin-bottom: 0;
 								.input-field {
 									position: relative;
-									margin: 0 0 0.5rem 0;
+									margin: 0 0 .5rem 0;
 									&.s12 {
 										height: 5rem;
 										margin-bottom: 1rem;
@@ -6155,14 +6151,14 @@ body, html {
 										.form-group-line {
 											position: absolute;
 											bottom: -1px !important;
-											left: 0.75rem;
+											left: .75rem;
 										}
 									}
 									&.s6 .form-group-line {
 										position: absolute;
 										top: 3rem;
 										bottom: unset;
-										left: 0.75rem;
+										left: .75rem;
 									}
 									label {
 										font-weight: 400;
@@ -6173,7 +6169,7 @@ body, html {
 									}
 									.form-group-input:focus ~ .form-group-line,
 									.form-group-input:valid ~ .form-group-line {
-										animation: input3 0.5s 1 ease;
+										animation: input3 .5s 1 ease;
 										width: calc(100% - 1.5rem);
 									}
 									button{
@@ -6200,7 +6196,7 @@ body, html {
 										& > span {
 											& > span {
 												& > span{
-													transition: color 0.15s ease-out 0.3s;
+													transition: color .15s ease-out .3s;
 													color: transparent;
 													&::after{
 														position: absolute;
@@ -6216,7 +6212,7 @@ body, html {
 														overflow: hidden;
 														display: flex;
 														justify-content: center;
-														transition: width 0.2s;
+														transition: width .2s;
 													}
 												}
 												&::before{
@@ -6248,7 +6244,7 @@ body, html {
 												border: .5rem solid $main-color;
 												border-right: none;
 												border-bottom: none;
-												transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+												transition: height .15s ease-out, width .15s ease-out .15s;
 											}
 											&::after {
 												content:'';
@@ -6260,7 +6256,7 @@ body, html {
 												border: .5rem solid $main-color;
 												border-left: none;
 												border-bottom: none;
-												transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+												transition: height .15s ease-out, width .15s ease-out .15s;
 											}
 										}
 										&:hover{
@@ -6288,11 +6284,11 @@ body, html {
 										background: white;
 										border-radius: 0;
 										border: 0;
-										padding: 0.5rem;
+										padding: .5rem;
 										overflow: visible;
 										box-shadow: none;
 										.shadow_title{
-											opacity: 0.1;
+											opacity: .1;
 											font-size: 5rem;
 											position: absolute;
 											font-weight: bolder;
@@ -6303,15 +6299,15 @@ body, html {
 											height: fit-content;
 											margin: 0;
 											border: 0;
-											-webkit-transition: all 0.3s;
-											-moz-transition: all 0.3s;
-												-o-transition: all 0.3s;
-												transition: all 0.3s;
+											-webkit-transition: all .3s;
+											-moz-transition: all .3s;
+												-o-transition: all .3s;
+												transition: all .3s;
 											box-shadow: none;
-											padding: 0.5rem;
+											padding: .5rem;
 											.card-body {
 												position: relative;
-												border: 0.5rem solid lighten($color: $liteBg_gray, $amount: 1);
+												border: .5rem solid lighten($color: $liteBg_gray, $amount: 1);
 												display: flex;
 												flex-direction: column;
 												.top_row {
@@ -6342,7 +6338,7 @@ body, html {
 																font: inherit;
 															}
 															i{
-																padding-left: 0.25rem;
+																padding-left: .25rem;
 															}
 															&.active {
 																button {
@@ -6351,7 +6347,7 @@ body, html {
 															}
 														}
 														i {
-															margin-left: 0.5rem;
+															margin-left: .5rem;
 															margin-bottom: 0;
 														}
 													}
@@ -6471,9 +6467,9 @@ body, html {
 									top: 50%;
 									left: 50%;
 									transform: translate(-50%, -50%);
-									background: rgba($color: $main-color, $alpha: 0.25);
+									background: rgba($color: $main-color, $alpha: .25);
 									border-radius: 100%;
-									transition: all 0.5s ease-in-out;
+									transition: all .5s ease-in-out;
 								}
 								&.expand {
 									&::before {
@@ -6501,7 +6497,7 @@ body, html {
 							}
 							.input-field {
 								position: relative;
-								margin: 0 0 0.5rem 0;
+								margin: 0 0 .5rem 0;
 								& > div {
 									width: 100%;
 									& > div {
@@ -6512,7 +6508,7 @@ body, html {
 										transform: translate(.75rem, 0) !important;
 										max-height: 25vh !important;
 										border: 1px solid $main-color !important;
-										padding: 0.25rem !important;
+										padding: .25rem !important;
 										font-size: 1rem !important;
 										margin: 0 auto !important;
 										background-color: #fff !important;
@@ -6521,7 +6517,7 @@ body, html {
 										.item {
 											cursor: pointer !important;
 											line-height: 1 !important;
-											padding: 0.5rem 0.75rem !important;
+											padding: .5rem .75rem !important;
 											white-space: nowrap;
 										}
 									}
@@ -6556,12 +6552,12 @@ body, html {
 								}
 								.form-group-line {
 									position: absolute;
-									bottom: 0.5rem;
-									left: 0.75rem;
+									bottom: .5rem;
+									left: .75rem;
 								}
 								.form-group-input:focus ~ .form-group-line,
 								.form-group-input:valid ~ .form-group-line {
-									animation: input3 0.5s 1 ease;
+									animation: input3 .5s 1 ease;
 									width: calc(100% - 1.5rem);
 								}
 							}
@@ -6572,7 +6568,7 @@ body, html {
 							display: flex;
 							flex-wrap: wrap;
 							margin: 0 auto;
-							border-top: 0.1rem solid rgba($color: #aaa, $alpha: 0.25);
+							border-top: .1rem solid rgba($color: #aaa, $alpha: .25);
 							padding-top: 1.25rem;
 							.article_card{
 								position: relative;
@@ -6581,7 +6577,7 @@ body, html {
     							height: 65vh;
 								padding: 0 10px;
 								margin-bottom: 1.25rem;
-								transition: 0.5s;
+								transition: .5s;
 								.card {
 									background: #fff;
     								border: 0;
@@ -6589,9 +6585,9 @@ body, html {
 									overflow: hidden;
 									padding: 0;
 									margin: 0;
-									transition: all 0.6s ease 0s;
+									transition: all .6s ease 0s;
 									* {
-										transition: all 0.6s ease 0s;
+										transition: all .6s ease 0s;
 									}
 									&-body {
 										position: relative;
@@ -6621,15 +6617,15 @@ body, html {
 												font-size: small;
 												color: black;
 												border: 1px solid black;
-												padding: 0.2rem 0.5rem;
-												margin-bottom: 0.25rem;
+												padding: .2rem .5rem;
+												margin-bottom: .25rem;
 												width: fit-content;
 											}
 											h4 {
 												color: black;
 												text-align: -webkit-left;
 												letter-spacing: 0;
-												transition: all 0.15s ease 0s;
+												transition: all .15s ease 0s;
 												position: relative;
 												z-index: 10;
 												margin: 0;
@@ -6642,7 +6638,7 @@ body, html {
 												display: flex;
 												flex-direction: initial;
 												align-items: flex-start;
-												margin-top: 0.5rem;
+												margin-top: .5rem;
 												flex: auto;
 												overflow-x: hidden;
 												li {
@@ -6760,18 +6756,18 @@ body, html {
 													text-align: -webkit-left;
 													font-size: xx-small;
 													flex: 1;
-													margin-bottom: 0.25rem;
+													margin-bottom: .25rem;
 													i{
-														padding-left: 0.25rem;
+														padding-left: .25rem;
 													}
 												}
 												.upvotes, .downvotes, .comments {
 													margin-left: 1rem;
 													text-align: -webkit-right;
 													font-size: x-small;
-													margin-bottom: 0.25rem;
+													margin-bottom: .25rem;
 													i{
-														padding-left: 0.25rem;
+														padding-left: .25rem;
 													}
 												}
 											}
@@ -6783,7 +6779,7 @@ body, html {
 										}
 									}
 									&:hover {
-										box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.75);
+										box-shadow: 5px 5px 20px 0px rgba(0,0,0,.75);
 									}
 								}
 							}
@@ -6801,7 +6797,7 @@ body, html {
 								display: block;
 								border-radius: 1rem;
 								background: #062744;
-								opacity: 0.2;
+								opacity: .2;
 								transition: all .3s;
 								margin: .25rem;
 								border: none;
@@ -6812,9 +6808,9 @@ body, html {
 									width: 2rem;
 									opacity: 1;
 									background: $main-color;
-									box-shadow: 0px 0px 20px rgba($main-color, 0.3);
+									box-shadow: 0px 0px 20px rgba($main-color, .3);
 									.shadow_page {
-										opacity: 0.25;
+										opacity: .25;
 									}
 								}
 								.shadow_page {
@@ -6877,7 +6873,7 @@ body, html {
 					padding: 5rem 5rem 2.5rem 5rem;
 					i {
 						color: white;
-						opacity: 0.2;
+						opacity: .2;
 						font-size: 20rem;
 						margin-bottom: -5rem;
 					}
@@ -6924,7 +6920,7 @@ body, html {
 							& > span {
 								& > span {
 									& > span{
-										transition: color 0.15s ease-out 0.3s;
+										transition: color .15s ease-out .3s;
 										color: transparent;
 										&::after{
 											position: absolute;
@@ -6940,7 +6936,7 @@ body, html {
 											overflow: hidden;
 											display: flex;
 											justify-content: center;
-											transition: width 0.2s;
+											transition: width .2s;
 										}
 									}
 									&::before{
@@ -6972,7 +6968,7 @@ body, html {
 									border: .5rem solid $main-color;
 									border-right: none;
 									border-bottom: none;
-									transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+									transition: height .15s ease-out, width .15s ease-out .15s;
 								}
 								&::after {
 									content:'';
@@ -6984,7 +6980,7 @@ body, html {
 									border: .5rem solid $main-color;
 									border-left: none;
 									border-bottom: none;
-									transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+									transition: height .15s ease-out, width .15s ease-out .15s;
 								}
 							}
 							&:hover{
@@ -7019,7 +7015,7 @@ body, html {
 									padding: 1rem 1rem;
 									height: 100%;
 									margin: 0;
-									transition:0.5s;
+									transition:.5s;
 									.card {
 										height: 100%;
 										width: 18vw;
@@ -7030,19 +7026,19 @@ body, html {
 										border: 1rem solid lighten($color: $purple, $amount: 20);
 										border-radius: 0;
 										background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-										-webkit-backdrop-filter: blur(0.8rem);
-												backdrop-filter: blur(0.8rem);
+										-webkit-backdrop-filter: blur(.8rem);
+												backdrop-filter: blur(.8rem);
 										* {
-											transition: all 0.6s ease 0s;
+											transition: all .6s ease 0s;
 										}
 										.shadow_title{
-											opacity: 0.1;
+											opacity: .1;
 											font-size: 5rem;
 											position: absolute;
 											left: -2rem;
 										}
 										.shadow_letter{
-											opacity: 0.1;
+											opacity: .1;
 											font-size: 20rem;
 											position: absolute;
 										}
@@ -7068,7 +7064,7 @@ body, html {
 												color:$color1;
 												text-align: -webkit-left;
 												letter-spacing: 0;
-												transition: all 0.15s ease 0s; 
+												transition: all .15s ease 0s; 
 												position: relative;
 												z-index: 10;
 												margin: 0;
@@ -7087,7 +7083,7 @@ body, html {
 												font-size: small;
 												color: white;
 												border: 1px solid white;
-												padding: 0.2rem 0.5rem;
+												padding: .2rem .5rem;
 												width: fit-content;
 												margin-bottom: 0;
 											}
@@ -7096,7 +7092,7 @@ body, html {
 												display: flex;
 												flex-direction: initial;
 												align-items: flex-start;
-												margin-top: 0.5rem;
+												margin-top: .5rem;
 												flex: auto;
 												li {
 													font-size: xx-small;
@@ -7217,7 +7213,7 @@ body, html {
 													font-size: xx-small;
 													flex: 1;
 													i{
-														padding-left: 0.25rem;
+														padding-left: .25rem;
 													}
 												}
 												.upvotes, .downvotes, .comments {
@@ -7225,7 +7221,7 @@ body, html {
 													text-align: -webkit-right;
 													font-size: x-small;
 													i{
-														padding-left: 0.25rem;
+														padding-left: .25rem;
 													}
 												}
 											}
@@ -7245,7 +7241,7 @@ body, html {
 										width: calc(100% - 2rem);
 										height: calc(100% - 2rem);
 										z-index: 10;
-										border: 1rem solid rgba(255, 255, 255, 0.2);
+										border: 1rem solid rgba(255, 255, 255, .2);
 										-webkit-user-select: none;
 										   -moz-user-select: none;
 											-ms-user-select: none;
@@ -7262,7 +7258,7 @@ body, html {
 										&::before {
 											border-top: 1rem solid $color1;
 											border-right: 1rem solid $color1;
-											transition: width 0.1s ease 0.3s, height 0.1s ease 0.2s, visibility 0s 0.4s;
+											transition: width .1s ease .3s, height .1s ease .2s, visibility 0s .4s;
 											top: -1rem;
 											left: -1rem;
 										}
@@ -7271,23 +7267,23 @@ body, html {
 											border-bottom: 1rem solid $color1;
 											bottom: -1rem;
 											right: -1rem;
-											transition: width 0.1s ease 0.1s, height 0.1s ease, visibility 0s 0.2s;
+											transition: width .1s ease .1s, height .1s ease, visibility 0s .2s;
 										}
 									}
 									&:hover {
 										.card_shadower{
-											-webkit-animation: pulse 1s ease-out 0.4s;
-												animation: pulse 1s ease-out 0.4s;
+											-webkit-animation: pulse 1s ease-out .4s;
+												animation: pulse 1s ease-out .4s;
 											&::before, &::after {
 												width: calc(100% + 2rem);
 												height: calc(100% + 2rem);
 												visibility: visible;
 											}
 											&::before {
-												transition: width 0.1s ease, height 0.1s ease 0.1s;
+												transition: width .1s ease, height .1s ease .1s;
 											}
 											&::after {
-												transition: width 0.1s ease 0.2s, height 0.1s ease 0.3s, visibility 0s 0.2s;
+												transition: width .1s ease .2s, height .1s ease .3s, visibility 0s .2s;
 											}
 										}
 									}
@@ -7335,16 +7331,16 @@ body, html {
 						padding: 0;
 						margin: 0;
 						border: 0;
-						color: rgba($color: black, $alpha: 0.8);
+						color: rgba($color: black, $alpha: .8);
 						background: rgba(0,0,0,0);
-						-webkit-backdrop-filter: blur(0.2rem);
-								backdrop-filter: blur(0.2rem);
+						-webkit-backdrop-filter: blur(.2rem);
+								backdrop-filter: blur(.2rem);
 						outline: none;
-						transition: all 0.6s ease 0s;
+						transition: all .6s ease 0s;
 						z-index: 999;
 						&:hover {
 							color: rgba($color: black, $alpha: 1.0);
-							background: rgba(0,0,0,0.2);
+							background: rgba(0,0,0,.2);
 						}
 						&::after {
 							display: none;
@@ -7382,7 +7378,7 @@ body, html {
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
-				opacity: 0.1;
+				opacity: .1;
 				.word {
 					position: absolute;
 					font-weight: bold;
@@ -7464,9 +7460,9 @@ body, html {
 						transform: translate(0%, -6rem);
 						.name {
 							font-weight: normal;
-							color: rgba($color: black, $alpha: 0.8);
-							margin-bottom: 0.2rem;
-							margin-top: 0.2rem;
+							color: rgba($color: black, $alpha: .8);
+							margin-bottom: .2rem;
+							margin-top: .2rem;
 							p {
 								font-size: 5rem;
 								line-height: 4rem;
@@ -7478,7 +7474,7 @@ body, html {
 									content: '';
 									position: absolute;
 									width: 9rem;
-									height: 0.5rem;
+									height: .5rem;
 									background-color: $main-color;
 									left: -1rem;
 									top: 50%;
@@ -7499,7 +7495,7 @@ body, html {
 									width: 100%;
 									height: 40%;
 									background-color: $main-color;
-									opacity: 0.6;
+									opacity: .6;
 									left: 20%;
 									bottom: 0;
 									transform: translate(0, 0);
@@ -7521,9 +7517,9 @@ body, html {
 								font-style: normal;
 								font-size: 16px;
 								line-height: 1rem;
-								color: rgba($color: black, $alpha: 0.8);
-								margin-bottom: 0.2rem;
-								margin-top: 0.2rem;
+								color: rgba($color: black, $alpha: .8);
+								margin-bottom: .2rem;
+								margin-top: .2rem;
 								margin-left: 5.5rem;
 								font-family: "Helvetica Now Display DW",sans-serif;
 								&::before {
@@ -7532,9 +7528,9 @@ body, html {
 									width: 5rem;
 									height: 1px;
 									background-color: black;
-									left: -0.5rem;
+									left: -.5rem;
 									top: 0;
-									transform: translate(-100%, 0.5rem);
+									transform: translate(-100%, .5rem);
 								}
 							}
 						}
@@ -7564,7 +7560,7 @@ body, html {
 							& > span {
 								& > span {
 									& > span{
-										transition: color 0.15s ease-out 0.3s;
+										transition: color .15s ease-out .3s;
 										color: transparent;
 										&::after{
 											position: absolute;
@@ -7580,7 +7576,7 @@ body, html {
 											overflow: hidden;
 											display: flex;
 											justify-content: center;
-											transition: width 0.2s;
+											transition: width .2s;
 										}
 									}
 									&::before{
@@ -7612,7 +7608,7 @@ body, html {
 									border: .5rem solid $main-color;
 									border-right: none;
 									border-bottom: none;
-									transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+									transition: height .15s ease-out, width .15s ease-out .15s;
 								}
 								&::after {
 									content:'';
@@ -7624,14 +7620,14 @@ body, html {
 									border: .5rem solid $main-color;
 									border-left: none;
 									border-bottom: none;
-									transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+									transition: height .15s ease-out, width .15s ease-out .15s;
 								}
 							}
 							&:hover{
 								.button_border {
 									width: 100%;
 									height: 100%;
-									box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, 0.15);
+									box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, .15);
 								}
 								& > span {
 									& > span {
@@ -7667,7 +7663,7 @@ body, html {
 							}
 						}
 						.shadow_title {
-							opacity: 0.2;
+							opacity: .2;
 							font-size: 8rem;
 							position: absolute;
 							left: -2rem;
@@ -7684,7 +7680,7 @@ body, html {
 							cursor: default;
 						}
 						.index_card_shadow {
-							opacity: 0.25;
+							opacity: .25;
 							position: absolute;
 							right: 0;
 							bottom: 0;
@@ -7711,10 +7707,10 @@ body, html {
 								width: calc(100% - 9rem);
 								height: fit-content;
 								border: 0;
-								-webkit-transition: all 0.3s;
-								-moz-transition: all 0.3s;
-									-o-transition: all 0.3s;
-									transition: all 0.3s;
+								-webkit-transition: all .3s;
+								-moz-transition: all .3s;
+									-o-transition: all .3s;
+									transition: all .3s;
 								box-shadow: none;
 								background: transparent;
 								.card-body {
@@ -7722,19 +7718,19 @@ body, html {
 									h2{
 										color:$color1;
 										letter-spacing: 0;
-										transition: all 0.15s ease 0s; 
+										transition: all .15s ease 0s; 
 										position: relative;
 										z-index: 10;
 									}
 									p{
-										transition: all 0.15s ease 0s; 
+										transition: all .15s ease 0s; 
 										position: relative;
 										z-index: 10;
 									}
 									.image {
 										position: relative;
 										img {
-											box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+											box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
 										}
 										.border_effect {
 											position: absolute;
@@ -7742,7 +7738,7 @@ body, html {
 											height: 100%;
 											left: -2rem;
 											top: -2rem;
-											border: 0.2rem solid hsla(0,0%,100%,.2);
+											border: .2rem solid hsla(0,0%,100%,.2);
 											-webkit-user-select: none;
 											-moz-user-select: none;
 											-ms-user-select: none;
@@ -7756,18 +7752,18 @@ body, html {
 												border-radius: 2px;
 											}
 											&::before {
-												border-top: 0.2rem solid $color1;
-												border-right: 0.2rem solid $color1;
-												transition: width 0.1s ease 0.3s, height 0.1s ease 0.2s, visibility 0s 0.4s;
-												top: -0.2rem;
-												left: -0.2rem;
+												border-top: .2rem solid $color1;
+												border-right: .2rem solid $color1;
+												transition: width .1s ease .3s, height .1s ease .2s, visibility 0s .4s;
+												top: -.2rem;
+												left: -.2rem;
 											}
 											&::after {
-												border-left: 0.2rem solid $color1;
-												border-bottom: 0.2rem solid $color1;
+												border-left: .2rem solid $color1;
+												border-bottom: .2rem solid $color1;
 												bottom: 0rem;
 												right: 0rem;
-												transition: width 0.1s ease 0.1s, height 0.1s ease, visibility 0s 0.2s;
+												transition: width .1s ease .1s, height .1s ease, visibility 0s .2s;
 											}
 										}
 									}
@@ -7784,7 +7780,7 @@ body, html {
 										background: linear-gradient(135deg, lighten($color: $main-color, $amount: 2) 0%,lighten($color: $main-color, $amount: 0) 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 										content: '';
 										opacity: 0;
-										transition: opacity 0.9s ease 0s; 
+										transition: opacity .9s ease 0s; 
 									}
 									&:hover {
 										h2 {
@@ -7794,18 +7790,18 @@ body, html {
 											transform: translateY(10px);
 										}
 										.border_effect {
-											-webkit-animation: pulse 1s ease-out 0.4s;
-												animation: pulse 1s ease-out 0.4s;
+											-webkit-animation: pulse 1s ease-out .4s;
+												animation: pulse 1s ease-out .4s;
 											&::before, &::after {
-												width: calc(100% + 0.2rem);
-												height: calc(100% + 0.2rem);
+												width: calc(100% + .2rem);
+												height: calc(100% + .2rem);
 												visibility: visible;
 											}
 											&::before {
-												transition: width 0.1s ease, height 0.1s ease 0.1s;
+												transition: width .1s ease, height .1s ease .1s;
 											}
 											&::after {
-												transition: width 0.1s ease 0.2s, height 0.1s ease 0.3s, visibility 0s 0.2s;
+												transition: width .1s ease .2s, height .1s ease .3s, visibility 0s .2s;
 											}
 										}
 										button {
@@ -7813,12 +7809,12 @@ body, html {
 												&::after {
 													width: 50%;
 													height: 100%;
-													transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+													transition: width .15s ease-out, height .15s ease-out .15s;
 												}
 												&::before {
 													width: 50%;
 													height: 100%;
-													transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+													transition: width .15s ease-out, height .15s ease-out .15s;
 												}
 												& > span {
 													&::after {
@@ -7826,14 +7822,14 @@ body, html {
 														border-bottom: .5rem solid $main-color;
 														width: calc(50%);
 														height: 1px;
-														transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+														transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 													}
 													&::before {
 														opacity: 1;
 														border-bottom: .5rem solid $main-color;
 														width: calc(50%);
 														height: 1px;
-														transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+														transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 													}
 													& > span {
 														color:$color1;
@@ -7851,7 +7847,7 @@ body, html {
 									font-size: xx-small;
 								}
 								.body{
-									border-left: 0.05rem solid black;
+									border-left: .05rem solid black;
 									padding-left: 1rem;
 								}
 							}
@@ -7876,7 +7872,7 @@ body, html {
 								}
 							}
 							#prev{
-								font-size: 0.8rem;
+								font-size: .8rem;
 								color: $text-color;
 								cursor: pointer;
 								&::before {
@@ -7884,14 +7880,14 @@ body, html {
 									content: "";
 									background: $text-color;
 									width: 1rem;
-									height: 0.1rem;
+									height: .1rem;
 									left: -1rem;
 									top: 50%;
     								transform: translateY(-50%);
 								}
 							}
 							#next{
-								font-size: 0.8rem;
+								font-size: .8rem;
 								color: $text-color;
 								cursor: pointer;
 								&::after {
@@ -7899,7 +7895,7 @@ body, html {
 									content: "";
 									background: $text-color;
 									width: 1rem;
-									height: 0.1rem;
+									height: .1rem;
 									top: 50%;
     								transform: translateY(-50%);
 								}
@@ -7931,7 +7927,7 @@ body, html {
 							display: block;
 							border-radius: 1rem;
 							background: #062744;
-							opacity: 0.2;
+							opacity: .2;
 							transition: all .3s;
 							margin: .25rem;
 							border: none;
@@ -7942,7 +7938,7 @@ body, html {
 								width: 1rem;
 								opacity: 1;
 								background: $main-color;
-								box-shadow: 0px 0px 20px rgba($main-color, 0.3);
+								box-shadow: 0px 0px 20px rgba($main-color, .3);
 							}
 						}
 					}
@@ -7969,7 +7965,7 @@ body, html {
 				.display-1 {
 					font-weight: bold;
 					font-family: 'Abril Fatface', cursive;
-					opacity: 0.2;
+					opacity: .2;
 					font-size: 8rem;
 					position: absolute;
 					right: -2vw;
@@ -8019,10 +8015,10 @@ body, html {
 							}
 							&::after {
 								content: '';
-								opacity: 0.2;
+								opacity: .2;
 								position: absolute;
 								height: 80%;
-								width: 0.1rem;
+								width: .1rem;
 								background-color: $main-color;
 								right: 0;
 								top: 50%;
@@ -8097,10 +8093,10 @@ body, html {
 							}
 							&::before {
 								content: '';
-								opacity: 0.2;
+								opacity: .2;
 								position: absolute;
 								height: 80%;
-								width: 0.1rem;
+								width: .1rem;
 								background-color: $main-color;
 								left: 0;
 								top: 50%;
@@ -8110,37 +8106,37 @@ body, html {
 						.tags {
 							width: 100%;
 							margin-bottom: 0 !important;
-							margin-top: 0.5rem;
+							margin-top: .5rem;
 							display: flex;
   							flex-wrap: wrap;
 							li {
 								background: lighten($color: $main-color, $amount: 20);
-								border-radius: 0.2rem 0 0 0.2rem;
+								border-radius: .2rem 0 0 .2rem;
 								color: #000;
 								height: 1.75rem;
 								line-height: 1.75rem;
 								padding: 0 1.5rem 0 1.5rem;
 								position: relative;
 								margin: 0 calc(1.75rem / 2) calc(1.75rem / 2) 0;
-								transition: color 0.2s;
+								transition: color .2s;
 								font-size: small;
 								box-sizing: border-box;
 								&::before {
 									position: absolute;
 									content: '';
 									background: #fff;
-									width: 0.5rem;
-									height: 0.5rem;
-									border-radius: 0.5rem;
-									left: 0.5rem;
+									width: .5rem;
+									height: .5rem;
+									border-radius: .5rem;
+									left: .5rem;
 									top: 50%;
 									transform: translateY(-50%);
-									box-shadow: inset 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
+									box-shadow: inset .1rem .1rem rgba(0, 0, 0, .25);
 								}
 								&::after {
 									background: #fff;
 									border-bottom: calc(1.75rem / 2) solid transparent;
-									border-left: 0.5rem solid lighten($color: $main-color, $amount: 20);
+									border-left: .5rem solid lighten($color: $main-color, $amount: 20);
 									border-top: calc(1.75rem / 2) solid transparent;
 									content: '';
 									position: absolute;
@@ -8218,7 +8214,7 @@ body, html {
 				height: 100%;
 				width: 80%;
 				margin: 0;
-				font-size: 0.8rem;
+				font-size: .8rem;
 				display: flex;
 				flex-direction: column;
 				padding: 5rem 0 0 0;
@@ -8235,16 +8231,16 @@ body, html {
 						background: $Gradient;
 						margin: 1rem;
 						padding: 1rem;
-						box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+						box-shadow: 0 2px 20px rgba(0, 0, 0, .25);
 						&::after{
 							position: absolute;
 							display: inline-block;
 							content: "";
 							background: black;
 							width: 5rem;
-							height: 0.2rem;
+							height: .2rem;
 							left: 1rem;
-							top: -0.1rem;
+							top: -.1rem;
 						}
 						h6{
 							white-space: nowrap;
@@ -8254,7 +8250,7 @@ body, html {
 							height: calc(100% - 2.5rem);
 							li {
 								span{
-									font-size: 0.8rem;
+									font-size: .8rem;
 									color: black;
 									transition:.5s ease-in-out;
 									&:hover {
@@ -8292,7 +8288,7 @@ body, html {
 						display: flex;
 						height: 100%;
 						.modal-left {
-							box-shadow: -1rem 0rem 2rem -1rem rgba(0, 0, 0, 0.5);
+							box-shadow: -1rem 0rem 2rem -1rem rgba(0, 0, 0, .5);
 							background: darken($color: $main-color, $amount: 20);
 							color: #fff;
 							padding: 2rem 3rem;
@@ -8323,7 +8319,7 @@ body, html {
 							}
 						}
 						.modal-content {
-							box-shadow: 1rem 0rem 2rem -1rem rgba(0, 0, 0, 0.5);
+							box-shadow: 1rem 0rem 2rem -1rem rgba(0, 0, 0, .5);
 							position: relative;
 							background: white;
 							border-radius: 0;
@@ -8341,7 +8337,7 @@ body, html {
 									margin-bottom: 0;
 									.input-field {
 										position: relative;
-										margin: 0 0 0.5rem 0;
+										margin: 0 0 .5rem 0;
 										&.s12 {
 											textarea.materialize-textarea {
 												color: $color1;
@@ -8362,12 +8358,12 @@ body, html {
 										}
 										.form-group-line {
 											position: absolute;
-											bottom: 0.5rem;
-											left: 0.75rem;
+											bottom: .5rem;
+											left: .75rem;
 										}
 										.form-group-input:focus ~ .form-group-line,
 										.form-group-input:valid ~ .form-group-line {
-											animation: input3 0.5s 1 ease;
+											animation: input3 .5s 1 ease;
 											width: calc(100% - 1.5rem);
 										}
 									}
@@ -8392,9 +8388,9 @@ body, html {
 												position: absolute;
 												width: 45%;
 												height: 45%;
-												padding: 0.5rem;
+												padding: .5rem;
 												border: 1px solid $main-color;
-												opacity: 0.5;
+												opacity: .5;
 												left: 25%;
 												top: 25%;
 												transition: all 200ms ease-in-out;
@@ -8410,7 +8406,7 @@ body, html {
 											& > span {
 												& > span {
 													& > span{
-														transition: color 0.15s ease-out 0.3s;
+														transition: color .15s ease-out .3s;
 														color: transparent;
 														&::after{
 															position: absolute;
@@ -8426,7 +8422,7 @@ body, html {
 															overflow: hidden;
 															display: flex;
 															justify-content: center;
-															transition: width 0.2s;
+															transition: width .2s;
 														}
 													}
 													&::before{
@@ -8458,7 +8454,7 @@ body, html {
 													border: .5rem solid $main-color;
 													border-right: none;
 													border-bottom: none;
-													transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+													transition: height .15s ease-out, width .15s ease-out .15s;
 												}
 												&::after {
 													content:'';
@@ -8470,16 +8466,16 @@ body, html {
 													border: .5rem solid $main-color;
 													border-left: none;
 													border-bottom: none;
-													transition: height 0.15s ease-out, width 0.15s ease-out 0.15s;
+													transition: height .15s ease-out, width .15s ease-out .15s;
 												}
 											}
 											&:hover{
 												.button_border {
 													width: 100%;
 													height: 100%;
-													left: -0.5rem;
-													top: -0.5rem;
-													box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.15);
+													left: -.5rem;
+													top: -.5rem;
+													box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .15);
 												}
 												& > span {
 													& > span {
@@ -8516,7 +8512,7 @@ body, html {
 							content: "";
 							background: black;
 							width: 5rem;
-							height: 0.1rem;
+							height: .1rem;
 							left: -6.5rem;
 							top: 50%;
 							transform: translateY(-50%);
@@ -8528,7 +8524,7 @@ body, html {
 							li{
 								margin-right: 2rem;
 								&:last-of-type {
-									color: rgba($color: black, $alpha: 0.8);
+									color: rgba($color: black, $alpha: .8);
 									font-weight: 500;
 								}
 							}
@@ -8553,8 +8549,8 @@ body, html {
 					}
 				}
 				span{
-					padding-left: 0.2rem;
-					padding-right: 0.2rem;
+					padding-left: .2rem;
+					padding-right: .2rem;
 				}
 			}
 			.letter-grid {
@@ -8565,7 +8561,7 @@ body, html {
 				top: 0;
 				overflow: hidden;
 				text-align: center;
-				opacity: 0.4;
+				opacity: .4;
 				span {
 					background-color: transparent;
 					color: rgba(0,0,0,.25);
@@ -8682,11 +8678,11 @@ body, html {
 				.low_shelf {
 					height: 5rem !important;
 					.push-left {
-						margin-left: 10.5rem !important;
+						margin-left: 1.5rem !important;
 						&::before {
-							height: 0.5rem !important;
+							height: .5rem !important;
 							width: 8rem !important;
-							left: -10.5rem !important;
+							left: -1.5rem !important;
 						}
 					}
 					li {
@@ -8761,9 +8757,9 @@ body, html {
 					.button_border {
 						width: 100% !important;
 						height: 100% !important;
-						left: -0.5rem !important;
-						top: -0.5rem !important;
-						box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.15) !important;
+						left: -.5rem !important;
+						top: -.5rem !important;
+						box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .15) !important;
 					}
 				}
 			}
@@ -8776,10 +8772,10 @@ body, html {
 					}
 					&.type {
 						button {
-							margin-bottom: 0.25rem !important;
+							margin-bottom: .25rem !important;
 						}
 						.lorem {
-							margin-top: 0.25rem !important;
+							margin-top: .25rem !important;
 							padding: 0 0 0 0 !important;
 						}
 					}
@@ -8793,7 +8789,7 @@ body, html {
 						.card-body {
 							display: flex;
 							flex-direction: column;
-							padding: 0.25rem !important;
+							padding: .25rem !important;
 							h3 {
 								font-size: 1rem !important;
 							}
@@ -8814,7 +8810,7 @@ body, html {
 					}
 					&.card_coffesbought {
 						& > .card-body {
-							padding: 0.25rem !important;
+							padding: .25rem !important;
 							.testimonies-modal {
 								width: 100% !important;
 							}
@@ -8838,9 +8834,9 @@ body, html {
 					.button_border {
 						width: 100% !important;
 						height: 100% !important;
-						left: -0.5rem !important;
-						top: -0.5rem !important;
-						box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.15) !important;
+						left: -.5rem !important;
+						top: -.5rem !important;
+						box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .15) !important;
 					}
 				}
 			}
@@ -8878,9 +8874,9 @@ body, html {
 							.button_border {
 								width: 100% !important;
 								height: 100% !important;
-								left: -0.5rem !important;
-								top: -0.5rem !important;
-								box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.15) !important;
+								left: -.5rem !important;
+								top: -.5rem !important;
+								box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .15) !important;
 							}
 						}
 					}
@@ -8919,7 +8915,7 @@ body, html {
 				width: 90% !important;
 				.top_shelf {
 					div {
-						margin: 0.5rem !important;
+						margin: .5rem !important;
 						width: calc(calc(100% - 4rem) / 4) !important;
 					}
 				}
@@ -8957,9 +8953,9 @@ body, html {
 									.button_border {
 										width: 100% !important;
 										height: 100% !important;
-										left: -0.5rem !important;
-										top: -0.5rem !important;
-										box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.15) !important;
+										left: -.5rem !important;
+										top: -.5rem !important;
+										box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .15) !important;
 									}
 								}
 							}
@@ -8977,14 +8973,14 @@ body, html {
 						}
 						ul {
 							li {
-								margin-right: 0.75rem !important;
+								margin-right: .75rem !important;
 							}
 						}
 					}
 					.push-right {
 						ul {
 							li {
-								margin-right: 0.75rem !important;
+								margin-right: .75rem !important;
 								.name {
 									margin-left: 1rem !important;
 								}
@@ -9035,7 +9031,7 @@ body, html {
 					position: absolute;
 					&::before {
 						background-position: right !important;
-						opacity: 0.2;
+						opacity: .2;
 					}
 					&::after {
 						content: '';
@@ -9046,10 +9042,10 @@ body, html {
 						transform: translate(-50%, -50%);
 						position: absolute;
 						text-align: center;
-						color: rgba($color: black, $alpha: 0.8);
+						color: rgba($color: black, $alpha: .8);
 						background: rgba(0,0,0,0);
-						-webkit-backdrop-filter: blur(0.2rem);
-								backdrop-filter: blur(0.2rem);
+						-webkit-backdrop-filter: blur(.2rem);
+								backdrop-filter: blur(.2rem);
 					}
 				}
 				&.right_part {
@@ -9064,19 +9060,19 @@ body, html {
 										transform: translateY(10px);
 									}
 									&::after{
-										opacity: 0.4;
+										opacity: .4;
 									}
 									button {
 										& > span {
 											&::after {
 												width: 50%;
 												height: 100%;
-												transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+												transition: width .15s ease-out, height .15s ease-out .15s;
 											}
 											&::before {
 												width: 50%;
 												height: 100%;
-												transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+												transition: width .15s ease-out, height .15s ease-out .15s;
 											}
 											& > span {
 												&::after {
@@ -9084,14 +9080,14 @@ body, html {
 													border-bottom: .5rem solid $main-color;
 													width: calc(50%);
 													height: 1px;
-													transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+													transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 												}
 												&::before {
 													opacity: 1;
 													border-bottom: .5rem solid $main-color;
 													width: calc(50%);
 													height: 1px;
-													transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+													transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 												}
 												& > span {
 													color:$color1;
@@ -9163,7 +9159,7 @@ body, html {
 								transform: translate(8rem, 0) !important;
 								&::before {
 									width: 7rem !important;
-									height: 0.4rem !important;
+									height: .4rem !important;
 									transform: translate(-7rem, -50%) !important;
 								}
 							}
@@ -9171,7 +9167,7 @@ body, html {
 						p {
 							font-size: 2rem !important;
 							line-height: 2rem !important;
-							margin-bottom: 0.75rem !important;
+							margin-bottom: .75rem !important;
 							&.text {
 								font-size: 1rem !important;
 								line-height: 1rem !important;
@@ -9207,8 +9203,8 @@ body, html {
 									}
 									.border_effect {
 										&::before, &::after {
-											width: calc(100% + 0.2rem) !important;
-											height: calc(100% + 0.2rem) !important;
+											width: calc(100% + .2rem) !important;
+											height: calc(100% + .2rem) !important;
 											visibility: visible !important;
 										}
 									}
@@ -9307,14 +9303,14 @@ body, html {
 										border-bottom: .5rem solid $main-color;
 										width: calc(50%);
 										height: 1px;
-										transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+										transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 									}
 									&::before {
 										opacity: 1;
 										border-bottom: .5rem solid $main-color;
 										width: calc(50%);
 										height: 1px;
-										transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+										transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 									}
 									& > span {
 										line-height: 1 !important;
@@ -9371,7 +9367,7 @@ body, html {
 				width: 100% !important;
 				.top_shelf {
 					div {
-						margin: 0.5rem !important;
+						margin: .5rem !important;
 						width: calc(calc(100% - 4rem) / 4) !important;
 					}
 				}
@@ -9409,9 +9405,9 @@ body, html {
 									.button_border {
 										width: 100% !important;
 										height: 100% !important;
-										left: -0.5rem !important;
-										top: -0.5rem !important;
-										box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.15) !important;
+										left: -.5rem !important;
+										top: -.5rem !important;
+										box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .15) !important;
 									}
 								}
 							}
@@ -9429,14 +9425,14 @@ body, html {
 						}
 						ul {
 							li {
-								margin-right: 0.75rem !important;
+								margin-right: .75rem !important;
 							}
 						}
 					}
 					.push-right {
 						ul {
 							li {
-								margin-right: 0.75rem !important;
+								margin-right: .75rem !important;
 								.name {
 									margin-left: 1rem !important;
 								}
@@ -9493,7 +9489,7 @@ body, html {
 					position: absolute;
 					&::before {
 						background-position: right !important;
-						opacity: 0.2;
+						opacity: .2;
 					}
 					&::after {
 						content: '';
@@ -9504,10 +9500,10 @@ body, html {
 						transform: translate(-50%, -50%);
 						position: absolute;
 						text-align: center;
-						color: rgba($color: black, $alpha: 0.8);
+						color: rgba($color: black, $alpha: .8);
 						background: rgba(0,0,0,0);
-						-webkit-backdrop-filter: blur(0.2rem);
-								backdrop-filter: blur(0.2rem);
+						-webkit-backdrop-filter: blur(.2rem);
+								backdrop-filter: blur(.2rem);
 					}
 				}
 				&.right_part {
@@ -9523,19 +9519,19 @@ body, html {
 										transform: translateY(10px);
 									}
 									&::after{
-										opacity: 0.4;
+										opacity: .4;
 									}
 									button {
 										& > span {
 											&::after {
 												width: 50%;
 												height: 100%;
-												transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+												transition: width .15s ease-out, height .15s ease-out .15s;
 											}
 											&::before {
 												width: 50%;
 												height: 100%;
-												transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+												transition: width .15s ease-out, height .15s ease-out .15s;
 											}
 											& > span {
 												&::after {
@@ -9543,14 +9539,14 @@ body, html {
 													border-bottom: .5rem solid $main-color;
 													width: calc(50%);
 													height: 1px;
-													transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+													transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 												}
 												&::before {
 													opacity: 1;
 													border-bottom: .5rem solid $main-color;
 													width: calc(50%);
 													height: 1px;
-													transition: opacity 0s ease-out 0.29s, width 0.15s ease-out 0.3s;
+													transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
 												}
 												& > span {
 													color:$color1;
@@ -9582,10 +9578,10 @@ body, html {
 		}
 		.first_section_about {
 			.wrapper_full  {
-				margin: 5rem calc(0.75rem + 5px) 0.75rem calc(0.75rem + 5px) !important;
+				margin: 5rem calc(.75rem + 5px) .75rem calc(.75rem + 5px) !important;
 				flex-direction: column !important;
 				.type {
-					margin: 0 calc(calc(2.6rem + 5px) - calc(0.75rem + 5px)) !important;
+					margin: 0 calc(calc(2.6rem + 5px) - calc(.75rem + 5px)) !important;
 					padding: 0 0 0 0 !important;
 					button {
 						& > span {
@@ -9635,7 +9631,7 @@ body, html {
 					width: 95% !important;
     				line-height: 1.5rem !important;
 					.breadcrumb {
-						font-size: 0.5rem !important;
+						font-size: .5rem !important;
 					}
 				}
 				.shadow_title {
@@ -9714,7 +9710,7 @@ body, html {
 								transform: translate(7rem, 0) !important;
 								&::before {
 									width: 6rem !important;
-									height: 0.3rem !important;
+									height: .3rem !important;
 									transform: translate(-6rem, -50%) !important;
 								}
 							}
@@ -9723,8 +9719,8 @@ body, html {
 							font-size: 1.25rem !important;
 							line-height: 1.25rem !important;
 							&.text {
-								font-size: 0.75rem !important;
-								line-height: 0.75rem !important;
+								font-size: .75rem !important;
+								line-height: .75rem !important;
 							}
 						}
 						button {
@@ -9763,12 +9759,12 @@ body, html {
 							li {
 								width: 100% !important;
 								height: 25vh !important;
-								background: rgba($color: $main-color, $alpha: 0.2);
-								border-left: 0.5rem solid $main-color;
+								background: rgba($color: $main-color, $alpha: .2);
+								border-left: .5rem solid $main-color;
 								.card {
 									background: transparent !important;
 									.card-body {
-										padding: 0.75rem !important;
+										padding: .75rem !important;
 										figure {
 											display: none !important;
 										}
@@ -9836,9 +9832,9 @@ body, html {
 					.modal-content {
 						padding: 0 !important;
 						.card {
-							padding: 0.5rem 0 !important;
+							padding: .5rem 0 !important;
 							.shadow_title {
-								color: rgba($color: black, $alpha: 0.5) !important;
+								color: rgba($color: black, $alpha: .5) !important;
 							}
 						}
 					}
@@ -9854,7 +9850,7 @@ body, html {
 						.column_1 {
 							.head {
 								i {
-									margin-top: 0.5rem !important;
+									margin-top: .5rem !important;
 								}
 								span {
 									font-size: 1rem !important;
@@ -9862,7 +9858,7 @@ body, html {
 							}
 							.content {
 								h6 {
-									margin-top: 0.5rem;
+									margin-top: .5rem;
 									font-size: 1rem !important;
 								}
 							}
@@ -9874,7 +9870,7 @@ body, html {
 							grid-column: 2 !important;
 							.head {
 								i {
-									margin-top: 0.5rem !important;
+									margin-top: .5rem !important;
 								}
 								span {
 									font-size: 1rem !important;
@@ -9882,7 +9878,7 @@ body, html {
 							}
 							.content {
 								h6 {
-									margin-top: 0.5rem;
+									margin-top: .5rem;
 									font-size: 1rem !important;
 								}
 							}
@@ -9890,7 +9886,7 @@ body, html {
 						.tags {
 							justify-content: space-evenly;
 							li {
-								margin: 0 0.2rem 0.2rem 0 !important;
+								margin: 0 .2rem .2rem 0 !important;
 								height: 3rem !important;
 								width: 3rem;
 								border-radius: 1rem;
@@ -9899,11 +9895,11 @@ body, html {
 								display: flex;
 								justify-content: center;
 								align-items: center;
-								font-size: 0.6rem !important;
-								line-height: 0.6rem !important;
+								font-size: .6rem !important;
+								line-height: .6rem !important;
 								text-align: center;
 								&::before {
-									top: 0.5rem !important;
+									top: .5rem !important;
 									transform: translate(-50%, -50%) !important;
 								}
 								&::after {
@@ -9975,7 +9971,7 @@ body, html {
 						margin-left: auto;
 						ul {
 							li {
-								margin-right: 0.75rem !important;
+								margin-right: .75rem !important;
 								.name {
 									margin-left: 1rem !important;
 								}

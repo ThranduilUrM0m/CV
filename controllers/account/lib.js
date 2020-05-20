@@ -131,7 +131,7 @@ async function update(req, res) {
             },
             { upsert: true }
         );
-        //main(user.email).catch(console.error);
+        verification_email(findUser.email, 'Hello,\n\n' + 'your information has been changed, if this wasn\'t you, please contact us.\n');
         return res.status(200).json({
             text: "User updated successfully.",
         });

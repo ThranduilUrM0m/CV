@@ -4,6 +4,8 @@ import Swiper from 'swiper';
 import moment from 'moment';
 import { Form } from '../Article';
 import { FormProject } from '../Project';
+import logo from '../../logo.svg';
+import favicon from '../../favicon.svg';
 import Calendar from './Calendar';
 import Account from './Account';
 import Autocomplete from 'react-autocomplete';
@@ -25,6 +27,7 @@ class Dashboard extends React.Component {
         super(props);
         
 		this.state = {
+            logo_to_show: logo,
             _user: {},
             _users: [],
             _user_toEdit_username: '',
@@ -214,6 +217,28 @@ class Dashboard extends React.Component {
         this._handleModal('_testimony_modal_trigger', '_all_testimony_modal_view');
 
         this._handleTimeFit();
+
+        function displayWindowSize(){
+            if ($(window).width() <= 425) {
+                self.setState({
+                    logo_to_show: favicon
+                });
+                $('.logoHolder').css({
+                    height: '4rem'
+                })
+            } else {
+                self.setState({
+                    logo_to_show: logo
+                });
+                $('.logoHolder').css({
+                    height: '1.5rem'
+                });
+            }
+        }
+        // Attaching the event listener function to window's resize event
+        window.addEventListener("resize", displayWindowSize);
+        // Calling the function for the first time
+        displayWindowSize();
 	}
     UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.userToEdit) {
@@ -800,7 +825,7 @@ class Dashboard extends React.Component {
     }
 	render() {
         //if user choose to update than close nd add, he'll eventually be updating, so wtf
-		const { _user, _users, title, title_projects, sort, timeframe, categorie, _article, _testimony, currentPage, todosPerPage, tags, _user_toEdit_username, _user_toEdit_roles, modal_msg } = this.state;
+		const { logo_to_show, _user, _users, title, title_projects, sort, timeframe, categorie, _article, _testimony, currentPage, todosPerPage, tags, _user_toEdit_username, _user_toEdit_roles, modal_msg } = this.state;
         const { articles, projects, testimonies } = this.props;
 		return (
 			<FullPage scrollMode={'normal'}>
@@ -808,41 +833,27 @@ class Dashboard extends React.Component {
 					<section id="first_section_dashboard" className="first_section_dashboard">
 						<div className="wrapper_full">
 							<div className="nav nav-pills flex-column">
-								<ul className="settings_dashboard">
-									<li><a href="/" className="nav_link">Home</a></li>
-									<li><a href="#1a" className="nav_link active" data-toggle="tab">Dashboard</a></li>
-									<li><a href="#2a" className="nav_link" data-toggle="tab">Settings</a></li>
+                                <a className="logoHolder" href="/">
+                                    <img className="logo img-fluid" src={logo_to_show} alt="Risala"/>
+                                </a>
+                                <div className="user_info">
+                                    <div className="user_name">
+                                        <h4>Hello,</h4>
+                                        <h4>{_user.username}</h4>
+                                        <p className='text-muted'>{_user.roles}</p>
+                                    </div>
+                                    <div className="user_logo">
+                                        {_.upperCase(_.head(_.head(_.words(_user.username))))}
+                                    </div>
+                                </div>
+                                <ul className="settings_dashboard">
+									<li><a href="#1a" className="nav_link active" data-toggle="tab"><i className="fas fa-th-large"></i>Dashboard</a></li>
+									<li><a href="#3a" className="nav_link" data-toggle="tab"><i className="far fa-bell"></i>Notifications</a></li>
+									<li><a href="#4a" className="nav_link" data-toggle="tab"><i className="fas fa-chart-line"></i>Analytics</a></li>
+                                    <li className="not_link"><p className="text-muted">My Account</p></li>
+									<li><a href="#2a" className="nav_link" data-toggle="tab"><i className="fas fa-users-cog"></i>Settings</a></li>
 								</ul>
-                                <div className="hello">
-									<p>Hello,</p>
-									<h3>{_user.username}</h3>
-								</div>
-								<div className="timeanddatenow">
-									<h1 id="bigtext" className="datenow">
-                                        <Clock
-                                            className='_day_name'
-                                            format={'dddd'}
-                                        />
-                                        <Clock
-                                            className='_day_number'
-                                            format={'Do'}
-                                        />
-                                        <Clock
-                                            className='_month_name'
-                                            format={'MMMM'}
-                                        />
-                                        <Clock
-                                            className='_year_number'
-                                            format={'YYYY'}
-                                        />
-									</h1>
-									<div className="timenow">
-										<Clock
-											format={'hh:mm A'}
-											ticking={true}
-										/>
-									</div>
-								</div>
+                                
                             </div>
 							<div className="after"></div>
 							
@@ -853,9 +864,33 @@ class Dashboard extends React.Component {
                                             <h2>Dashboard</h2>
                                             <div className="name">{_user.email}</div>
                                         </div>
-                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-door-open"></i></a>
+                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
                                     </div>
 									<ul className="cards">
+                                        <div className="timeanddatenow">
+                                            <h1 id="bigtext" className="datenow">
+                                                <Clock
+                                                    className='_day_name'
+                                                    format={'dddd'}
+                                                />
+                                                <Clock
+                                                    className='_day_number'
+                                                    format={'Do'}
+                                                />
+                                                <Clock
+                                                    className='_month_name'
+                                                    format={'MMMM'}
+                                                />
+                                                <Clock
+                                                    className='_year_number'
+                                                    format={'YYYY'}
+                                                />
+                                                <Clock
+                                                    format={'hh:mm A'}
+                                                    ticking={true}
+                                                />
+                                            </h1>
+                                        </div>
                                         <li className="cards__item">
                                             <div className="card">
                                                 <div className="card__content">
@@ -1067,12 +1102,6 @@ class Dashboard extends React.Component {
                                                                                                             <a className="dropdown-item _view" href={project.link_to} target="_blank" rel="noopener noreferrer"><i className="fas fa-expand-alt"></i></a>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div className="comments_up_down">
-                                                                                                        <p className="text-muted views"><b>{_.size(project.view)}</b><i className="fas fa-eye"></i></p>
-                                                                                                        <p className="text-muted comments"><b>{_.size(project.comment)}</b> <i className="fas fa-comment-alt"></i></p>
-                                                                                                        <p className="text-muted upvotes"><b>{_.size(project.upvotes)}</b> <i className="fas fa-thumbs-up"></i></p>
-                                                                                                        <p className="text-muted downvotes"><b>{_.size(project.downvotes)}</b> <i className="fas fa-thumbs-down"></i></p>
-                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1194,7 +1223,7 @@ class Dashboard extends React.Component {
                                             <h2>Settings</h2>
                                             <div className="name">{_user.email}</div>
                                         </div>
-                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-door-open"></i></a>
+                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
                                     </div>
                                     <ul className="forms">
                                         <li className="forms__item">
@@ -1274,7 +1303,25 @@ class Dashboard extends React.Component {
                                         </li>
                                     </ul>
                                 </div>
-							</div>
+                                <div className="notifications_pane tab-pane" id="3a">
+                                    <div className="top_roof">
+                                        <div className="left_roof">
+                                            <h2>Notifications</h2>
+                                            <div className="name">{_user.email}</div>
+                                        </div>
+                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
+                                    </div>
+                                </div>
+                                <div className="analytics_pane tab-pane" id="4a">
+                                    <div className="top_roof">
+                                        <div className="left_roof">
+                                            <h2>Analytics</h2>
+                                            <div className="name">{_user.email}</div>
+                                        </div>
+                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <div className="_article_modal modal _modal fade" id="_article_modal" tabIndex="-1" role="dialog" aria-labelledby="_article_modalLabel" aria-hidden="true">
                                 <div className="modal-dialog" role="document">

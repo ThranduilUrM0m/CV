@@ -333,10 +333,10 @@ class Footer extends React.Component {
                                     (_.orderBy(_.filter(projects, (_p) => { return !_p._hide }), ['createdAt'], ['asc']).slice(0, 3)).map((project, index) => {
                                         return (
                                             <li key={index}>
-                                                <Link to={`${project.link_to}`}>
+                                                <a href={project.link_to} target="_blank" rel="noopener noreferrer">
                                                     <span>{project.title}</span>
                                                     <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
-                                                </Link>
+                                                </a>
                                             </li>
                                         )
                                     })
