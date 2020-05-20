@@ -1268,7 +1268,7 @@ class Dashboard extends React.Component {
                                                                     {
                                                                         _.orderBy(_users, ['createdAt'], ['desc']).map((_u, index) => {
                                                                             return (
-                                                                                <tr className={`user_card user_anchor ${_u._id === _user._id ? 'active' : ''}`}>
+                                                                                <tr key={index} className={`user_card user_anchor ${_u._id === _user._id ? 'active' : ''}`}>
                                                                                     <td>{_u.username}</td>
                                                                                     <td>{_u.email}</td>
                                                                                     <td>{_u.fingerprint}</td>

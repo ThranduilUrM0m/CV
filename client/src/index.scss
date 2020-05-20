@@ -1798,7 +1798,7 @@ body, html {
 						border: 0;
 						color: white;
 						height: 1.5rem;
-						margin: 1rem 3.5rem 1rem 3.5rem;
+						margin: 1rem 1.25rem 1rem 5rem;
 						transform-origin: left;
 						transform: scale(.8);
 						img {
@@ -1806,7 +1806,7 @@ body, html {
 						}
 					}
 					.user_info {
-						margin: 1rem 3.5rem 1rem 3.5rem;
+						margin: 1rem 5rem 1rem 5rem;
 						display: flex;
 						justify-content: space-between;
 						h4 {
@@ -1829,7 +1829,7 @@ body, html {
 					.settings_dashboard {
 						display: flex;
 						flex-direction: column;
-						margin: 1.25rem 3.5rem;
+						margin: 1.25rem 1.25rem 1.25rem 5rem;
 						li:not(.not_link) {
 							position: relative;
 							font-size: 1rem;
