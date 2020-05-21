@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const Testimonies = mongoose.model('Testimonies');
+const Notifications = mongoose.model('Notifications');
 
 router.post('/', (req, res, next) => {
     const { body } = req;
@@ -31,7 +32,9 @@ router.post('/', (req, res, next) => {
 
     const finalTestimony = new Testimonies(body);
     return finalTestimony.save()
-        .then(() => res.json({ testimony: finalTestimony.toJSON() }))
+        .then(() => {
+            res.json({ testimony: finalTestimony.toJSON() });
+        })
         .catch(next);
 });
 

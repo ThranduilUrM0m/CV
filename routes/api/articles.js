@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const Articles = mongoose.model('Articles');
+const Notifications = mongoose.model('Notifications');
 
 router.post('/', (req, res, next) => {
   const { body } = req;
@@ -39,7 +40,9 @@ router.post('/', (req, res, next) => {
 
   const finalArticle = new Articles(body);
   return finalArticle.save()
-    .then(() => res.json({ article: finalArticle.toJSON() }))
+    .then(() => {
+      res.json({ article: finalArticle.toJSON() });
+    })
     .catch(next);
 });
 

@@ -81,7 +81,7 @@ class Dashboard extends React.Component {
         this.handleChangeFieldUser = this.handleChangeFieldUser.bind(this);
 	}
 	componentDidMount() {
-		const { onLoad, onLoadProject, onLoadTestimony } = this.props;
+		const { onLoad, onLoadProject, onLoadTestimony, onLoadNotification } = this.props;
 		let self = this;
 
         document.getElementById('first_section_dashboard').parentElement.style.height = 'initial';
@@ -167,6 +167,16 @@ class Dashboard extends React.Component {
         })
         .then(function () {
             // always executed
+        });
+        
+        axios('/api/notifications')
+        .then(function (response) {
+            // handle success
+            onLoadNotification(response.data);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
         });
 		
 		//to get the user object
@@ -826,7 +836,7 @@ class Dashboard extends React.Component {
 	render() {
         //if user choose to update than close nd add, he'll eventually be updating, so wtf
 		const { logo_to_show, _user, _users, title, title_projects, sort, timeframe, categorie, _article, _testimony, currentPage, todosPerPage, tags, _user_toEdit_username, _user_toEdit_roles, modal_msg } = this.state;
-        const { articles, projects, testimonies } = this.props;
+        const { articles, projects, testimonies, notifications } = this.props;
 		return (
 			<FullPage scrollMode={'normal'}>
 				<Slide>
@@ -837,13 +847,12 @@ class Dashboard extends React.Component {
                                     <img className="logo img-fluid" src={logo_to_show} alt="Risala"/>
                                 </a>
                                 <div className="user_info">
-                                    <div className="user_name">
-                                        <h4>Hello,</h4>
-                                        <h4>{_user.username}</h4>
-                                        <p className='text-muted'>{_user.roles}</p>
-                                    </div>
                                     <div className="user_logo">
                                         {_.upperCase(_.head(_.head(_.words(_user.username))))}
+                                    </div>
+                                    <div className="user_name">
+                                        <h4>{_user.username}</h4>
+                                        <div className="name">{_user.email}</div>
                                     </div>
                                 </div>
                                 <ul className="settings_dashboard">
@@ -852,7 +861,8 @@ class Dashboard extends React.Component {
 									<li><a href="#4a" className="nav_link" data-toggle="tab"><i className="fas fa-chart-line"></i>Analytics</a></li>
                                     <li className="not_link"><p className="text-muted">My Account</p></li>
 									<li><a href="#2a" className="nav_link" data-toggle="tab"><i className="fas fa-users-cog"></i>Settings</a></li>
-								</ul>
+                                    <li><a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a></li>
+                                </ul>
                                 
                             </div>
 							<div className="after"></div>
@@ -862,10 +872,7 @@ class Dashboard extends React.Component {
                                     <div className="top_roof">
                                         <div className="left_roof">
                                             <h2>Dashboard</h2>
-                                            <div className="name">{_user.email}</div>
-                                            
                                         </div>
-                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
                                     </div>
 									<ul className="cards">
                                         <div className="timeanddatenow">
@@ -1222,10 +1229,8 @@ class Dashboard extends React.Component {
                                     <div className="top_roof">
                                         <div className="left_roof">
                                             <h2>Settings</h2>
-                                            <div className="name">{_user.email}</div>
                                         </div>
-                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
-                                    </div>
+                                     </div>
                                     <ul className="forms">
                                         <li className="forms__item">
                                             <div className="card">
@@ -1308,18 +1313,56 @@ class Dashboard extends React.Component {
                                     <div className="top_roof">
                                         <div className="left_roof">
                                             <h2>Notifications</h2>
-                                            <div className="name">{_user.email}</div>
                                         </div>
                                         <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
                                     </div>
+                                    <ul className="forms">
+                                        <li className="forms__item">
+                                            <div className="card">
+                                                <div className="card__content">
+                                                    <div className="_notifs_pane _pane">
+                                                        <div className="_notifs_content _content">
+                                                            <div className="_notifs_head">
+                                                                <h4>Notifications.</h4>
+                                                            </div>
+                                                            <div className="_notifs_data data_container">
+                                                                <table className="notifs_list table table-striped">
+                                                                    <thead>
+                                                                        <tr className="notifs_list_header">
+                                                                            <th>Date</th>
+                                                                            <th>Type</th>
+                                                                            <th>Source</th>
+                                                                            <th>Description</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    {
+                                                                        _.orderBy(notifications, ['createdAt'], ['desc']).map((_notification, index) => {
+                                                                            return (
+                                                                                <tr key={index} className={`notif_card notif_anchor`}>
+                                                                                    <td>{moment(_notification.createdAt).format("YYYY Do MM")}</td>
+                                                                                    <td>{_notification.type}</td>
+                                                                                    <td>{_notification.author}</td>
+                                                                                    <td>{_notification.description}</td>
+                                                                                </tr>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                                 <div className="analytics_pane tab-pane" id="4a">
                                     <div className="top_roof">
                                         <div className="left_roof">
                                             <h2>Analytics</h2>
-                                            <div className="name">{_user.email}</div>
                                         </div>
-                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -2220,6 +2263,7 @@ const mapStateToProps = state => ({
     articles: state.home.articles,
     projects: state.home.projects,
     testimonies: state.home.testimonies,
+    notifications: state.home.notifications,
     
     userToEdit: state.home.userToEdit,
 });
@@ -2228,6 +2272,10 @@ const mapDispatchToProps = dispatch => ({
     onLoad: data => dispatch({ type: 'HOME_PAGE_LOADED', data }),
     onDelete: id => dispatch({ type: 'DELETE_ARTICLE', id }),
     setEdit: article => dispatch({ type: 'SET_EDIT', article }),
+
+    
+    onLoadNotification: data => dispatch({ type: 'NOTIFICATION_PAGE_LOADED', data }),
+    onDeleteNotification: id => dispatch({ type: 'DELETE_NOTIFICATION', id }),
     
     setEditUser: user => dispatch({ type: 'SET_EDIT_USER', user }),
     

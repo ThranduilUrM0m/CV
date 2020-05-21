@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const Projects = mongoose.model('Projects');
+const Notifications = mongoose.model('Notifications');
 
 router.post('/', (req, res, next) => {
   const { body } = req;
@@ -47,7 +48,9 @@ router.post('/', (req, res, next) => {
 
   const finalProject = new Projects(body);
   return finalProject.save()
-    .then(() => res.json({ project: finalProject.toJSON() }))
+    .then(() => {
+      res.json({ project: finalProject.toJSON() });
+    })
     .catch(next);
 });
 

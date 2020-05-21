@@ -51,6 +51,7 @@ const setUpExpress = () => {
     require('./models/Events');
     require('./models/Projects');
     require('./models/Testimonies');
+    require('./models/Notifications');
 
     //On définit notre objet express nommé app
     const app = express();

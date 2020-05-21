@@ -43,6 +43,23 @@ export default (state={
                 articleToEdit: undefined,
             };
 
+        //NOTIFICATION
+        case 'NOTIFICATION_PAGE_LOADED':
+            return {
+                ...state,
+                notifications: action.data.notifications,
+            };
+        case 'SUBMIT_NOTIFICATION':
+            return {
+                ...state,
+                notifications: ([action.data.notification]).concat(state.notifications),
+            };
+        case 'DELETE_NOTIFICATION':
+            return {
+                ...state,
+                notifications: state.notifications.filter((notification) => notification._id !== action.id),
+            };
+
         //EVENT
         case 'EVENT_PAGE_LOADED':
             return {

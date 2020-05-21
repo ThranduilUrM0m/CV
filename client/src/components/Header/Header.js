@@ -410,7 +410,7 @@ class Header extends React.Component {
                             <div className="togglebtn"><span role="img" aria-label="sheep">👉</span> May we suggest?</div>
                             <ul className="text-muted tags">
                                 {
-                                    _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment', 'upvotes', 'view'], ['desc', 'desc', 'desc']).map((_ap, _index) => {
+                                    _.orderBy(_.filter(_.union(articles, projects), (_a) => { return !_a._hide }), ['comment', 'upvotes', 'view'], ['desc', 'desc', 'desc']).map((_ap, _index) => {
                                         return (
                                             _ap.tag.map((t, i) => {
                                                 return (

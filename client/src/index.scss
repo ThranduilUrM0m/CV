@@ -1473,6 +1473,22 @@ body, html {
 				}
 				box-shadow: none;
 			}
+			select {
+				display: initial;
+				background-color: transparent;
+				border: none;
+				border-bottom: 1px solid #b8b8b8;
+				border-radius: 0;
+				outline: none;
+				height: 3rem;
+				width: 100%;
+				font-size: 16px;
+				margin: 0 0 8px 0;
+				padding: 0;
+				box-shadow: none;
+				box-sizing: content-box;
+				transition: box-shadow .3s, border .3s;
+			}
 			.title_article{
 				margin-top: 0 !important;
 				margin-bottom: .5rem !important;
@@ -1562,6 +1578,9 @@ body, html {
 			.checkbox_hide {
 				display: flex;
 				align-items: center;
+				p {
+					margin-bottom: 0;
+				}
 				label {
 					transform: none !important;
 					position: relative !important;
@@ -1778,22 +1797,22 @@ body, html {
 				display: flex;
 				background-color: #e2e2e5;
 				.nav {
-					position: relative;
+					position: fixed;
 					display: flex;
 					margin: .5rem;
 					width: 28%;
-					height: auto;
+					height: calc(100vh - 1rem);
 					background: white;
 					box-shadow: 1rem 0rem 2rem -1rem rgba(0, 0, 0, .5);
-					-webkit-clip-path: inset(0 calc(100% - 5rem) 0 0);
-					clip-path: inset(0 calc(100% - 5rem) 0 0);
+					-webkit-clip-path: inset(0 calc(100% - 4rem) 0 0);
+					clip-path: inset(0 calc(100% - 4rem) 0 0);
 					transition: all .1s ease-out;
 					z-index: 9998;
 					.logoHolder {
 						border: 0;
 						color: white;
 						height: 1.5rem;
-						margin: 1rem 1.25rem 1rem 5rem;
+						margin: 1rem auto 1rem 4rem;
 						transform-origin: left;
 						transform: scale(.8);
 						img {
@@ -1801,30 +1820,37 @@ body, html {
 						}
 					}
 					.user_info {
-						margin: 1rem 5rem 1rem 5rem;
+						margin: 1rem 4rem 1rem 4rem;
 						display: flex;
 						justify-content: space-between;
-						h4 {
-							margin-bottom: 0;
-						}
+						align-items: center;
 						.user_logo {
 							display: flex;
 							align-items: center;
 							justify-content: center;
 							color: $main-color;
 							font-weight: bold;
-							width: 5rem;
-							height: 5rem;
+							width: 4rem;
+							height: 4rem;
 							border-radius: .75rem;
-							margin-bottom: 1.25rem;
 							background: white;
 							box-shadow: 0.25rem 0.25rem 1rem -.5rem rgba(0, 0, 0, 0.5);
+						}
+						.user_name {
+							h4 {
+								margin-bottom: 0;
+							}
+							.name {
+								font-size: .75rem;
+								color: rgba(0, 0, 0, .5);
+							}
 						}
 					}
 					.settings_dashboard {
 						display: flex;
+						flex: 1;
 						flex-direction: column;
-						margin: 1.25rem 1.25rem 1.25rem 5rem;
+						margin: 1.25rem 1.25rem 1.25rem 4rem;
 						li:not(.not_link) {
 							position: relative;
 							font-size: 1rem;
@@ -1859,6 +1885,9 @@ body, html {
 								}
 							}
 						}
+						li:last-of-type {
+							margin-top: auto;
+						}
 						.not_link {
 							font-size: .75rem;
 							p {
@@ -1875,8 +1904,8 @@ body, html {
 					position: absolute;
 					width: .25rem;
 					height: 3.5rem;
-					top: 50%;
-					left: 5rem;
+					top: 50vh;
+					left: 4rem;
 					transform: translate(.75rem, -50%);
 					background-color: white;
 					transition: all .1s ease-out;
@@ -1886,7 +1915,7 @@ body, html {
 					height: 100%;
 					top: 0;
 					left: 0;
-					margin-left: calc(calc(28vw - 6.75rem) * -1);
+					margin-left: 5.75rem;
 					padding: 1.25rem;
 					.tab-pane {
 						height: fit-content;
@@ -1921,10 +1950,6 @@ body, html {
 								margin-right: auto;
 								h2 {
 									font-weight: bold;
-								}
-								.name {
-									font-size: .75rem;
-									color: rgba(0, 0, 0, .5);
 								}
 							}
 						}
@@ -2732,7 +2757,7 @@ body, html {
 								}
 							}
 						}
-						&.settings_pane {
+						&.settings_pane, &.notifications_pane {
 							.forms {
 								display: flex;
 								flex-wrap: wrap;
