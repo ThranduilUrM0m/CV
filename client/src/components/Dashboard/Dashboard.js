@@ -405,9 +405,21 @@ class Dashboard extends React.Component {
         setEdit(article);
     }
     handleDeleteArticle(_id) {
-        const { onDelete } = this.props;
+        const { onDelete, onSubmitNotification } = this.props;
+        const { _user } = this.state;
 		return axios.delete(`/api/articles/${_id}`)
-			.then(() => onDelete(_id));
+			.then(() => {
+                onDelete(_id);
+                return axios.post('/api/notifications', {
+                    type: 'Article Deleted',
+                    description: 'Article \''+_id+'\' Deleted.',
+                    author: _user.email
+                })
+                .then((res_n) => onSubmitNotification(res_n.data))
+                .catch(error => {
+                    console.log(error)
+                });
+            });
     }
     handleAddProject() {
         const { setEditProject } = this.props;
@@ -418,18 +430,42 @@ class Dashboard extends React.Component {
         setEditProject(project);
     }
     handleDeleteProject(_id) {
-        const { onDeleteProject } = this.props;
+        const { onDeleteProject, onSubmitNotification } = this.props;
+        const { _user } = this.state;
 		return axios.delete(`/api/projects/${_id}`)
-			.then(() => onDeleteProject(_id));
+			.then(() => {
+                onDeleteProject(_id);
+                return axios.post('/api/notifications', {
+                    type: 'Project Deleted',
+                    description: 'Project \''+_id+'\' Deleted.',
+                    author: _user.email
+                })
+                .then((res_n) => onSubmitNotification(res_n.data))
+                .catch(error => {
+                    console.log(error)
+                });
+            });
     }
     handleEditTestimony(testimony) {
         const { setEditTestimony } = this.props;
         setEditTestimony(testimony);
     }
     handleDeleteTestimony(_id) {
-        const { onDeleteTestimony } = this.props;
+        const { onDeleteTestimony, onSubmitNotification } = this.props;
+        const { _user } = this.state;
 		return axios.delete(`/api/testimonies/${_id}`)
-			.then(() => onDeleteTestimony(_id));
+			.then(() => {
+                onDeleteTestimony(_id);
+                return axios.post('/api/notifications', {
+                    type: 'Testimony Deleted',
+                    description: 'Testimony \''+_id+'\' Deleted.',
+                    author: _user.email
+                })
+                .then((res_n) => onSubmitNotification(res_n.data))
+                .catch(error => {
+                    console.log(error)
+                });
+            });
     }
 	handleChange(event) {
 		this.setState({
@@ -2276,6 +2312,7 @@ const mapDispatchToProps = dispatch => ({
     
     onLoadNotification: data => dispatch({ type: 'NOTIFICATION_PAGE_LOADED', data }),
     onDeleteNotification: id => dispatch({ type: 'DELETE_NOTIFICATION', id }),
+    onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data }),
     
     setEditUser: user => dispatch({ type: 'SET_EDIT_USER', user }),
     

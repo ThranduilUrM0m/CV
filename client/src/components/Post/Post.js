@@ -190,19 +190,32 @@ class Post extends React.Component {
 	}
 	handleSubmitViews() {
 		const f = new Fingerprint().get();
-		const { view } = this.state;
+		const { title, view } = this.state;
+		const { onSubmitNotification } = this.props;
 		const self = this;
 
 		if( _.isUndefined( _.find(view, (v) => {return v.viewer === f.toString()}) ) ) {
 			self.setState(state => ({
 				view: [...state.view, {viewer: f.toString()}],
 			}), () => {
-				self.handleSubmit();
+				self.handleSubmit()
+				.then(() => {
+					return axios.post('/api/notifications', {
+						type: 'Post viewed',
+						description: '\''+f.toString()+'\' viewed \''+title+'\'',
+						author: f.toString()
+					})
+					.then((res_n) => onSubmitNotification(res_n.data))
+					.catch(error => {
+						console.log(error)
+					});
+				})
 			})
 		}
 	}
 	handleSubmitUpvotes(event) {
-		const { upvotes, downvotes } = this.state;
+		const { title, upvotes, downvotes } = this.state;
+		const { onSubmitNotification } = this.props;
         var f = new Fingerprint().get();
         let target = event.target;
 		let self = this;
@@ -216,11 +229,33 @@ class Post extends React.Component {
 					self.setState({
 						downvotes: _downvotes,
 					}, () => {
-						self.handleSubmit();
+						self.handleSubmit()
+						.then(() => {
+							return axios.post('/api/notifications', {
+								type: 'Article upvoted',
+								description: '\''+f.toString()+'\' upvoted \''+title+'\'',
+								author: f.toString()
+							})
+							.then((res_n) => onSubmitNotification(res_n.data))
+							.catch(error => {
+								console.log(error)
+							});
+						});
 					});
 					$(target).closest("div").parent().find('div.downvotes').removeClass('active');
 				} else {
-					self.handleSubmit();
+					self.handleSubmit()
+					.then(() => {
+						return axios.post('/api/notifications', {
+							type: 'Article upvoted',
+							description: '\''+f.toString()+'\' upvoted \''+title+'\'',
+							author: f.toString()
+						})
+						.then((res_n) => onSubmitNotification(res_n.data))
+						.catch(error => {
+							console.log(error)
+						});
+					});
 				}
 				$(target).closest("div").addClass('active');
 			})
@@ -229,13 +264,25 @@ class Post extends React.Component {
 			self.setState(state => ({
 				upvotes: _upvotes,
 			}), () => {
-				self.handleSubmit();
+				self.handleSubmit()
+				.then(() => {
+					return axios.post('/api/notifications', {
+						type: 'Article negative upvoted',
+						description: '\''+f.toString()+'\' negative upvoted \''+title+'\'',
+						author: f.toString()
+					})
+					.then((res_n) => onSubmitNotification(res_n.data))
+					.catch(error => {
+						console.log(error)
+					});
+				});
 				$(target).closest("div").removeClass('active');
 			})
 		}
 	}
 	handleSubmitDownvotes(event) {
-		const { downvotes, upvotes } = this.state;
+		const { title, downvotes, upvotes } = this.state;
+		const { onSubmitNotification } = this.props;
         var f = new Fingerprint().get();
         let target = event.target;
 		let self = this;
@@ -249,11 +296,33 @@ class Post extends React.Component {
 					self.setState({
 						upvotes: _upvotes,
 					}, () => {
-						self.handleSubmit();
+						self.handleSubmit()
+						.then(() => {
+							return axios.post('/api/notifications', {
+								type: 'Article downvoted',
+								description: '\''+f.toString()+'\' downvoted \''+title+'\'',
+								author: f.toString()
+							})
+							.then((res_n) => onSubmitNotification(res_n.data))
+							.catch(error => {
+								console.log(error)
+							});
+						});
 					});
 					$(target).closest("div").parent().find('div.upvotes').removeClass('active');
 				} else {
-					self.handleSubmit();
+					self.handleSubmit()
+					.then(() => {
+						return axios.post('/api/notifications', {
+							type: 'Article downvoted',
+							description: '\''+f.toString()+'\' downvoted \''+title+'\'',
+							author: f.toString()
+						})
+						.then((res_n) => onSubmitNotification(res_n.data))
+						.catch(error => {
+							console.log(error)
+						});
+					});
 				}
 				$(target).closest("div").addClass('active');
 			})
@@ -262,13 +331,25 @@ class Post extends React.Component {
 			self.setState(state => ({
 				downvotes: _downvotes,
 			}), () => {
-				self.handleSubmit();
+				self.handleSubmit()
+				.then(() => {
+					return axios.post('/api/notifications', {
+						type: 'Article negative downvoted',
+						description: '\''+f.toString()+'\' negative downvoted \''+title+'\'',
+						author: f.toString()
+					})
+					.then((res_n) => onSubmitNotification(res_n.data))
+					.catch(error => {
+						console.log(error)
+					});
+				});
 				$(target).closest("div").removeClass('active');
 			})
 		}
 	}
 	handleSubmitComments() {
-		const { _comment_id_ifEditing, comment ,_comment_parent_id, _comment_author, _comment_body, _comment_fingerprint, _comment_upvotes, _comment_downvotes } = this.state;
+		const { title ,_comment_id_ifEditing, comment ,_comment_parent_id, _comment_author, _comment_body, _comment_fingerprint, _comment_upvotes, _comment_downvotes } = this.state;
+		const { onSubmitNotification } = this.props;
 		const self = this;
 		let _edited_comment = [];
 
@@ -302,7 +383,18 @@ class Post extends React.Component {
 								// Get the current 'global' time from an API using Promise
 								return new Promise((resolve, reject) => {
 									setTimeout(function() {
-										self.handleSubmit();
+										self.handleSubmit()
+										.then(() => {
+											return axios.post('/api/notifications', {
+												type: 'Comment edited',
+												description: '\''+_comment_fingerprint+'\' edited comment \''+_comment_id_ifEditing+'\' on article \''+title+'\'',
+												author: _comment_fingerprint
+											})
+											.then((res_n) => onSubmitNotification(res_n.data))
+											.catch(error => {
+												console.log(error)
+											});
+										});
 										true ? resolve('Success') : reject('Error');
 									}, 2000);
 								})
@@ -338,7 +430,30 @@ class Post extends React.Component {
 						// Get the current 'global' time from an API using Promise
 						return new Promise((resolve, reject) => {
 							setTimeout(function() {
-								self.handleSubmit();
+								self.handleSubmit()
+								.then(() => {
+									if(_comment_parent_id != null) {
+										return axios.post('/api/notifications', {
+											type: 'Comment submited',
+											description: '\''+_comment_fingerprint+'\' replied to comment \''+_comment_parent_id+'\' in article \''+title+'\'',
+											author: _comment_fingerprint
+										})
+										.then((res_n) => onSubmitNotification(res_n.data))
+										.catch(error => {
+											console.log(error)
+										});
+									} else {
+										return axios.post('/api/notifications', {
+											type: 'Comment submited',
+											description: '\''+_comment_fingerprint+'\' submited a comment \''+_comment_id_ifEditing+'\' to article \''+title+'\'',
+											author: _comment_fingerprint
+										})
+										.then((res_n) => onSubmitNotification(res_n.data))
+										.catch(error => {
+											console.log(error)
+										});
+									}
+								});
 								true ? resolve('Success') : reject('Error');
 							}, 2000);
 						})
@@ -362,7 +477,8 @@ class Post extends React.Component {
 		}
 	}
 	handleSubmitupvotesComment(in_comment, event) {
-		const { comment } = this.state;
+		const { title, comment } = this.state;
+		const { onSubmitNotification } = this.props;
 		var f = new Fingerprint().get();
 		let self = this;
 		let _edited_comment = [];
@@ -393,7 +509,18 @@ class Post extends React.Component {
 					self.setState(prevState => ({
 						comment : _edited_comment
 					}), () => {
-						self.handleSubmit();
+						self.handleSubmit()
+						.then(() => {
+							return axios.post('/api/notifications', {
+								type: 'Comment upvoted',
+								description: '\''+f.toString()+'\' upvoted a comment \''+in_comment._id+'\' to article \''+title+'\'',
+								author: f.toString()
+							})
+							.then((res_n) => onSubmitNotification(res_n.data))
+							.catch(error => {
+								console.log(error)
+							});
+						});
 					});
 					return true;
 				})
@@ -418,7 +545,18 @@ class Post extends React.Component {
 					self.setState(prevState => ({
 						comment : _edited_comment
 					}), () => {
-						self.handleSubmit();
+						self.handleSubmit()
+						.then(() => {
+							return axios.post('/api/notifications', {
+								type: 'Comment negative upvoted',
+								description: '\''+f.toString()+'\' negative upvoted a comment \''+in_comment._id+'\' to article \''+title+'\'',
+								author: f.toString()
+							})
+							.then((res_n) => onSubmitNotification(res_n.data))
+							.catch(error => {
+								console.log(error)
+							});
+						});
 					});
 					return true;
 				})
@@ -426,7 +564,8 @@ class Post extends React.Component {
 		}
 	}
 	handleSubmitdownvotesComment(in_comment, event) {
-		const { comment } = this.state;
+		const { title, comment } = this.state;
+		const { onSubmitNotification } = this.props;
 		var f = new Fingerprint().get();
 		let self = this;
 		let _edited_comment = [];
@@ -457,7 +596,18 @@ class Post extends React.Component {
 					self.setState(prevState => ({
 						comment : _edited_comment
 					}), () => {
-						self.handleSubmit();
+						self.handleSubmit()
+						.then(() => {
+							return axios.post('/api/notifications', {
+								type: 'Comment downvoted',
+								description: '\''+f.toString()+'\' downvoted a comment \''+in_comment._id+'\' to article \''+title+'\'',
+								author: f.toString()
+							})
+							.then((res_n) => onSubmitNotification(res_n.data))
+							.catch(error => {
+								console.log(error)
+							});
+						});
 					});
 					return true;
 				})
@@ -482,7 +632,18 @@ class Post extends React.Component {
 					self.setState(prevState => ({
 						comment : _edited_comment
 					}), () => {
-						self.handleSubmit();
+						self.handleSubmit()
+						.then(() => {
+							return axios.post('/api/notifications', {
+								type: 'Comment negative downvoted',
+								description: '\''+f.toString()+'\' negative downvoted a comment \''+in_comment._id+'\' to article \''+title+'\'',
+								author: f.toString()
+							})
+							.then((res_n) => onSubmitNotification(res_n.data))
+							.catch(error => {
+								console.log(error)
+							});
+						});
 					});
 					return true;
 				})
@@ -511,12 +672,24 @@ class Post extends React.Component {
 	}
 	handleDeleteComment(_in_id) {
 		const self = this;
-		const { comment } = this.state;
+		const { fingerprint, title, comment } = this.state;
+		const { onSubmitNotification } = this.props;
 
 		self.setState(state => ({
 			comment: _.takeWhile(comment, (_c) => { return _c._id != _in_id }),
 		}), () => {
-			self.handleSubmit();
+			self.handleSubmit()
+			.then(() => {
+				return axios.post('/api/notifications', {
+					type: 'Comment deleted',
+					description: '\''+fingerprint+'\' deleted a comment \''+_in_id+'\' to article \''+title+'\'',
+					author: fingerprint
+				})
+				.then((res_n) => onSubmitNotification(res_n.data))
+				.catch(error => {
+					console.log(error)
+				});
+			});
 		});
 	}
     handleChangeField(key, event) {
@@ -852,6 +1025,8 @@ const mapDispatchToProps = dispatch => ({
 	onDelete: id => dispatch({ type: 'DELETE_ARTICLE', id }),
 	onEdit: data => dispatch({ type: 'EDIT_ARTICLE', data }),
 	setEdit: article => dispatch({ type: 'SET_EDIT', article }),
+
+    onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

@@ -57,6 +57,7 @@ class Minttea extends React.Component {
         }
     }
 	handleSubmitupvotesTestimony(testimony, event) {
+        const { onSubmitNotification } = this.props;
         var f = new Fingerprint().get();
         let self = this;
         let target = event.target;
@@ -80,11 +81,33 @@ class Minttea extends React.Component {
                             self.setState({
                                 downvotes: _downvotes,
                             }, () => {
-                                self.handleSubmit();
+                                self.handleSubmit()
+                                .then(() => {
+                                    return axios.post('/api/notifications', {
+                                        type: 'Testimony upvoted',
+                                        description: '\''+f.toString()+'\' upvoted \''+testimony._id+'\'',
+                                        author: f.toString()
+                                    })
+                                    .then((res_n) => onSubmitNotification(res_n.data))
+                                    .catch(error => {
+                                        console.log(error)
+                                    });
+                                });
                             });
                             $(target).closest("div").parent().find('div.downvotes').removeClass('active');
                         } else {
-                            self.handleSubmit();
+                            self.handleSubmit()
+                            .then(() => {
+                                return axios.post('/api/notifications', {
+                                    type: 'Testimony upvoted',
+                                    description: '\''+f.toString()+'\' upvoted \''+testimony._id+'\'',
+                                    author: f.toString()
+                                })
+                                .then((res_n) => onSubmitNotification(res_n.data))
+                                .catch(error => {
+                                    console.log(error)
+                                });
+                            });
                         }
                         $(target).closest("div").addClass('active');
                     });
@@ -107,7 +130,18 @@ class Minttea extends React.Component {
                     self.setState(state => ({
                         upvotes: _upvotes,
                     }), () => {
-                        self.handleSubmit();
+                        self.handleSubmit()
+                        .then(() => {
+                            return axios.post('/api/notifications', {
+                                type: 'Testimony negative upvoted',
+                                description: '\''+f.toString()+'\' negative upvoted \''+testimony._id+'\'',
+                                author: f.toString()
+                            })
+                            .then((res_n) => onSubmitNotification(res_n.data))
+                            .catch(error => {
+                                console.log(error)
+                            });
+                        });
                         $(target).closest("div").removeClass('active');
                     });
                     return true;
@@ -116,6 +150,7 @@ class Minttea extends React.Component {
         }
 	}
 	handleSubmitdownvotesTestimony(testimony, event) {
+        const { onSubmitNotification } = this.props;
         var f = new Fingerprint().get();
         let self = this;
         let target = event.target;
@@ -139,11 +174,33 @@ class Minttea extends React.Component {
                             self.setState({
                                 upvotes: _upvotes,
                             }, () => {
-                                self.handleSubmit();
+                                self.handleSubmit()
+                                .then(() => {
+                                    return axios.post('/api/notifications', {
+                                        type: 'Testimony downvoted',
+                                        description: '\''+f.toString()+'\' downvoted \''+testimony._id+'\'',
+                                        author: f.toString()
+                                    })
+                                    .then((res_n) => onSubmitNotification(res_n.data))
+                                    .catch(error => {
+                                        console.log(error)
+                                    });
+                                });
                             });
                             $(target).closest("div").parent().find('div.upvotes').removeClass('active');
                         } else {
-                            self.handleSubmit();
+                            self.handleSubmit()
+                            .then(() => {
+                                return axios.post('/api/notifications', {
+                                    type: 'Testimony downvoted',
+                                    description: '\''+f.toString()+'\' downvoted \''+testimony._id+'\'',
+                                    author: f.toString()
+                                })
+                                .then((res_n) => onSubmitNotification(res_n.data))
+                                .catch(error => {
+                                    console.log(error)
+                                });
+                            })
                         }
                         $(target).closest("div").addClass('active');
                     });
@@ -166,7 +223,18 @@ class Minttea extends React.Component {
                     self.setState(state => ({
                         downvotes: _downvotes,
                     }), () => {
-                        self.handleSubmit();
+                        self.handleSubmit()
+                        .then(() => {
+                            return axios.post('/api/notifications', {
+                                type: 'Testimony negative downvoted',
+                                description: '\''+f.toString()+'\' negative downvoted \''+testimony._id+'\'',
+                                author: f.toString()
+                            })
+                            .then((res_n) => onSubmitNotification(res_n.data))
+                            .catch(error => {
+                                console.log(error)
+                            });
+                        });
                         $(target).closest("div").removeClass('active');
                     });
                     return true;
@@ -175,8 +243,21 @@ class Minttea extends React.Component {
         }
     }
     handleDelete(id) {
-        const { onDeleteTestimony } = this.props;
-        return axios.delete(`/api/testimonies/${id}`).then(() => onDeleteTestimony(id));
+        const { onDeleteTestimony, onSubmitNotification } = this.props;
+        const { fingerprint } = this.state;
+        return axios.delete(`/api/testimonies/${id}`)
+            .then(() => {
+                onDeleteTestimony(id);
+                return axios.post('/api/notifications', {
+                    type: 'Testimony Deleted',
+                    description: 'Testimony \''+id+'\' Deleted.',
+                    author: fingerprint
+                })
+                .then((res_n) => onSubmitNotification(res_n.data))
+                .catch(error => {
+                    console.log(error)
+                });
+            });
     }
     handleEdit(testimony) {
         const { setEditTestimony } = this.props;
@@ -191,7 +272,7 @@ class Minttea extends React.Component {
         });
     }
     handleSubmit(){
-        const { onSubmitTestimony, testimonyToEdit, onEditTestimony } = this.props;
+        const { onSubmitTestimony, testimonyToEdit, onEditTestimony, onSubmitNotification } = this.props;
         const { parent_id, body, author, is_private, fingerprint, upvotes, downvotes } = this.state;
 
         if(!testimonyToEdit) {
@@ -204,7 +285,30 @@ class Minttea extends React.Component {
                 upvotes,
                 downvotes,
             })
-                .then((res) => onSubmitTestimony(res.data))
+                .then((res) => {
+                    onSubmitTestimony(res.data);
+                    if(parent_id != null) {
+                        return axios.post('/api/notifications', {
+                            type: 'Testimony Replied To',
+                            description: '\''+fingerprint+'\' replied to \''+parent_id+'\'',
+                            author: fingerprint
+                        })
+                        .then((res_n) => onSubmitNotification(res_n.data))
+                        .catch(error => {
+                            console.log(error)
+                        });
+                    } else {
+                        return axios.post('/api/notifications', {
+                            type: 'Testimony Created',
+                            description: '\''+fingerprint+'\' created \''+res.data.testimony._id+'\'',
+                            author: fingerprint
+                        })
+                        .then((res_n) => onSubmitNotification(res_n.data))
+                        .catch(error => {
+                            console.log(error)
+                        });
+                    }
+                })
                 .then(() => {
                     this.setState({ 
                         parent_id: null,
@@ -225,7 +329,9 @@ class Minttea extends React.Component {
                 upvotes,
                 downvotes,
             })
-                .then((res) => onEditTestimony(res.data))
+                .then((res) => {
+                    onEditTestimony(res.data);
+                })
                 .then(() => {
                     this.setState({ 
                         parent_id: null,
@@ -463,9 +569,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data }),
+
     onSubmitTestimony: data => dispatch({ type: 'SUBMIT_TESTIMONY', data }),
     onEditTestimony: data => dispatch({ type: 'EDIT_TESTIMONY', data }),
-
     onLoadTestimony: data => dispatch({ type: 'TESTIMONY_PAGE_LOADED', data }),
 	onDeleteTestimony: id => dispatch({ type: 'DELETE_TESTIMONY', id }),
 	setEditTestimony: testimony => dispatch({ type: 'SET_EDIT_TESTIMONY', testimony }),

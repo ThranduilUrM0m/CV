@@ -27,7 +27,6 @@ class Blog extends React.Component {
 			categorie: '',
 			tags: '',
 		};
-		this.handleEdit = this.handleEdit.bind(this);
 		this.handleJSONTOHTMLIMAGE = this.handleJSONTOHTMLIMAGE.bind(this);
 		this._FormatNumberLength = this._FormatNumberLength.bind(this);
         this.handleClickPage = this.handleClickPage.bind(this);
@@ -69,10 +68,6 @@ class Blog extends React.Component {
         .then(function () {
             // always executed
 		});
-	}
-	handleEdit(article) {
-		const { setEdit } = this.props;
-		setEdit(article);
 	}
 	_handleDrag() {
 		var mySwiper = new Swiper ('.swiper-container', {
@@ -639,8 +634,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	onLoad: data => dispatch({ type: 'HOME_PAGE_LOADED', data }),
-	onDelete: id => dispatch({ type: 'DELETE_ARTICLE', id }),
-	setEdit: article => dispatch({ type: 'SET_EDIT', article }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Blog);

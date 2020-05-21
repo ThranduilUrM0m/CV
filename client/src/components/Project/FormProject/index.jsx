@@ -124,7 +124,7 @@ class FormProject extends React.Component {
         }
     }
     handleSubmit() {
-        const { onSubmitProject, projectToEdit, onEditProject } = this.props;
+        const { onSubmitProject, projectToEdit, onEditProject, onSubmitNotification } = this.props;
         const { title, image, link_to, author, _hide, tag, comment, upvotes, downvotes, view } = this.state;
         const self = this;
 
@@ -141,7 +141,18 @@ class FormProject extends React.Component {
                 downvotes,
                 view,
             })
-                .then((res) => onSubmitProject(res.data))
+                .then((res) => {
+                    onSubmitProject(res.data);
+                    return axios.post('/api/notifications', {
+                        type: 'Project Created',
+                        description: '\''+author+'\' created \''+title+'\'',
+                        author: author
+                    })
+                    .then((res_n) => onSubmitNotification(res_n.data))
+                    .catch(error => {
+                        console.log(error)
+                    });
+                })
                 .then(function() {
                     var element = document.getElementsByClassName("ql-editor");
                     element[0].innerHTML = "";
@@ -174,7 +185,18 @@ class FormProject extends React.Component {
                 downvotes,
                 view,
             })
-                .then((res) => onEditProject(res.data))
+                .then((res) => {
+                    onEditProject(res.data);
+                    return axios.post('/api/notifications', {
+                        type: 'Project Edited',
+                        description: '\''+author+'\' edited \''+title+'\'',
+                        author: author
+                    })
+                    .then((res_n) => onSubmitNotification(res_n.data))
+                    .catch(error => {
+                        console.log(error)
+                    });
+                })
                 .then(function() {
                     var element = document.getElementsByClassName("ql-editor");
                     element[0].innerHTML = "";
@@ -330,7 +352,9 @@ const mapDispatchToProps = dispatch => ({
     onEditProject: data => dispatch({ type: 'EDIT_PROJECT', data }),
     onLoadProject: data => dispatch({ type: 'PROJECT_PAGE_LOADED', data }),
 	onDeleteProject: id => dispatch({ type: 'DELETE_PROJECT', id }),
-	setEditProject: project => dispatch({ type: 'SET_EDIT', project }),
+    setEditProject: project => dispatch({ type: 'SET_EDIT', project }),
+    
+    onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data }),
 }) 
   
 const mapStateToProps = state => ({

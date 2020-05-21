@@ -1,4 +1,6 @@
 import React from "react";
+import axios from 'axios';
+import { connect } from 'react-redux';
 import API from "../../utils/API";
 import { FullPage, Slide } from 'react-full-page';
 import 'whatwg-fetch';
@@ -24,7 +26,8 @@ class Signup extends React.Component {
 		var f = new Fingerprint().get();
 		var _fingerprint = f.toString();
 		var _role = ["normal"];
-        const { username, email, password, confirm_password } = this.state;
+		const { username, email, password, confirm_password } = this.state;
+		const { onSubmitNotification } = this.props;
         try {
 			if (password != confirm_password) throw { text: 'Please check your password confirmation'};
 			await API.signup({ username, email, password, _fingerprint, _role })
@@ -33,6 +36,15 @@ class Signup extends React.Component {
 					modal_msg: res.data.text
 				}, () => {
 					$('#signup_modal').modal('toggle');
+					return axios.post('/api/notifications', {
+                        type: 'User Account Created',
+                        description: '\''+email+'\' created an account as \''+username+'\'',
+                        author: email
+                    })
+                    .then((res_n) => onSubmitNotification(res_n.data))
+                    .catch(error => {
+                        console.log(error)
+                    });
 				});
 			})
 			.catch((error) => {
@@ -173,4 +185,7 @@ class Signup extends React.Component {
 	}
 }
 
-export default Signup
+const mapDispatchToProps = dispatch => ({ onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data })})
+const mapStateToProps = state => ({})
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Signup) 

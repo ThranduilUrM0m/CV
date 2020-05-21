@@ -124,8 +124,9 @@ class Form extends React.Component {
         }
     }
     handleSubmit(){
-        const { onSubmit, articleToEdit, onEdit } = this.props;
+        const { onSubmitNotification, onSubmit, articleToEdit, onEdit } = this.props;
         const { title, body, author, categorie, _hide, tag, comment, upvotes, downvotes, view } = this.state;
+        
         const self = this;
         
         if(!articleToEdit) {
@@ -141,7 +142,18 @@ class Form extends React.Component {
                 downvotes,
                 view,
             })
-                .then((res) => onSubmit(res.data))
+                .then((res) => {
+                    onSubmit(res.data);
+                    return axios.post('/api/notifications', {
+                        type: 'Article Created',
+                        description: '\''+author+'\' created \''+title+'\'',
+                        author: author
+                    })
+                    .then((res_n) => onSubmitNotification(res_n.data))
+                    .catch(error => {
+                        console.log(error)
+                    });
+                })
                 .then(function() {
                     var element = document.getElementsByClassName("ql-editor");
                     element[0].innerHTML = "";
@@ -174,7 +186,18 @@ class Form extends React.Component {
                 downvotes,
                 view,
             })
-                .then((res) => onEdit(res.data))
+                .then((res) => {
+                    onEdit(res.data);
+                    return axios.post('/api/notifications', {
+                        type: 'Article Edited',
+                        description: '\''+author+'\' edited \''+title+'\'',
+                        author: author
+                    })
+                    .then((res_n) => onSubmitNotification(res_n.data))
+                    .catch(error => {
+                        console.log(error)
+                    });
+                })
                 .then(function() {
                     var element = document.getElementsByClassName("ql-editor");
                     element[0].innerHTML = "";
@@ -334,7 +357,9 @@ const mapDispatchToProps = dispatch => ({
     onEdit: data => dispatch({ type: 'EDIT_ARTICLE', data }),
 	onLoad: data => dispatch({ type: 'HOME_PAGE_LOADED', data }),
 	onDelete: id => dispatch({ type: 'DELETE_ARTICLE', id }),
-	setEdit: article => dispatch({ type: 'SET_EDIT', article }),
+    setEdit: article => dispatch({ type: 'SET_EDIT', article }),
+    
+    onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data }),
 }) 
   
 const mapStateToProps = state => ({
