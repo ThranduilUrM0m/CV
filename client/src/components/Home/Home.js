@@ -363,17 +363,17 @@ class Home extends React.Component {
                             <div className="word w4">Chào mừng</div>
                             <div className="word w5">Bienvenido</div>
                         </div>
-                        <div className="wrapper left_part">
-                            <div id="social_media">
-                                <div className="icons_gatherer">
-                                    <a href="# " className="icon-button github"><i className="fab fa-github"></i><span></span></a>
-                                    <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                    <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-                                    <a href="# " className="icon-button scroll">
-                                        
-                                    </a>
-                                </div>
+                        <div id="social_media">
+                            <div className="icons_gatherer">
+                                <a href="# " className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                <a href="# " className="icon-button scroll">
+                                    
+                                </a>
                             </div>
+                        </div>
+                        <div className="wrapper left_part">
                             <div className="pulsing_dots">
                                 <div className="p1"></div>
                                 <div className="p2"></div>

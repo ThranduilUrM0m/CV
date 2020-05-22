@@ -376,18 +376,6 @@ class Minttea extends React.Component {
                                 <div className="card-body">
                                     <h3>Have a <strong>Mint Tea</strong> with me !</h3>
                                     <p className="text-muted">Thank you, feel free to show your support, leave a comment !</p>
-                                    <span className="coffee_buyout">
-                                        <div className="row">
-                                            <div className="input-field col s12">
-                                                <div>
-                                                    <span></span>
-                                                    <span></span>
-                                                    <span></span>
-                                                    <span></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </span>
                                     <div className="mail_form">
                                         <div className="row">
                                             <div className="input-field col s12">
@@ -404,7 +392,7 @@ class Minttea extends React.Component {
                                                 <div className="form-group-line"></div>
                                             </div>
                                         </div>
-                                        <div className="row">
+                                        <div className="row _textarea">
                                             <div className="input-field col s12 textarea">
                                                 <textarea 
                                                     className="validate form-group-input materialize-textarea body" 
@@ -420,17 +408,21 @@ class Minttea extends React.Component {
                                         </div>
                                         <div className="row">
                                             <div className="input-field col s12">
-                                                <input
-                                                    className="validate form-group-input is_private" 
-                                                    id="is_private" 
-                                                    type="checkbox"
-                                                    name="is_private" 
-                                                    required="required"
-                                                    value={is_private}
-                                                    checked={is_private}
-                                                    onClick={(ev) => this.handleChange('is_private', ev)}
-                                                />
-                                                <label className="is_private" htmlFor="is_private">Private Message ?</label>
+                                                <p>
+                                                    <label>
+                                                        <input 
+                                                        className="validate form-group-input is_private" 
+                                                        id="is_private" 
+                                                        type="checkbox"
+                                                        name="is_private" 
+                                                        required="required"
+                                                        value={is_private}
+                                                        checked={is_private}
+                                                        onChange={(ev) => this.handleChange('is_private', ev)}
+                                                        />
+                                                        <span>Private Message ?</span>
+                                                    </label>
+                                                </p>
                                                 <button 
                                                     className="pull-right" 
                                                     type="submit"
