@@ -75,12 +75,11 @@ class Blog extends React.Component {
 			effect: 'coverflow',
 			direction: 'horizontal',
 			grabCursor: true,
-			loop: true,
-			slidesPerView: 'auto',
+			slidesPerView: 3.25,
 			centeredSlides: false,
-			centeredSlidesBounds: true,
+			centeredSlidesBounds: false,
 			paginationClickable: true,
-			centerInsufficientSlides: true,
+			centerInsufficientSlides: false,
 			spaceBetween: 0,
 			autoResize: false,
             observer: true,
@@ -580,7 +579,7 @@ class Blog extends React.Component {
 																<div className="card-body">
 																	<figure>{this.handleJSONTOHTMLIMAGE(article.body, index)}</figure>
 																	<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
-																	<h3>{article.title}</h3>
+																	<h4>{article.title}</h4>
 																	<p className="categorie">{article.categorie}</p>
 																	<Link
 																		to={

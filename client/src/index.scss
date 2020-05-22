@@ -1841,8 +1841,7 @@ body, html {
 								margin-bottom: 0;
 							}
 							.name {
-								font-size: .75rem;
-								color: rgba(0, 0, 0, .5);
+								font-size: x-small;
 							}
 						}
 					}
@@ -1915,7 +1914,7 @@ body, html {
 					height: 100%;
 					top: 0;
 					left: 0;
-					margin-left: 5.75rem;
+					margin-left: 5.5rem;
 					padding: 1.25rem;
 					.tab-pane {
 						height: fit-content;
@@ -3263,7 +3262,7 @@ body, html {
 									}
 								}
 								.modal-top-filter {
-									width: 960px;
+									width: 100%;
 									margin: 0 auto;
 									position: relative;
 									display: none;
@@ -6193,7 +6192,7 @@ body, html {
 										animation: input3 .5s 1 ease;
 										width: calc(100% - 1.5rem);
 									}
-									button{
+									button {
 										-webkit-appearance: none;
 										border: none;
 										background: none;
@@ -6210,7 +6209,7 @@ body, html {
 										span{
 											display: block;
 											position: relative;
-											line-height: 50px;
+											line-height: 3rem;
 											height: 100%;
 											cursor: pointer;
 										}
@@ -6507,7 +6506,7 @@ body, html {
 							}
 						}
 						.modal-top-filter {
-							width: 960px;
+							width: 100%;
 							margin: 0 auto;
 							position: relative;
 							display: none;
@@ -6519,6 +6518,7 @@ body, html {
 							.input-field {
 								position: relative;
 								margin: 0 0 .5rem 0;
+								padding: 0 .5rem;
 								& > div {
 									width: 100%;
 									& > div {
@@ -6574,7 +6574,8 @@ body, html {
 								.form-group-line {
 									position: absolute;
 									bottom: .5rem;
-									left: .75rem;
+									left: .5rem;
+									width: calc(100% - 1rem) !important;
 								}
 								.form-group-input:focus ~ .form-group-line,
 								.form-group-input:valid ~ .form-group-line {
@@ -7024,12 +7025,8 @@ body, html {
 						&_cards {
 							align-items: center;
 							&_item {
-								width: 22.5vw;
-								height: 92% !important;
-								&.swiper-slide-active {
-									height: 100% !important;
-									width: 25vw;
-								}
+								width: 22vw;
+								height: 95% !important;
 								.article_item {
 									position: relative;
 									display: flex;
@@ -7081,7 +7078,7 @@ body, html {
 													   object-position: top;
 												}
 											}
-											h3{
+											h4{
 												color:$color1;
 												text-align: -webkit-left;
 												letter-spacing: 0;
@@ -7089,6 +7086,10 @@ body, html {
 												position: relative;
 												z-index: 10;
 												margin: 0;
+
+												overflow-x: hidden;
+												white-space: nowrap;
+												text-overflow: ellipsis;
 											}
 											h1, h2, h3, h4, h5, h6{
 												text-align: -webkit-left;
@@ -7096,7 +7097,7 @@ body, html {
 											.author{
 												text-align: -webkit-left;
 												font-size: xx-small;
-												margin-bottom: .5rem;
+												margin-bottom: 0;
 												margin-top: .5rem;
 											}
 											.categorie {
@@ -8761,7 +8762,20 @@ body, html {
 }
 
 /* 1024px devices */
-@media only screen and (max-width: 1024px) {
+@media only screen   
+and (min-device-width : 768px)   
+and (max-device-width : 1024px) {
+	button {
+		& > span {
+			& > span {
+				& > span {
+					&::after {
+						width: 100% !important;
+					}
+				}
+			}
+		}
+	}
 	.container-fluid {
 		.first_section {
 			.right_part {
@@ -8774,13 +8788,6 @@ body, html {
 								}
 							}
 						}
-					}
-					.button_border {
-						width: 100% !important;
-						height: 100% !important;
-						left: -.5rem !important;
-						top: -.5rem !important;
-						box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .15) !important;
 					}
 				}
 			}
@@ -8840,6 +8847,62 @@ body, html {
 				}
 			}
 		}
+		.first_section_dashboard {
+			.nav {
+				.user_info {
+					.user_logo {
+						display: none !important;
+					}
+				}
+				ul {
+					width: -webkit-fill-available;
+					li {
+						width: fit-content;
+						&:last-of-type {
+							margin-bottom: 0 !important;
+						}
+					}
+				}
+			}
+			.tab-content {
+				padding: 1rem !important;
+				.tab-pane {
+					.cards {
+						&__item {
+							padding: .5rem !important;
+							._pane {
+								._header, ._content {
+									padding: .5rem !important;
+									.swiper-slide_item {
+										padding: .25rem !important;
+										.card-body {
+											padding: .5rem !important;
+											h2 {
+												font-size: 1.25rem;
+											}
+											p {
+												margin-bottom: .25rem;
+											}
+											.comments_up_down {
+												p:not(:first-of-type) {
+													margin-left: .5rem !important;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						._1024__item {
+							min-width: 40vw !important;
+							._content {
+								padding: 1rem !important;
+							}
+						}
+					}
+				}
+			}
+		}
 		.second_section {
 			.right_part {
 				button {
@@ -8880,8 +8943,9 @@ body, html {
 			}
 			.wrapper_full {
 				.articles_slider {
+					padding-left: 3rem !important;
 					.articles_caption {
-						width: calc(30vw - 5rem) !important;
+						width: calc(25vw - 3rem) !important;
 						button {
 							& > span {
 								& > span {
@@ -8902,13 +8966,31 @@ body, html {
 						}
 					}
 					&_wrapper {
-						width: 70vw !important;
+						width: 75vw !important;
 						&_cards {
 							&_item {
-								width: 22vw !important;
-								&.swiper-slide-active {
-									width: 26vw !important;
+								width: 23vw !important;
+								.card-body {
+									padding: .75rem !important;
 								}
+								h4 {
+									white-space: nowrap;
+									overflow: hidden;
+									text-overflow: ellipsis;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		.second_section_post {
+			button {
+				& > span {
+					& > span {
+						& > span {
+							&::after {
+								width: 100% !important;
 							}
 						}
 					}
@@ -9035,7 +9117,46 @@ body, html {
 			[data-am-linearrow~="tooltip"] {
 				&:after {
 					opacity: 1 !important;
+					transform: translateX(-50%) translateY(-80%) !important;
 					color: darken(black, 20%) !important;
+				}
+			}
+		}
+	}
+}
+
+/* IPAD LANDSCAPE*/
+@media only screen   
+and (orientation : landscape)   
+and (-webkit-min-device-pixel-ratio: 1)  
+and (min-device-width : 768px)   
+and (max-device-width : 1007px) {
+	button {
+		& > span {
+			& > span {
+				& > span {
+					&::after {
+						width: 100% !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* IPAD PORTRAIT */
+@media only screen   
+and (orientation : portrait)   
+and (-webkit-min-device-pixel-ratio: 1)   
+and (min-device-width : 768px)   
+and (max-device-width : 1007px) {
+	button {
+		& > span {
+			& > span {
+				& > span {
+					&::after {
+						width: 100% !important;
+					}
 				}
 			}
 		}
@@ -9483,8 +9604,9 @@ body, html {
 	}
 }
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 425px) {
+@media only screen   
+and (min-device-width : 360px)   
+and (max-device-width : 640px) {
 	.container-fluid {
 		.fixedHeaderContainer {
 			.headerWrapper {

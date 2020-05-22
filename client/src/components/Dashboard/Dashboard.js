@@ -888,7 +888,7 @@ class Dashboard extends React.Component {
                                     </div>
                                     <div className="user_name">
                                         <h4>{_user.username}</h4>
-                                        <div className="name">{_user.email}</div>
+                                        <div className="name text-muted">{_user.email}</div>
                                     </div>
                                 </div>
                                 <ul className="settings_dashboard">
@@ -1162,7 +1162,7 @@ class Dashboard extends React.Component {
                                                 </div>
                                             </div>
                                         </li>
-                                        <li className="cards__item">
+                                        <li className="cards__item _1024__item">
                                             <div className="card">
                                                 <div className="card__content">
                                                     <div className="_calendat_pane _pane">
@@ -1173,7 +1173,7 @@ class Dashboard extends React.Component {
                                                 </div>
                                             </div>
                                         </li>
-                                        <li className="cards__item">
+                                        <li className="cards__item _1024__item">
                                             <div className="card">
                                                 <div className="card__content">
                                                     <div className="_testimonies_pane _pane">
@@ -1350,7 +1350,6 @@ class Dashboard extends React.Component {
                                         <div className="left_roof">
                                             <h2>Notifications</h2>
                                         </div>
-                                        <a href="# " className="logout" onClick={() => this.disconnect()}><p className="text-muted">logout.</p><i className="fas fa-sign-out-alt"></i></a>
                                     </div>
                                     <ul className="forms">
                                         <li className="forms__item">
