@@ -332,7 +332,7 @@ class Dashboard extends React.Component {
 
     }
 	_handleDrag(source) {
-        if(source != 'testimonies_slider_wrapper')
+        if(source != 'testimonies_slider_wrapper'){
             var mySwiper = new Swiper ('.'+source+'.swiper-container', {
                 // Optional parameters
                 effect: 'coverflow',
@@ -362,6 +362,14 @@ class Dashboard extends React.Component {
                     dynamicBullets: true,
                 }
             });
+            $(window).resize(function() {
+                if($(window).width() <= 768) {
+                    mySwiper.params.slidesPerView = 1;
+                    mySwiper.update();
+                }
+            });
+            $(window).trigger('resize');
+        }
         else
             var mySwiperTestimonies = new Swiper ('.'+source+'.swiper-container', {
                 // Optional parameters
@@ -1162,7 +1170,7 @@ class Dashboard extends React.Component {
                                                 </div>
                                             </div>
                                         </li>
-                                        <li className="cards__item _1024__item">
+                                        <li className="cards__item _1024__item calendar__item">
                                             <div className="card">
                                                 <div className="card__content">
                                                     <div className="_calendat_pane _pane">
@@ -1173,7 +1181,7 @@ class Dashboard extends React.Component {
                                                 </div>
                                             </div>
                                         </li>
-                                        <li className="cards__item _1024__item">
+                                        <li className="cards__item _1024__item testimonies__item">
                                             <div className="card">
                                                 <div className="card__content">
                                                     <div className="_testimonies_pane _pane">

@@ -1911,7 +1911,7 @@ body, html {
 					transition: all .1s ease-out;
 				}
 				.tab-content {
-					width: 100%;
+					width: calc(100% - 5.5rem);
 					height: 100%;
 					top: 0;
 					left: 0;
@@ -2887,6 +2887,9 @@ body, html {
 																	}
 																}
 															}
+														}
+														table {
+															table-layout: fixed;
 														}
 														.accounts_list {
 															position: relative;
@@ -7008,7 +7011,7 @@ body, html {
 						&_cards {
 							align-items: center;
 							&_item {
-								width: 22vw;
+								width: 21.5vw;
 								height: 95% !important;
 								.article_item {
 									position: relative;
@@ -7016,7 +7019,7 @@ body, html {
 									padding: 1rem 1rem;
 									height: 100%;
 									margin: 0;
-									transition:.5s;
+									transition: .5s ease-out;
 									.card {
 										height: 100%;
 										width: 18vw;
@@ -8759,12 +8762,24 @@ and (max-device-width : 1024px) {
 						&__item {
 							padding: .5rem !important;
 						}
+						._1024__item {
+							&.calendar__item {
+								min-width: 45vw !important;
+							}
+							&.testimonies__item {
+								min-width: 40vw !important;
+							}
+							._content {
+								padding: 1rem !important;
+							}
+						}
 					}
 				}
 			}
 		}
 	}
 }
+
 /* 1024px devices */
 @media only screen   
 and (max-device-width : 1024px) {
@@ -8893,12 +8908,6 @@ and (max-device-width : 1024px) {
 										}
 									}
 								}
-							}
-						}
-						._1024__item {
-							min-width: 40vw !important;
-							._content {
-								padding: 1rem !important;
 							}
 						}
 					}
@@ -9130,7 +9139,7 @@ and (max-device-width : 1024px) {
 /* 768px devices */
 @media only screen 
 and (max-device-width: 768px) {
-	button:not([data-am-linearrow]) {
+	button:not([data-am-linearrow]):not(#reach_out_button) {
 		width: 100% !important;
 		& > span {
 			& > span {
@@ -9239,13 +9248,20 @@ and (max-device-width: 768px) {
 					margin: .25rem !important;
 					width: 6.5vw !important;
 				}
-				.cards__item {
-					padding: 0 .5rem .5rem 0 !important;
-					max-width: 41vw !important;
+				.notifications_pane {
+					.forms__item {
+						padding: .5rem !important;
+						._notifs_content {
+							padding: .5rem !important;
+							._notifs_data {
+								font-size: .9rem !important;
+							}
+						}
+					}
 				}
 			}
 			.swiper-slide {
-				min-width: 18vw !important;
+				min-width: 100% !important;
 			}
 		}
 		.second_section {
@@ -9444,10 +9460,7 @@ and (max-device-width: 768px) {
 						width: 100vw !important;
 						&_cards {
 							&_item {
-								width: calc(calc(100vw / 3) - 1vw) !important;
-								&.swiper-slide-active {
-									width: calc(calc(100vw / 3) + 2vw) !important;
-								}
+								width: calc(100vw / 3.25) !important;
 							}
 						}
 					}
@@ -9551,6 +9564,21 @@ and (max-device-width: 768px) {
 		}
 	}
 }
+/* 768px devices special case */
+@media only screen 
+and (min-device-width: 700px)
+and (max-device-width: 768px) {
+	.first_section_dashboard {
+		.tab-content {
+			.cards__item {
+				padding: 0 .5rem .5rem 0 !important;
+				&:not(._1024__item) {
+					max-width: 41vw !important;
+				}
+			}
+		}
+	}
+}
 
 /* 700px devices */
 @media only screen 
@@ -9619,7 +9647,7 @@ and (max-device-width : 640px) {
 					#slider {
 						.img-wrap.current {
 							.card {
-								width: fit-content !important;
+								width: 50% !important;
 								.card-body {
 									h2 {
 										transform: translateY(-10px);
@@ -9805,6 +9833,11 @@ and (max-device-width : 640px) {
 				}
 			}
 		}
+		.first_section_dashboard {
+			.datenow {
+				font-size: .4em !important;
+			}
+		}
 		.second_section {
 			.wrapper {
 				&.left_part {
@@ -9853,7 +9886,11 @@ and (max-device-width : 640px) {
 						}
 						.img-wrap {
 							.card {
-								width: 75% !important;
+								width: 50% !important;
+								p {
+									transform: translate(0) !important;
+									margin-bottom: .25rem !important;
+								}
 							}
 						}
 					}
@@ -9900,25 +9937,24 @@ and (max-device-width : 640px) {
 			}
 			.wrapper_full {
 				& > span {
-					top: calc(20% - 7.5rem) !important;
+					top: calc(30% - 7.5rem) !important;
 					left: 7.5% !important;
 					font-size: 7.5rem !important;
 					line-height: 7.5rem !important;
 				}
 				.caption {
-					height: 20% !important;
+					height: 30% !important;
 				}
 				.articles_slider {
-					height: 80% !important;
+					height: 70% !important;
 					.articles_caption {
 						right: 5rem !important;
 					}
 					&_wrapper {
 						&_cards {
 							&_item {
-								width: calc(calc(100vw - 7rem) - 1vw) !important;
-								&.swiper-slide-active {
-									width: calc(calc(100vw - 7rem) + 2vw) !important;
+								.article_item {
+									padding: 1rem .25rem !important;
 								}
 							}
 						}
@@ -10092,3 +10128,67 @@ and (max-device-width : 640px) {
 		}
 	}
 }
+
+/* 640px devices special case */
+@media only screen
+and (min-device-width : 500px)
+and (max-device-width : 640px) {
+	.container-fluid {
+		.first_section_dashboard {
+			.tab-content {
+				.cards__item:not(._1024__item) {
+					padding: 0 .5rem .5rem 0 !important;
+					max-width: 50vw !important;
+				}
+				._1024__item {
+					padding: 0 .5rem .5rem 0 !important;
+					min-width: 55vw !important;
+					max-width: 60vw !important;
+				}
+			}
+		}
+	}
+}
+
+/* 500px devices */
+@media only screen 
+and (max-device-width : 500px) {
+	.container-fluid {
+		.first_section_dashboard {
+			.nav {
+				width: calc(100% - 1.25rem) !important;
+			}
+			.tab-content {
+				.cards__item:not(._1024__item) {
+					padding: 0 .5rem .5rem 0 !important;
+					max-width: 100% !important;
+				}
+				._1024__item {
+					padding: 0 .5rem .5rem 0 !important;
+					min-width: 100% !important;
+					max-width: 100% !important;
+				}
+				.notifications_pane {
+					.forms__item {
+						._notifs_content {
+							._notifs_data {
+								* {
+									font-size: .85rem !important;
+								}
+							}
+						}
+					}
+				}
+				.settings_pane {
+					.forms__item {
+						._account_data {
+							* {
+								font-size: .85rem !important;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+} 
