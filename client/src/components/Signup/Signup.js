@@ -21,6 +21,11 @@ class Signup extends React.Component {
         this.send_signup = this.send_signup.bind(this);
         this.handleChange = this.handleChange.bind(this);
 	}
+	componentDidMount() {
+		if(localStorage.getItem('email')) {
+			window.location = "/dashboard";
+		}
+	}
     async send_signup() {
 		let self = this;
 		var f = new Fingerprint().get();

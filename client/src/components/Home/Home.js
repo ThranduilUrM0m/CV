@@ -443,14 +443,7 @@ class Home extends React.Component {
                                                 <div className="shadow_title">{(_.head( article.title.split(/[\s.]+/) ).length <= 2 ) ? _.head( article.title.split(/[\s.]+/) )+" "+_.nth(article.title.split(/[\s.]+/), 1) : _.head( article.title.split(/[\s.]+/) )}.</div>
                                                 <div className="card-body">
                                                     <h2>{article.title}</h2>
-                                                    <Link 
-                                                        to={
-                                                            {
-                                                                pathname: '/blog/'+article.title, 
-                                                                state : {article}
-                                                            }
-                                                        }
-                                                    >
+                                                    <Link to={`/blog/${article._id}`}>
                                                         <button>
                                                             <span>
                                                                 <span>

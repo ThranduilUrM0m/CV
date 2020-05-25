@@ -125,7 +125,8 @@ class Post extends React.Component {
 					return new Promise((resolve, reject) => {
 						setTimeout(function() {
 							onLoad(res.data);
-							self.handleEdit(_.find(res.data.articles, {'_id': self.props.location.state.article._id}));
+							console.log(self.props);
+							self.handleEdit(_.find(res.data.articles, {'_id': match.params.postId}));
 							true ? resolve('Success') : reject('Error');
 						}, 2000);
 					})
@@ -744,6 +745,7 @@ class Post extends React.Component {
 		const { articles } = this.props;
         const { _user, _id, title, body, author, comment, _comment_author, _comment_body, _comment_fingerprint, upvotes, downvotes, view, createdAt, fingerprint } = this.state;
 		const shareUrl = window.location.href;
+		
 		return (
             <FullPage scrollMode={'normal'}>
 				<Slide>

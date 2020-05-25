@@ -1175,7 +1175,7 @@ class Dashboard extends React.Component {
                                                 <div className="card__content">
                                                     <div className="_calendat_pane _pane">
                                                         <div className="_calendar_content _content">
-                                                            <Calendar/>
+                                                            <Calendar NOTIFICATIONS={notifications}/>
                                                         </div>
                                                     </div>
                                                 </div>

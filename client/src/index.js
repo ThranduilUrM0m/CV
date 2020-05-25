@@ -37,8 +37,8 @@ ReactDOM.render(
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />
                     <Route path={`/confirmation/:token_id`} component={Confirmation} />
-                    <Route exact path="/404" component={NotFound} />
                     <PrivateRoute path='/dashboard' component={Dashboard} />
+                    <Route component={NotFound} />
                 </Switch>
             </App>
         </Provider>

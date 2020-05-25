@@ -261,14 +261,7 @@ class Footer extends React.Component {
                                     (_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']).slice(0, 3)).map((article, index) => {
                                         return (
                                             <li key={index}>
-                                                <Link 
-                                                    to={
-                                                        {
-                                                            pathname: '/blog/'+article.title, 
-                                                            state : {article}
-                                                        }
-                                                    }
-                                                >
+                                                <Link to={`/blog/${article._id}`}>
                                                     <span>{article.title}</span>
                                                     <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
                                                 </Link>
@@ -285,14 +278,7 @@ class Footer extends React.Component {
                                     (_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).slice(0, 3)).map((article, index) => {
                                         return (
                                             <li key={index}>
-                                                <Link 
-                                                    to={
-                                                        {
-                                                            pathname: '/blog/'+article.title, 
-                                                            state : {article}
-                                                        }
-                                                    }
-                                                >
+                                                <Link to={`/blog/${article._id}`}>
                                                     <span>{article.title}</span>
                                                     <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
                                                 </Link>
@@ -309,14 +295,7 @@ class Footer extends React.Component {
                                     (_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']).slice(0, 3)).map((article, index) => {
                                         return (
                                             <li key={index}>
-                                                <Link 
-                                                    to={
-                                                        {
-                                                            pathname: '/blog/'+article.title, 
-                                                            state : {article}
-                                                        }
-                                                    }
-                                                >
+                                                <Link to={`/blog/${article._id}`}>
                                                     <span>{article.title}</span>
                                                     <p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
                                                 </Link>

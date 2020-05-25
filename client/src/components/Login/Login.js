@@ -16,6 +16,11 @@ class Login extends React.Component {
         this.send_login = this.send_login.bind(this);
         this.handleChange = this.handleChange.bind(this);
 	}
+	componentDidMount() {
+		if(localStorage.getItem('email')) {
+			window.location = "/dashboard";
+		}
+	}
 	async send_login() {
 		let self = this;
         const { email, password } = this.state;

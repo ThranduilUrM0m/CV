@@ -477,14 +477,7 @@ class Blog extends React.Component {
 																				})
 																			}
 																		</ul>
-																		<Link 
-																			to={
-																				{
-																					pathname: '/blog/'+article.title, 
-																					state : {article}
-																				}
-																			}
-																		>
+																		<Link to={`${match.url}/${article._id}`}>
 																			<div className="readmore">
 																				<button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
 																					<div className="line line-1"></div>

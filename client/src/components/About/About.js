@@ -139,14 +139,7 @@ class About extends React.Component {
                                     <p>I am now a <b>Freelancer</b> and if you would like to know more about me,</p>
                                     <p>How about you read something i wrote for you ?</p>
                                 </span>
-                                <Link 
-                                    to={
-                                        {
-                                            pathname: '/blog/'+_.get(_.find(articles, {'title': 'about me'}), 'title'), 
-                                            state : _.find(articles, {'title': 'about me'})
-                                        }
-                                    }
-                                >
+                                <Link to={`blog/${_.get(_.find(articles, {'title': 'about me'}), '_id')}`}>
                                     <div className="readmore">
                                         <button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
                                             <div className="line line-1"></div>
