@@ -21,7 +21,8 @@
         "mongoose": "*",
         "morgan": "*",
         "nodemailer": "*",
-        "password-hash": "*"
+        "password-hash": "*",
+        "socket.io": "^2.3.0"
     },
     "devDependencies": {
         "concurrently": "*",

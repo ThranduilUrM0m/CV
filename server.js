@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 const cluster = require('cluster');
 let workers = [];
 
+const http = require('http');
+const socketIO = require('socket.io');
+
 const setupWorkerProcesses = () => {
     // to read number of cores on system
     let numCores = require('os').cpus().length;
@@ -46,12 +49,12 @@ const setupWorkerProcesses = () => {
 
 const setUpExpress = () => {
     // IMPORT MODELS
-    require('./models/Articles');
-    require('./models/Experiences');
-    require('./models/Events');
-    require('./models/Projects');
-    require('./models/Testimonies');
-    require('./models/Notifications');
+    const articleModel = require('./models/Articles');
+    const ExperienceModel = require('./models/Experiences');
+    const EventModel = require('./models/Events');
+    const ProjectModel = require('./models/Projects');
+    const TestimonyModel = require('./models/Testimonies');
+    const NotificationModel = require('./models/Notifications');
 
     //On définit notre objet express nommé app
     const app = express();
@@ -82,11 +85,6 @@ const setUpExpress = () => {
     require(__dirname + "/controllers/userController")(router);
     app.use(require('./routes'));
 
-    //Définition et mise en place du port d'écoute
-    const port = process.env.PORT || 8800;
-    app.listen(port, () => console.log(`Listening on port ${port}`));
-
-
     /*Adds the react production build to serve react requests*/
     app.use(express.static(path.join(__dirname, "./client/build")));
 
@@ -99,6 +97,28 @@ const setUpExpress = () => {
             res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
         })
     }
+    
+    var server = http.createServer(app);
+    var io = socketIO(server);
+
+    //Définition et mise en place du port d'écoute
+    const port = process.env.PORT || 8800;
+    server.listen(port, () => console.log(`Listening on port ${port}`));
+
+    const connections = [];
+    io.on('connection', (socket) => {
+        console.log('Connected to Socket : '+socket.id);
+        connections.push(socket);
+        socket.on('change color', (color) => {
+            // once we get a 'change color' event from one of our clients, we will send it to the rest of the clients
+            // we make use of the socket.emit method again with the argument given to use from the callback function above
+            console.log('Color Changed to: ', color);
+            io.sockets.emit('change color', color);
+        });
+        socket.on('disconnect', () => {
+            console.log('Socket Disconnected : '+socket.id);
+        });
+    });
 };
 
 /**

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import socketIOClient from "socket.io-client";
 import moment from 'moment';
 import Footer from '../Footer/Footer';
 import { connect } from 'react-redux';
@@ -15,6 +16,9 @@ var _ = require('lodash');
 class Home extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            color: 'white'
+        }
         this._handleSlider = this._handleSlider.bind(this);
         this._handleMouseMove = this._handleMouseMove.bind(this);
 		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
@@ -81,6 +85,20 @@ class Home extends React.Component {
         });
 
         $('.fixedHeaderContainer').removeClass('blog_header');
+
+        const socket = socketIOClient('localhost:8800');
+        setInterval(this.send(), 1000)
+        socket.on('change color', (col) => {
+            document.body.style.backgroundColor = col
+        });
+    }
+    send() {
+        const { color } = this.state;
+        const socket = socketIOClient('localhost:8800');
+        socket.emit('change color', color);
+    }
+    setColor(color) {
+        this.setState({ color });
     }
     _handleSlider(source) {
         function FormatNumberLength(num, length) {
@@ -352,10 +370,18 @@ class Home extends React.Component {
     }
     render() {
         const { articles, projects } = this.props;
+        const socket = socketIOClient('localhost:8800');
+        socket.on('change color', (col) => {
+            document.body.style.backgroundColor = col
+        });
         return (
             <FullPage scrollMode={'normal'}>
                 <Slide>
                     <section className="second_section">
+                        <button onClick={() => this.send() }>Change Color</button>
+                        <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
+                        <button id="red" onClick={() => this.setColor('red')}>Red</button>
+                        
                         <div className="Hello">
                             <div className="word w1">مرحبا</div>
                             <div className="word w2">Welcome</div>
