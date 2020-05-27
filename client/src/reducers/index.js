@@ -1,1 +1,6 @@
-export { default as home } from './home';
+import { combineReducers } from 'redux';
+import home from './home';
+
+export default combineReducers({
+    home: home
+});

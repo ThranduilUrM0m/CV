@@ -5,6 +5,7 @@ import ReactQuill, { Quill } from 'react-quill';
 import API from "../../../utils/API";
 import ImageResize from 'quill-image-resize-module';
 import ImageUploader from "quill-image-uploader";
+import io from "socket.io-client";
 Quill.register('modules/ImageResize', ImageResize);
 Quill.register("modules/imageUploader", ImageUploader);
 
@@ -114,11 +115,13 @@ class Form extends React.Component {
 	async get_user() {
         const self = this;
         try {
-            const { data } = await API.get_user(localStorage.getItem('email'));
-			self.setState({
-                _user: data.user,
-                author: data.user.username,
-			});
+            await API.get_user(localStorage.getItem('email'))
+            .then((res) => {
+                self.setState({
+                    _user: res.data.user,
+                    author: res.data.user.username,
+                });
+            });
         } catch (error) {
             console.error(error);
         }
@@ -253,7 +256,7 @@ class Form extends React.Component {
     render() {
         const { articleToEdit } = this.props;
         const { title, body, categorie, _hide, tag, tagInput } = this.state;
-    
+
         return (
             <div className="wrapper_form">
                 <div className="row">

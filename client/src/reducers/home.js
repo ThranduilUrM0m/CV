@@ -1,35 +1,37 @@
-export default (state={
-        articles: [],
-        events: [],
-        experiences: [],
-        projects: [],
-        testimonies: [],
-        user: {},
-        users: [],
-    }, action) => {
+import { HOME_PAGE_LOADED, SUBMIT_ARTICLE, DELETE_ARTICLE, SET_EDIT, EDIT_ARTICLE, NOTIFICATION_PAGE_LOADED, SUBMIT_NOTIFICATION, PROJECT_PAGE_LOADED, SUBMIT_PROJECT, DELETE_PROJECT, SET_EDIT_PROJECT, EDIT_PROJECT, TESTIMONY_PAGE_LOADED, SUBMIT_TESTIMONY, DELETE_TESTIMONY, SET_EDIT_TESTIMONY, EDIT_TESTIMONY, USER_PAGE_LOADED, SUBMIT_USER, DELETE_USER, SET_EDIT_USER, EDIT_USER } from '../actions/types';
+
+const initialState = {
+    articles: [],
+    projects: [],
+    testimonies: [],
+    user: {},
+    users: [],
+};
+
+export default (state = initialState, action) => {
     switch(action.type) {
         //ARTICLE
-        case 'HOME_PAGE_LOADED':
+        case HOME_PAGE_LOADED:
             return {
                 ...state,
                 articles: action.data.articles,
             };
-        case 'SUBMIT_ARTICLE':
+        case SUBMIT_ARTICLE:
             return {
                 ...state,
                 articles: ([action.data.article]).concat(state.articles),
             };
-        case 'DELETE_ARTICLE':
+        case DELETE_ARTICLE:
             return {
                 ...state,
                 articles: state.articles.filter((article) => article._id !== action.id),
             };
-        case 'SET_EDIT':
+        case SET_EDIT:
             return {
                 ...state,
                 articleToEdit: action.article,
             };
-        case 'EDIT_ARTICLE':
+        case EDIT_ARTICLE:
             return {
                 ...state,
                 articles: state.articles.map((article) => {
@@ -44,114 +46,39 @@ export default (state={
             };
 
         //NOTIFICATION
-        case 'NOTIFICATION_PAGE_LOADED':
+        case NOTIFICATION_PAGE_LOADED:
             return {
                 ...state,
                 notifications: action.data.notifications,
             };
-        case 'SUBMIT_NOTIFICATION':
+        case SUBMIT_NOTIFICATION:
             return {
                 ...state,
                 notifications: ([action.data.notification]).concat(state.notifications),
             };
-        case 'DELETE_NOTIFICATION':
-            return {
-                ...state,
-                notifications: state.notifications.filter((notification) => notification._id !== action.id),
-            };
-
-        //EVENT
-        case 'EVENT_PAGE_LOADED':
-            return {
-                ...state,
-                events: action.data.events,
-            };
-        case 'SUBMIT_EVENT':
-            return {
-                ...state,
-                events: ([action.data.event]).concat(state.events),
-            };
-        case 'DELETE_EVENT':
-            return {
-                ...state,
-                events: state.events.filter((event) => event._id !== action.id),
-            };
-        case 'SET_EDIT_EVENT':
-            return {
-                ...state,
-                eventToEdit: action.event,
-            };
-        case 'EDIT_EVENT':
-            return {
-                ...state,
-                events: state.events.map((event) => {
-                    if(event._id === action.data.event._id) {
-                        return {
-                            ...action.data.event,
-                        }
-                    }
-                    return event;
-                }),
-                eventToEdit: undefined,
-            };
-
-        //EXPERIENCE
-        case 'EXPERIENCE_PAGE_LOADED':
-            return {
-                ...state,
-                experiences: action.data.experiences,
-            };
-        case 'SUBMIT_EXPERIENCE':
-            return {
-                ...state,
-                experiences: ([action.data.experience]).concat(state.experiences),
-            };
-        case 'DELETE_EXPERIENCE':
-            return {
-                ...state,
-                experiences: state.experiences.filter((experience) => experience._id !== action.id),
-            };
-        case 'SET_EDIT_EXPERIENCE':
-            return {
-                ...state,
-                experienceToEdit: action.experience,
-            };
-        case 'EDIT_EXPERIENCE':
-            return {
-                ...state,
-                experiences: state.experiences.map((experience) => {
-                    if(experience._id === action.data.experience._id) {
-                        return {
-                            ...action.data.experience,
-                        }
-                    }
-                    return experience;
-                }),
-                experienceToEdit: undefined,
-            };
 
         //PROJECT
-        case 'PROJECT_PAGE_LOADED':
+        case PROJECT_PAGE_LOADED:
             return {
                 ...state,
                 projects: action.data.projects,
             };
-        case 'SUBMIT_PROJECT':
+        case SUBMIT_PROJECT:
             return {
                 ...state,
                 projects: ([action.data.project]).concat(state.projects),
             };
-        case 'DELETE_PROJECT':
+        case DELETE_PROJECT:
             return {
                 ...state,
                 projects: state.projects.filter((project) => project._id !== action.id),
             };
-        case 'SET_EDIT_PROJECT':
+        case SET_EDIT_PROJECT:
             return {
                 ...state,
                 projectToEdit: action.project,
             };
-        case 'EDIT_PROJECT':
+        case EDIT_PROJECT:
             return {
                 ...state,
                 projects: state.projects.map((project) => {
@@ -166,27 +93,27 @@ export default (state={
             };
 
         //TESTIMONY
-        case 'TESTIMONY_PAGE_LOADED':
+        case TESTIMONY_PAGE_LOADED:
             return {
                 ...state,
                 testimonies: action.data.testimonies,
             };
-        case 'SUBMIT_TESTIMONY':
+        case SUBMIT_TESTIMONY:
             return {
                 ...state,
                 testimonies: ([action.data.testimony]).concat(state.testimonies),
             };
-        case 'DELETE_TESTIMONY':
+        case DELETE_TESTIMONY:
             return {
                 ...state,
                 testimonies: state.testimonies.filter((testimony) => testimony._id !== action.id),
             };
-        case 'SET_EDIT_TESTIMONY':
+        case SET_EDIT_TESTIMONY:
             return {
                 ...state,
                 testimonyToEdit: action.testimony,
             };
-        case 'EDIT_TESTIMONY':
+        case EDIT_TESTIMONY:
             return {
                 ...state,
                 testimonies: state.testimonies.map((testimony) => {
@@ -201,26 +128,26 @@ export default (state={
             };
 
         //USER
-        case 'USER_PAGE_LOADED':
+        case USER_PAGE_LOADED:
             return {
                 user: action.data.user,
             };
-        case 'SUBMIT_USER':
+        case SUBMIT_USER:
             return {
                 ...state,
                 users: ([action.data.user]).concat(state.user),
             };
-        case 'DELETE_USER':
+        case DELETE_USER:
             return {
                 ...state,
                 users: state.users.filter((user) => user._id !== action.id),
             };
-        case 'SET_EDIT_USER':
+        case SET_EDIT_USER:
             return {
                 ...state,
                 userToEdit: action.user,
             };
-        case 'EDIT_USER':
+        case EDIT_USER:
             return {
                 ...state,
                 users: state.users.map((user) => {

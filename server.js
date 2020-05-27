@@ -50,8 +50,6 @@ const setupWorkerProcesses = () => {
 const setUpExpress = () => {
     // IMPORT MODELS
     const articleModel = require('./models/Articles');
-    const ExperienceModel = require('./models/Experiences');
-    const EventModel = require('./models/Events');
     const ProjectModel = require('./models/Projects');
     const TestimonyModel = require('./models/Testimonies');
     const NotificationModel = require('./models/Notifications');
@@ -109,12 +107,7 @@ const setUpExpress = () => {
     io.on('connection', (socket) => {
         console.log('Connected to Socket : '+socket.id);
         connections.push(socket);
-        socket.on('change color', (color) => {
-            // once we get a 'change color' event from one of our clients, we will send it to the rest of the clients
-            // we make use of the socket.emit method again with the argument given to use from the callback function above
-            console.log('Color Changed to: ', color);
-            io.sockets.emit('change color', color);
-        });
+        
         socket.on('disconnect', () => {
             console.log('Socket Disconnected : '+socket.id);
         });

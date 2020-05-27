@@ -56,7 +56,7 @@
     "react-scripts": "*",
     "react-share": "*",
     "redux": "*",
-    "redux-thunk": "^2.3.0",
+    "redux-thunk": "*",
     "serve": "*",
     "swiper": "*",
     "underscore": "*"
