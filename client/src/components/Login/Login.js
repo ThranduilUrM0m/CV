@@ -16,7 +16,7 @@ class Login extends React.Component {
         this.send_login = this.send_login.bind(this);
         this.handleChange = this.handleChange.bind(this);
 	}
-	componentDidMount() {
+	componentWillMount() {
 		if(localStorage.getItem('email')) {
 			window.location = "/dashboard";
 		}

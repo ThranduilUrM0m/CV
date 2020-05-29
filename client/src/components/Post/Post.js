@@ -107,37 +107,60 @@ class Post extends React.Component {
         this._handleMouseMove = this._handleMouseMove.bind(this);
         this._handleScroll = this._handleScroll.bind(this);
 	}
+	componentWillMount() {		
+		const { onLoad, match } = this.props;
+		const self = this;
+
+		function setEditFunction() {
+			// Get the current 'global' time from an API using Promise
+			return new Promise((resolve, reject) => {
+				setTimeout(function() {
+					
+					//to get the user object
+					this.get_user();
+
+					true ? resolve('Success') : reject('Error');
+				}, 2000);
+			})
+		}
+		setEditFunction()
+			.then(() => {
+				
+				// GET POST
+				axios('/api/articles')
+				.then((res) => {
+					function setEditFunction() {
+						// Get the current 'global' time from an API using Promise
+						return new Promise((resolve, reject) => {
+							setTimeout(function() {
+								onLoad(res.data);
+								console.log(self.props);
+								self.handleEdit(_.find(res.data.articles, {'_id': match.params.postId}));
+								true ? resolve('Success') : reject('Error');
+							}, 2000);
+						})
+					}
+					setEditFunction()
+						.then(() => {
+							self.handleSubmitViews();
+							return true;
+						})
+						.catch(err => console.log('There was an error:' + err));
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+
+				return true;
+			})
+			.catch(err => console.log('There was an error:' + err));
+	}
 	componentDidMount() {
         loadProgressBar();
 		document.getElementById('articles_post').parentElement.style.height = 'initial';
 		document.getElementById('comments_post').parentElement.style.height = 'initial';
 		this._handleMouseMove();
 		this._handleScroll();
-		//to get the user object
-        this.get_user();
-
-		const { onLoad, match } = this.props;
-		const self = this;
-		axios('/api/articles')
-			.then((res) => {
-				function setEditFunction() {
-					// Get the current 'global' time from an API using Promise
-					return new Promise((resolve, reject) => {
-						setTimeout(function() {
-							onLoad(res.data);
-							console.log(self.props);
-							self.handleEdit(_.find(res.data.articles, {'_id': match.params.postId}));
-							true ? resolve('Success') : reject('Error');
-						}, 2000);
-					})
-				}
-				setEditFunction()
-					.then(() => {
-						self.handleSubmitViews();
-						return true;
-					})
-					.catch(err => console.log('There was an error:' + err));
-			});
 	}
 	async get_user() {
         const self = this;

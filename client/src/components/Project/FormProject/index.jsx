@@ -77,7 +77,7 @@ class FormProject extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputKeyDown = this.handleInputKeyDown.bind(this);
     }
-    componentDidMount() {
+    componentWillMount() {
         this.get_user();
     }
     UNSAFE_componentWillReceiveProps(nextProps) {

@@ -21,10 +21,8 @@ class Home extends React.Component {
         this._handleScroll = this._handleScroll.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
-    componentDidMount() {
+    componentWillMount() {
         const { onLoad, onLoadProject } = this.props;
-        this._handleScroll();
-        this._handleMouseMove();
         const self = this;
         axios('/api/articles')
         .then(function (response) {
@@ -79,7 +77,10 @@ class Home extends React.Component {
         .then(function () {
             // always executed
         });
-
+    }
+    componentDidMount() {
+        this._handleScroll();
+        this._handleMouseMove();
         $('.fixedHeaderContainer').removeClass('blog_header');
     }
     _handleSlider(source) {

@@ -36,12 +36,10 @@ class Blog extends React.Component {
         this.handleShowFilter = this.handleShowFilter.bind(this);
         this._handleDrag = this._handleDrag.bind(this);
 	}
-	componentDidMount() {
+	componentWillMount() {
         const { onLoad } = this.props;
 		const self = this;
-		this._handleMouseMove();
-		this._handleModal();
-        axios('/api/articles')
+		axios('/api/articles')
         .then(function (response) {
             // handle success
 			onLoad(response.data);
@@ -68,6 +66,10 @@ class Blog extends React.Component {
         .then(function () {
             // always executed
 		});
+	}
+	componentDidMount() {
+		this._handleMouseMove();
+		this._handleModal();
 	}
 	_handleDrag() {
 		var mySwiper = new Swiper ('.swiper-container', {

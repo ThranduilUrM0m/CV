@@ -28,38 +28,31 @@ class Footer extends React.Component {
         this.send_mail = this.send_mail.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-    componentDidMount() {
+    componentWillMount() {
         const { onLoad, onLoadProject } = this.props;
-        let self = this;
-        this._handleMouseMove();
 
         axios('/api/articles')
         .then(function (response) {
-            // handle success
             onLoad(response.data);
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
         });
 
         axios('/api/projects')
         .then(function (response) {
-            // handle success
             onLoadProject(response.data);
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
         });
+    }
+    componentDidMount() {
+        let self = this;
+        
+        this._handleMouseMove();
 
-        self.setState({
+        this.setState({
             window_height: $(window).height(),
             window_width: $(window).width()
         }, () => {

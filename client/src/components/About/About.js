@@ -16,18 +16,18 @@ class About extends React.Component {
         this.typewriting = this.typewriting.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
-    componentDidMount() {
+    componentWillMount() {
         const { onLoad } = this.props;
-        this.typewriting();
         axios('/api/articles')
         .then(function (response) {
-            // handle success
             onLoad(response.data);
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
         });
+    }
+    componentDidMount() {
+        this.typewriting();
         $('.fixedHeaderContainer').removeClass('blog_header');
     }
     typewriting() {

@@ -79,28 +79,20 @@ class Dashboard extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleChangeFieldUser = this.handleChangeFieldUser.bind(this);
-	}
-	componentDidMount() {
+    }
+    componentWillMount() {
 		const { onLoad, onLoadProject, onLoadTestimony, onLoadNotification } = this.props;
-		let self = this;
-
-        document.getElementById('first_section_dashboard').parentElement.style.height = 'initial';
-        document.getElementById('first_section_dashboard').parentElement.style.minHeight = '100%';
-
-		axios('/api/articles')
+        let self = this;
+        
+        axios('/api/articles')
         .then(function (response) {
-            // handle success
 			onLoad(response.data);
 			function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
-                //if one or more elements have been yielded by jquery
-                //using this selector
                 if ($(jquery_selector).length) {
-                    //stop checking for the existence of this element
                     clearInterval(checker);
-                    //call the passed in function via the parameter above
                     callback();
-                }}, 200); //I usually check 5 times per second
+                }}, 200);
             }
             runAfterElementExists(".first_section_dashboard .articles_slider_wrapper_cards_item", function() {
 				self._handleDrag('articles_slider_wrapper');
@@ -108,81 +100,62 @@ class Dashboard extends React.Component {
 			$('.fixedHeaderContainer').addClass('blog_header');
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
-		});
+        });
 
         axios('/api/projects')
         .then(function (response) {
-            // handle success
             onLoadProject(response.data);
             function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
-                //if one or more elements have been yielded by jquery
-                //using this selector
                 if ($(jquery_selector).length) {
-                    //stop checking for the existence of this element
                     clearInterval(checker);
-                    //call the passed in function via the parameter above
                     callback();
-                }}, 200); //I usually check 5 times per second
+                }}, 200);
             }
             runAfterElementExists(".first_section_dashboard .projects_slider_wrapper_cards_item", function() {
 				self._handleDrag('projects_slider_wrapper');
 			});
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
         });
         
         axios('/api/testimonies')
         .then(function (response) {
-            // handle success
             onLoadTestimony(response.data);
             function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
-                //if one or more elements have been yielded by jquery
-                //using this selector
                 if ($(jquery_selector).length) {
-                    //stop checking for the existence of this element
                     clearInterval(checker);
-                    //call the passed in function via the parameter above
                     callback();
-                }}, 200); //I usually check 5 times per second
+                }}, 200);
             }
             runAfterElementExists(".first_section_dashboard .testimonies_slider_wrapper_cards_item", function() {
 				self._handleDrag('testimonies_slider_wrapper');
 			});
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
         });
         
         axios('/api/notifications')
         .then(function (response) {
-            // handle success
             onLoadNotification(response.data);
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
         });
 		
 		//to get the user object
         this.get_user();
+    }
+	componentDidMount() {
+        let self = this;
+        
+        document.getElementById('first_section_dashboard').parentElement.style.height = 'initial';
+        document.getElementById('first_section_dashboard').parentElement.style.minHeight = '100%';
 
-		//when hovered on the nav
 		$('.nav').hover(
 			function() {
 			  	$('.wrapper_full .after').css(

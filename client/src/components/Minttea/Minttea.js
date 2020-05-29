@@ -33,15 +33,19 @@ class Minttea extends React.Component {
         this.handleEdit = this.handleEdit.bind(this);
         this.handleReply = this.handleReply.bind(this);
     }
-    componentDidMount() {
+    componentWillMount() {
         const { onLoadTestimony } = this.props;
-        document.getElementsByClassName('first_section_coffee')[0].parentElement.style.height = 'initial';
-        document.getElementsByClassName('first_section_coffee')[0].parentElement.style.minHeight = '100%';
-
         axios('/api/testimonies')
         .then((response) => {
             onLoadTestimony(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
         });
+    }
+    componentDidMount() {
+        document.getElementsByClassName('first_section_coffee')[0].parentElement.style.height = 'initial';
+        document.getElementsByClassName('first_section_coffee')[0].parentElement.style.minHeight = '100%';
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.testimonyToEdit) {

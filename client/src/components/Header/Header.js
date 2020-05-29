@@ -29,39 +29,30 @@ class Header extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-    componentDidMount() {
-        loadProgressBar();
+    componentWillMount() {
         const { onLoad, onLoadProject } = this.props;
-
-        this._handleClickEvents();
-        this.handleSearch();
-        const self = this;
-
         axios('/api/articles')
         .then(function (response) {
-            // handle success
             onLoad(response.data);
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
         });
 
         axios('/api/projects')
         .then(function (response) {
-            // handle success
             onLoadProject(response.data);
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
         });
+    }
+    componentDidMount() {
+        loadProgressBar();
+
+        this._handleClickEvents();
+        this.handleSearch();
+        const self = this;
 
         let _links = $('.menu .nav-link');
         let _url = window.location.pathname;

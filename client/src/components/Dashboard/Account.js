@@ -25,7 +25,7 @@ class Account extends React.Component {
         this.send_user = this.send_user.bind(this);
         this._progress = this._progress.bind(this);
     }
-    componentDidMount() {
+    componentWillMount() {
         this.get_user();
     }
 	async get_user() {

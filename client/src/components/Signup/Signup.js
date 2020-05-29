@@ -21,7 +21,7 @@ class Signup extends React.Component {
         this.send_signup = this.send_signup.bind(this);
         this.handleChange = this.handleChange.bind(this);
 	}
-	componentDidMount() {
+	componentWillMount() {
 		if(localStorage.getItem('email')) {
 			window.location = "/dashboard";
 		}

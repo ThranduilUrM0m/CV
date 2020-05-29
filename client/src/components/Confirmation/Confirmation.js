@@ -14,7 +14,7 @@ class Confirmation extends React.Component {
         }
         this.confirmation = this.confirmation.bind(this);
     }
-    componentDidMount() {
+    componentWillMount() {
         let self = this;
         this.confirmation(self.props.match.params.token_id);
     }
