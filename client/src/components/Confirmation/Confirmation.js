@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
 import { Link } from 'react-router-dom';
 import * as $ from "jquery";
+import socketIOClient from "socket.io-client";
+
+const socket = socketIOClient('');
 
 class Confirmation extends React.Component {
     constructor(props) {
@@ -26,6 +29,7 @@ class Confirmation extends React.Component {
             self.setState({
                 modal_msg: res.data.text
             }, () => {
+                socket.emit("USER_UPDATED", res.data.text);
                 $('#confirmation_modal').modal('toggle');
                 return axios.post('/api/notifications', {
                     type: 'Account verified',

@@ -117,7 +117,7 @@ async function update(req, res) {
         const user = {
             username: _user.username,
             email: _user.email,
-            password: passwordHash.generate(_new_password),
+            password: passwordHash.generate(_new_password ? _new_password : _current_password),
         };
         // Sauvegarde de l'utilisateur en base
         const findUser = await User.findOneAndUpdate(

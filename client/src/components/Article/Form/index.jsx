@@ -5,7 +5,9 @@ import ReactQuill, { Quill } from 'react-quill';
 import API from "../../../utils/API";
 import ImageResize from 'quill-image-resize-module';
 import ImageUploader from "quill-image-uploader";
-import io from "socket.io-client";
+import socketIOClient from "socket.io-client";
+
+const socket = socketIOClient('');
 Quill.register('modules/ImageResize', ImageResize);
 Quill.register("modules/imageUploader", ImageUploader);
 
@@ -79,7 +81,9 @@ class Form extends React.Component {
         this.handleInputKeyDown = this.handleInputKeyDown.bind(this);
     }
     componentWillMount() {
+        const self = this;
         this.get_user();
+        socket.on("USER_UPDATED_GET", data => self.get_user());
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.articleToEdit) {

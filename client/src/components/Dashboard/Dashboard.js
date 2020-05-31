@@ -18,7 +18,9 @@ import 'whatwg-fetch';
 import * as $ from "jquery";
 import jQuery from 'jquery';
 import 'bootstrap';
+import socketIOClient from "socket.io-client";
 
+const socket = socketIOClient('');
 var _ = require('lodash');
 
 class Dashboard extends React.Component {
@@ -148,6 +150,7 @@ class Dashboard extends React.Component {
 		
 		//to get the user object
         this.get_user();
+        socket.on("USER_UPDATED_GET", data => self.get_user());
     }
 	componentDidMount() {
         let self = this;
@@ -249,7 +252,7 @@ class Dashboard extends React.Component {
             });
         } else {
             self.setState(prevState => ({
-                _users: [...prevState._users, _user]
+                _users: [_user]
             }));
         }
     }
@@ -279,6 +282,7 @@ class Dashboard extends React.Component {
                 }, () => {
                     self.get_users();
                     $('#edit_modal').modal('toggle');
+                    socket.emit("USER_UPDATED", res.data.text);
                 })
             })
             .catch((error) => {
@@ -1282,7 +1286,6 @@ class Dashboard extends React.Component {
                                                                             <th>Fingerprint</th>
                                                                             <th>Created At</th>
                                                                             <th>Roles</th>
-                                                                            <th className="_empty"></th>
                                                                             <th className="_empty"></th>
                                                                         </tr>
                                                                     </thead>

@@ -145,8 +145,14 @@ const setUpExpress = () => {
                 });
             }
         });
-        //I GOTTA WATCH FOR WHEN A USER HAS BEEN UPDATED, TO SEND AN EMIT WITH FUNCTION get_users()
-        
+        socket.on('USER_UPDATED', (data) => {
+            connections.forEach(connectedSocket => {
+                if (connectedSocket !== socket) {
+                    connectedSocket.emit('USER_UPDATED_GET', 'GET_USERS' );
+                }
+            });
+        });
+
         socket.on('disconnect', () => {
             const index = connections.indexOf(socket);
             connections.splice(index, 1);

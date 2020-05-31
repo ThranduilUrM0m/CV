@@ -2,7 +2,9 @@ import React from "react";
 import 'whatwg-fetch';
 import API from '../../utils/API';
 import $ from 'jquery';
+import socketIOClient from "socket.io-client";
 
+const socket = socketIOClient('');
 var _ = require('lodash');
 
 class Account extends React.Component {
@@ -36,6 +38,9 @@ class Account extends React.Component {
                 _user: data.user,
                 _old_username: data.user.username,
                 _old_email: data.user.email,
+                _current_password: '',
+                _new_password: '',
+                _confirm_password: '',
 			});
         } catch (error) {
             console.error(error);
@@ -57,6 +62,9 @@ class Account extends React.Component {
                 }, () => {
                     self.get_user();
                     $('#edit_modal').modal('toggle');
+                    //when u update a username per example, u need to link the articles
+                    socket.on("USER_UPDATED_GET", data => self.get_user());
+                    socket.emit("USER_UPDATED", res.data.text);
                 })
             })
             .catch((error) => {
@@ -75,7 +83,18 @@ class Account extends React.Component {
         }
     }
     handleChangeField(key, event) {
-        this.setState({ [key]: event.target.value });
+        const self = this;
+        const value = event.target.value;
+        if(key === 'username' || key === 'email') {
+            self.setState(prevState => ({
+                _user: {
+                    ...prevState._user,
+                    [key]: value
+                }
+            }));
+        } else {
+            this.setState({ [key]: value });
+        }
     }
     _progress(user) {
         function percentage(partialValue, totalValue) {

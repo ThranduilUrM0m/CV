@@ -59,6 +59,9 @@ import {
 	InstapaperIcon,
 	WeiboIcon,
 } from "react-share";
+import socketIOClient from "socket.io-client";
+
+const socket = socketIOClient('');
 
 var _ = require('lodash');
 
@@ -117,6 +120,7 @@ class Post extends React.Component {
 				setTimeout(function() {
 					//to get the user object
 					self.get_user();
+					socket.on("USER_UPDATED_GET", data => self.get_user());
 					true ? resolve('Success') : reject('Error');
 				}, 2000);
 			})
@@ -130,7 +134,6 @@ class Post extends React.Component {
 						return new Promise((resolve, reject) => {
 							setTimeout(function() {
 								onLoad(res.data);
-								console.log(self.props);
 								self.handleEdit(_.find(res.data.articles, {'_id': match.params.postId}));
 								true ? resolve('Success') : reject('Error');
 							}, 2000);

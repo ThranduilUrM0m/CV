@@ -347,7 +347,7 @@ class Footer extends React.Component {
                                                 name="mail_username" 
                                                 required="required"
                                                 value={this.state.mail_username} 
-                                                onChange={this.handleChange}
+                                            onChange={this.handleChange}
                                             />
                                             <label htmlFor='mail_username'>username*</label>
                                             <div className="form-group-line"></div>

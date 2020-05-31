@@ -5,9 +5,11 @@ import ReactQuill, { Quill } from 'react-quill';
 import API from "../../../utils/API";
 import ImageResize from 'quill-image-resize-module';
 import ImageUploader from "quill-image-uploader";
+import socketIOClient from "socket.io-client";
 Quill.register('modules/ImageResize', ImageResize);
 Quill.register("modules/imageUploader", ImageUploader);
 
+const socket = socketIOClient('');
 var _ = require('lodash');
 const modules = {
     ImageResize: {
@@ -78,7 +80,9 @@ class FormProject extends React.Component {
         this.handleInputKeyDown = this.handleInputKeyDown.bind(this);
     }
     componentWillMount() {
+        const self = this;
         this.get_user();
+        socket.on("USER_UPDATED_GET", data => self.get_user());
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         if(nextProps.projectToEdit) {

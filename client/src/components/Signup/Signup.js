@@ -7,6 +7,9 @@ import 'whatwg-fetch';
 import 'bootstrap';
 import Fingerprint from 'fingerprintjs';
 import * as $ from "jquery";
+import socketIOClient from "socket.io-client";
+
+const socket = socketIOClient('');
 
 class Signup extends React.Component {
 	constructor(props) {
@@ -41,6 +44,7 @@ class Signup extends React.Component {
 					modal_msg: res.data.text
 				}, () => {
 					$('#signup_modal').modal('toggle');
+                    socket.emit("USER_UPDATED", res.data.text);
 					return axios.post('/api/notifications', {
                         type: 'User Account Created',
                         description: '\''+email+'\' created an account as \''+username+'\'',
