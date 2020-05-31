@@ -7,7 +7,7 @@ import rootReducer from './reducers';
 //io('change address') for production
 const initialState = {},
       socket = io(''),
-      socketIoMiddleware = createSocketIoMiddleware(socket, ""),
+      socketIoMiddleware = createSocketIoMiddleware(socket, ''),
       middleware = [thunk, socketIoMiddleware];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

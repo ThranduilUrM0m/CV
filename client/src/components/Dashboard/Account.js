@@ -177,7 +177,7 @@ class Account extends React.Component {
                                 required="required" 
                                 onChange={(ev) => this.handleChangeField('_current_password', ev)}
                                 value={_current_password}
-                                autocomplete="new-password"
+                                autoComplete="new-password"
                                 />
                                 <label htmlFor='_current_password' className={_current_password ? 'active' : ''}>Current Password</label>
                                 <div className="form-group-line"></div>

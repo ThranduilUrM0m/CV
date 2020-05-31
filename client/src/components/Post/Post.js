@@ -12,57 +12,24 @@ import * as $ from "jquery";
 import 'bootstrap';
 import 'axios-progress-bar/dist/nprogress.css';
 import {
-	FacebookShareCount,
-	PinterestShareCount,
-	VKShareCount,
-	OKShareCount,
-	RedditShareCount,
-	TumblrShareCount,
 	FacebookShareButton,
 	FacebookMessengerShareButton,
 	FacebookMessengerIcon,
 	LinkedinShareButton,
 	TwitterShareButton,
 	PinterestShareButton,
-	VKShareButton,
-	OKShareButton,
-	TelegramShareButton,
 	WhatsappShareButton,
-	RedditShareButton,
 	EmailShareButton,
-	TumblrShareButton,
-	LivejournalShareButton,
-	MailruShareButton,
-	ViberShareButton,
-	WorkplaceShareButton,
-	LineShareButton,
-	WeiboShareButton,
-	PocketShareButton,
-	InstapaperShareButton,
 	FacebookIcon,
 	TwitterIcon,
 	LinkedinIcon,
 	PinterestIcon,
-	VKIcon,
-	OKIcon,
-	TelegramIcon,
 	WhatsappIcon,
-	RedditIcon,
-	TumblrIcon,
-	MailruIcon,
-	EmailIcon,
-	LivejournalIcon,
-	ViberIcon,
-	WorkplaceIcon,
-	LineIcon,
-	PocketIcon,
-	InstapaperIcon,
-	WeiboIcon,
+	EmailIcon
 } from "react-share";
 import socketIOClient from "socket.io-client";
 
 const socket = socketIOClient('');
-
 var _ = require('lodash');
 
 class Post extends React.Component {

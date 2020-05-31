@@ -1,7 +1,6 @@
 import React from 'react';
 import { FullPage, Slide } from 'react-full-page';
 import { Link } from 'react-router-dom';
-import * as $ from "jquery";
 
 class NotFound extends React.Component {
   	render() {

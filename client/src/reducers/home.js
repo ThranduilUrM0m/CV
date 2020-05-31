@@ -129,7 +129,6 @@ export default (state = initialState, action) => {
 
         //USER
         case USER_PAGE_LOADED:
-            console.log(action.data);
             return {
                 user: action.data.user,
             };

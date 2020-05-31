@@ -121,11 +121,13 @@ const setUpExpress = () => {
         'SET_EDIT_USER'
     ]
 
+    io.set('origins', '*:*');
     io.attach(server);
     io.on('connection', function(socket){
         connections.push(socket);
 
         socket.on('action', (action) => {
+            console.log('/*****************ACTION FIRED*****************/');
             if(!types.includes(action.type)) {
                 connections.forEach(connectedSocket => {
                     if (connectedSocket !== socket) {
@@ -146,6 +148,7 @@ const setUpExpress = () => {
             }
         });
         socket.on('USER_UPDATED', (data) => {
+            console.log('/*****************USER_UPDATED*****************/');
             connections.forEach(connectedSocket => {
                 if (connectedSocket !== socket) {
                     connectedSocket.emit('USER_UPDATED_GET', 'GET_USERS' );

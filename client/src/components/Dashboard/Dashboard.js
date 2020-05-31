@@ -1045,7 +1045,7 @@ class Dashboard extends React.Component {
                                                                 <Autocomplete
                                                                     items={_.map(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), 'title')}
                                                                     getItemValue={(item) => item}
-                                                                    inputProps={{ id: 'title_projects', className: 'form-group-input title_projects', name: 'title_projects', autocomplete: "off" }}
+                                                                    inputProps={{ id: 'title_projects', className: 'form-group-input title_projects', name: 'title_projects', autoComplete: "off" }}
                                                                     shouldItemRender={(item, title_projects) => item.toLowerCase().indexOf(title_projects.toLowerCase()) > -1}
 													                renderItem={(item, isHighlighted) =>
                                                                         <div className={`item ${isHighlighted ? 'item-highlighted' : ''}`}>
