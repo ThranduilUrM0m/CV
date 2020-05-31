@@ -452,6 +452,7 @@ class Minttea extends React.Component {
                                         <div className="modal-inner">
                                             <div className="modal-content">
                                             {
+                                                //orderby upvotes as main nd then the date
                                                 _.orderBy(_.filter(testimonies, { 'is_private': false, parent_id: null }), ['upvotes'], ['desc']).map((testimony, index) => {
                                                     return (
                                                         <div className={"card card_" + index} data-index={index+1}>

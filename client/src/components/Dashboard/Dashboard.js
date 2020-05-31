@@ -21,7 +21,6 @@ import 'bootstrap';
 
 var _ = require('lodash');
 
-//user has role normal so wut now
 class Dashboard extends React.Component {
   	constructor(props) {
         super(props);

@@ -1,15 +1,16 @@
+const axios = require('axios');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
-const errorHandler = require('errorhandler');
 const mongoose = require('mongoose');
 const cluster = require('cluster');
-let workers = [];
 
 const http = require('http');
-const socketIO = require('socket.io');
+const socket_io = require('socket.io');
+
+let workers = [];
 
 const setupWorkerProcesses = () => {
     // to read number of cores on system
@@ -72,6 +73,10 @@ const setUpExpress = () => {
         });
     mongoose.set('debug', true);
 
+    var db = mongoose.connection;
+    db.on('error', ()=> {console.log( '---Gethyl FAILED to connect to mongoose')});
+    db.once('open', () => {console.log( '+++Gethyl connected to mongoose')});
+
     app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
     app.use(bodyParser.json({ limit: '50mb' }));
     app.use(require('morgan')('dev'));
@@ -95,21 +100,56 @@ const setUpExpress = () => {
             res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
         })
     }
-    
+
     var server = http.createServer(app);
-    var io = socketIO(server);
 
     //Définition et mise en place du port d'écoute
     const port = process.env.PORT || 8800;
     server.listen(port, () => console.log(`Listening on port ${port}`));
 
+    const io = socket_io();
     const connections = [];
-    io.on('connection', (socket) => {
-        console.log('Connected to Socket : '+socket.id);
+    const types = [
+        'HOME_PAGE_LOADED',
+        'NOTIFICATION_PAGE_LOADED',
+        'PROJECT_PAGE_LOADED',
+        'TESTIMONY_PAGE_LOADED',
+        'USER_PAGE_LOADED',
+        'SET_EDIT',
+        'SET_EDIT_PROJECT',
+        'SET_EDIT_TESTIMONY',
+        'SET_EDIT_USER'
+    ]
+
+    io.attach(server);
+    io.on('connection', function(socket){
         connections.push(socket);
+
+        socket.on('action', (action) => {
+            if(!types.includes(action.type)) {
+                connections.forEach(connectedSocket => {
+                    if (connectedSocket !== socket) {
+                        db.collection("notifications").find({}).toArray(function(err, docs){
+                            connectedSocket.emit('action', { type:'NOTIFICATION_PAGE_LOADED', data: { notifications: docs} });
+                        });
+                        db.collection("testimonies").find({}).toArray(function(err, docs){
+                            connectedSocket.emit('action', { type:'TESTIMONY_PAGE_LOADED', data: { testimonies: docs} });
+                        });
+                        db.collection("articles").find({}).toArray(function(err, docs){
+                            connectedSocket.emit('action', { type:'HOME_PAGE_LOADED', data: { articles: docs} });
+                        });
+                        db.collection("projects").find({}).toArray(function(err, docs){
+                            connectedSocket.emit('action', { type:'PROJECT_PAGE_LOADED', data: { projects: docs} });
+                        });
+                    }
+                });
+            }
+        });
+        //I GOTTA WATCH FOR WHEN A USER HAS BEEN UPDATED, TO SEND AN EMIT WITH FUNCTION get_users()
         
         socket.on('disconnect', () => {
-            console.log('Socket Disconnected : '+socket.id);
+            const index = connections.indexOf(socket);
+            connections.splice(index, 1);
         });
     });
 };

@@ -157,7 +157,7 @@ class Form extends React.Component {
                         console.log(error)
                     });
                 })
-                .then(function() {
+                .then(() => {
                     var element = document.getElementsByClassName("ql-editor");
                     element[0].innerHTML = "";
                     self.setState({ 
@@ -173,7 +173,8 @@ class Form extends React.Component {
                         downvotes: [],
                         view: [],
                     })
-                }).catch(error => {
+                })
+                .catch(error => {
                     console.log(error.response)
                 });
         } else {

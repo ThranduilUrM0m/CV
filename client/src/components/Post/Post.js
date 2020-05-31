@@ -115,18 +115,14 @@ class Post extends React.Component {
 			// Get the current 'global' time from an API using Promise
 			return new Promise((resolve, reject) => {
 				setTimeout(function() {
-					
 					//to get the user object
-					this.get_user();
-
+					self.get_user();
 					true ? resolve('Success') : reject('Error');
 				}, 2000);
 			})
 		}
 		setEditFunction()
 			.then(() => {
-				
-				// GET POST
 				axios('/api/articles')
 				.then((res) => {
 					function setEditFunction() {
@@ -150,7 +146,6 @@ class Post extends React.Component {
 				.catch(function (error) {
 					console.log(error);
 				});
-
 				return true;
 			})
 			.catch(err => console.log('There was an error:' + err));

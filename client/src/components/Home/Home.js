@@ -30,25 +30,17 @@ class Home extends React.Component {
             onLoad(response.data);
             function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
-                //if one or more elements have been yielded by jquery
-                //using this selector
                 if ($(jquery_selector).length) {
-                    //stop checking for the existence of this element
                     clearInterval(checker);
-                    //call the passed in function via the parameter above
                     callback();
-                }}, 200); //I usually check 5 times per second
+                }}, 200);
             }
             runAfterElementExists(".first_section .card_"+(_.size(_.filter(response.data.articles, { '_hide': false }))), function() {
                 self._handleSlider('slider');
             });
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
         });
 
         axios('/api/projects')
@@ -57,25 +49,17 @@ class Home extends React.Component {
             onLoadProject(response.data);
             function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
-                //if one or more elements have been yielded by jquery
-                //using this selector
                 if ($(jquery_selector).length) {
-                    //stop checking for the existence of this element
                     clearInterval(checker);
-                    //call the passed in function via the parameter above
                     callback();
-                }}, 200); //I usually check 5 times per second
+                }}, 200);
             }
             runAfterElementExists(".second_section .card_"+(_.size(_.filter(response.data.projects, { '_hide': false }))), function() {
                 self._handleSlider('slider_projects');
             });
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
         });
     }
     componentDidMount() {

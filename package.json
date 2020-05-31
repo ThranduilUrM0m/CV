@@ -9,6 +9,7 @@
     "author": "boutaleb_zakariae",
     "license": "ISC",
     "dependencies": {
+        "axios": "^0.19.2",
         "body-parser": "*",
         "cluster": "*",
         "cors": "*",
@@ -17,12 +18,14 @@
         "errorhandler": "*",
         "express": "*",
         "express-session": "*",
+        "http": "*",
         "jwt-simple": "*",
         "mongoose": "*",
         "morgan": "*",
         "nodemailer": "*",
         "password-hash": "*",
-        "socket.io": "^2.3.0"
+        "socket.io": "*",
+        "websocket": "*"
     },
     "devDependencies": {
         "concurrently": "*",
