@@ -152,9 +152,9 @@ async function update_roles(req, res) {
             },
             { upsert: true }
         );
-        //main(user.email).catch(console.error);
+        verification_email(findUser.email, 'Hello,\n\n' + 'your account has been marked to be deleted, if you wish to undo that, just login in the next 7 days, if u choose not to, your account will be automatically deleted after the 7 days.\n We thank you for your support.');
         return res.status(200).json({
-            text: "User updated successfully.",
+            text: "User Roles updated successfully.",
         });
     } catch (error) {
         return res.status(500).json({ error });
@@ -186,6 +186,18 @@ async function login(req, res) {
             return res.status(401).json({
                 text: "Your account has not been verified. Please check your inbox for a verification email that was sent to you."
             });
+        if((findUser.roles).includes('Deleted')) {
+            // Sauvegarde de l'utilisateur en base
+            await User.findOneAndUpdate(
+                { email : email },
+                {
+                    $set : {
+                        roles: findUser.roles.filter(function(value, index, arr){ return value != 'Deleted';}),
+                    }
+                },
+                { upsert: true }
+            );
+        } 
         return res.status(200).json({
             token: findUser.getToken(),
             email: findUser.email,

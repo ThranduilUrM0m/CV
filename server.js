@@ -121,7 +121,6 @@ const setUpExpress = () => {
         'SET_EDIT_USER'
     ]
 
-    io.set('origins', '*:*');
     io.attach(server);
     io.on('connection', function(socket){
         connections.push(socket);
@@ -131,18 +130,26 @@ const setUpExpress = () => {
             if(!types.includes(action.type)) {
                 connections.forEach(connectedSocket => {
                     if (connectedSocket !== socket) {
-                        db.collection("notifications").find({}).toArray(function(err, docs){
-                            connectedSocket.emit('action', { type:'NOTIFICATION_PAGE_LOADED', data: { notifications: docs} });
-                        });
-                        db.collection("testimonies").find({}).toArray(function(err, docs){
-                            connectedSocket.emit('action', { type:'TESTIMONY_PAGE_LOADED', data: { testimonies: docs} });
-                        });
-                        db.collection("articles").find({}).toArray(function(err, docs){
-                            connectedSocket.emit('action', { type:'HOME_PAGE_LOADED', data: { articles: docs} });
-                        });
-                        db.collection("projects").find({}).toArray(function(err, docs){
-                            connectedSocket.emit('action', { type:'PROJECT_PAGE_LOADED', data: { projects: docs} });
-                        });
+                        if(action.type == 'SUBMIT_ARTICLE' || action.type == 'DELETE_ARTICLE' || action.type == 'EDIT_ARTICLE') {
+                            db.collection("articles").find({}).toArray(function(err, docs){
+                                connectedSocket.emit('action', { type:'HOME_PAGE_LOADED', data: { articles: docs} });
+                            });
+                        }
+                        if(action.type == 'SUBMIT_NOTIFICATION') {
+                            db.collection("notifications").find({}).toArray(function(err, docs){
+                                connectedSocket.emit('action', { type:'NOTIFICATION_PAGE_LOADED', data: { notifications: docs} });
+                            });
+                        }
+                        if(action.type == 'SUBMIT_PROJECT' || action.type == 'DELETE_PROJECT' || action.type == 'EDIT_PROJECT') {
+                            db.collection("projects").find({}).toArray(function(err, docs){
+                                connectedSocket.emit('action', { type:'PROJECT_PAGE_LOADED', data: { projects: docs} });
+                            });
+                        }
+                        if(action.type == 'SUBMIT_TESTIMONY' || action.type == 'DELETE_TESTIMONY' || action.type == 'EDIT_TESTIMONY') {
+                            db.collection("testimonies").find({}).toArray(function(err, docs){
+                                connectedSocket.emit('action', { type:'TESTIMONY_PAGE_LOADED', data: { testimonies: docs} });
+                            });
+                        }
                     }
                 });
             }

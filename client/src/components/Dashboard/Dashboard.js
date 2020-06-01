@@ -272,7 +272,7 @@ class Dashboard extends React.Component {
     }
     async send_user() {
         let self = this;
-        const { _user_toEdit_username, _user_toEdit_roles } = this.state;
+        const { _user_toEdit_username, _user_toEdit_roles, _user } = this.state;
         
         try {
             await API.update_roles({ _user_toEdit_username, _user_toEdit_roles })
@@ -280,9 +280,29 @@ class Dashboard extends React.Component {
                 self.setState({
                     modal_msg: res.data.text
                 }, () => {
-                    self.get_users();
-                    $('#edit_modal').modal('toggle');
-                    socket.emit("USER_UPDATED", res.data.text);
+                    function setEditFunction() {
+                        // Get the current 'global' time from an API using Promise
+                        return new Promise((resolve, reject) => {
+                            setTimeout(function() {
+                                $('#edit_modal').modal('toggle');
+                                self.get_users();
+                                self.get_user();
+                                self.setState({
+                                    _user_toEdit_username : '', _user_toEdit_roles: ''
+                                });
+                                socket.emit("USER_UPDATED", res.data.text);
+                                true ? resolve('Success') : reject('Error');
+                            }, 2000);
+                        })
+                    }
+                    setEditFunction()
+                        .then(() => {
+                            $('#myModal').on('hidden.bs.modal', function (e) {
+                                if(_.includes(_user.roles, 'Deleted')) {
+                                    self.disconnect();
+                                }
+                            })
+                        });
                 })
             })
             .catch((error) => {
@@ -304,8 +324,29 @@ class Dashboard extends React.Component {
         const { setEditUser } = this.props;
         setEditUser(user);
     }
-    handleDeleteUser(_id) {
+    handleDeleteUser(user) {
+        const self = this;
+        const { _user_toEdit_username, _user_toEdit_roles } = this.state;
 
+        function setEditFunction() {
+			// Get the current 'global' time from an API using Promise
+			return new Promise((resolve, reject) => {
+				setTimeout(function() {
+                    self.handleEditUser(user);
+					true ? resolve('Success') : reject('Error');
+				}, 2000);
+			})
+		}
+		setEditFunction()
+			.then(() => {
+                self.setState(prevState => ({
+                    _user_toEdit_roles: [...prevState._user_toEdit_roles, 'Deleted']
+                }), () => {
+                    self.send_user();
+                });
+				return true;
+			})
+			.catch(err => console.log('There was an error:' + err));
     }
 	_handleDrag(source) {
         if(source != 'testimonies_slider_wrapper'){
@@ -513,7 +554,7 @@ class Dashboard extends React.Component {
     }
     handleChangeFieldUser(key, event) {
         this.setState({
-            [key]: event.target.value,
+            [key]: [event.target.value],
         });
     }
 	_handleModal(trigger, modal_target) {
@@ -854,7 +895,6 @@ class Dashboard extends React.Component {
         $('#bigtext').bigtext();
     }
 	render() {
-        //if user choose to update than close nd add, he'll eventually be updating, so wtf
 		const { logo_to_show, _user, _users, title, title_projects, sort, timeframe, categorie, _article, _testimony, currentPage, todosPerPage, tags, _user_toEdit_username, _user_toEdit_roles, modal_msg } = this.state;
         const { articles, projects, testimonies, notifications } = this.props;
 		return (
@@ -1286,6 +1326,7 @@ class Dashboard extends React.Component {
                                                                             <th>Fingerprint</th>
                                                                             <th>Created At</th>
                                                                             <th>Roles</th>
+                                                                            <th>Verified</th>
                                                                             <th className="_empty"></th>
                                                                         </tr>
                                                                     </thead>
@@ -1298,7 +1339,8 @@ class Dashboard extends React.Component {
                                                                                     <td>{_u.email}</td>
                                                                                     <td>{_u.fingerprint}</td>
                                                                                     <td>{moment(_u.createdAt).format('MMM DD, YYYY')}</td>
-                                                                                    <td>{_.isEmpty(_u.roles) ? 'pending...' : _u.roles}</td>
+                                                                                    <td>{_.isEmpty(_u.roles) ? 'Reader' : _.map(_u.roles, (r) => { return <p>{r}</p>; })}</td>
+                                                                                    <td>{_u.isVerified ? 'Verified' : 'Not Verified'}</td>
                                                                                     <td className="dropdown">
                                                                                         <span className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                             <i className="fas fa-ellipsis-h"></i>
@@ -1307,11 +1349,11 @@ class Dashboard extends React.Component {
                                                                                             {(() => {
                                                                                                 if(_.includes(_user.roles, 'admin')) {
                                                                                                     return (
-                                                                                                        <a className="dropdown-item" href="" data-toggle="modal" data-target="#_user_modal" onClick={() => this.handleEditUser(_u)}>Edit User.</a>
+                                                                                                        <a className="dropdown-item" href="# " data-toggle="modal" data-target="#_user_modal" onClick={() => this.handleEditUser(_u)}>Edit User.</a>
                                                                                                     )
                                                                                                 }
                                                                                             })()}
-                                                                                            <a className="dropdown-item" href="" onClick={() => this.handleDeleteUser(_u._id)}>Delete User.</a>
+                                                                                            <a className="dropdown-item" href="# " onClick={() => this.handleDeleteUser(_u)}>Delete User.</a>
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
@@ -2231,7 +2273,7 @@ class Dashboard extends React.Component {
                                                             name="_user_toEdit_roles"
                                                         >
                                                             <option value=""></option>
-                                                            <option value="Write">Write</option>
+                                                            <option value="Writer">Writer</option>
                                                             <option value="Admin">Admin</option>
                                                         </select>
                                                         <label htmlFor='_user_toEdit_roles' className={_user_toEdit_roles ? 'active' : ''}>Roles</label>
