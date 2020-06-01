@@ -31,7 +31,6 @@ const modules = {
                 )
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result);
                     resolve(result.data.url);
                 })
                 .catch(error => {
@@ -176,7 +175,7 @@ class Form extends React.Component {
                         upvotes: [],
                         downvotes: [],
                         view: [],
-                    })
+                    });
                 })
                 .catch(error => {
                     console.log(error.response)
@@ -206,7 +205,7 @@ class Form extends React.Component {
                         console.log(error)
                     });
                 })
-                .then(function() {
+                .then(() => {
                     var element = document.getElementsByClassName("ql-editor");
                     element[0].innerHTML = "";
                     self.setState({ 
@@ -221,8 +220,9 @@ class Form extends React.Component {
                         upvotes: [],
                         downvotes: [],
                         view: [],
-                    })
-                }).catch(function (error) {
+                    });
+                })
+                .catch((error) => {
                     console.log(error);
                 });
         }
@@ -367,10 +367,10 @@ const mapDispatchToProps = dispatch => ({
     setEdit: article => dispatch({ type: 'SET_EDIT', article }),
     
     onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data }),
-}) 
+})
   
 const mapStateToProps = state => ({
     articleToEdit: state.home.articleToEdit,
-}) 
+})
   
 export default connect(mapStateToProps, mapDispatchToProps)(Form) 

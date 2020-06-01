@@ -6,10 +6,11 @@ import API from "../../../utils/API";
 import ImageResize from 'quill-image-resize-module';
 import ImageUploader from "quill-image-uploader";
 import socketIOClient from "socket.io-client";
+
+const socket = socketIOClient('');
 Quill.register('modules/ImageResize', ImageResize);
 Quill.register("modules/imageUploader", ImageUploader);
 
-const socket = socketIOClient('');
 var _ = require('lodash');
 const modules = {
     ImageResize: {
@@ -30,7 +31,6 @@ const modules = {
                 )
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result);
                     resolve(result.data.url);
                 })
                 .catch(error => {
@@ -118,11 +118,13 @@ class FormProject extends React.Component {
 	async get_user() {
         const self = this;
         try {
-            const { data } = await API.get_user(localStorage.getItem('email'));
-			self.setState({
-                _user: data.user,
-                author: data.user.username,
-			});
+            await API.get_user(localStorage.getItem('email'))
+            .then((res) => {
+                self.setState({
+                    _user: res.data.user,
+                    author: res.data.user.username,
+                });
+            });
         } catch (error) {
             console.error(error);
         }
@@ -157,7 +159,7 @@ class FormProject extends React.Component {
                         console.log(error)
                     });
                 })
-                .then(function() {
+                .then(() => {
                     var element = document.getElementsByClassName("ql-editor");
                     element[0].innerHTML = "";
                     self.setState({ 
@@ -172,8 +174,9 @@ class FormProject extends React.Component {
                         upvotes: {},
                         downvotes: {},
                         view: [],
-                    })
-                }).catch(error => {
+                    });
+                })
+                .catch(error => {
                     console.log(error.response)
                 });
         } else {
@@ -201,7 +204,7 @@ class FormProject extends React.Component {
                         console.log(error)
                     });
                 })
-                .then(function() {
+                .then(() => {
                     var element = document.getElementsByClassName("ql-editor");
                     element[0].innerHTML = "";
                     self.setState({ 
@@ -216,8 +219,9 @@ class FormProject extends React.Component {
                         upvotes: {},
                         downvotes: {},
                         view: [],
-                    })
-                }).catch(function (error) {
+                    });
+                })
+                .catch((error) => {
                     console.log(error);
                 });
         }
@@ -358,10 +362,10 @@ const mapDispatchToProps = dispatch => ({
     setEditProject: project => dispatch({ type: 'SET_EDIT', project }),
     
     onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data }),
-}) 
+})
   
 const mapStateToProps = state => ({
     projectToEdit: state.home.projectToEdit,
-}) 
+})
   
 export default connect(mapStateToProps, mapDispatchToProps)(FormProject) 
