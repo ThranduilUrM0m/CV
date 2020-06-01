@@ -108,6 +108,7 @@ class Account extends React.Component {
     async send_user() {
         let self = this;
         const { _user, _old_username, _old_email, _current_password, _new_password, _confirm_password } = this.state;
+        const { onSubmitNotification } = this.props;
         
         try {
             if (_new_password){
@@ -124,6 +125,15 @@ class Account extends React.Component {
                     $('#edit_modal').modal('toggle');
                     socket.on("USER_UPDATED_GET", data => self.get_user());
                     socket.emit("USER_UPDATED", res.data.text);
+                    return axios.post('/api/notifications', {
+                        type: 'User Account Updated',
+                        description: '\''+_old_username+'\' edited account',
+                        author: _user.username
+                    })
+                    .then((res_n) => onSubmitNotification(res_n.data))
+                    .catch(error => {
+                        console.log(error)
+                    });
                 })
             })
             .catch((error) => {

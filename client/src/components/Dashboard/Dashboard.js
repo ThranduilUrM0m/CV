@@ -277,7 +277,6 @@ class Dashboard extends React.Component {
                 self.setState({
                     modal_msg: res.data.text
                 }, () => {
-                    console.log('PRINTING');
                     console.log(_user_toEdit_roles);
                     function setEditFunction() {
                         return new Promise((resolve, reject) => {
@@ -340,7 +339,7 @@ class Dashboard extends React.Component {
                     self.send_user();
                     return axios.post('/api/notifications', {
                         type: 'User Deleted',
-                        description: 'User \''+_user_toEdit_username+'\' Deleted.',
+                        description: 'User \' '+user.username+' \' Deleted.',
                         author: _user.email
                     })
                     .then((res_n) => {
@@ -1395,7 +1394,7 @@ class Dashboard extends React.Component {
                                                                     </thead>
                                                                     <tbody>
                                                                     {
-                                                                        _.orderBy(notifications, ['createdAt'], ['desc']).map((_notification, index) => {
+                                                                        _.orderBy(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }), ['createdAt'], ['desc']).map((_notification, index) => {
                                                                             return (
                                                                                 <tr key={index} className={`notif_card notif_anchor`} id={_notification.type == 'User Deleted' ? 'user_deleted' : ''}>
                                                                                     <td>{moment(_notification.createdAt).format("YYYY Do MM")}</td>
