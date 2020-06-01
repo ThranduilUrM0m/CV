@@ -67,7 +67,6 @@ class Minttea extends React.Component {
         let target = event.target;
         if( _.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
             function setEditFunction() {
-                // Get the current 'global' time from an API using Promise
                 return new Promise((resolve, reject) => {
                     setTimeout(function() {
                         self.handleEdit(testimony);
@@ -120,7 +119,6 @@ class Minttea extends React.Component {
                 .catch(err => console.log('There was an error:' + err));
         } else {
             function setEditFunction() {
-                // Get the current 'global' time from an API using Promise
                 return new Promise((resolve, reject) => {
                     setTimeout(function() {
                         self.handleEdit(testimony);
@@ -160,7 +158,6 @@ class Minttea extends React.Component {
         let target = event.target;
         if( _.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
             function setEditFunction() {
-                // Get the current 'global' time from an API using Promise
                 return new Promise((resolve, reject) => {
                     setTimeout(function() {
                         self.handleEdit(testimony);
@@ -213,7 +210,6 @@ class Minttea extends React.Component {
                 .catch(err => console.log('There was an error:' + err));
         } else {
             function setEditFunction() {
-                // Get the current 'global' time from an API using Promise
                 return new Promise((resolve, reject) => {
                     setTimeout(function() {
                         self.handleEdit(testimony);
@@ -452,8 +448,7 @@ class Minttea extends React.Component {
                                         <div className="modal-inner">
                                             <div className="modal-content">
                                             {
-                                                //orderby upvotes as main nd then the date
-                                                _.orderBy(_.filter(testimonies, { 'is_private': false, parent_id: null }), ['upvotes'], ['desc']).map((testimony, index) => {
+                                                _.orderBy(_.filter(testimonies, { 'is_private': false, parent_id: null }), ['upvotes', 'createdAt'], ['desc', 'desc']).map((testimony, index) => {
                                                     return (
                                                         <div className={"card card_" + index} data-index={index+1}>
                                                             <div className="shadow_title">{_.head(_.words(testimony.body))}</div>

@@ -64,7 +64,6 @@ class Signup extends React.Component {
 				});
 			});
         } catch (error) {
-			//console.log(error.response);
 			self.setState({
 				modal_msg: JSON.stringify(error)
 			}, () => {

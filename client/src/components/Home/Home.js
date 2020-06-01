@@ -26,7 +26,6 @@ class Home extends React.Component {
         const self = this;
         axios('/api/articles')
         .then(function (response) {
-            // handle success
             onLoad(response.data);
             function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
@@ -45,7 +44,6 @@ class Home extends React.Component {
 
         axios('/api/projects')
         .then(function (response) {
-            // handle success
             onLoadProject(response.data);
             function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {

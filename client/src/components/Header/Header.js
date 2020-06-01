@@ -112,9 +112,7 @@ class Header extends React.Component {
                 });
             }
         }
-        // Attaching the event listener function to window's resize event
         window.addEventListener("resize", displayWindowSize);
-        // Calling the function for the first time
         displayWindowSize();
 
         if($(window).scrollTop() > 100) {

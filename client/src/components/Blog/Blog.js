@@ -41,18 +41,13 @@ class Blog extends React.Component {
 		const self = this;
 		axios('/api/articles')
         .then(function (response) {
-            // handle success
 			onLoad(response.data);
 			function runAfterElementExists(jquery_selector, callback){
                 var checker = window.setInterval(function() {
-                //if one or more elements have been yielded by jquery
-                //using this selector
                 if ($(jquery_selector).length) {
-                    //stop checking for the existence of this element
                     clearInterval(checker);
-                    //call the passed in function via the parameter above
                     callback();
-                }}, 200); //I usually check 5 times per second
+                }}, 200);
             }
             runAfterElementExists(".second_section_blog .articles_slider_wrapper_cards_item", function() {
 				self._handleDrag();
@@ -60,12 +55,8 @@ class Blog extends React.Component {
 			$('.fixedHeaderContainer').addClass('blog_header');
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        })
-        .then(function () {
-            // always executed
-		});
+        });
 	}
 	componentDidMount() {
 		this._handleMouseMove();
@@ -73,7 +64,6 @@ class Blog extends React.Component {
 	}
 	_handleDrag() {
 		var mySwiper = new Swiper ('.swiper-container', {
-			// Optional parameters
 			effect: 'coverflow',
 			direction: 'horizontal',
 			grabCursor: true,
@@ -95,12 +85,10 @@ class Blog extends React.Component {
 				slideShadows: false
 			},
 			simulateTouch: true,
-			// If we need pagination
 			pagination: {
 			  el: '.swiper-pagination',
 			  dynamicBullets: true,
 			},
-			// Navigation arrows
 			navigation: {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev',
@@ -146,7 +134,6 @@ class Blog extends React.Component {
 		}
 		new Parallax();
 		
-		//socials
 		let items = document.querySelectorAll(".socials-item-icon");
 		items.forEach((item, index) => {
 			item.addEventListener("mousemove", mouseMove);
@@ -241,7 +228,6 @@ class Blog extends React.Component {
 						wrapper.classList.add(hasExpandedClass);
 						document.getElementById('second_section_blog').parentElement.style.height = 'initial';
 						$('.fixedHeaderContainer').toggleClass('blog_header');
-						//to edit the focus of the tags input in filter modal, because the label is not directly after it, it's after the autocomplete object
 						$('.modal-top-filter input.tags').focus(() => {
 							$('.modal-top-filter label#tags_label').toggleClass('active');
 						});

@@ -83,8 +83,6 @@ class Footer extends React.Component {
     _handleAlphabet() {
         const { window_height, window_width } = this.state;
         (function(){
-            // setup
-          
             var gridWidth;
             var gridHeight;
             var letterWidth = 30; // @todo: make this dynamic

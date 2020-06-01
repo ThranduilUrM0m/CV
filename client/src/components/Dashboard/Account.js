@@ -1,4 +1,6 @@
 import React from "react";
+import axios from 'axios';
+import { connect } from 'react-redux';
 import 'whatwg-fetch';
 import API from '../../utils/API';
 import $ from 'jquery';
@@ -23,12 +25,69 @@ class Account extends React.Component {
             modal_msg: '',
         };
         this.handleChangeField = this.handleChangeField.bind(this);
+        this.set_articles_author = this.set_articles_author.bind(this);
+		this.handleEditArticle = this.handleEditArticle.bind(this);
         this.get_user = this.get_user.bind(this);
         this.send_user = this.send_user.bind(this);
         this._progress = this._progress.bind(this);
     }
     componentWillMount() {
         this.get_user();
+    }
+    set_articles_author(_old_username, _new_username) {
+        const self = this;
+
+        axios('/api/articles')
+        .then(function (response) {
+            _.map(response.data.articles, (article) => {
+                if(article.author == _old_username) {
+                    function setEditFunction() {
+                        return new Promise((resolve, reject) => {
+                            setTimeout(function() {
+                                self.handleEditArticle(article);
+                                true ? resolve('Success') : reject('Error');
+                            }, 2000);
+                        })
+                    }
+                    setEditFunction()
+                        .then(() => {
+                            self.handleSubmit(_new_username);
+                        });
+                }
+            })
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+    handleEditArticle(article) {
+        const { setEdit } = this.props;
+        setEdit(article);
+    }
+    handleSubmit(_new_username){
+        const { onSubmitNotification, articleToEdit, onEdit } = this.props;
+        const { title, body, author, categorie, _hide, tag, comment, upvotes, downvotes, view } = this.state;
+        
+        const self = this;
+        
+        return axios.patch(`/api/articles/${articleToEdit._id}`, {
+            author: _new_username,
+        })
+            .then((res) => {
+                onEdit(res.data);
+                return axios.post('/api/notifications', {
+                    type: 'Article Edited',
+                    description: '\''+author+'\' edited \''+title+'\'',
+                    author: author
+                })
+                .then((res_n) => onSubmitNotification(res_n.data))
+                .catch(error => {
+                    console.log(error)
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 	async get_user() {
         const self = this;
@@ -60,9 +119,9 @@ class Account extends React.Component {
                 self.setState({
                     modal_msg: res.data.text
                 }, () => {
+                    self.set_articles_author(_old_username, _user.username);
                     self.get_user();
                     $('#edit_modal').modal('toggle');
-                    //when u update a username per example, u need to link the articles
                     socket.on("USER_UPDATED_GET", data => self.get_user());
                     socket.emit("USER_UPDATED", res.data.text);
                 })
@@ -125,18 +184,6 @@ class Account extends React.Component {
         const { _user, _current_password, _new_password, _confirm_password, modal_msg } = this.state;
         return (
             <>
-                <div className="modal fade" id="edit_modal_error" tabIndex="-1" role="dialog" aria-labelledby="edit_modal_errorLabel" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-body">
-                                <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
-                                <h5 className="modal-title" id="edit_modal_errorLabel">Hey!</h5>
-                                <div>{ modal_msg }</div>
-                                <div><small>Thanks {localStorage.getItem('username')}</small></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div className="_form">
                     <div className="modal-content_user">
                         <div className='row'>
@@ -217,4 +264,16 @@ class Account extends React.Component {
     }
 }
 
-export default Account;
+const mapStateToProps = state => ({
+    articleToEdit: state.home.articleToEdit,
+});
+
+const mapDispatchToProps = dispatch => ({
+    setEdit: article => dispatch({ type: 'SET_EDIT', article }),
+    onSubmit: data => dispatch({ type: 'SUBMIT_ARTICLE', data }),
+    onEdit: data => dispatch({ type: 'EDIT_ARTICLE', data }),
+    
+    onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

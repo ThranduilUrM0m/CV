@@ -44,15 +44,15 @@ const modules = {
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
         [{ 'font': [] }],
         [{ size: [] }],
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'color': [] }, { 'background': [] }]
         [{ 'align': [] }],
         ['blockquote', 'code-block'],
-        ['link', 'image'],                                        // image and link
+        ['link', 'image'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-        [{ 'direction': 'rtl' }],                         // text direction
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'direction': 'rtl' }],
         ['clean']
     ],
 }
@@ -218,7 +218,6 @@ class FormProject extends React.Component {
                         view: [],
                     })
                 }).catch(function (error) {
-                    // handle error
                     console.log(error);
                 });
         }

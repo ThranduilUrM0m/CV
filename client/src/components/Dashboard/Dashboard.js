@@ -148,7 +148,6 @@ class Dashboard extends React.Component {
             console.log(error);
         });
 		
-		//to get the user object
         this.get_user();
         socket.on("USER_UPDATED_GET", data => self.get_user());
     }
@@ -220,9 +219,7 @@ class Dashboard extends React.Component {
                 });
             }
         }
-        // Attaching the event listener function to window's resize event
         window.addEventListener("resize", displayWindowSize);
-        // Calling the function for the first time
         displayWindowSize();
 	}
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -281,7 +278,6 @@ class Dashboard extends React.Component {
                     modal_msg: res.data.text
                 }, () => {
                     function setEditFunction() {
-                        // Get the current 'global' time from an API using Promise
                         return new Promise((resolve, reject) => {
                             setTimeout(function() {
                                 $('#edit_modal').modal('toggle');
@@ -329,7 +325,6 @@ class Dashboard extends React.Component {
         const { _user_toEdit_username, _user_toEdit_roles } = this.state;
 
         function setEditFunction() {
-			// Get the current 'global' time from an API using Promise
 			return new Promise((resolve, reject) => {
 				setTimeout(function() {
                     self.handleEditUser(user);
@@ -351,7 +346,6 @@ class Dashboard extends React.Component {
 	_handleDrag(source) {
         if(source != 'testimonies_slider_wrapper'){
             var mySwiper = new Swiper ('.'+source+'.swiper-container', {
-                // Optional parameters
                 effect: 'coverflow',
                 direction: 'horizontal',
                 grabCursor: true,
@@ -373,7 +367,6 @@ class Dashboard extends React.Component {
                     slideShadows: false
                 },
                 simulateTouch: true,
-                // If we need pagination
                 pagination: {
                     el: '.'+source+' .swiper-pagination',
                     dynamicBullets: true,
@@ -389,7 +382,6 @@ class Dashboard extends React.Component {
         }
         else
             var mySwiperTestimonies = new Swiper ('.'+source+'.swiper-container', {
-                // Optional parameters
                 effect: 'coverflow',
                 direction: 'vertical',
                 loop: false,
@@ -413,7 +405,6 @@ class Dashboard extends React.Component {
                     slideShadows: false
                 },
                 simulateTouch: true,
-                // If we need pagination
                 pagination: {
                     el: '.'+source+' .swiper-pagination',
                     dynamicBullets: true,
@@ -576,7 +567,6 @@ class Dashboard extends React.Component {
 					if ( !modal.hasClass(expandedClass) ) {
 						modal.addClass(expandedClass, 500);
 						wrapper.classList.add(hasExpandedClass);
-						//to edit the focus of the tags input in filter modal, because the label is not directly after it, it's after the autocomplete object
 						$('.modal-top-filter input.tags').focus(() => {
 							$('.modal-top-filter label#tags_label').toggleClass('active');
 						});
@@ -716,7 +706,6 @@ class Dashboard extends React.Component {
                     if(options.resize) {
                       BigText.bindResize('resize.bigtext-event-' + id, function()
                       {
-                        // TODO only call this if the width has changed.
                         BigText.jQueryMethod.call($('#' + id), options);
                       });
                     }
@@ -725,9 +714,8 @@ class Dashboard extends React.Component {
           
                     $children.addClass(function(lineNumber, className)
                     {
-                      // remove existing line classes.
-                      return [className.replace(new RegExp('\\b' + BigText.LINE_CLASS_PREFIX + '\\d+\\b'), ''),
-                          BigText.LINE_CLASS_PREFIX + lineNumber].join(' ');
+                        return [className.replace(new RegExp('\\b' + BigText.LINE_CLASS_PREFIX + '\\d+\\b'), ''),
+                                BigText.LINE_CLASS_PREFIX + lineNumber].join(' ');
                     });
           
                     var sizes = BigText.calculateSizes($t, $children, maxWidth, options.maxfontsize, options.minfontsize);
@@ -745,7 +733,6 @@ class Dashboard extends React.Component {
                   width = $line.width();
           
                   if(width >= maxWidth) {
-              // console.log(width, ' previous: ' + previousWidth, property + ' at ' + interval, 'prior: ' + (parseFloat(size) - interval), 'new:' + parseFloat(size));
                     $line.css(property, '');
           
                     if(width === maxWidth) {
@@ -2305,6 +2292,18 @@ class Dashboard extends React.Component {
                                         <div className="modal-body">
                                             <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
                                             <h5 className="modal-title" id="edit_modal_error_rolesLabel">Hey!</h5>
+                                            <div>{ modal_msg }</div>
+                                            <div><small>Thanks {localStorage.getItem('username')}</small></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal fade" id="edit_modal_error" tabIndex="-1" role="dialog" aria-labelledby="edit_modal_errorLabel" aria-hidden="true">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                        <div className="modal-body">
+                                            <a href="# " title="Close" className="modal-close" data-dismiss="modal">Close</a>
+                                            <h5 className="modal-title" id="edit_modal_errorLabel">Hey!</h5>
                                             <div>{ modal_msg }</div>
                                             <div><small>Thanks {localStorage.getItem('username')}</small></div>
                                         </div>

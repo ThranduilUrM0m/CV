@@ -126,7 +126,6 @@ const setUpExpress = () => {
         connections.push(socket);
 
         socket.on('action', (action) => {
-            console.log('/*****************ACTION FIRED*****************/');
             if(!types.includes(action.type)) {
                 connections.forEach(connectedSocket => {
                     if (connectedSocket !== socket) {
@@ -134,30 +133,34 @@ const setUpExpress = () => {
                             db.collection("articles").find({}).toArray(function(err, docs){
                                 connectedSocket.emit('action', { type:'HOME_PAGE_LOADED', data: { articles: docs} });
                             });
+                            console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
                         }
                         if(action.type == 'SUBMIT_NOTIFICATION') {
                             db.collection("notifications").find({}).toArray(function(err, docs){
                                 connectedSocket.emit('action', { type:'NOTIFICATION_PAGE_LOADED', data: { notifications: docs} });
                             });
+                            console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
                         }
                         if(action.type == 'SUBMIT_PROJECT' || action.type == 'DELETE_PROJECT' || action.type == 'EDIT_PROJECT') {
                             db.collection("projects").find({}).toArray(function(err, docs){
                                 connectedSocket.emit('action', { type:'PROJECT_PAGE_LOADED', data: { projects: docs} });
                             });
+                            console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
                         }
                         if(action.type == 'SUBMIT_TESTIMONY' || action.type == 'DELETE_TESTIMONY' || action.type == 'EDIT_TESTIMONY') {
                             db.collection("testimonies").find({}).toArray(function(err, docs){
                                 connectedSocket.emit('action', { type:'TESTIMONY_PAGE_LOADED', data: { testimonies: docs} });
                             });
+                            console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
                         }
                     }
                 });
             }
         });
         socket.on('USER_UPDATED', (data) => {
-            console.log('/*****************USER_UPDATED*****************/');
             connections.forEach(connectedSocket => {
                 if (connectedSocket !== socket) {
+                    console.log('/*****************USER_UPDATED*****************/');
                     connectedSocket.emit('USER_UPDATED_GET', 'GET_USERS' );
                 }
             });

@@ -82,10 +82,8 @@ class Post extends React.Component {
 		const self = this;
 
 		function setEditFunction() {
-			// Get the current 'global' time from an API using Promise
 			return new Promise((resolve, reject) => {
 				setTimeout(function() {
-					//to get the user object
 					self.get_user();
 					socket.on("USER_UPDATED_GET", data => self.get_user());
 					true ? resolve('Success') : reject('Error');
@@ -97,7 +95,6 @@ class Post extends React.Component {
 				axios('/api/articles')
 				.then((res) => {
 					function setEditFunction() {
-						// Get the current 'global' time from an API using Promise
 						return new Promise((resolve, reject) => {
 							setTimeout(function() {
 								onLoad(res.data);
@@ -346,7 +343,6 @@ class Post extends React.Component {
 			if(_comment_id_ifEditing != null) {
 				_edited_comment = comment;
 				function setEditFunction() {
-					// Get the current 'global' time from an API using Promise
 					return new Promise((resolve, reject) => {
 						setTimeout(function() {
 							_edited_comment = _.map(_edited_comment, (_c) => {
@@ -369,7 +365,6 @@ class Post extends React.Component {
 							comment : _edited_comment
 						}), () => {
 							function setEditFunction() {
-								// Get the current 'global' time from an API using Promise
 								return new Promise((resolve, reject) => {
 									setTimeout(function() {
 										self.handleSubmit()
@@ -416,7 +411,6 @@ class Post extends React.Component {
 					}],
 				}), () => {
 					function setEditFunction() {
-						// Get the current 'global' time from an API using Promise
 						return new Promise((resolve, reject) => {
 							setTimeout(function() {
 								self.handleSubmit()
@@ -474,7 +468,6 @@ class Post extends React.Component {
 		
 		if( _.isUndefined( _.find(_.get(_.find(comment, {'_id': in_comment._id}), 'upvotes'), (_up) => {return _up.upvoter === f.toString()}) ) ) {
 			function setEditFunction() {
-				// Get the current 'global' time from an API using Promise
 				return new Promise((resolve, reject) => {
 					setTimeout(function() {
 						_edited_comment = comment;
@@ -561,7 +554,6 @@ class Post extends React.Component {
 		
 		if( _.isUndefined( _.find(_.get(_.find(comment, {'_id': in_comment._id}), 'downvotes'), (_do) => {return _do.downvoter === f.toString()}) ) ) {
 			function setEditFunction() {
-				// Get the current 'global' time from an API using Promise
 				return new Promise((resolve, reject) => {
 					setTimeout(function() {
 						_edited_comment = comment;

@@ -131,8 +131,11 @@ async function update(req, res) {
             },
             { upsert: true }
         );
+
         verification_email(findUser.email, 'Hello,\n\n' + 'your information has been changed, if this wasn\'t you, please contact us.\n');
         return res.status(200).json({
+            email: user.email,
+            username: user.username,
             text: "User updated successfully.",
         });
     } catch (error) {
