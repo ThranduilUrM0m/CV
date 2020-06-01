@@ -277,15 +277,14 @@ class Dashboard extends React.Component {
                 self.setState({
                     modal_msg: res.data.text
                 }, () => {
+                    console.log('PRINTING');
+                    console.log(_user_toEdit_roles);
                     function setEditFunction() {
                         return new Promise((resolve, reject) => {
                             setTimeout(function() {
                                 $('#edit_modal').modal('toggle');
                                 self.get_users();
                                 self.get_user();
-                                self.setState({
-                                    _user_toEdit_username : '', _user_toEdit_roles: ''
-                                });
                                 socket.emit("USER_UPDATED", res.data.text);
                                 true ? resolve('Success') : reject('Error');
                             }, 2000);
@@ -322,7 +321,8 @@ class Dashboard extends React.Component {
     }
     handleDeleteUser(user) {
         const self = this;
-        const { _user_toEdit_username, _user_toEdit_roles } = this.state;
+        const { onSubmitNotification } = this.props;
+        const { _user_toEdit_username, _user_toEdit_roles, _user } = this.state;
 
         function setEditFunction() {
 			return new Promise((resolve, reject) => {
@@ -335,9 +335,20 @@ class Dashboard extends React.Component {
 		setEditFunction()
 			.then(() => {
                 self.setState(prevState => ({
-                    _user_toEdit_roles: [...prevState._user_toEdit_roles, 'Deleted']
+                    _user_toEdit_roles: prevState._user_toEdit_roles.concat('Deleted')
                 }), () => {
                     self.send_user();
+                    return axios.post('/api/notifications', {
+                        type: 'User Deleted',
+                        description: 'User \''+_user_toEdit_username+'\' Deleted.',
+                        author: _user.email
+                    })
+                    .then((res_n) => {
+                        onSubmitNotification(res_n.data);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
                 });
 				return true;
 			})
@@ -1386,7 +1397,7 @@ class Dashboard extends React.Component {
                                                                     {
                                                                         _.orderBy(notifications, ['createdAt'], ['desc']).map((_notification, index) => {
                                                                             return (
-                                                                                <tr key={index} className={`notif_card notif_anchor`}>
+                                                                                <tr key={index} className={`notif_card notif_anchor`} id={_notification.type == 'User Deleted' ? 'user_deleted' : ''}>
                                                                                     <td>{moment(_notification.createdAt).format("YYYY Do MM")}</td>
                                                                                     <td>{_notification.type}</td>
                                                                                     <td>{_notification.author}</td>

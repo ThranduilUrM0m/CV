@@ -6,7 +6,7 @@ const NotificationsSchema = new Schema({
     type: { type: String, required: true },
     description: { type: String, required: true },
     author: { type: String, required: true },
-    createdAt: { type: Date, required: true, default: Date.now, expires: 864000 }
+    createdAt: { type: Date, required: true, default: Date.now, expires: 60*60*24*7 }
 });
 
 NotificationsSchema.methods.toJSON = function() {

@@ -2880,6 +2880,9 @@ body, html {
 														}
 														table {
 															table-layout: fixed;
+															#user_deleted {
+																background-color: $calendar-red;
+															}
 														}
 														.accounts_list {
 															position: relative;

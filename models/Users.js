@@ -41,5 +41,6 @@ userSchema.methods = {
         return jwt.encode(this, config.secret);
     }
 }
-  
+
+userSchema.index({updatedAt: 1}, {expireAfterSeconds : 60*60*24*7, partialFilterExpression : { roles: { $eq: 'Deleted'} }})
 module.exports = mongoose.model("User", userSchema);
