@@ -4159,7 +4159,7 @@ body, html {
 									.content {
 										opacity: 1;
 										i {
-											font-size: 2rem;
+											font-size: 5.5rem;
 										}
 									}
 								}
@@ -4210,35 +4210,31 @@ body, html {
 								.content {
 									display: flex;
 									flex-direction: column;
-									justify-content: space-between;
+									justify-content: flex-end;
 									align-items: center;
 									width: 100%;
 									height: 100%;
-									padding: 2rem 1rem 1rem 1rem;
+									padding: 1rem;
 									transition: .2s ease-out;
 									opacity: .5;
 									i {
 										position: relative;
 										transition: .2s ease-out;
-										font-size: 2.5rem;
+										font-size: 4rem;
+										margin-bottom: 1.25rem;
 										color: white;
-										&::after {
-											content: '';
-											position: absolute;
-											width: 5rem;
-											height: 5rem;
-											top: 50%;
-											left: 50%;
-											transform: translate(-50%, -50%);
-											border: 1px solid white;
-										}
 									}
-									h3 {
-										font-size: 1.5rem;
-										text-align: center;
-										color: white;
-										text-transform: uppercase;
-									}
+								}
+								&::before {
+									content: '';
+									position: absolute;
+									width: 100%;
+									height: 100%;
+									top: 0;
+									left: 0;
+									background: url(http://cdn.flaticon.com/svg/44/44386.svg) no-repeat center;
+									background-size: cover;
+									opacity: .05;
 								}
 							}
 							&.face2 {
@@ -4258,6 +4254,11 @@ body, html {
 									width: 100%;
 									height: 100%;
 									padding: 1rem;
+									h6, p {
+										width: 100%;
+										text-align: left;
+										margin-bottom: 0;
+									}
 									a {
 										-webkit-appearance: none;
 										border: none;
@@ -4689,7 +4690,7 @@ body, html {
 									.content {
 										opacity: 1;
 										i {
-											font-size: 2rem;
+											font-size: 5.5rem;
 										}
 									}
 								}
@@ -4734,41 +4735,37 @@ body, html {
 							transition: .2s ease-out;
 							&.face1 {
 								background: #474A59;
-								z-index: 1;
 								transform: translateY(50%);
 								box-shadow: .5rem .5rem 1.75rem -1rem rgba(0, 0, 0, 0.5);
+								z-index: 1;
 								.content {
 									display: flex;
 									flex-direction: column;
-									justify-content: space-between;
+									justify-content: flex-end;
 									align-items: center;
 									width: 100%;
 									height: 100%;
-									padding: 2rem 1rem 1rem 1rem;
+									padding: 1rem;
 									transition: .2s ease-out;
 									opacity: .5;
 									i {
 										position: relative;
 										transition: .2s ease-out;
-										font-size: 2.5rem;
+										font-size: 4rem;
+										margin-bottom: 1.25rem;
 										color: white;
-										&::after {
-											content: '';
-											position: absolute;
-											width: 5rem;
-											height: 5rem;
-											top: 50%;
-											left: 50%;
-											transform: translate(-50%, -50%);
-											border: 1px solid white;
-										}
 									}
-									h3 {
-										font-size: 1.5rem;
-										text-align: center;
-										color: white;
-										text-transform: uppercase;
-									}
+								}
+								&::before {
+									content: '';
+									position: absolute;
+									width: 100%;
+									height: 100%;
+									top: 0;
+									left: 0;
+									background: url(http://cdn.flaticon.com/svg/44/44386.svg) no-repeat center;
+									background-size: cover;
+									opacity: .05;
 								}
 							}
 							&.face2 {
@@ -4788,6 +4785,11 @@ body, html {
 									width: 100%;
 									height: 100%;
 									padding: 1rem;
+									h6, p {
+										width: 100%;
+										text-align: left;
+										margin-bottom: 0;
+									}
 									a {
 										-webkit-appearance: none;
 										border: none;
