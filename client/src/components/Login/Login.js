@@ -67,7 +67,6 @@ class Login extends React.Component {
 									<div className="Head_Login">
 										<div>
 											<h3>Login</h3>
-											<a className="text-muted" href="/signup">Signup</a>
 										</div>
 									</div>
 									<div className="Login">
@@ -123,7 +122,27 @@ class Login extends React.Component {
 								</div>
 							</div>
 							<div className="Content">
-
+								<div className="card">
+									<div className="face face1">
+										<div className="content">
+											<i className="fas fa-user-plus"></i>
+											<h3>signup.</h3>
+										</div>
+									</div>
+									<div className="face face2">
+										<div className="content">
+											<a className="text-muted" href="/signup">
+												<span>
+													<span>
+														<span data-attr-span="signup.">
+															signup.
+														</span>
+													</span>
+												</span>
+											</a>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</section>

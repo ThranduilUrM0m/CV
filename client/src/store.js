@@ -4,9 +4,13 @@ import io from 'socket.io-client';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 
-//io('change address') for production
+const socketURL =
+  process.env.NODE_ENV === 'production'
+    ? window.location.hostname
+    : 'http://localhost:8800';
+
 const initialState = {},
-      socket = io(''),
+      socket = io(socketURL, {'transports': ['websocket', 'polling']}),
       socketIoMiddleware = createSocketIoMiddleware(socket, ''),
       middleware = [thunk, socketIoMiddleware];
 

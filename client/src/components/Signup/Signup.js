@@ -9,7 +9,12 @@ import Fingerprint from 'fingerprintjs';
 import * as $ from "jquery";
 import socketIOClient from "socket.io-client";
 
-const socket = socketIOClient('');
+const socketURL =
+  process.env.NODE_ENV === 'production'
+    ? window.location.hostname
+    : 'localhost:8800';
+    
+const socket = socketIOClient(socketURL, {'transports': ['websocket', 'polling']});
 
 class Signup extends React.Component {
 	constructor(props) {
@@ -95,14 +100,33 @@ class Signup extends React.Component {
 								</div>
 							</div>
 							<div className="Content">
-
+							<div className="card">
+									<div className="face face1">
+										<div className="content">
+											<i className="fas fa-sign-in-alt"></i>
+											<h3>login.</h3>
+										</div>
+									</div>
+									<div className="face face2">
+										<div className="content">
+											<a className="text-muted" href="/login">
+												<span>
+													<span>
+														<span data-attr-span="login.">
+															login.
+														</span>
+													</span>
+												</span>
+											</a>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div className="Sidebar">
 								<div className="wrap">
 									<div className="Head_Signup">
 										<div>
 											<h3>Signup</h3>
-											<a className="text-muted" href="/login">Login</a>
 										</div>
 									</div>
 									<div className="Signup">

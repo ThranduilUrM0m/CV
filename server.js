@@ -1,4 +1,3 @@
-const axios = require('axios');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -8,7 +7,7 @@ const mongoose = require('mongoose');
 const cluster = require('cluster');
 
 const http = require('http');
-const socket_io = require('socket.io');
+const socketIO = require('socket.io');
 
 let workers = [];
 
@@ -101,14 +100,15 @@ const setUpExpress = () => {
         })
     }
 
-    var server = http.createServer(app);
-
     //Définition et mise en place du port d'écoute
     const port = process.env.PORT || 8800;
-    server.listen(port, () => console.log(`Listening on port ${port}`));
 
-    const io = socket_io();
-    const connections = [];
+    //our server instance
+    const server = http.createServer(app);
+
+    //This creates our socket using the instance of the server
+    const io = socketIO(server);
+
     const types = [
         'HOME_PAGE_LOADED',
         'NOTIFICATION_PAGE_LOADED',
@@ -119,58 +119,48 @@ const setUpExpress = () => {
         'SET_EDIT_PROJECT',
         'SET_EDIT_TESTIMONY',
         'SET_EDIT_USER'
-    ]
-
-    io.attach(server);
+    ];
     io.on('connection', function(socket){
-        connections.push(socket);
 
         socket.on('action', (action) => {
             if(!types.includes(action.type)) {
-                connections.forEach(connectedSocket => {
-                    if (connectedSocket !== socket) {
-                        if(action.type == 'SUBMIT_ARTICLE' || action.type == 'DELETE_ARTICLE' || action.type == 'EDIT_ARTICLE') {
-                            db.collection("articles").find({}).toArray(function(err, docs){
-                                connectedSocket.emit('action', { type:'HOME_PAGE_LOADED', data: { articles: docs} });
-                            });
-                            console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
-                        }
-                        if(action.type == 'SUBMIT_NOTIFICATION') {
-                            db.collection("notifications").find({}).toArray(function(err, docs){
-                                connectedSocket.emit('action', { type:'NOTIFICATION_PAGE_LOADED', data: { notifications: docs} });
-                            });
-                            console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
-                        }
-                        if(action.type == 'SUBMIT_PROJECT' || action.type == 'DELETE_PROJECT' || action.type == 'EDIT_PROJECT') {
-                            db.collection("projects").find({}).toArray(function(err, docs){
-                                connectedSocket.emit('action', { type:'PROJECT_PAGE_LOADED', data: { projects: docs} });
-                            });
-                            console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
-                        }
-                        if(action.type == 'SUBMIT_TESTIMONY' || action.type == 'DELETE_TESTIMONY' || action.type == 'EDIT_TESTIMONY') {
-                            db.collection("testimonies").find({}).toArray(function(err, docs){
-                                connectedSocket.emit('action', { type:'TESTIMONY_PAGE_LOADED', data: { testimonies: docs} });
-                            });
-                            console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
-                        }
-                    }
-                });
+                if(action.type == 'SUBMIT_ARTICLE' || action.type == 'DELETE_ARTICLE' || action.type == 'EDIT_ARTICLE') {
+                    db.collection("articles").find({}).toArray(function(err, docs){
+                        io.sockets.emit('action', { type:'HOME_PAGE_LOADED', data: { articles: docs} });
+                    });
+                    console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
+                }
+                if(action.type == 'SUBMIT_NOTIFICATION') {
+                    db.collection("notifications").find({}).toArray(function(err, docs){
+                        io.sockets.emit('action', { type:'NOTIFICATION_PAGE_LOADED', data: { notifications: docs} });
+                    });
+                    console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
+                }
+                if(action.type == 'SUBMIT_PROJECT' || action.type == 'DELETE_PROJECT' || action.type == 'EDIT_PROJECT') {
+                    db.collection("projects").find({}).toArray(function(err, docs){
+                        io.sockets.emit('action', { type:'PROJECT_PAGE_LOADED', data: { projects: docs} });
+                    });
+                    console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
+                }
+                if(action.type == 'SUBMIT_TESTIMONY' || action.type == 'DELETE_TESTIMONY' || action.type == 'EDIT_TESTIMONY') {
+                    db.collection("testimonies").find({}).toArray(function(err, docs){
+                        io.sockets.emit('action', { type:'TESTIMONY_PAGE_LOADED', data: { testimonies: docs} });
+                    });
+                    console.log('/*****************'+(action.type).toUpperCase()+' ACTION FIRED*****************/');
+                }
             }
         });
         socket.on('USER_UPDATED', (data) => {
-            connections.forEach(connectedSocket => {
-                if (connectedSocket !== socket) {
-                    console.log('/*****************USER_UPDATED*****************/');
-                    connectedSocket.emit('USER_UPDATED_GET', 'GET_USERS' );
-                }
-            });
+            console.log('/*****************USER_UPDATED*****************/');
+            io.sockets.emit('USER_UPDATED_GET', 'GET_USERS' );
         });
 
         socket.on('disconnect', () => {
-            const index = connections.indexOf(socket);
-            connections.splice(index, 1);
+            console.log('user disconnected')
         });
     });
+
+    server.listen(port, () => console.log(`Listening on port ${port}`));
 };
 
 /**

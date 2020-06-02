@@ -3,11 +3,15 @@ import axios from 'axios';
 import API from "../../utils/API";
 import { connect } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page';
-import { Link } from 'react-router-dom';
 import * as $ from "jquery";
 import socketIOClient from "socket.io-client";
 
-const socket = socketIOClient('');
+const socketURL =
+  process.env.NODE_ENV === 'production'
+    ? window.location.hostname
+    : 'localhost:8800';
+    
+const socket = socketIOClient(socketURL, {'transports': ['websocket', 'polling']});
 
 class Confirmation extends React.Component {
     constructor(props) {

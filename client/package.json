@@ -18,8 +18,7 @@
     "jquery": "*",
     "node-sass": "*",
     "sass-loader": "*",
-    "style-loader": "*",
-    "websocket": "*"
+    "style-loader": "*"
   },
   "dependencies": {
     "@testing-library/jest-dom": "*",
@@ -57,9 +56,10 @@
     "react-scripts": "*",
     "react-share": "*",
     "redux": "*",
-    "redux-socket.io": "^1.4.0",
+    "redux-socket.io": "*",
     "redux-thunk": "*",
     "serve": "*",
+    "socket.io-client": "*",
     "swiper": "*",
     "underscore": "*"
   },

@@ -29,7 +29,12 @@ import {
 } from "react-share";
 import socketIOClient from "socket.io-client";
 
-const socket = socketIOClient('');
+const socketURL =
+  process.env.NODE_ENV === 'production'
+    ? window.location.hostname
+    : 'localhost:8800';
+    
+const socket = socketIOClient(socketURL, {'transports': ['websocket', 'polling']});
 var _ = require('lodash');
 
 class Post extends React.Component {
