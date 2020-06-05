@@ -460,7 +460,7 @@ class Home extends React.Component {
                                         <div className="content">
                                             <h6>Languages i'm fluent at</h6>
                                             <ul className="text-muted tags">
-                                                <li className="tag_item">_Lodash</li>
+                                                <li className="tag_item">Socket.io</li>
                                                 <li className="tag_item">JQuery</li>
                                                 <li className="tag_item">Sass</li>
                                                 <li className="tag_item">Css</li>

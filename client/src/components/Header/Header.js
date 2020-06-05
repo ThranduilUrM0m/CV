@@ -98,7 +98,8 @@ class Header extends React.Component {
         function displayWindowSize(){
             if ($(window).width() <= 425) {
                 self.setState({
-                    logo_to_show: favicon
+                    logo_to_show: favicon,
+                    todosPerPage: 2
                 });
                 $('.logoHolder').css({
                     height: '4rem'

@@ -48,25 +48,10 @@ class Footer extends React.Component {
         });
     }
     componentDidMount() {
-        let self = this;
-        
+        const self = this;
         this._handleMouseMove();
-
-        this.setState({
-            window_height: $(window).height(),
-            window_width: $(window).width()
-        }, () => {
+        $(document).ready(function () {
             self._handleAlphabet();
-        });
-
-        //upon resizinng window, recheck the alphabets
-        $(window).resize(function() {
-            self.setState({
-                window_height: $(window).height(),
-                window_width: $(window).width()
-            }, () => {
-                self._handleAlphabet();
-            });
         });
     }
     _handleMouseMove() {
@@ -81,124 +66,116 @@ class Footer extends React.Component {
         });
     }
     _handleAlphabet() {
-        const { window_height, window_width } = this.state;
-        (function(){
-            var gridWidth;
-            var gridHeight;
-            var letterWidth = 30; // @todo: make this dynamic
-            var letterHeight = 30; // @todo: make this dynamic
-            var totalLetters;
-            var letterArray = [];
-            var currentLetters = 0;
-            var resizeCount = 0;
-          
-            // the unicode values that we want to loop through (A-Z)
-            // http://www.codingforums.com/showpost.php?s=ca38992f8716f43d325c12be6fc0198b&p=843844&postcount=3
-          
-            var charCodeRange = {
-                start: 48,
-                end: 49
-            };
-          
-            // get the grid's width and height
-          
-            function getDimensions(){
-                gridWidth = window_width;
-                gridHeight = window_height;
+        var win = window,
+            doc = document,
+            docElem = doc.documentElement,
+            body = doc.getElementsByTagName('body')[0],
+            x = win.innerWidth || docElem.clientWidth || body.clientWidth,
+            y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+        var gridWidth;
+        var gridHeight;
+        var letterWidth = _.round(docElem.clientWidth / _.round(docElem.clientWidth / 30)); // @todo: make this dynamic
+        var letterHeight = _.round(docElem.clientWidth / _.round(docElem.clientWidth / 30)); // @todo: make this dynamic
+        var totalLetters;
+        var letterArray = [];
+        var currentLetters = 0;
+        var resizeCount = 0;
+        
+        // the unicode values that we want to loop through (A-Z)
+        // http://www.codingforums.com/showpost.php?s=ca38992f8716f43d325c12be6fc0198b&p=843844&postcount=3
+        
+        var charCodeRange = {
+            start: 48,
+            end: 49
+        };
+        
+        // get the grid's width and height
+        
+        function getDimensions(){
+            gridWidth = docElem.clientWidth;
+            gridHeight = docElem.clientHeight;
+        }
+        
+        // get the total possible letters needed to fill the grid
+        // and store that in totalLetters
+        
+        function getTotalLetters(){
+            var multiplierX = Math.round(gridWidth / letterWidth);
+            var multiplierY = Math.round(gridHeight / letterHeight); 
+            totalLetters = Math.round(multiplierX * multiplierY);
+            //console.log('multiplierX: '+multiplierX, '\nmultiplierY: '+multiplierY, '\ntotalLetters: '+totalLetters);
+        }
+        
+        // loop through the unicode values and push each character into letterArray
+        
+        function populateLetters() {
+            for (var i = charCodeRange.start; i <= charCodeRange.end; i++) {
+                letterArray.push(String.fromCharCode(i));
             }
-          
-            // get the total possible letters needed to fill the grid
-            // and store that in totalLetters
-          
-            function getTotalLetters(){
-                var multiplierX = gridWidth / letterWidth;
-                var multiplierY = gridHeight / letterHeight; 
-                totalLetters = Math.round((multiplierX * multiplierY));
-                //console.log('multiplierX: '+multiplierX, '\nmultiplierY: '+multiplierY, '\ntotalLetters: '+totalLetters);
-            }
-          
-            // loop through the unicode values and push each character into letterArray
-          
-            function populateLetters() {
-                for (var i = charCodeRange.start; i <= charCodeRange.end; i++) {
-                    letterArray.push(String.fromCharCode(i));
+        }
+        
+        // a function to loop a given number of times (value), each time
+        // appending a letter from the letter array to the grid
+        
+        function drawLetters(value){
+            var text;
+            var span;
+            var count = 0;
+        
+            for (var letter=0; letter <= value; letter++) {
+                text = document.createTextNode(letterArray[count]);
+                span = document.createElement('span');
+                span.appendChild(text);
+                $('.letter-grid').append(span);
+                count++;
+            
+                // if our count equals the length of our letter array, then that
+                // means we've reached the end of the array (Z), so we set count to 
+                // zero again in order to start from the beginning of the array (A).
+                // we keep looping over the letter array 'value' number of times.
+            
+                if (count === letterArray.length) {
+                    count = 0;
+                }
+            
+                // if our for counter var (letter) equals the passed in value argument
+                // then we've finished our loop and we throw a class onto the grid element
+                
+                if (letter === value) {
+                    $('.letter-grid').addClass('js-show-letters');
                 }
             }
-          
-            // a function to loop a given number of times (value), each time
-            // appending a letter from the letter array to the grid
-          
-            function drawLetters(value){
-                var text;
-                var span;
-                var count = 0;
-          
-                for (var letter=0; letter <= value; letter++) {
-                    text = document.createTextNode(letterArray[count]);
-                    span = document.createElement('span');
-                    span.appendChild(text);
-                    $('.letter-grid').append(span);
-                    count++;
-                
-                    // if our count equals the length of our letter array, then that
-                    // means we've reached the end of the array (Z), so we set count to 
-                    // zero again in order to start from the beginning of the array (A).
-                    // we keep looping over the letter array 'value' number of times.
-                
-                    if (count === letterArray.length) {
-                        count = 0;
-                    }
-                
-                    // if our for counter var (letter) equals the passed in value argument
-                    // then we've finished our loop and we throw a class onto the grid element
-                    
-                    if (letter === value) {
-                        $('.letter-grid').addClass('js-show-letters');
-                    }
-                }
-            }
-          
-            // get the length of the grid.find('span') jQuery object
-            // essentially the current number of letters in the grid at this point
-          
-            function getCurrentLetters(){
-                currentLetters = $('.letter-grid').find('span').length;
-            }
-          
-            function init() {
-                populateLetters();
-                getDimensions();
-                getTotalLetters();
-                drawLetters(totalLetters);
-                getCurrentLetters();
-            }
-          
-            function onResize() {
-                resizeCount++;
-                getDimensions();
-                getTotalLetters();
-          
-                // here we're looking to see if the current number of letters in the grid
-                // (currentLetters) is less than the total possible letters
-                // if so, we figure out how many need to be added to fill it up, then draw them
-                
-                if (currentLetters < totalLetters) {
-                    var difference = totalLetters - currentLetters;
-                    drawLetters(difference);
-                }
-              
-                // update currentLetters with the current number of letters in the grid
-                
-                getCurrentLetters();
-            }
-          
-            init();
-          
-            // do everything we've done so far, except on window resize using debounce to 
-            // ensure that resize isn't going nuts firing all this code constantly
-          
-            window.addEventListener('resize', _.debounce(onResize, 100));
-        })();
+        }
+        
+        // get the length of the grid.find('span') jQuery object
+        // essentially the current number of letters in the grid at this point
+        
+        function getCurrentLetters(){
+            currentLetters = $('.letter-grid').find('span').length;
+        }
+        
+        function init() {
+            populateLetters();
+            getDimensions();
+            getTotalLetters();
+            drawLetters(totalLetters);
+            getCurrentLetters();
+        }
+        
+        function onResize() {
+            resizeCount++;
+            getDimensions();
+            getTotalLetters();
+            if (currentLetters < totalLetters) {
+                var difference = totalLetters - currentLetters;
+                drawLetters(difference);
+            }            
+            getCurrentLetters();
+        }
+        
+        init();
+        
+        window.addEventListener('resize', _.debounce(onResize, 100));
     }
     async send_mail() {
         const { mail_username, mail_location, mail_email, mail_phone, mail_content } = this.state;
