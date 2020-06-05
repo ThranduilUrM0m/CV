@@ -93,7 +93,14 @@ class Blog extends React.Component {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev',
 			}
-		})
+		});
+		$(window).resize(function() {
+			if($(window).width() <= 768) {
+				mySwiper.params.slidesPerView = 1.25;
+				mySwiper.update();
+			}
+		});
+		$(window).trigger('resize');
 	}
     _handleMouseMove() {
 		function Parallax(options){
@@ -355,7 +362,7 @@ class Blog extends React.Component {
 											</div>
 										</div>
 										<div className="modal-top-filter">
-											<div className="input-field col s3">
+											<div className="input-field col">
 												<select 
 													value={sort}
 													onChange={(ev) => this.handleChangeField('sort', ev)}
@@ -371,7 +378,7 @@ class Blog extends React.Component {
 												<label htmlFor='sort' className={sort ? 'active' : ''}>sort</label>
 												<div className="form-group-line"></div>
 											</div>
-											<div className="input-field col s3">
+											<div className="input-field col">
 												<select 
 													value={timeframe}
 													onChange={(ev) => this.handleChangeField('timeframe', ev)}
@@ -388,7 +395,7 @@ class Blog extends React.Component {
 												<label htmlFor='timeframe' className={timeframe ? 'active' : ''}>timeframe</label>
 												<div className="form-group-line"></div>
 											</div>
-											<div className="input-field col s3">
+											<div className="input-field col">
 												<select 
 													value={categorie}
 													onChange={(ev) => this.handleChangeField('categorie', ev)}
@@ -405,7 +412,7 @@ class Blog extends React.Component {
 												<label htmlFor='categorie' className={categorie ? 'active' : ''}>categorie</label>
 												<div className="form-group-line"></div>
 											</div>
-											<div className="input-field col s3">
+											<div className="input-field col">
 												<Autocomplete
 													items={_.flattenDeep(_.map(_.filter(articles, (_a) => { return !_a._hide }), 'tag'))}
 													getItemValue={(item) => item}

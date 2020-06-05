@@ -113,7 +113,7 @@ class About extends React.Component {
                                 
                             </div>
                             <div className="type">
-                                <p className="text-muted">by A Partisan du <b>"Less Is More"</b></p>
+                                <p className="text-muted">by A Partisan of <b>"Less Is More"</b></p>
                                 <button onClick={() => this.handleClick('footer_to')} type="button">
                                     <span>
                                         <span>
