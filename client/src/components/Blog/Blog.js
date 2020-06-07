@@ -569,14 +569,7 @@ class Blog extends React.Component {
 																	<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
 																	<h4>{article.title}</h4>
 																	<p className="categorie">{article.categorie}</p>
-																	<Link
-																		to={
-																			{
-																				pathname: '/blog/'+article.title, 
-																				state : {article}
-																			}
-																		}
-																	>
+																	<Link to={`/blog/${article._id}`}>
 																		<div className="readmore">
 																			<button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
 																				<div className="line line-1"></div>

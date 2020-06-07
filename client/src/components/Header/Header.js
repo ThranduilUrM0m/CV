@@ -106,7 +106,8 @@ class Header extends React.Component {
                 })
             } else {
                 self.setState({
-                    logo_to_show: logo
+                    logo_to_show: logo,
+                    todosPerPage: 4
                 });
                 $('.logoHolder').css({
                     height: '1.5rem'
