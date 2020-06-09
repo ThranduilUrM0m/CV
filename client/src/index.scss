@@ -39,6 +39,7 @@ $background-color-main: #2196f3;
 $background-color-dark: #1e88e5;
 $animation-delay: .5s;
 
+$breakpoint-alpha: 600px;
 $size: 5rem;
 $itemBg1: #453178;
 $itemBg2: #ef3d59;
@@ -469,6 +470,7 @@ img {
 	z-index: 1050;
 }
 
+//Animations DAROUUURI, like as if you're making a motion video with premiere pro
 body, html {
 	height: 100%;
 	background-color: rgba(0,0,0,0);
@@ -5144,6 +5146,7 @@ body, html {
 							box-shadow: 0.25rem 0.25rem 1rem -.5rem rgba(0, 0, 0, 0.5);
 						}
 						.user_name {
+							text-align: right;
 							h4 {
 								margin-bottom: 0;
 							}
@@ -5210,11 +5213,12 @@ body, html {
 					position: absolute;
 					width: .25rem;
 					height: 3.5rem;
-					top: 50vh;
-					left: 4rem;
-					transform: translate(.75rem, -50%);
+					top: calc(50vh + 1rem);
+					left: 4.5rem;
+					transform: translate(100%, -50%);
 					background-color: white;
 					transition: all .1s ease-out;
+					z-index: 111;
 				}
 				.tab-content {
 					width: calc(100% - 5.5rem);
@@ -6071,8 +6075,9 @@ body, html {
 									height: fit-content;
 									min-height: 5rem;
 									.card {
-										background: white;
-										border-radius: .25rem;
+										background: transparent;
+										border: 0.05rem solid lighten(#34495E, 10%);
+										border-radius: 0;
 										box-shadow: 1rem 2rem 2rem -1rem rgba(0, 0, 0, .25);
 										display: flex;
 										flex-direction: column;
@@ -6187,9 +6192,87 @@ body, html {
 															}
 														}
 														table {
-															table-layout: fixed;
-															#user_deleted {
-																background-color: $calendar-red;
+															border-radius: 0;
+															border-collapse: collapse;
+															tr {
+																position: relative;
+																box-shadow: 0.25rem 0.25rem .25rem -0.5rem rgba(0, 0, 0, 0.5);
+																&:not(.spacer) {
+																	background: white;
+																}
+																&.spacer {
+																	height: 1rem;
+																}
+																th {
+																	color: rgba($color: #000000, $alpha: 0.25);
+																	display: none;
+																}
+																td {
+																	height: 100%;
+																	display: block;
+																	p {
+																		padding: .5rem;
+																		margin: .25rem;
+																		font-size: x-small;
+																		border: .06rem solid #ddd;
+																		background: #eee;
+																		display: inline-block;
+																		border-radius: .05rem;
+																		height: fit-content;
+																		width: fit-content;
+																	}
+																	&:before {
+																		content: attr(data-th)": ";
+																		font-weight: bold;
+																		width: 6.5em;
+																		color: rgba($color: #000000, $alpha: 0.25);
+																		display: inline-block;
+																		@media (min-width: $breakpoint-alpha) {
+																			display: none;
+																		}
+																	}
+																}
+																th, td {
+																	text-align: left;
+																	vertical-align: middle;
+																	font-size: .75rem;
+																	padding: .5rem;
+																	margin: 0;
+																	height: 4.5rem;
+																	border: none;
+																	overflow-x: hidden;
+																	white-space: nowrap;
+																	text-overflow: ellipsis;
+																	&:first-of-type {
+																		padding-left: 1.5rem;
+																	}
+																	&.type {
+																		position: relative;
+																		&::after {
+																			display: none;
+																			content: 'User Deleted';
+																			position: absolute;
+																			top: 50%;
+																			right: .25rem;
+																			transform: translate(0, -50%);
+																			width: fit-content;
+																			height: fit-content;
+																			padding: .5rem;
+																			font-size: small;
+																			border: .06rem solid #ddd;
+																			background: #eee;
+																			border-radius: .05rem;
+																		}
+																		&.user_deleted {
+																			&::after {
+																				display: inline-block;
+																			}
+																		}
+																	}
+																	@media (min-width: $breakpoint-alpha) {
+																		display: table-cell;
+																	}
+																}
 															}
 														}
 														.accounts_list {
@@ -7452,7 +7535,7 @@ body, html {
 						position: absolute;
 						margin: 0;
 						top: 50%;
-						left: 75%;
+						left: 25%;
 						transform: translate(-50%, -50%);
 						width: 25vw;
 						height: 50vh;
@@ -7468,8 +7551,8 @@ body, html {
 									box-shadow: none;
 									.content {
 										opacity: 1;
-										i {
-											font-size: 5.5rem;
+										h4 {
+											font-size: 1.75rem;
 										}
 									}
 								}
@@ -7521,17 +7604,17 @@ body, html {
 									display: flex;
 									flex-direction: column;
 									justify-content: flex-end;
-									align-items: center;
+									align-items: flex-start;
 									width: 100%;
 									height: 100%;
 									padding: 1rem;
 									transition: .2s ease-out;
 									opacity: .5;
-									i {
+									h4 {
 										position: relative;
 										transition: .2s ease-out;
-										font-size: 4rem;
-										margin-bottom: 1.25rem;
+										margin-bottom: .25rem;
+										margin-left: 1.25rem;
 										color: white;
 									}
 								}
@@ -7559,15 +7642,19 @@ body, html {
 								.content {
 									display: flex;
 									flex-direction: column;
-									justify-content: flex-end;
+									justify-content: space-between;
 									align-items: center;
 									width: 100%;
 									height: 100%;
-									padding: 1rem;
-									h6, p {
+									padding: 0;
+									& > span {
 										width: 100%;
 										text-align: left;
-										margin-bottom: 0;
+										h6, p {
+											width: 100%;
+											text-align: left;
+											margin-bottom: 0;
+										}
 									}
 									a {
 										-webkit-appearance: none;
@@ -7999,8 +8086,8 @@ body, html {
 									box-shadow: none;
 									.content {
 										opacity: 1;
-										i {
-											font-size: 5.5rem;
+										h4 {
+											font-size: 1.75rem;
 										}
 									}
 								}
@@ -8052,17 +8139,17 @@ body, html {
 									display: flex;
 									flex-direction: column;
 									justify-content: flex-end;
-									align-items: center;
+									align-items: flex-start;
 									width: 100%;
 									height: 100%;
 									padding: 1rem;
 									transition: .2s ease-out;
 									opacity: .5;
-									i {
+									h4 {
 										position: relative;
 										transition: .2s ease-out;
-										font-size: 4rem;
-										margin-bottom: 1.25rem;
+										margin-bottom: .25rem;
+										margin-left: 1.25rem;
 										color: white;
 									}
 								}
@@ -8090,15 +8177,19 @@ body, html {
 								.content {
 									display: flex;
 									flex-direction: column;
-									justify-content: flex-end;
+									justify-content: space-between;
 									align-items: center;
 									width: 100%;
 									height: 100%;
-									padding: 1rem;
-									h6, p {
+									padding: 0;
+									& > span {
 										width: 100%;
 										text-align: left;
-										margin-bottom: 0;
+										h6, p {
+											width: 100%;
+											text-align: left;
+											margin-bottom: 0;
+										}
 									}
 									a {
 										-webkit-appearance: none;
@@ -9072,6 +9163,209 @@ and (min-width : 1824px) {
 														.up_down {
 															.replies, .upvotes, .downvotes {
 																font-size: medium;
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.first_section_dashboard {
+				.wrapper_full {
+					.nav {
+						.logoHolder {
+							transform: scale(1.1);
+						}
+						.user_info {
+							.user_logo {
+								font-size: 2.5rem;
+								width: 5.75rem;
+    							height: 5.75rem;
+							}
+							.user_name {
+								h4 {
+									font-size: 2rem;
+								}
+								.name {
+									font-size: medium;
+								}
+							}
+						}
+						.settings_dashboard {
+							li:not(.not_link) {
+								font-size: 1.25rem;
+							}
+							.not_link {
+								font-size: .95rem;
+							}
+						}
+					}
+					.tab-content {
+						.tab-pane {
+							&.dashboard_pane {
+								.cards {
+									&__item {
+										.card {
+											&__content {
+												._pane {
+													._header {
+														.card__title {
+															font-size: 1.25rem;
+														}
+													}
+													._content {
+														.data-container {
+															.swiper-container {
+																height: 45vh;
+																.swiper-wrapper {
+																	.swiper-slide:not(.testimonies_slider_wrapper_cards_item) {
+																		.swiper-slide_item {
+																			.card:not(.card_testimonies) {
+																				.card-body {
+																					.author {
+																						font-size: small;
+																					}
+																					.categorie {
+																						font-size: medium;
+																					}
+																					.dropdown {
+																						span {
+																							i {
+																								font-size: 1.25rem;
+																							}
+																						}
+																						.dropdown-menu {
+																							font-size: 1.25rem;
+																						}
+																					}
+																					.comments_up_down {
+																						.views, .comments, .upvotes, .downvotes {
+																							font-size: small;
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																	.swiper-slide {
+																		.swiper-slide_item {
+																			.card {
+																				.card-body {
+																					._heads_up {
+																						.intel {
+																							.author {
+																								font-size: small;
+																							}
+																						}
+																						.dropdown {
+																							span {
+																								font-size: 1.25rem;
+																							}
+																							.dropdown-menu {
+																								font-size: 1.25rem;
+																							}
+																						}
+																					}
+																					._testy_body {
+																						h6 {
+																							font-size: 1.5rem;
+																						}
+																					}
+																					.comments_up_down {
+																						.views, .replies, .upvotes, .downvotes {
+																							font-size: small;
+																						}
+																					}
+																				}
+																				&.card_testimonies {
+																					border-bottom: 0.1rem solid hsl(0, 0%, 100%);
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+														&._calendar_content {
+															.col-start {
+																.p {
+																	font-size: x-large;
+																}
+															}
+															.col-center, .col-end {
+																.icon {
+																	font-size: large;
+																}
+															}
+															.calendar {
+																h4 {
+																	font-size: 1.75rem;
+																}
+																.days {
+																	font-size: 90%;
+																}
+																.body {
+																	.cell {
+																		height: 2.75rem;
+																		.number {
+																			font-size: 110%;
+																		}
+																	}
+																}
+															}
+
+														}
+														&._testimonies_content {
+															._testimonies_head {
+																h6 {
+																	font-size: 1.25rem;
+																}
+																.dropdown {
+																	span {
+																		font-size: 1.25rem;
+																	}
+																	.dropdown-menu {
+																		font-size: 1.25rem;
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							&.settings_pane, &.notifications_pane {
+								.forms {
+									.forms__item {
+										.card__content {
+											._pane {
+												._content {
+													._account_head {
+														p {
+															font-size: medium;
+														}
+													}
+													.data_container {
+														table {
+															tr {
+																td {
+																	p {
+																		font-size: small;
+																	}
+																}
+																th, td {
+																	font-size: 1.25rem;
+																}
 															}
 														}
 													}

@@ -165,11 +165,11 @@ class Dashboard extends React.Component {
 		$('.nav').hover(
 			function() {
 			  	$('.wrapper_full .after').css(
-					'left', '35%'
+					'left', 'calc(28% + .5rem)'
 				);
 			}, function() {
 				$('.wrapper_full .after').css(
-				  	'left', '5rem'
+				  	'left', '4.5rem'
 			  	);
 			}
 		);
@@ -1336,29 +1336,32 @@ class Dashboard extends React.Component {
                                                                     {
                                                                         _.orderBy(_users, ['createdAt'], ['desc']).map((_u, index) => {
                                                                             return (
-                                                                                <tr key={index} className={`user_card user_anchor ${_u._id === _user._id ? 'active' : ''}`}>
-                                                                                    <td>{_u.username}</td>
-                                                                                    <td>{_u.email}</td>
-                                                                                    <td>{_u.fingerprint}</td>
-                                                                                    <td>{moment(_u.createdAt).format('MMM DD, YYYY')}</td>
-                                                                                    <td>{_.isEmpty(_u.roles) ? 'Reader' : _.map(_u.roles, (r) => { return <p>{r}</p>; })}</td>
-                                                                                    <td>{_u.isVerified ? 'Verified' : 'Not Verified'}</td>
-                                                                                    <td className="dropdown">
-                                                                                        <span className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i className="fas fa-ellipsis-h"></i>
-                                                                                        </span>
-                                                                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                                            {(() => {
-                                                                                                if(_.includes(_user.roles, 'admin')) {
-                                                                                                    return (
-                                                                                                        <a className="dropdown-item" href="# " data-toggle="modal" data-target="#_user_modal" onClick={() => this.handleEditUser(_u)}>Edit User.</a>
-                                                                                                    )
-                                                                                                }
-                                                                                            })()}
-                                                                                            <a className="dropdown-item" href="# " onClick={() => this.handleDeleteUser(_u)}>Delete User.</a>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
+                                                                                <>
+                                                                                    <tr className="spacer"></tr>
+                                                                                    <tr key={index} className={`user_card user_anchor ${_u._id === _user._id ? 'active' : ''}`}>
+                                                                                        <td data-th="Username">{_u.username}</td>
+                                                                                        <td data-th="Email">{_u.email}</td>
+                                                                                        <td data-th="Fingerprint">{_u.fingerprint}</td>
+                                                                                        <td data-th="Created">{moment(_u.createdAt).format('dddd, MMM Do YYYY')}</td>
+                                                                                        <td data-th="Roles">{_.isEmpty(_u.roles) ? 'Reader' : _.map(_u.roles, (r) => { return <p>{r}</p>; })}</td>
+                                                                                        <td data-th="Verified">{_u.isVerified ? 'Verified' : 'Not Verified'}</td>
+                                                                                        <td className="dropdown">
+                                                                                            <span className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i className="fas fa-ellipsis-h"></i>
+                                                                                            </span>
+                                                                                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                                                {(() => {
+                                                                                                    if(_.includes(_user.roles, 'admin')) {
+                                                                                                        return (
+                                                                                                            <a className="dropdown-item" href="# " data-toggle="modal" data-target="#_user_modal" onClick={() => this.handleEditUser(_u)}>Edit User.</a>
+                                                                                                        )
+                                                                                                    }
+                                                                                                })()}
+                                                                                                <a className="dropdown-item" href="# " onClick={() => this.handleDeleteUser(_u)}>Delete User.</a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </>
                                                                             )
                                                                         })
                                                                     }
@@ -1385,15 +1388,17 @@ class Dashboard extends React.Component {
                                                     <div className="_notifs_pane _pane">
                                                         <div className="_notifs_content _content">
                                                             <div className="_notifs_head">
-                                                                <h4>Notifications.</h4>
+                                                                <h4>Latests.</h4>
+                                                                <p className="text-muted">{_.size(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }))} Total, Last : {moment(new Date(_.get(_.head(_.orderBy(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }), ['createdAt'], ['desc'])), 'createdAt'))).fromNow()}</p>
                                                             </div>
                                                             <div className="_notifs_data data_container">
                                                                 <table className="notifs_list table table-striped">
                                                                     <thead>
                                                                         <tr className="notifs_list_header">
+                                                                            <th>New</th>
+                                                                            <th>Time</th>
                                                                             <th>Date</th>
                                                                             <th>Type</th>
-                                                                            <th>Source</th>
                                                                             <th>Description</th>
                                                                         </tr>
                                                                     </thead>
@@ -1401,12 +1406,16 @@ class Dashboard extends React.Component {
                                                                     {
                                                                         _.orderBy(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }), ['createdAt'], ['desc']).map((_notification, index) => {
                                                                             return (
-                                                                                <tr key={index} className={`notif_card notif_anchor`} id={_notification.type == 'User Deleted' ? 'user_deleted' : ''}>
-                                                                                    <td>{moment(_notification.createdAt).format("YYYY Do MM")}</td>
-                                                                                    <td>{_notification.type}</td>
-                                                                                    <td>{_notification.author}</td>
-                                                                                    <td>{_notification.description}</td>
-                                                                                </tr>
+                                                                                <>
+                                                                                    <tr className="spacer"></tr>
+                                                                                    <tr key={index} className={`notif_card notif_anchor`}>
+                                                                                        <td data-th="New">{moment(_notification.createdAt).isSame(moment(), 'day') ? <p>today</p> : ''}</td>
+                                                                                        <td data-th="Time">{moment(_notification.createdAt).format('HH:mm')}</td>
+                                                                                        <td data-th="Date">{moment(_notification.createdAt).format("dddd, MMM Do YYYY")}</td>
+                                                                                        <td data-th="Type" className={ `type ${_notification.type == 'User Deleted' ? 'user_deleted' : ''}` }>{_notification.type}</td>
+                                                                                        <td data-th="Description">{_notification.description}</td>
+                                                                                    </tr>
+                                                                                </>
                                                                             )
                                                                         })
                                                                     }

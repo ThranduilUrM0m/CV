@@ -103,13 +103,15 @@ class Signup extends React.Component {
 								<div className="card">
 									<div className="face face1">
 										<div className="content">
-											<i className="fas fa-sign-in-alt"></i>
+											<h4>Login</h4>
 										</div>
 									</div>
 									<div className="face face2">
 										<div className="content">
-											<h6>Welcome to boutaleb.</h6>
-											<p>The blog to speak louder.</p>
+											<span>
+												<h6>Welcome to boutaleb.</h6>
+												<p>The blog to speak louder.</p>
+											</span>
 											<a className="text-muted" href="/login">
 												<span>
 													<span>

@@ -125,13 +125,15 @@ class Login extends React.Component {
 								<div className="card">
 									<div className="face face1">
 										<div className="content">
-											<i className="fas fa-user-plus"></i>
+											<h4>Signup.</h4>
 										</div>
 									</div>
 									<div className="face face2">
 										<div className="content">
-											<h6>Welcome to boutaleb.</h6>
-											<p>The blog to speak louder.</p>
+											<span>
+												<h6>Welcome to boutaleb.</h6>
+												<p>The blog to speak louder.</p>
+											</span>
 											<a className="text-muted" href="/signup">
 												<span>
 													<span>
