@@ -64,6 +64,20 @@ class Home extends React.Component {
         this._handleScroll();
         this._handleMouseMove();
         $('.fixedHeaderContainer').removeClass('blog_header');
+
+        setTimeout(function() {
+            $('svg.word').each(function() {
+                var svg = $(this);
+                var text = svg.find('text');
+                var bbox = text.get(0).getBBox(); 
+
+                svg.get(0).setAttribute('viewBox', 
+                                        [bbox.x,
+                                        bbox.y,
+                                        bbox.width,
+                                        bbox.height].join(' '));
+            });
+        }, 100);
     }
     _handleSlider(source) {
         function FormatNumberLength(num, length) {
@@ -101,7 +115,7 @@ class Home extends React.Component {
                             $(this).append('<p class="index_card_shadow">'+caption+'</p>');
                     });
                     /* Controls */
-                    container.append('<div id="controls"><a id="next">next.</a><a id="curr">curr.</a><a id="prev">prev.</a></div>');
+                    container.append('<div id="controls"><a id="prev">prev.</a><a id="curr">curr.</a><a id="next">next.</a></div>');
                     this.navNext = container.find('#next');
                     this.navPrev = container.find('#prev');
                     /* Navigation */
@@ -340,11 +354,21 @@ class Home extends React.Component {
                 <Slide>
                     <section className="second_section">
                         <div className="Hello">
-                            <div className="word w1">مرحبا</div>
-                            <div className="word w2">Welcome</div>
-                            <div className="word w3">Bienvenue</div>
-                            <div className="word w4">Chào mừng</div>
-                            <div className="word w5">Bienvenido</div>
+                            <svg className="word w1">
+                                <text>مرحبا</text>
+                            </svg>
+                            <svg className="word w2">
+                                <text>Welcome</text>
+                            </svg>
+                            <svg className="word w3">
+                                <text>Bienvenue</text>
+                            </svg>
+                            <svg className="word w4">
+                                <text>Chào mừng</text>
+                            </svg>
+                            <svg className="word w5">
+                                <text>Bienvenido</text>
+                            </svg>
                         </div>
                         <div id="social_media">
                             <div className="icons_gatherer">
@@ -366,8 +390,10 @@ class Home extends React.Component {
                                 <div className="name">
                                     <p>ZAKARIAE</p><p>BOUTALEB</p>
                                 </div>
-                                <p>Website and user interface developer.</p>
-                                <p>Based in <b className='web'>Morocco.</b></p>
+                                <div>
+                                    <p>Website and user interface developer.</p>
+                                    <p>Based in <b className='web'>Morocco.</b></p>
+                                </div>
                                 <p className="text">So no one told you life was gonna be this way. When it hasn't been your day, your week, your month...</p>
                                 <button id="reach_out_button" onClick={() => this.handleClick('footer_to')} type="button">
                                     <span>
@@ -464,6 +490,7 @@ class Home extends React.Component {
                                                 <li className="tag_item">JQuery</li>
                                                 <li className="tag_item">Sass</li>
                                                 <li className="tag_item">Css</li>
+                                                <li className="tag_item">Css Grid</li>
                                                 <li className="tag_item">HTML</li>
                                                 <li className="tag_item">ReactJS</li>
                                             </ul>

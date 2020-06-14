@@ -102,7 +102,7 @@ class Header extends React.Component {
                     todosPerPage: 2
                 });
                 $('.logoHolder').css({
-                    height: '4rem'
+                    height: '10.25vh'
                 })
             } else {
                 self.setState({
@@ -110,7 +110,7 @@ class Header extends React.Component {
                     todosPerPage: 4
                 });
                 $('.logoHolder').css({
-                    height: '1.5rem'
+                    height: '4vh'
                 });
             }
         }
