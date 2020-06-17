@@ -428,21 +428,86 @@ img {
 }
 
 .input-field {
-    margin-top: 0;
 
-    input:not(input[type=checkbox]),
-    select {
-        height: 5vh;
-        color: $color1;
-        margin: 0 0 1.25vh 0;
-    }
+    &.col,
+    & {
+        position: relative;
+        margin: 0 1vh 1vh 1vh;
+        padding: 0;
 
-    label {
-        top: 0;
-        font-size: 2.25vh;
+        input:not([type=checkbox]),
+        select {
+            box-sizing: border-box;
+            color: $color1;
+            height: 100%;
+            margin: 0;
+            box-shadow: none;
+            transition: all .3s ease-out;
+        }
 
-        &.active {
-            transform: translateY(-50%);
+        textarea {
+            box-sizing: border-box;
+            color: $color1;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-shadow: none;
+            transition: all .3s ease-out;
+        }
+
+        label {
+            box-sizing: content-box;
+            font-size: 2vh;
+            font-weight: 500;
+            top: 50%;
+            left: 0;
+            margin: 0;
+            transform: translate(0, -25%) !important;
+            transition: all .3s ease-out;
+
+            &.active {
+                font-size: 1.5vh;
+                top: 0;
+                transform: translate(0, -25%);
+            }
+        }
+
+        .form-group-line {
+            position: absolute;
+            box-sizing: content-box;
+            background-color: $green;
+            width: 0;
+            height: 2px;
+            top: 100%;
+            left: 0;
+            transform: translate(0, -75%);
+            transition: all .3s ease-out;
+            z-index: 1;
+        }
+
+        &.s12 {
+            label {
+                box-sizing: content-box;
+                top: 85%;
+                transform: translate(0, -100%);
+
+                &.active {
+                    font-size: 1.5vh;
+                    top: 0;
+                    transform: translate(0, -50%);
+                }
+            }
+
+            .form-group-line {
+                transform: translate(0, -50%);
+            }
+        }
+
+        &:hover {
+            .form-group-line {
+                width: 0;
+                animation: input 1s infinite ease-out;
+            }
         }
     }
 }
@@ -464,31 +529,6 @@ img {
     box-shadow: none;
 }
 
-.form-group-line {
-    position: absolute;
-    bottom: 1.25vh;
-    left: 2vh;
-    width: 0;
-    height: .33vh;
-    background-color: $green;
-    z-index: 1;
-    transform: translatex(0);
-    transition: all .3s ease-out;
-}
-
-.input-field:hover {
-    .form-group-line {
-        width: 0;
-        animation: input 1s infinite ease-out;
-    }
-}
-
-.form-group-input:focus~.form-group-line,
-.form-group-input:valid~.form-group-line {
-    animation: input2 .5s 1 ease-out;
-    width: 100%;
-}
-
 .dropdown-content.select-dropdown {
     z-index: 1050;
 }
@@ -499,8 +539,8 @@ html {
     color: black;
     background-color: white;
     height: 100%;
-	font-family: $mainFont;
-	font-size: 2.5vh;
+    font-family: $mainFont;
+    font-size: 2.5vh;
     scroll-behavior: smooth;
 
     .container-fluid {
@@ -759,7 +799,6 @@ html {
                     form {
                         position: relative;
                         margin-left: auto;
-
                         margin-right: 1%;
 
                         &::before {
@@ -768,8 +807,9 @@ html {
                             display: inline-block;
                             background: black;
                             top: 100%;
-                            right: 0;
+                            transform: translate(0, -100%);
 
+                            right: 1vh;
                             width: 51.25vh;
                             height: .3vh;
                         }
@@ -784,18 +824,10 @@ html {
                             width: 7.5vh;
                             height: 7.5vh;
 
-                            .form-group-input:focus~.form-group-line,
-                            .form-group-input:valid~.form-group-line {
-                                animation: input3 .5s 1 ease-out;
-                                top: 100%;
-                                width: 100%;
-                            }
-
                             input {
                                 background: black;
                                 color: $liteBg;
                                 outline: none;
-                                border: 0;
                                 overflow: hidden;
                                 font-weight: 100;
                                 transform: scale(0);
@@ -805,15 +837,6 @@ html {
 
                                 height: 6.5vh;
                                 width: 0;
-
-                                &::placeholder {
-                                    color: #cccccc;
-                                }
-                            }
-
-                            label {
-                                top: 50;
-                                transform: translateY(-50%);
                             }
 
                             label,
@@ -922,32 +945,23 @@ html {
                                 width: 51.25vh;
 
                                 input {
-                                    padding: 0 6.5vh 0 2.5vh;
-                                    transform: scale(1);
+                                    box-sizing: inherit;
                                     width: 100%;
                                     height: 100%;
-                                    box-sizing: inherit;
                                     margin: 0;
+                                    padding: 0 6.5vh 0 2.5vh;
+                                    transform: scale(1);
                                 }
 
                                 label {
                                     display: initial;
-                                    font-weight: 400;
-                                    width: calc(100% - 9.25vh);
                                     left: 2.5vh;
+                                    width: calc(100% - 2.5vh);
                                     color: white;
-
-                                    &.active {
-                                        transform: translateY(-50%);
-                                    }
                                 }
 
                                 .form-group-line {
                                     display: initial;
-                                    position: absolute;
-                                    width: 100%;
-                                    left: 0;
-                                    bottom: 0;
                                 }
                             }
                         }
@@ -1888,7 +1902,7 @@ html {
                         grid-row: 1 / 4;
 
                         display: grid;
-                        grid-template-columns: 5% auto 5%;
+                        grid-template-columns: auto 5%;
                         grid-template-rows: 20% auto 20%;
 
                         .shadow_title {
@@ -1910,11 +1924,11 @@ html {
                             width: 100%;
                             height: 100%;
 
-                            grid-column: 2 / 3;
+                            grid-column: 1 / 2;
                             grid-row: 2 / 3;
 
                             display: grid;
-                            grid-template-columns: 20% auto 20%;
+                            grid-template-columns: 10% auto 15%;
                             grid-template-rows: 20% auto 20%;
 
                             .card {
@@ -2185,7 +2199,7 @@ html {
 
                         #controls {
 
-                            grid-column: 3 / 4;
+                            grid-column: 2 / 3;
                             grid-row: 2 / 3;
 
                             width: 100%;
@@ -2347,16 +2361,12 @@ html {
                     grid-area: wrapper_left_part;
 
                     display: grid;
-                    grid-template-columns: 10% auto 10%;
+                    grid-template-columns: 8vh auto;
                     grid-template-rows: 30% 70%;
 
                     .pulsing_dots {
-                        position: absolute;
-                        width: 60%;
-                        height: 60%;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
+                        grid-column: 2 / 3;
+                        grid-row: 1 / 3;
 
                         &>div {
                             height: 4vh;
@@ -2391,7 +2401,7 @@ html {
                         width: 100%;
 
                         grid-column: 2 / 3;
-                        grid-row: 2 / 4;
+                        grid-row: 2 / 3;
 
                         display: grid;
                         grid-template-columns: 1fr;
@@ -2425,14 +2435,14 @@ html {
                         }
 
                         p {
-                            font-size: 6vh;
-							line-height: 6vh;
+                            font-size: 5vh;
+                            line-height: 5vh;
                             font-family: 'Abril Fatface', cursive;
                             margin-bottom: 2.5vh;
 
                             .web {
                                 position: relative;
-								font-weight: 900;
+                                font-weight: 900;
 
                                 &::before {
                                     content: '';
@@ -3010,33 +3020,33 @@ html {
                     .card-body {
                         display: grid;
                         grid-template-columns: repeat(3, 1fr);
-                        grid-template-rows: repeat(1, 1fr);
 
-                        .column_1 {
-                            grid-column: 1;
+                        .column {
                             position: relative;
-                            padding-right: 3.25vh;
 
                             .head {
                                 display: flex;
                                 flex-direction: column;
                                 align-items: center;
 
+                                i,
+                                span {
+                                    margin-top: 1vh;
+                                }
+
                                 i {
                                     font-size: 7.5vh;
                                     color: $main-color;
-                                    margin-top: 5vh;
                                 }
 
                                 span {
                                     font-size: 3vh;
                                     font-weight: bold;
-                                    margin-top: 5vh;
                                 }
                             }
 
                             .content {
-                                margin-top: 5vh;
+                                margin-top: 1vh;
                                 display: flex;
                                 flex-direction: column;
                                 align-items: center;
@@ -3046,7 +3056,66 @@ html {
                                     font-weight: bold;
                                     color: $main-color;
                                 }
+
+                                .tags {
+                                    width: 100%;
+                                    margin-bottom: 0 !important;
+                                    margin-top: 1.25vh;
+                                    display: flex;
+                                    flex-wrap: wrap;
+
+                                    li {
+                                        background: lighten($color: $main-color, $amount: 20);
+                                        border-radius: .5vh 0 0 .5vh;
+                                        color: #000;
+                                        height: 4.5vh;
+                                        line-height: 4.5vh;
+                                        padding: 0 3.75vh 0 3.75vh;
+                                        position: relative;
+                                        margin: 0 calc(2.5vh / 2) calc(2.5vh / 2) 0;
+                                        transition: color .2s ease-out;
+                                        font-size: 2vh;
+                                        box-sizing: border-box;
+
+                                        &::before {
+                                            position: absolute;
+                                            content: '';
+                                            background: #fff;
+                                            width: 1.25vh;
+                                            height: 1.25vh;
+                                            border-radius: 1.25vh;
+                                            left: 1.25vh;
+                                            top: 50%;
+                                            transform: translateY(-50%);
+                                            box-shadow: inset .25vh .25vh rgba(0, 0, 0, .25);
+                                        }
+
+                                        &::after {
+                                            background: #fff;
+                                            border-bottom: calc(4.5vh / 2) solid transparent;
+                                            border-left: 1.25vh solid lighten($color: $main-color, $amount: 20);
+                                            border-top: calc(4.5vh / 2) solid transparent;
+                                            content: '';
+                                            position: absolute;
+                                            right: 0;
+                                            top: 0;
+                                        }
+
+                                        &:hover {
+                                            background-color: $main-color;
+                                            color: white;
+
+                                            &::after {
+                                                border-left-color: $main-color;
+                                            }
+                                        }
+                                    }
+                                }
                             }
+                        }
+
+                        .column_1 {
+                            padding-right: 3.25vh;
 
                             &::after {
                                 content: '';
@@ -3062,82 +3131,13 @@ html {
                         }
 
                         .column_2 {
-                            grid-column: 2;
-                            padding: 3.25vh 0;
+                            padding: 0;
                             display: flex;
                             flex-direction: column;
-
-                            .head {
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-
-                                i {
-                                    font-size: 7.5vh;
-                                    color: $main-color;
-                                    margin-top: 5vh;
-                                }
-
-                                span {
-                                    font-size: 3vh;
-                                    font-weight: bold;
-                                    margin-top: 5vh;
-                                }
-                            }
-
-                            .content {
-                                margin-top: 5vh;
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                                background: url('FOUR.png') no-repeat;
-                                background-size: contain;
-                                background-position: center;
-                                flex: 1;
-
-                                h6 {
-                                    font-size: 3vh;
-                                    font-weight: bold;
-                                    color: $main-color;
-                                }
-                            }
                         }
 
                         .column_3 {
-                            grid-column: 3;
-                            position: relative;
                             padding-left: 3.25vh;
-
-                            .head {
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-
-                                i {
-                                    font-size: 7.5vh;
-                                    color: $main-color;
-                                    margin-top: 5vh;
-                                }
-
-                                span {
-                                    font-size: 3vh;
-                                    font-weight: bold;
-                                    margin-top: 5vh;
-                                }
-                            }
-
-                            .content {
-                                margin-top: 5vh;
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-
-                                h6 {
-                                    font-size: 3vh;
-                                    font-weight: bold;
-                                    color: $main-color;
-                                }
-                            }
 
                             &::before {
                                 content: '';
@@ -3149,61 +3149,6 @@ html {
                                 left: 0;
                                 top: 50%;
                                 transform: translate(0, -50%);
-                            }
-                        }
-
-                        .tags {
-                            width: 100%;
-                            margin-bottom: 0 !important;
-                            margin-top: 1.25vh;
-                            display: flex;
-                            flex-wrap: wrap;
-
-                            li {
-                                background: lighten($color: $main-color, $amount: 20);
-                                border-radius: .5vh 0 0 .5vh;
-                                color: #000;
-                                height: 4.5vh;
-                                line-height: 4.5vh;
-                                padding: 0 3.75vh 0 3.75vh;
-                                position: relative;
-                                margin: 0 calc(4.5vh / 2) calc(4.5vh / 2) 0;
-                                transition: color .2s ease-out;
-                                font-size: 2vh;
-                                box-sizing: border-box;
-
-                                &::before {
-                                    position: absolute;
-                                    content: '';
-                                    background: #fff;
-                                    width: 1.25vh;
-                                    height: 1.25vh;
-                                    border-radius: 1.25vh;
-                                    left: 1.25vh;
-                                    top: 50%;
-                                    transform: translateY(-50%);
-                                    box-shadow: inset .25vh .25vh rgba(0, 0, 0, .25);
-                                }
-
-                                &::after {
-                                    background: #fff;
-                                    border-bottom: calc(4.5vh / 2) solid transparent;
-                                    border-left: 1.25vh solid lighten($color: $main-color, $amount: 20);
-                                    border-top: calc(4.5vh / 2) solid transparent;
-                                    content: '';
-                                    position: absolute;
-                                    right: 0;
-                                    top: 0;
-                                }
-
-                                &:hover {
-                                    background-color: $main-color;
-                                    color: white;
-
-                                    &::after {
-                                        border-left-color: $main-color;
-                                    }
-                                }
                             }
                         }
                     }
@@ -3517,7 +3462,7 @@ html {
 
                                 .form-group-line {
                                     position: absolute;
-                                    bottom: 1.25vh;
+                                    bottom: 0;
                                     left: 1.25vh;
                                     width: calc(100% - 2.5vh) !important;
                                 }
@@ -9839,7 +9784,7 @@ html {
                 padding: 12vh 0 0 0;
 
                 display: grid;
-                grid-template-columns: 10% auto 10%;
+                grid-template-columns: 5% auto 5%;
                 grid-template-rows: 40% 50% 10%;
                 place-items: stretch;
                 place-content: stretch;
@@ -9860,7 +9805,7 @@ html {
                     div {
                         position: relative;
                         background: $Gradient;
-                        padding: 2.5vh;
+                        padding: 1.25vh;
                         margin: 1.25vh;
                         box-shadow: 0 .35vh 3.25vh rgba(0, 0, 0, .25);
 
@@ -9978,63 +9923,14 @@ html {
                             .mail_form {
                                 transition: all .6s ease-out;
                                 height: 100%;
-                                display: flex;
-                                flex-direction: column;
+
+                                display: grid;
+                                grid-template-rows: 7.5vh 7.5vh auto 7.5vh;
 
                                 .row {
                                     margin-right: 0;
                                     margin-left: 0;
                                     margin-bottom: 0;
-
-                                    .input-field {
-                                        position: relative;
-                                        margin: 0 0 1.25vh 0;
-
-                                        &.s12 {
-                                            textarea.materialize-textarea {
-                                                color: $color1;
-                                                padding: 0;
-                                                margin: 0;
-                                                height: calc(100% - .15vh);
-                                            }
-
-                                            .form-group-line {
-                                                bottom: 0 !important;
-                                            }
-                                        }
-
-                                        label {
-                                            font-weight: 400;
-
-                                            &.active {
-                                                transform: translateY(-80%);
-                                            }
-                                        }
-
-                                        .form-group-line {
-                                            position: absolute;
-                                            bottom: 1.25vh;
-                                            left: 2vh;
-                                        }
-
-                                        .form-group-input:focus~.form-group-line,
-                                        .form-group-input:valid~.form-group-line {
-                                            animation: input3 .5s 1 ease-out;
-                                            width: calc(100% - 3.75vh);
-                                        }
-                                    }
-
-                                    &:nth-of-type(3) {
-                                        flex: 1;
-
-                                        .input-field.s12 {
-                                            label {
-                                                top: unset;
-                                                bottom: 0;
-                                                transform: translateY(-50%);
-                                            }
-                                        }
-                                    }
 
                                     &:last-of-type {
                                         button {
@@ -10184,7 +10080,7 @@ html {
                     .push-left {
                         position: relative;
                         height: 100%;
-                        margin-left: 19.25vh;
+                        margin-left: 15vh;
                         color: black;
                         display: flex;
 
@@ -10193,9 +10089,9 @@ html {
                             display: inline-block;
                             content: "";
                             background: black;
-                            width: 12vh;
+                            width: 10vh;
                             height: .25vh;
-                            left: -16.5vh;
+                            left: -12vh;
                             top: 50%;
                             transform: translateY(-50%);
                         }
@@ -10206,7 +10102,7 @@ html {
                             align-items: center;
 
                             li {
-                                margin-right: 5vh;
+                                margin-right: 2vh;
 
                                 &:last-of-type {
                                     color: rgba($color: black, $alpha: .8);
@@ -10232,7 +10128,7 @@ html {
                             align-items: center;
 
                             li {
-                                margin-right: 5vh;
+                                margin-right: 2vh;
                             }
                         }
                     }
@@ -10292,3 +10188,227 @@ html {
         }
     }
 }
+
+@media (max-width: 1680px) and (min-height: 1050px),
+(max-width: 1440px) and (min-height: 900px),
+(max-width: 1280px) and (min-height: 800px),
+(max-width: 1920px) and (min-height: 1200px) {
+
+    body,
+    html {
+        .container-fluid {
+            .second_section {
+                .wrapper {
+                    &.left_part {
+                        .some_text {
+                            .name {
+                                p:last-of-type {
+                                    transform: translate(20vh, 0);
+
+                                    &::before {
+                                        width: 18vh;
+                                        left: -2vh;
+                                        transform: translate(-18vh, -50%);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 2732px) and (min-height: 2048px) {
+
+    body,
+    html {
+        .container-fluid {
+            .second_section {
+                .wrapper {
+                    &.left_part {
+                        .some_text {
+
+                            p {
+
+                                &.text {
+                                    margin-left: 8vh;
+
+                                    &::before {
+                                        width: 6vh;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 2736px) and (min-height: 1824px),
+(max-width: 2560px) and (min-height: 1600px),
+(max-width: 2160px) and (min-height: 1440px) {
+
+    body,
+    html {
+        .container-fluid {
+            .second_section {
+                .wrapper {
+                    &.left_part {
+                        .some_text {
+                            .name {
+                                p {
+                                    font-size: 9vh;
+                                    line-height: 9vh;
+
+                                    &:last-of-type {
+                                        transform: translate(19vh, 0);
+
+                                        &::before {
+                                            width: 17vh;
+                                            left: -2vh;
+                                            transform: translate(-17vh, -50%);
+                                        }
+                                    }
+                                }
+                            }
+
+                            p {
+                                font-size: 4vh;
+                                line-height: 4vh;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 2048px) and (min-height: 1536px),
+(max-width: 1600px) and (min-height: 1200px) {
+
+    body,
+    html {
+        .container-fluid {
+            .footer {
+                .wrapper {
+                    grid-template-columns: 2.5% auto 2.5%;
+
+                    .low_shelf {
+                        .push-left {
+                            margin-left: 0;
+
+                            &::before {
+                                display: none;
+                            }
+                        }
+
+                        .push-right {
+                            ul {
+                                li {
+                                    .name {
+                                        margin-left: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1600px) and (min-height: 1200px),
+(max-width: 480px) and (min-height: 360px) {
+
+    body,
+    html {
+        .container-fluid {
+            .second_section {
+                .wrapper {
+                    &.left_part {
+                        .some_text {
+                            .name {
+                                p {
+                                    font-size: 9vh;
+                                    line-height: 9vh;
+
+                                    &:last-of-type {
+                                        transform: translate(19vh, 0);
+
+                                        &::before {
+                                            width: 17vh;
+                                            left: -2vh;
+                                            transform: translate(-17vh, -50%);
+                                        }
+                                    }
+                                }
+                            }
+
+                            p {
+                                font-size: 4vh;
+                                line-height: 4vh;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) and (min-height: 360px) {
+
+    body,
+    html {
+        .container-fluid {
+
+            .third_section {
+                .wrapper {
+                    .card {
+                        .card-body {
+                            grid-template-columns: repeat(2, 1fr);
+                            .column_2 {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .footer {
+                .wrapper {
+                    grid-template-columns: 2.5% auto 2.5%;
+
+                    .low_shelf {
+                        .push-left {
+                            margin-left: 0;
+
+                            &::before {
+                                display: none;
+                            }
+                        }
+
+                        .push-right {
+                            ul {
+                                li {
+                                    .name {
+                                        margin-left: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (orientation: portrait) {}
