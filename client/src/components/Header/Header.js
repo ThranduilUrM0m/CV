@@ -98,20 +98,14 @@ class Header extends React.Component {
         function displayWindowSize(){
             if ($(window).width() <= 425) {
                 self.setState({
-                    logo_to_show: favicon,
-                    todosPerPage: 2
+                    logo_to_show: favicon
                 });
-                $('.logoHolder').css({
-                    height: '10.25vh'
-                })
+                $('.logoHolder').addClass('small');
             } else {
                 self.setState({
-                    logo_to_show: logo,
-                    todosPerPage: 4
+                    logo_to_show: logo
                 });
-                $('.logoHolder').css({
-                    height: '4vh'
-                });
+                $('.logoHolder').removeClass('small');
             }
         }
         window.addEventListener("resize", displayWindowSize);

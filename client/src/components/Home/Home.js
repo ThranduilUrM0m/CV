@@ -290,7 +290,7 @@ class Home extends React.Component {
         });
     }
     _handleMouseMove() {
-        $('.first_section').mousemove(function(e){
+        $('.first_section').mousemove(function(e) {
             var width = $(this).width() / 2;
             var height = $(this).height() / 2;
             var amountMovedX = ((width - e.pageX) * -1 / 12);
@@ -299,23 +299,23 @@ class Home extends React.Component {
             $('.luna').css('marginLeft', amountMovedX);
             $('.luna').css('marginTop', amountMovedY);
         });
-        $('.second_section').mousemove(function(e){
+        $('.second_section').mousemove(function(e) {
             var width = $(this).width() / 2;
             var height = $(this).height() / 2;
             var amountMovedX = ((width - e.pageX) * -1 / 12);
             var amountMovedY = ((height - e.pageY) * -1 / 12);
         
-            $('.display-1').css('marginLeft', amountMovedX);
-            $('.display-1').css('marginTop', amountMovedY);
+            $('.second_section .display-1').css('marginLeft', amountMovedX);
+            $('.second_section .display-1').css('marginTop', amountMovedY);
         });
-        $('.third_section').mousemove(function(e){
+        $('.third_section').mousemove(function(e) {
             var width = $(this).width() / 2;
             var height = $(this).height() / 2;
             var amountMovedX = ((width - e.pageX) * -1 / 12);
             var amountMovedY = ((height - e.pageY) * -1 / 12);
         
-            $('.display-1').css('left', amountMovedX);
-            $('.display-1').css('top', amountMovedY);
+            $('.third_section .display-1').css('marginLeft', amountMovedX);
+            $('.third_section .display-1').css('marginTop', amountMovedY);
         });
     }
     handleJSONTOHTML(inputDelta) {
@@ -334,10 +334,10 @@ class Home extends React.Component {
 	}
     _handleScroll(){
         $(window).scroll(function() {
-            if ($(document).height() - $(window).height() - $(window).scrollTop() < 100){
+            if ($(document).height() - $(window).height() - $(window).scrollTop() < 100) {
                 $('.fixedHeaderContainer').addClass('blog_header');
             }
-            else{
+            else {
                 $('.fixedHeaderContainer').removeClass('blog_header');
             }
         });

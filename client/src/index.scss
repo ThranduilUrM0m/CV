@@ -449,7 +449,7 @@ img {
             box-sizing: border-box;
             color: $color1;
             height: 100%;
-            margin: 0;
+            margin: 1vh 0 0 0;
             padding: 0;
             box-shadow: none;
             transition: all .3s ease-out;
@@ -488,12 +488,14 @@ img {
         &.s12 {
             label {
                 box-sizing: content-box;
-                top: 85%;
+                top: unset;
+                bottom: 0;
                 transform: translate(0, -100%);
 
                 &.active {
                     font-size: 1.5vh;
                     top: 0;
+                    bottom: unset;
                     transform: translate(0, -50%);
                 }
             }
@@ -526,6 +528,22 @@ img {
 .input-field input[type=password]:focus,
 .input-field select:focus {
     border-bottom: 0;
+    box-shadow: none;
+}
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
     box-shadow: none;
 }
 
@@ -717,11 +735,11 @@ html {
                 padding: 0;
 
                 header {
-                    display: flex;
-                    flex-flow: row nowrap;
-                    align-items: center;
                     position: relative;
+                    display: flex;
+                    align-items: center;
                     text-align: left;
+                    flex-flow: row nowrap;
 
                     .navToggle {
                         fill: black;
@@ -783,16 +801,20 @@ html {
                     }
 
                     .logoHolder {
-                        border: 0;
-                        color: white;
+                        display: flex;
+                        align-items: center;
+                        margin-left: 2.5%;
+                        border: none;
                         z-index: 10000;
 
-                        height: 4vh;
-                        margin-left: 2.5%;
-                        transform: scale(.8);
+                        &.small {
+                            img {
+                                height: 10.25vh;
+                            }
+                        }
 
                         img {
-                            height: 100%;
+                            height: 4vh;
                         }
                     }
 
@@ -829,6 +851,7 @@ html {
                                 color: $liteBg;
                                 outline: none;
                                 overflow: hidden;
+                                font-size: 2.5vh;
                                 font-weight: 100;
                                 transform: scale(0);
                                 transform-origin: right center;
@@ -1076,7 +1099,7 @@ html {
                 height: 100%;
 
                 display: grid;
-                grid-template-rows: 70% 30%;
+                grid-template-rows: 75% 25%;
                 align-items: center;
                 justify-items: center;
                 place-content: stretch;
@@ -1162,7 +1185,7 @@ html {
 
                                         h4 {
                                             color: black;
-                                            text-align: center;
+                                            text-align: left;
                                             letter-spacing: 0;
                                             transition: all .15s ease-out 0s;
                                             position: relative;
@@ -1315,6 +1338,7 @@ html {
 
                                             .views {
                                                 margin-right: auto;
+                                                margin-left: 0;
                                             }
                                         }
                                     }
@@ -1348,7 +1372,6 @@ html {
                             cursor: pointer;
 
                             &.current {
-                                height: 2.5vh;
                                 width: 5vh;
                                 opacity: 1;
                                 background: $main-color;
@@ -1375,7 +1398,7 @@ html {
                 }
 
                 .search-suggestions {
-                    max-width: 60%;
+                    max-width: 70%;
                     width: fit-content;
                     color: white;
 
@@ -1807,8 +1830,6 @@ html {
             grid-template-columns: 40% 60%;
             place-items: stretch;
             place-content: stretch;
-            grid-template-areas:
-                "wrapper_left_part wrapper_right_part";
 
             .wrapper {
                 overflow: hidden;
@@ -1819,7 +1840,6 @@ html {
                 &.left_part {
 
                     grid-column: 1 / 2;
-                    grid-area: wrapper_left_part;
 
                     &::before {
                         content: '';
@@ -1839,7 +1859,6 @@ html {
                     position: relative;
 
                     grid-column: 2 / 3;
-                    grid-area: wrapper_right_part;
 
                     display: grid;
                     grid-template-columns: 20% auto 20%;
@@ -1974,18 +1993,6 @@ html {
                                         position: relative;
                                         z-index: 10;
 
-                                        .button_border {
-                                            position: absolute;
-                                            width: 95%;
-                                            height: 95%;
-                                            padding: 1.25vh;
-                                            border: .15vh solid $main-color;
-                                            opacity: .5;
-                                            left: -1.25vh;
-                                            top: -1.25vh;
-                                            transition: all .2s ease-out;
-                                        }
-
                                         span {
                                             display: block;
                                             position: relative;
@@ -2070,11 +2077,6 @@ html {
                                         }
 
                                         &:hover {
-                                            .button_border {
-                                                width: 100%;
-                                                height: 100%;
-                                                box-shadow: -1.5vh -1.5vh .33vh 0 rgba(0, 0, 0, .15);
-                                            }
 
                                             &>span {
                                                 &>span {
@@ -2207,8 +2209,8 @@ html {
 
                             display: grid;
                             grid-template-rows: repeat(3, 1fr);
-                            place-items: center;
                             place-content: center;
+                            justify-items: center;
 
                             #prev,
                             #next,
@@ -2216,7 +2218,6 @@ html {
                                 height: fit-content;
                                 width: max-content;
                                 z-index: 9999;
-                                transform: rotate(-90deg);
                                 transition: all .5s ease-out;
 
                                 &:hover {
@@ -2226,7 +2227,9 @@ html {
 
                             #prev {
                                 position: relative;
-                                font-size: 2vh;
+                                font-size: 2vw;
+                                transform-origin: right center;
+                                transform: translate(-50%, -50%) rotate(-90deg);
                                 color: $text-color;
                                 cursor: pointer;
 
@@ -2238,14 +2241,22 @@ html {
                                     background: $text-color;
                                     width: 2.5vh;
                                     height: .25vh;
+                                    right: 100%;
                                     top: 50%;
-                                    transform: translateY(-50%);
+                                    transform: translate(-50%, -50%);
                                 }
+                            }
+
+                            #curr {
+                                align-self: center;
+                                transform: rotate(-90deg);
                             }
 
                             #next {
                                 position: relative;
-                                font-size: 2vh;
+                                font-size: 2vw;
+                                transform-origin: left center;
+                                transform: translate(50%, 50%) rotate(-90deg);
                                 color: $text-color;
                                 cursor: pointer;
 
@@ -2257,9 +2268,9 @@ html {
                                     background: $text-color;
                                     width: 2.5vh;
                                     height: .25vh;
-                                    left: -2.5vh;
+                                    left: 100%;
                                     top: 50%;
-                                    transform: translateY(-50%);
+                                    transform: translate(50%, -50%);
                                 }
                             }
                         }
@@ -2286,7 +2297,6 @@ html {
                             cursor: pointer;
 
                             &.current {
-                                height: 2.5vh;
                                 width: 5vh;
                                 opacity: 1;
                                 background: $main-color;
@@ -2310,8 +2320,6 @@ html {
             grid-template-columns: 60% 40%;
             place-items: stretch;
             place-content: stretch;
-            grid-template-areas:
-                "wrapper_left_part wrapper_right_part";
 
             .Hello {
                 position: absolute;
@@ -2356,9 +2364,6 @@ html {
 
                 &.left_part {
                     position: relative;
-
-                    grid-column: 1 / 2;
-                    grid-area: wrapper_left_part;
 
                     display: grid;
                     grid-template-columns: 8vh auto;
@@ -2468,6 +2473,7 @@ html {
 
                             &.text {
                                 position: relative;
+                                align-self: center;
                                 font-style: normal;
                                 font-size: 2.5vh;
                                 line-height: 2.5vh;
@@ -2534,7 +2540,7 @@ html {
                                             overflow: hidden;
                                             display: flex;
                                             justify-content: center;
-                                            transition: width .2s ease-out;
+                                            transition: all .2s ease-out;
                                         }
                                     }
 
@@ -2587,17 +2593,13 @@ html {
                             }
 
                             &:hover {
-                                .button_border {
-                                    width: 100%;
-                                    height: 100%;
-                                    box-shadow: -1.5vh -1.5vh .33vh 0 rgba(0, 0, 0, .15);
-                                }
 
                                 &>span {
                                     &>span {
                                         &>span {
                                             &::after {
                                                 width: 100%;
+                                                height: 100%;
                                             }
                                         }
                                     }
@@ -2609,14 +2611,10 @@ html {
 
                 &.right_part {
 
-                    grid-column: 2 / 3;
-                    grid-area: wrapper_right_part;
-
                     display: grid;
                     grid-template-columns: auto 10%;
 
                     #slider_projects {
-                        margin: 0 auto;
                         position: relative;
                         overflow: visible;
                         width: 100%;
@@ -2887,7 +2885,6 @@ html {
 
                             display: grid;
                             grid-template-rows: repeat(3, 1fr);
-                            place-items: center;
                             place-content: center;
 
                             #prev,
@@ -2896,7 +2893,6 @@ html {
                                 height: fit-content;
                                 width: max-content;
                                 z-index: 9999;
-                                transform: rotate(-90deg);
                                 transition: all .5s ease-out;
 
                                 &:hover {
@@ -2906,7 +2902,9 @@ html {
 
                             #prev {
                                 position: relative;
-                                font-size: 2vh;
+                                font-size: 2vw;
+                                transform-origin: right center;
+                                transform: translate(-50%, -50%) rotate(-90deg);
                                 color: $text-color;
                                 cursor: pointer;
 
@@ -2918,14 +2916,22 @@ html {
                                     background: $text-color;
                                     width: 2.5vh;
                                     height: .25vh;
+                                    right: 100%;
                                     top: 50%;
-                                    transform: translateY(-50%);
+                                    transform: translate(-50%, -50%);
                                 }
+                            }
+
+                            #curr {
+                                align-self: center;
+                                transform: rotate(-90deg);
                             }
 
                             #next {
                                 position: relative;
-                                font-size: 2vh;
+                                font-size: 2vw;
+                                transform-origin: left center;
+                                transform: translate(50%, 50%) rotate(-90deg);
                                 color: $text-color;
                                 cursor: pointer;
 
@@ -2937,9 +2943,9 @@ html {
                                     background: $text-color;
                                     width: 2.5vh;
                                     height: .25vh;
-                                    left: -2.5vh;
+                                    left: 100%;
                                     top: 50%;
-                                    transform: translateY(-50%);
+                                    transform: translate(50%, -50%);
                                 }
                             }
                         }
@@ -2968,7 +2974,6 @@ html {
 
                             &.current {
                                 height: 5vh;
-                                width: 2.5vh;
                                 opacity: 1;
                                 background: $main-color;
                                 box-shadow: 0 0 3.25vh rgba($main-color, .3);
@@ -2999,13 +3004,11 @@ html {
                 justify-content: left;
 
                 .display-1 {
+                    position: absolute;
                     font-weight: bold;
                     font-family: 'Abril Fatface', cursive;
-                    opacity: .2;
                     font-size: 20.5vh;
-                    position: absolute;
-                    right: -2vw;
-                    bottom: 0;
+                    opacity: .2;
                     color: $main-color;
                 }
 
@@ -3065,17 +3068,17 @@ html {
                                     flex-wrap: wrap;
 
                                     li {
-                                        background: lighten($color: $main-color, $amount: 20);
-                                        border-radius: .5vh 0 0 .5vh;
+                                        position: relative;
+                                        box-sizing: border-box;
                                         color: #000;
+                                        background: lighten($color: $main-color, $amount: 20);
                                         height: 4.5vh;
+                                        border-radius: .5vh 0 0 .5vh;
+                                        font-size: 2vh;
                                         line-height: 4.5vh;
                                         padding: 0 3.75vh 0 3.75vh;
-                                        position: relative;
                                         margin: 0 calc(2.5vh / 2) calc(2.5vh / 2) 0;
                                         transition: color .2s ease-out;
-                                        font-size: 2vh;
-                                        box-sizing: border-box;
 
                                         &::before {
                                             position: absolute;
@@ -3134,6 +3137,13 @@ html {
                             padding: 0;
                             display: flex;
                             flex-direction: column;
+
+                            .content {
+                                background: url('FOUR.png') no-repeat;
+                                background-size: contain;
+                                background-position: center;
+                                flex: 1;
+                            }
                         }
 
                         .column_3 {
@@ -9991,7 +10001,7 @@ html {
                                                             overflow: hidden;
                                                             display: flex;
                                                             justify-content: center;
-                                                            transition: width .2s ease-out;
+                                                            transition: all .2s ease-out;
                                                         }
                                                     }
 
@@ -10044,19 +10054,13 @@ html {
                                             }
 
                                             &:hover {
-                                                .button_border {
-                                                    width: 100%;
-                                                    height: 100%;
-                                                    left: -1.25vh;
-                                                    top: -1.25vh;
-                                                    box-shadow: .15vh .15vh .33vh 0 rgba(0, 0, 0, .15);
-                                                }
 
                                                 &>span {
                                                     &>span {
                                                         &>span {
                                                             &::after {
                                                                 width: 100%;
+                                                                height: 100%;
                                                             }
                                                         }
                                                     }
@@ -10374,6 +10378,7 @@ html {
                     .card {
                         .card-body {
                             grid-template-columns: repeat(2, 1fr);
+
                             .column_2 {
                                 display: none;
                             }
@@ -10411,4 +10416,972 @@ html {
     }
 }
 
-@media (orientation: portrait) {}
+@media (orientation: portrait) {
+
+    body,
+    html {
+        font-size: 2.5vw;
+
+        .container-fluid {
+
+            #social_media {
+                .icons_gatherer {
+                    .icon-button {
+                        font-size: 3.25vw;
+                        width: 6.5vw;
+                        height: 6.5vw;
+                        border-radius: 6.5vw;
+                        line-height: 6.5vw;
+                        margin: 0 .75vw;
+
+                        &.scroll {
+                            &::before {
+                                border: .5vw solid #000;
+                                height: calc(100% - 1.5vw);
+                                width: 3.25vw;
+                                border-radius: 3.25vw;
+                            }
+
+                            &::after {
+                                top: 1.5vw;
+                                width: .75vw;
+                                height: .75vw;
+                                border-radius: .75vw;
+                            }
+                        }
+
+                        &:hover {
+                            span:not(.circle) {
+                                width: 6.5vw;
+                                height: 6.5vw;
+                                border-radius: 6.5vw;
+                                margin: -3.25vw;
+                            }
+                        }
+                    }
+
+                    &::before {
+                        display: none;
+                    }
+                }
+            }
+
+            .menu {
+                width: 100%;
+            }
+
+            .fixedHeaderContainer {
+                .wrapper {
+                    header {
+                        .navToggle {
+                            width: 10vw;
+                            height: 10vw;
+                        }
+
+                        .logoHolder {
+
+                            &.small {
+                                img {
+                                    height: 10.25vw;
+                                }
+                            }
+
+                            img {
+                                height: 4vw;
+                            }
+                        }
+
+                        form {
+
+                            &::before {
+                                right: 0;
+                                width: 100%;
+                                height: .3vw;
+                            }
+
+                            .search-wrapper {
+                                width: 7.5vw;
+                                height: 7.5vw;
+
+                                input {
+                                    font-size: 2.5vw;
+                                    height: 6.5vw;
+                                }
+
+                                .hover_effect {
+                                    right: 3.75vw;
+                                }
+
+                                .search {
+                                    width: 2.5vw;
+                                    height: 2.5vw;
+                                    border: .5vw solid black;
+                                    right: 3.75vw;
+
+                                    &::after,
+                                    &::before {
+                                        height: .5vw;
+                                    }
+                                }
+
+                                &:hover {
+                                    .hover_effect {
+                                        width: 6.5vw;
+                                        height: 6.5vw;
+                                        border-radius: 6.5vw;
+                                    }
+                                }
+
+                                &.focused {
+                                    margin: 0;
+                                    width: 51.25vw;
+
+                                    label {
+                                        left: 2.5vw;
+                                        width: calc(100% - 2.5vw);
+                                        font-size: 2vw;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            #search-modal {
+                .search-content-area {
+                    grid-template-rows: 80% 20%;
+                    padding-top: 12vw;
+
+                    .search-results {
+                        max-width: 95%;
+
+                        ul#page {
+                            height: 100%;
+                            grid-template-columns: repeat(2, 50%);
+                            grid-template-rows: repeat(2, 50%);
+
+                            .article_card {
+                                height: 100%;
+                                padding: 2vw;
+
+                                .card-body {
+                                    padding: 1.25vw;
+
+                                    div.text {
+                                        .author {
+                                            font-size: 1.5vw;
+                                        }
+
+                                        figure {
+                                            margin: 1.25vw auto 0 -1.25vw;
+                                            width: calc(100% + 2.5vw);
+                                        }
+
+                                        h4 {
+                                            font-size: 2.75vw;
+                                            margin-top: 2vw;
+                                        }
+
+                                        a {
+                                            .readmore {
+                                                [data-am-linearrow] {
+                                                    padding: 2.25vw;
+                                                    width: 4.25vw;
+                                                    height: 0.75vw;
+
+                                                    .line {
+                                                        margin-top: -0.375vw;
+                                                        width: 2.5vw;
+                                                        height: 0.75vw;
+                                                    }
+
+                                                    .line-1 {
+                                                        margin-right: -0.375vw;
+                                                    }
+
+                                                    .line-2 {
+                                                        margin-left: -0.375vw;
+                                                    }
+                                                }
+
+                                                [data-am-linearrow~="tooltip"] {
+                                                    &::after {
+                                                        font-size: 1.6vw;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .comments_up_down {
+                                            padding: 1.25vw;
+                                            margin-top: 2.5vw;
+                                            margin-left: -1.25vw;
+                                            margin-bottom: -1.25vw;
+                                            width: calc(100% + 2.5vw);
+
+                                            .views,
+                                            .comments,
+                                            .upvotes,
+                                            .downvotes {
+                                                margin-left: 2.5vw;
+                                                font-size: 1.6vw;
+                                                margin-bottom: .5vw;
+                                                margin-top: .5vw;
+                                            }
+
+                                            .views {
+                                                margin-left: 0;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        ul#page-numbers {
+                            li {
+                                width: 2.5vw;
+                                height: 2.5vw;
+                                border-radius: 2.5vw;
+                                margin: .5vw;
+
+                                &.current {
+                                    width: 5vw;
+                                }
+
+                                .shadow_page {
+                                    font-size: 6.5vw;
+                                }
+                            }
+                        }
+                    }
+
+                    .search-suggestions {
+                        max-width: 85%;
+
+                        .tags {
+                            margin-top: 1.25vw;
+
+                            li {
+                                font-size: 1.5vw;
+                                padding: .5vw;
+                                margin: .5vw;
+                                border-radius: .5vw;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section {
+                grid-template-columns: 100%;
+                grid-template-rows: 100%;
+
+                .wrapper {
+                    &.left_part {
+                        grid-column: 1 / 2;
+                        grid-row: 1 / 2;
+
+                        &::before {
+                            width: 50%;
+                            height: 50%;
+                        }
+                    }
+
+                    &.right_part {
+                        grid-column: 1 / 2;
+                        grid-row: 1 / 2;
+                        grid-template-rows: 10% auto 10%;
+
+                        .luna {
+                            width: 25.5vw;
+                            height: 25.5vw;
+                            justify-self: end;
+                        }
+
+                        #slider {
+                            grid-template-columns: 5% auto 5%;
+                            grid-template-rows: 10% auto 10%;
+
+                            .img-wrap {
+                                grid-column: 2 / 3;
+                                grid-template-columns: 10% auto 10%;
+                                grid-template-rows: 20% auto 10%;
+                                align-content: end;
+
+                                .card {
+                                    .shadow_title {
+                                        font-size: 20.5vw;
+                                    }
+
+                                    .card-body {
+                                        h2 {
+                                            font-size: 5vw;
+                                        }
+
+                                        button {
+                                            width: 38.5vw;
+                                            height: 7.5vw;
+                                            font-size: 3vw;
+                                            margin-bottom: 2.5vw;
+
+                                            span {
+                                                line-height: 7.5vw;
+                                            }
+
+                                            &>span {
+                                                &>span {
+                                                    &::before {
+                                                        width: .15vw;
+                                                        height: .15vw;
+                                                    }
+
+                                                    &::after {
+                                                        width: .15vw;
+                                                        height: .15vw;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .author {
+                                        font-size: 1.5vw;
+                                        margin-bottom: 2vw;
+                                    }
+                                }
+
+                                .index_card {
+                                    font-size: 10.25vw;
+                                }
+                            }
+
+                            #controls {
+                                grid-column: 3 / 4;
+
+                                #prev,
+                                #curr,
+                                #next {
+                                    font-size: 2vw;
+                                }
+                            }
+                        }
+
+                        .carousel-indicatorsslider {
+                            li {
+                                width: 2.5vw;
+                                height: 2.5vw;
+                                border-radius: 2.5vw;
+                                margin: .5vw;
+
+                                &.current {
+                                    width: 5vw;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .second_section {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60% 40%;
+
+                .wrapper {
+                    &.left_part {
+                        grid-template-columns: 8vw auto 8vw;
+                        grid-template-rows: 35% 65%;
+
+                        .some_text {
+                            .name {
+                                p {
+                                    font-size: 10vw;
+                                    line-height: 10vw;
+
+                                    &:last-of-type {
+                                        transform: translate(10vw, 0);
+
+                                        &::before {
+                                            width: 2vw;
+                                            height: 100%;
+                                            top: 0;
+                                            left: 0;
+                                            transform: translate(-10vw, 0);
+                                            transition: all .2s ease-out;
+                                            z-index: -1;
+                                        }
+
+                                        &:hover {
+                                            &::before {
+                                                width: calc(100% + 20vw);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            p {
+                                font-size: 4.5vw;
+                                line-height: 4.5vw;
+                                margin-bottom: 2vW;
+
+                                &.text {
+                                    font-size: 2.25vw;
+                                    line-height: 2.25vw;
+                                    margin-left: 4vw;
+
+                                    &::before {
+                                        width: .5vw;
+                                        height: 100%;
+                                        left: 0;
+                                        transform: translate(-4vw, 0);
+                                    }
+                                }
+                            }
+
+                            button {
+                                justify-self: end;
+                                width: 38.5vw;
+                                height: 7.5vw;
+                                font-size: 3vw;
+
+                                &>span {
+
+                                    &>span {
+                                        &>span {
+                                            line-height: 7.5vw;
+
+                                            &::after {
+                                                left: unset;
+                                                bottom: unset;
+                                                height: 0;
+                                            }
+                                        }
+                                    }
+
+                                    &::before,
+                                    &::after {
+                                        right: 0;
+                                        left: unset;
+                                        width: 3.25vw;
+                                        border-width: 1.25vw;
+                                    }
+
+                                    &::after {
+                                        transform-origin: right bottom;
+                                        transform: translate(0, -100%) rotate(-90deg);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.right_part {
+                        grid-template-columns: 8vw auto 8vw;
+
+                        #slider_projects {
+                            grid-column: 2 / 3;
+                            grid-template-rows: 10% auto;
+                            grid-template-areas:
+                                "some_text ."
+                                "img-wrap controls";
+
+                            .some_text {
+                                p {
+                                    font-size: 3.25vw;
+                                }
+                            }
+
+                            .img-wrap {
+                                .card {
+                                    justify-self: center;
+                                    margin: 0 auto;
+                                    width: 90%;
+                                }
+                            }
+
+                            #controls {
+
+                                #prev,
+                                #curr,
+                                #next {
+                                    font-size: 2vw;
+                                }
+                            }
+
+                            .bg-pattern {
+                                height: 100%;
+                            }
+                        }
+
+                        .carousel-indicatorsslider_projects {
+                            grid-column: 3 / 4;
+
+                            li {
+                                width: 2.5vw;
+                                height: 2.5vw;
+                                border-radius: 2.5vw;
+                                margin: .5vw;
+
+                                &.current {
+                                    height: 5vw;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .third_section {
+                .wrapper {
+                    .card {
+                        .card-body {
+                            grid-template-columns: repeat(2, 1fr);
+
+                            .column {
+
+                                .head {
+                                    i {
+                                        font-size: 7.5vw;
+                                    }
+
+                                    span {
+                                        font-size: 3vw;
+                                    }
+                                }
+
+                                .content {
+                                    h6 {
+                                        font-size: 3vw;
+                                    }
+
+                                    .tags {
+                                        margin-top: 1.25vw;
+
+                                        li {
+                                            border-radius: .5vw 0 0 .5vw;
+                                            height: 4.5vw;
+                                            line-height: 4.5vw;
+                                            padding: 0 3.75vw 0 3.75vw;
+                                            margin: 0 calc(2.5vw / 2) calc(2.5vw / 2) 0;
+                                            font-size: 2vw;
+
+                                            &::before {
+                                                width: 1.25vw;
+                                                height: 1.25vw;
+                                                border-radius: 1.25vw;
+                                                left: 1.25vw;
+                                            }
+
+                                            &::after {
+                                                border-bottom: calc(4.5vw / 2) solid transparent;
+                                                border-left: 1.25vw solid #90dce6;
+                                                border-top: calc(4.5vw / 2) solid transparent;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                &.column_1 {
+                                    padding-right: 3.25vw;
+                                }
+
+                                &.column_2 {
+                                    display: none;
+                                }
+
+                                &.column_3 {
+                                    padding-left: 3.25vw;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            .footer {
+                .wrapper {
+                    font-size: 1.5vw;
+                    padding: 12vw 0 0 0;
+                    grid-template-rows: auto 1fr 5%;
+
+                    .top_shelf {
+                        grid-template-columns: repeat(2, 1fr);
+                        grid-template-rows: repeat(2, 1fr);
+
+                        div {
+                            padding: 1.25vw;
+                            margin: 1.25vw;
+
+                            h6 {
+                                font-size: 2vw;
+                                margin-bottom: 2vw;
+                            }
+
+                            ul {
+                                height: calc(100% - 6.5vw);
+                                margin-bottom: 2vw;
+
+                                li {
+                                    span {
+                                        font-size: 2vw;
+                                    }
+
+                                    .author {
+                                        font-size: 1.5vw;
+                                        margin-bottom: 1.25vw;
+                                    }
+                                }
+                            }
+
+                            &::after {
+                                width: 12vw;
+                                height: .5vw;
+                                left: 2.5vw;
+                                top: -.25vw;
+                            }
+                        }
+                    }
+
+                    .mail-modal {
+                        width: calc(100% - 1.25vw);
+                        margin: 1.25vw;
+
+                        .modal-inner {
+                            .modal-left {
+                                padding: 4.75vw 3.25vw;
+
+                                div {
+                                    &:first-of-type {
+                                        margin-bottom: 6.5vw;
+                                    }
+
+                                    h5 {
+                                        font-size: 3vw;
+                                    }
+
+                                    i {
+                                        width: 2.5vw;
+                                        height: 2.5vw;
+                                        margin-right: 2.5vw;
+                                    }
+
+                                    span {
+                                        padding-left: .5vw;
+                                        padding-right: .5vw;
+                                    }
+                                }
+                            }
+
+                            .modal-content {
+                                padding: 2vw;
+
+                                .mail_form {
+                                    grid-template-rows: 7.5vw 7.5vw auto 7.5vw;
+
+                                    .row {
+                                        .input-field {
+                                            margin: 0 1vw 1vw 1vw;
+
+                                            textarea {
+                                                height: calc(100% - 1vw);
+                                                margin: 1vw 0 0 0;
+                                            }
+
+                                            label {
+                                                font-size: 2vw;
+
+                                                &.active {
+                                                    font-size: 1.5vw;
+                                                }
+                                            }
+                                        }
+
+                                        &:last-of-type {
+                                            .input-field {
+                                                text-align: right;
+                                            }
+
+                                            button {
+                                                width: 50%;
+                                                height: 7.5vw;
+                                                font-size: 3vw;
+
+                                                &>span {
+
+                                                    &>span {
+                                                        &>span {
+                                                            line-height: 7.5vw;
+
+                                                            &::after {
+                                                                left: unset;
+                                                                bottom: unset;
+                                                                height: 0;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    &::before,
+                                                    &::after {
+                                                        right: 0;
+                                                        left: unset;
+                                                        width: 3.25vw;
+                                                        border-width: 1.25vw;
+                                                    }
+
+                                                    &::after {
+                                                        transform-origin: right bottom;
+                                                        transform: translate(0, -100%) rotate(-90deg);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .low_shelf {
+                        .push-left {
+                            margin-left: 0;
+
+                            ul {
+                                li {
+                                    margin-right: 1.5vw;
+                                }
+                            }
+
+                            &::before {
+                                display: none;
+                            }
+                        }
+
+                        .push-right {
+                            ul {
+                                li {
+                                    margin-right: 1.5vw;
+
+                                    .name {
+                                        margin-left: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (orientation: portrait) and (max-width: 640px) {
+
+    body,
+    html {
+        .container-fluid {
+            .footer {
+                .wrapper {
+                    .mail-modal {
+                        .modal-inner {
+                            .modal-content {
+                                .mail_form {
+                                    .row {
+                                        &:last-of-type {
+                                            button {
+                                                width: 100%;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .low_shelf {
+                .push-left {
+                    ul {
+                        li:not(:last-of-type) {
+                            display: none;
+                        }
+                    }
+                }
+
+                .push-right {
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+}
+
+@media (hover: none) {
+
+    body,
+    html {
+
+        .container-fluid {
+
+            #search-modal {
+                .search-content-area {
+                    .search-results {
+                        ul#page {
+                            .article_card {
+                                .card-body {
+                                    div.text {
+                                        a {
+                                            .readmore {
+                                                [data-am-linearrow] {
+                                                    .line-1 {
+                                                        transform: rotate($arrow-angle);
+                                                    }
+
+                                                    .line-2 {
+                                                        transform: rotate(-($arrow-angle));
+                                                    }
+                                                }
+
+                                                [data-am-linearrow~="tooltip"] {
+                                                    &:after {
+                                                        opacity: 1;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section {
+                .wrapper {
+                    &.right_part {
+                        #slider {
+                            .img-wrap.current {
+                                .card {
+                                    .card-body {
+                                        h2 {
+                                            transform: translateY(-1.5vh);
+                                        }
+
+                                        p {
+                                            transform: translateY(1.5vh);
+                                        }
+
+                                        &::after {
+                                            opacity: .4;
+                                        }
+
+                                        button {
+                                            &>span {
+                                                &::after {
+                                                    width: 50%;
+                                                    height: 100%;
+                                                    transition: width .15s ease-out, height .15s ease-out .15s;
+                                                }
+
+                                                &::before {
+                                                    width: 50%;
+                                                    height: 100%;
+                                                    transition: width .15s ease-out, height .15s ease-out .15s;
+                                                }
+
+                                                &>span {
+                                                    &::after {
+                                                        opacity: 1;
+                                                        border-bottom: 1.25vh solid $main-color;
+                                                        width: calc(50%);
+                                                        height: .15vh;
+                                                        transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
+                                                    }
+
+                                                    &::before {
+                                                        opacity: 1;
+                                                        border-bottom: 1.25vh solid $main-color;
+                                                        width: calc(50%);
+                                                        height: .15vh;
+                                                        transition: opacity 0s ease-out .29s, width .15s ease-out .3s;
+                                                    }
+
+                                                    &>span {
+                                                        color: $color1;
+
+                                                        &::after {
+                                                            width: 100%;
+                                                            height: 100%;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .second_section {
+                .wrapper {
+                    &.left_part {
+                        .some_text {
+                            button {
+                                &>span {
+                                    &>span {
+                                        &>span {
+                                            &::after {
+                                                width: 100%;
+                                                height: 100%;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .footer {
+                .wrapper {
+                    .mail-modal {
+                        .modal-inner {
+                            .modal-content {
+                                .mail_form {
+                                    .row {
+                                        &:last-of-type {
+                                            .input-field {
+                                                &.col.s12 {
+                                                    button {
+                                                        &>span {
+                                                            &>span {
+                                                                &>span {
+                                                                    &::after {
+                                                                        width: 100%;
+                                                                        height: 100%;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
