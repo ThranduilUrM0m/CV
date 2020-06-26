@@ -1169,6 +1169,10 @@ html {
                                             margin: 3.25vh auto 0 -1.25vh;
                                             width: calc(100% + 2.5vh);
                                             overflow: hidden;
+
+                                            img {
+                                                width: 100%;
+                                            }
                                         }
 
                                         .categorie {
@@ -10549,19 +10553,17 @@ html {
 
             #search-modal {
                 .search-content-area {
-                    grid-template-rows: 80% 20%;
+                    grid-template-rows: 75% 25%;
                     padding-top: 12vw;
 
                     .search-results {
                         max-width: 95%;
 
                         ul#page {
-                            height: 100%;
                             grid-template-columns: repeat(2, 50%);
                             grid-template-rows: repeat(2, 50%);
 
                             .article_card {
-                                height: 100%;
                                 padding: 2vw;
 
                                 .card-body {
@@ -10583,6 +10585,8 @@ html {
                                         }
 
                                         a {
+                                            padding-bottom: 1.6vw;
+
                                             .readmore {
                                                 [data-am-linearrow] {
                                                     padding: 2.25vw;
@@ -10614,7 +10618,6 @@ html {
 
                                         .comments_up_down {
                                             padding: 1.25vw;
-                                            margin-top: 2.5vw;
                                             margin-left: -1.25vw;
                                             margin-bottom: -1.25vw;
                                             width: calc(100% + 2.5vw);
