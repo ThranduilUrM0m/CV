@@ -392,8 +392,8 @@ class Minttea extends React.Component {
                                                 <div className="form-group-line"></div>
                                             </div>
                                         </div>
-                                        <div className="row _textarea">
-                                            <div className="input-field col s12 textarea">
+                                        <div className="row">
+                                            <div className="input-field col s12">
                                                 <textarea 
                                                     className="validate form-group-input materialize-textarea body" 
                                                     id="body" 
@@ -407,7 +407,7 @@ class Minttea extends React.Component {
                                             </div>
                                         </div>
                                         <div className="row">
-                                            <div className="input-field col s12">
+                                            <div className="input-field col">
                                                 <p>
                                                     <label>
                                                         <input 
