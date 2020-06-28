@@ -5008,13 +5008,16 @@ html {
         .first_section_about {
             position: relative;
             width: 100%;
-            height: fit-content;
-            min-height: 100%;
+            height: 100%;
             padding: 0;
             margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
             overflow: hidden;
+
+            display: grid;
+            grid-template-columns: 8vh auto 8vh;
+            grid-template-rows: 12vh auto 12vh;
+            place-items: stretch;
+            place-content: stretch;
 
             .shadowHi {
                 position: absolute;
@@ -5030,12 +5033,15 @@ html {
 
             .wrapper_full {
                 position: relative;
-                width: 100%;
-                margin: 12vh calc(6.5vh + .75vh);
-                text-align: center;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
+                overflow: hidden;
+
+                grid-column: 2 / 3;
+                grid-row: 2 / 3;
+
+                display: grid;
+                grid-template-columns: 45% 55%;
+                place-items: stretch;
+                place-content: stretch;
 
                 div {
                     h1 {
@@ -5045,7 +5051,6 @@ html {
                     }
 
                     &.artsy {
-                        flex: 45%;
                         width: 100%;
                         height: 100%;
                         background: url('THREE.png') no-repeat;
@@ -5054,18 +5059,18 @@ html {
                     }
 
                     &.type {
-                        flex: 55%;
-                        padding: 0 10.25vh 0 0;
-                        display: flex;
-                        flex-direction: column;
-                        align-self: flex-end;
+                        display: grid;
+                        grid-template-rows: auto auto auto auto auto;
+                        place-items: stretch;
+                        place-content: center;
 
                         p {
                             text-align: -webkit-left;
                             font-size: 1.5vh;
+                            margin-bottom: .75vh;
                         }
 
-                        button {
+                        &>button {
                             -webkit-appearance: none;
                             border: none;
                             background: none;
@@ -5073,7 +5078,7 @@ html {
                             width: 38.5vh;
                             height: 7.5vh;
                             font-size: 3vh;
-                            margin-bottom: 2.5vh;
+                            margin: 1.25vh 0;
                             padding: 0;
                             outline: none;
                             z-index: 10;
@@ -5183,6 +5188,7 @@ html {
 
                         div.title {
                             display: flex;
+                            align-self: center;
                         }
 
                         h1:first-child {
@@ -5211,13 +5217,12 @@ html {
                             flex: 100%;
                             text-align: left;
                             font-size: 2vh;
-                            padding: 0 25.5vh 0 0;
                             margin-top: 5vh;
                         }
 
                         a {
-                            padding: 0 12vh 0 0;
                             width: fit-content;
+                            justify-self: right;
 
                             .readmore {
                                 text-align: end;
@@ -5229,7 +5234,7 @@ html {
 
                                 [data-am-linearrow] {
                                     position: relative;
-                                    padding: 2.25vh 0;
+                                    padding: 2.25vh;
                                     cursor: pointer;
                                     width: (($arrow-width * 2) - $arrow-height);
                                     height: $arrow-height;
@@ -10233,6 +10238,20 @@ html {
                     grid-template-columns: 50% 50%;
                 }
             }
+
+            .first_section_about {
+                .wrapper_full {
+                    div.type {
+                        div {
+                            &.title {
+                                h1 {
+                                    font-size: 10vh;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -11356,7 +11375,7 @@ html {
                     }
                 }
             }
-            
+
             .footer {
                 .wrapper {
                     .mail-modal {
@@ -11548,6 +11567,45 @@ html {
                                                 }
                                             }
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section_about {
+                .wrapper_full {
+                    div.type {
+                        &>button {
+                            &>span {
+                                &>span {
+                                    &>span {
+                                        &::after {
+                                            width: 100%;
+                                            height: 100%;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        a {
+                            .readmore {
+                                [data-am-linearrow] {
+                                    .line-1 {
+                                        transform: rotate($arrow-angle);
+                                    }
+
+                                    .line-2 {
+                                        transform: rotate(-($arrow-angle));
+                                    }
+                                }
+
+                                [data-am-linearrow~="tooltip"] {
+                                    &:after {
+                                        opacity: 1;
                                     }
                                 }
                             }
