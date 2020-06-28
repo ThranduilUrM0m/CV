@@ -10310,6 +10310,25 @@ html {
                     }
                 }
             }
+
+            .first_section_about {
+                .wrapper_full {
+                    div.type {
+                        div {
+                            &.title {
+                                h1 {
+                                    font-size: 8vh;
+                                }
+                            }
+                        }
+
+                        .lorem {
+                            margin-top: 2.5vh;
+                            margin-bottom: 2.5vh;
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -10375,6 +10394,25 @@ html {
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+            }
+
+            .first_section_about {
+                .wrapper_full {
+                    div.type {
+                        div {
+                            &.title {
+                                h1 {
+                                    font-size: 8vh;
+                                }
+                            }
+                        }
+
+                        .lorem {
+                            margin-top: 2.5vh;
+                            margin-bottom: 2.5vh;
                         }
                     }
                 }
@@ -10478,6 +10516,25 @@ html {
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+            }
+
+            .first_section_about {
+                .wrapper_full {
+                    div.type {
+                        div {
+                            &.title {
+                                h1 {
+                                    font-size: 8vh;
+                                }
+                            }
+                        }
+
+                        .lorem {
+                            margin-top: 2.5vh;
+                            margin-bottom: 2.5vh;
                         }
                     }
                 }
@@ -11161,6 +11218,69 @@ html {
                                                 }
                                             }
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section_about {
+                grid-template-columns: 8vw auto 8vw;
+                grid-template-rows: 12vw auto 12vw;
+
+                .wrapper_full {
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 45% 55%;
+
+                    div.type {
+                        p {
+                            font-size: 1.5vw;
+                        }
+
+                        &>button {
+                            width: 38.5vw;
+                            height: 7.5vw;
+                            font-size: 3vw;
+                            margin: 1.25vw 0;
+
+                            span {
+                                line-height: 7.5vw;
+                            }
+                        }
+
+                        div.title {
+                            h1 {
+                                font-size: 8vw;
+                            }
+                        }
+
+                        a {
+                            .readmore {
+                                [data-am-linearrow] {
+                                    padding: 2.25vw;
+                                    width: 4.25vw;
+                                    height: 0.75vw;
+
+                                    .line {
+                                        margin-top: -0.375vw;
+                                        width: 2.5vw;
+                                        height: 0.75vw;
+                                    }
+
+                                    .line-1 {
+                                        margin-right: -0.375vw;
+                                    }
+
+                                    .line-2 {
+                                        margin-left: -0.375vw;
+                                    }
+                                }
+
+                                [data-am-linearrow~="tooltip"] {
+                                    &::after {
+                                        font-size: 1.6vw;
                                     }
                                 }
                             }
