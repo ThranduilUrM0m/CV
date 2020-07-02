@@ -95,9 +95,20 @@ class Blog extends React.Component {
 			}
 		});
 		$(window).resize(function() {
-			if($(window).width() <= 768) {
-				mySwiper.params.slidesPerView = 1.25;
-				mySwiper.update();
+			if(window.innerHeight > window.innerWidth){
+				if($(window).width() <= 640) {
+					mySwiper.params.slidesPerView = 1.25;
+					mySwiper.update();
+				}
+				if($(window).width() <= 768) {
+					mySwiper.params.slidesPerView = 2.25;
+					mySwiper.update();
+				}
+			} else {
+				if($(window).width() <= 768) {
+					mySwiper.params.slidesPerView = 2.25;
+					mySwiper.update();
+				}
 			}
 		});
 		$(window).trigger('resize');
@@ -250,9 +261,6 @@ class Blog extends React.Component {
 						wrapper.classList.remove(hasExpandedClass);
 						document.getElementById('second_section_blog').parentElement.style.height = '100%';
 						$('.fixedHeaderContainer').toggleClass('blog_header');
-						self.setState({
-							scroll_mode: 'full-page'
-						});
 					}
 				});
 			}

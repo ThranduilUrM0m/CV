@@ -3184,9 +3184,12 @@ html {
             height: 100%;
             padding: 0;
             margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
             overflow: hidden;
+
+            display: grid;
+            grid-template-columns: 50% 50%;
+            place-items: stretch;
+            place-content: stretch;
 
             .f_name,
             .l_name {
@@ -3214,10 +3217,8 @@ html {
                 overflow: hidden;
                 position: relative;
                 height: 100%;
-                line-height: 0;
 
                 &.left_part {
-                    width: 50%;
                     position: relative;
 
                     .caption {
@@ -3248,7 +3249,6 @@ html {
                 }
 
                 &.right_part {
-                    width: 50%;
                     position: relative;
 
                     .caption {
@@ -3298,8 +3298,7 @@ html {
             height: 100%;
             padding: 0;
             margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
+            overflow: hidden;
 
             .modal {
                 display: block;
@@ -3799,13 +3798,17 @@ html {
             }
 
             .wrapper_full {
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-                overflow: hidden;
                 position: relative;
                 width: 100%;
                 height: 100%;
+                padding: 0;
+                margin: 0 auto;
+                overflow: hidden;
+
+                display: grid;
+                grid-template-rows: 35% 65%;
+                place-items: stretch;
+                place-content: stretch;
 
                 &>span {
                     position: absolute;
@@ -3834,15 +3837,15 @@ html {
                 }
 
                 .caption {
+                    position: relative;
+                    font-size: 6.5vh;
+                    background-color: black;
+
+
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-end;
                     align-items: flex-end;
-                    position: relative;
-                    height: 35%;
-                    font-size: 6.5vh;
-                    background-color: black;
-                    padding: 12vh 12vh 6.5vh 12vh;
 
                     i {
                         color: white;
@@ -3853,17 +3856,22 @@ html {
                 }
 
                 .articles_slider {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    align-items: center;
                     position: relative;
-                    height: 65%;
-                    padding: 0 0 2.5vh 12vh;
+                    padding-bottom: 2.5vh;
+
+                    display: grid;
+                    grid-template-columns: 8vh calc(30vw - 12vh) 4vh auto;
+                    place-items: stretch;
+                    place-content: stretch;
 
                     .articles_caption {
-                        flex-direction: column;
-                        width: calc(30vw - 12vh);
+                        grid-column: 2 / 3;
+                        align-self: center;
+
+                        display: grid;
+                        grid-template-rows: auto auto;
+                        place-items: stretch;
+                        place-content: stretch;
 
                         h1 {
                             color: black;
@@ -3878,22 +3886,20 @@ html {
                             -webkit-appearance: none;
                             border: none;
                             background: none;
-                            color: $main-color;
-                            width: 30.75vh;
+                            color: black;
+                            width: 100%;
                             height: 7.5vh;
-                            font-size: 2.5vh;
-                            margin-bottom: 0;
+                            font-size: 3vh;
+                            margin: 1.25vh 0;
                             padding: 0;
                             outline: none;
-                            position: relative;
-                            z-index: 1051;
+                            z-index: 10;
 
                             span {
                                 display: block;
                                 position: relative;
                                 line-height: 7.5vh;
                                 height: 100%;
-                                padding: 0;
                                 cursor: pointer;
                             }
 
@@ -3907,12 +3913,10 @@ html {
                                             position: absolute;
                                             top: 0;
                                             left: 0;
-                                            right: 0;
-                                            bottom: 0;
-                                            color: white;
+                                            color: $liteBg_gray;
                                             content: attr(data-attr-span);
                                             width: 0;
-                                            height: 100%;
+                                            height: 0;
                                             background: $main-color;
                                             white-space: nowrap;
                                             text-align: center;
@@ -3920,7 +3924,7 @@ html {
                                             overflow: hidden;
                                             display: flex;
                                             justify-content: center;
-                                            transition: width .2s ease-out;
+                                            transition: all .2s ease-out;
                                         }
                                     }
 
@@ -3949,7 +3953,9 @@ html {
                                     content: '';
                                     position: absolute;
                                     top: 0;
-                                    right: 50%;
+                                    right: 100%;
+                                    transform-origin: top right;
+                                    transform: rotate(-90deg);
                                     width: 3.25vh;
                                     height: 0;
                                     border: 1.25vh solid $main-color;
@@ -3962,7 +3968,7 @@ html {
                                     content: '';
                                     position: absolute;
                                     top: 0;
-                                    left: 50%;
+                                    left: 0;
                                     width: 3.25vh;
                                     height: 0;
                                     border: 1.25vh solid $main-color;
@@ -3973,11 +3979,18 @@ html {
                             }
 
                             &:hover {
+                                .button_border {
+                                    width: 100%;
+                                    height: 100%;
+                                    box-shadow: -1.5vh -1.5vh .33vh 0 rgba(0, 0, 0, .15);
+                                }
+
                                 &>span {
                                     &>span {
                                         &>span {
                                             &::after {
                                                 width: 100%;
+                                                height: 100%;
                                             }
                                         }
                                     }
@@ -3987,9 +4000,8 @@ html {
                     }
 
                     &_wrapper {
+                        grid-column: 4 / 5;
                         width: 70vw;
-                        height: 100%;
-                        margin: 0 !important;
 
                         &_cards {
                             align-items: center;
@@ -4001,7 +4013,7 @@ html {
                                 .article_item {
                                     position: relative;
                                     display: flex;
-                                    padding: 2.5vh 2.5vh;
+                                    padding: 2.5vh;
                                     height: 100%;
                                     margin: 0;
                                     transition: all .5s ease-out;
@@ -4036,15 +4048,17 @@ html {
                                         }
 
                                         .card-body {
-                                            position: relative;
-                                            display: flex;
-                                            flex-direction: column;
+                                            padding: 2.5vh;
+
+                                            display: grid;
+                                            grid-template-rows: 40% auto auto 1fr auto;
+                                            place-items: stretch;
+                                            place-content: stretch;
 
                                             figure {
                                                 position: relative;
                                                 margin: 0;
                                                 width: calc(100% + 6.5vh);
-                                                height: 50%;
                                                 margin-left: -3.25vh;
                                                 margin-top: -3.25vh;
 
@@ -4087,12 +4101,15 @@ html {
                                             }
 
                                             .categorie {
-                                                text-align: -webkit-right;
+                                                align-self: flex-start;
+                                                justify-self: end;
+
                                                 font-size: 2vh;
                                                 color: white;
                                                 border: .15vh solid white;
                                                 padding: .5vh 1.25vh;
                                                 width: fit-content;
+                                                height: fit-content;
                                                 margin-bottom: 0;
                                             }
 
@@ -4118,7 +4135,7 @@ html {
 
                                             a {
                                                 align-self: flex-end;
-                                                margin-top: auto;
+                                                justify-self: end;
 
                                                 .readmore {
                                                     button {
@@ -4339,77 +4356,79 @@ html {
                             overflow: hidden;
                             height: 5%;
                         }
-                    }
 
-                    &_pagination {
-                        bottom: 0 !important;
-                        text-align: center;
+                        .articles_slider_pagination {
+                            left: 2.5vh;
+                            transform: translate(0, 0);
+                            text-align: center;
 
-                        .swiper-pagination-bullet {
-                            width: 2vh;
-                            height: 2vh;
-                            display: inline-block;
-                            background: #000;
-                            opacity: .2;
-                            margin: 0 .75vh;
-                            border-radius: 3.25vh;
-                            transition: opacity .5s ease-out, background-color .5s ease-out, width .5s ease-out;
-                            transition-delay: .5s, .5s, 0s;
-                        }
+                            .swiper-pagination-bullet {
+                                width: 2vh;
+                                height: 2vh;
+                                display: inline-block;
+                                background: #000;
+                                opacity: .2;
+                                margin: 0 .75vh;
+                                border-radius: 3.25vh;
+                                transition: opacity .5s ease-out, background-color .5s ease-out, width .5s ease-out;
+                                transition-delay: .5s, .5s, 0s;
+                            }
 
-                        .swiper-pagination-bullet-active {
-                            opacity: 1;
-                            background: #000000;
-                            width: 4.5vh;
-                            transition-delay: 0s;
+                            .swiper-pagination-bullet-active {
+                                opacity: 1;
+                                background: #000000;
+                                width: 4.5vh;
+                                transition-delay: 0s;
 
-                            @media screen and (max-width: 576px) {
-                                width: 3.25vh;
+                                @media screen and (max-width: 576px) {
+                                    width: 3.25vh;
+                                }
                             }
                         }
-                    }
 
-                    .btn-r,
-                    .btn-l {
-                        position: absolute;
-                        top: unset;
-                        bottom: 0;
-                        text-align: center;
-                        cursor: pointer;
-                        font-size: 3.25vh;
-                        width: 12vh;
-                        height: fit-content;
-                        padding: 0;
-                        margin: 0;
-                        border: 0;
-                        color: rgba($color: black, $alpha: .8);
-                        background: rgba(0, 0, 0, 0);
-                        backdrop-filter: blur(.5vh);
-                        outline: none;
-                        transition: all .6s ease-out 0s;
-                        z-index: 999;
+                        .btn-r,
+                        .btn-l {
+                            position: absolute;
+                            top: unset;
+                            bottom: 0;
+                            text-align: center;
+                            cursor: pointer;
+                            font-size: 3.25vh;
+                            width: 12vh;
+                            height: fit-content;
+                            padding: 0;
+                            margin: 0;
+                            border: 0;
+                            color: rgba($color: black, $alpha: .8);
+                            background: rgba(0, 0, 0, 0);
+                            backdrop-filter: blur(.5vh);
+                            outline: none;
+                            transition: all .6s ease-out 0s;
+                            z-index: 999;
 
-                        &:hover {
-                            color: rgba($color: black, $alpha: 1.0);
-                            background: rgba(0, 0, 0, .2);
+                            &:hover {
+                                color: rgba($color: black, $alpha: 1.0);
+                                background: rgba(0, 0, 0, .2);
+                            }
+
+                            &::after {
+                                display: none;
+                            }
                         }
 
-                        &::after {
+                        .btn-r {
+                            left: unset;
+                            right: 2.5vh;
+                        }
+
+                        .btn-l {
+                            left: unset;
+                            right: 14.5vh;
+                        }
+
+                        .swiper-button-disabled {
                             display: none;
                         }
-                    }
-
-                    .btn-r {
-                        right: 0;
-                    }
-
-                    .btn-l {
-                        left: unset;
-                        right: 12vh;
-                    }
-
-                    .swiper-button-disabled {
-                        display: none;
                     }
                 }
             }
@@ -10252,6 +10271,36 @@ html {
                     }
                 }
             }
+
+            .second_section_blog {
+                .wrapper_full {
+                    .articles_slider {
+                        grid-template-columns: 4vh calc(30vw - 12vh) 2vh auto;
+
+                        &_wrapper {
+                            width: calc(70vw + 6vh);
+
+                            &_cards_item {
+                                height: 90% !important;
+
+                                .article_item {
+                                    padding: 2.5vh 1vh;
+
+                                    .card {
+                                        .card-body {
+                                            padding: 1.25vh;
+                                        }
+                                    }
+
+                                    .card_shadower {
+                                        width: calc(100% - 2vh);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -10413,6 +10462,45 @@ html {
                         .lorem {
                             margin-top: 2.5vh;
                             margin-bottom: 2.5vh;
+                        }
+                    }
+                }
+            }
+
+            .second_section_blog {
+                .wrapper_full {
+                    .articles_slider {
+                        grid-template-columns: 4vh calc(30vw - 12vh) 2vh auto;
+
+                        &_wrapper {
+                            width: calc(70vw + 6vh);
+
+                            &_cards_item {
+                                height: 90% !important;
+
+                                .article_item {
+                                    padding: 2.5vh 1vh;
+
+                                    .card {
+                                        .card-body {
+                                            padding: 1.25vh;
+
+                                            .comments_up_down {
+
+                                                .comment,
+                                                .upvotes,
+                                                .downvotes {
+                                                    margin-left: 1vh;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .card_shadower {
+                                        width: calc(100% - 2vh);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -11289,6 +11377,277 @@ html {
                 }
             }
 
+            .first_section_blog {
+                grid-template-columns: 1fr;
+                grid-template-rows: 50% 50%;
+
+                .f_name,
+                .l_name {
+                    line-height: 20.5vh;
+                }
+
+                .f_name {
+                    top: 40%;
+                }
+
+                .l_name {
+                    top: calc(40% + 20.5vh);
+                }
+
+                .wrapper {
+                    &.left_part {
+                        .caption {
+                            top: 100%;
+                            width: 50vw;
+                            transform: translate(0, -100%);
+                            padding: 0 2vh;
+                            z-index: 1;
+                        }
+
+                        &::before {
+                            top: 100%;
+                            width: 50vw;
+                            transform: translate(0, -100%);
+                        }
+                    }
+
+                    &.right_part {
+                        .caption {
+                            top: 100%;
+                            width: 50vw;
+                            transform: translate(0, -100%);
+                            padding: 0 2vh;
+                            z-index: 1;
+                        }
+
+                        &::before {
+                            top: 100%;
+                            width: 50vw;
+                            transform: translate(0, -100%);
+                        }
+                    }
+                }
+
+                &::after {
+                    transform: translate(-50%, -50%);
+                    opacity: .25;
+                }
+            }
+
+            .second_section_blog {
+                .wrapper_full {
+                    &>span {
+                        top: calc(35% - 33.25vw);
+                        font-size: 33.25vw;
+                        line-height: 33.25vw;
+                    }
+
+                    .caption {
+                        font-size: 6.5vw;
+
+                        i {
+                            font-size: 51.25vw;
+                            margin-bottom: -12.5vw;
+                        }
+                    }
+
+                    .articles_slider {
+                        grid-template-columns: 1fr;
+                        grid-template-rows: auto auto;
+
+                        .articles_caption {
+                            grid-column: 1 / 2;
+                            grid-template-rows: 8vh auto;
+
+                            h1 {
+                                display: none;
+                            }
+
+                            button {
+                                width: 75%;
+                                height: 7.5vw;
+                                font-size: 3vw;
+                                margin: 1.25vw 0;
+
+                                justify-self: center;
+
+                                span {
+                                    line-height: 7.5vw;
+                                }
+                            }
+                        }
+
+                        &_wrapper {
+                            grid-column: 1 / 2;
+                            width: 95vw;
+
+                            &_cards {
+                                &_item {
+                                    .article_item {
+                                        padding: 2.5vw 1vw;
+
+                                        .card {
+                                            border: 2.5vw solid lighten($color: $purple, $amount: 20);
+                                            backdrop-filter: blur(2vw);
+
+                                            .shadow_title {
+                                                font-size: 12vw;
+                                                left: -5vw;
+                                            }
+
+                                            .shadow_letter {
+                                                font-size: 51.25vw;
+                                            }
+
+                                            .card-body {
+                                                padding: 1.25vw;
+
+                                                figure {
+                                                    width: calc(100% + 6.5vw);
+                                                    margin-left: -3.25vw;
+                                                    margin-top: -3.25vw;
+                                                }
+
+                                                .author {
+                                                    font-size: 1.5vw;
+                                                    margin-top: 1.25vw;
+                                                }
+
+                                                h4 {
+                                                    font-size: 3.75vw;
+                                                }
+
+                                                .categorie {
+                                                    font-size: 2vw;
+                                                    border: .15vw solid white;
+                                                    padding: .5vw 1.25vw;
+                                                }
+
+                                                a {
+                                                    padding-bottom: 1.6vw;
+
+                                                    .readmore {
+                                                        [data-am-linearrow] {
+                                                            padding: 2.25vw;
+                                                            width: 4.25vw;
+                                                            height: 0.75vw;
+
+                                                            .line {
+                                                                margin-top: -0.375vw;
+                                                                width: 2.5vw;
+                                                                height: 0.75vw;
+                                                            }
+
+                                                            .line-1 {
+                                                                margin-right: -0.375vw;
+                                                            }
+
+                                                            .line-2 {
+                                                                margin-left: -0.375vw;
+                                                            }
+                                                        }
+
+                                                        [data-am-linearrow~="tooltip"] {
+                                                            &::after {
+                                                                font-size: 1.6vw;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                .comments_up_down {
+                                                    padding: 1.25vw;
+                                                    margin-left: -1.25vw;
+                                                    margin-bottom: -1.25vw;
+                                                    width: calc(100% + 2.5vw);
+
+                                                    .views,
+                                                    .comments,
+                                                    .upvotes,
+                                                    .downvotes {
+                                                        margin-left: 2.5vw;
+                                                        font-size: 1.6vw;
+                                                        margin-bottom: .5vw;
+                                                        margin-top: .5vw;
+                                                    }
+
+                                                    .views {
+                                                        margin-left: 0;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .card_shadower {
+                                            width: calc(100% - 2vw);
+                                            height: calc(100% - 5vw);
+                                            border: 2.5vw solid rgba(255, 255, 255, .2);
+
+                                            &::before,
+                                            &::after {
+                                                border-radius: .33vh;
+                                            }
+
+                                            &::before {
+                                                border-top: 2.5vw solid $color1;
+                                                border-right: 2.5vw solid $color1;
+                                                top: -2.5vw;
+                                                left: -2.5vw;
+                                            }
+
+                                            &::after {
+                                                border-left: 2.5vw solid $color1;
+                                                border-bottom: 2.5vw solid $color1;
+                                                bottom: -2.5vw;
+                                                right: -2.5vw;
+                                            }
+                                        }
+
+                                        &:hover {
+                                            .card_shadower {
+
+                                                &::before,
+                                                &::after {
+                                                    width: calc(100% + 5vw);
+                                                    height: calc(100% + 5vw);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .articles_slider_pagination {
+                                left: 0;
+
+                                .swiper-pagination-bullet {
+                                    width: 2vw;
+                                    height: 2vw;
+
+                                    &-active {
+                                        width: 4.5vw;
+                                    }
+                                }
+                            }
+
+                            .btn-r,
+                            .btn-l {
+                                font-size: 3.25vw;
+                                width: 12vw;
+                            }
+
+                            .btn-l {
+                                right: 12vw;
+                            }
+
+                            .btn-r {
+                                right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
             .footer {
                 .wrapper {
                     font-size: 1.5vw;
@@ -11726,6 +12085,55 @@ html {
                                 [data-am-linearrow~="tooltip"] {
                                     &:after {
                                         opacity: 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .second_section_blog {
+                .wrapper_full {
+                    .articles_slider {
+                        .articles_caption {
+                            button {
+                                &>span {
+                                    &>span {
+                                        &>span {
+                                            &::after {
+                                                width: 100%;
+                                                height: 100%;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &_wrapper_cards_item {
+                            .article_item {
+                                .card {
+                                    .card-body {
+                                        a {
+                                            .readmore {
+                                                [data-am-linearrow] {
+                                                    .line-1 {
+                                                        transform: rotate($arrow-angle);
+                                                    }
+
+                                                    .line-2 {
+                                                        transform: rotate(-($arrow-angle));
+                                                    }
+                                                }
+
+                                                [data-am-linearrow~="tooltip"] {
+                                                    &:after {
+                                                        opacity: 1;
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
