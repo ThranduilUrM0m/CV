@@ -10,72 +10,72 @@ import * as $ from "jquery";
 import socketIOClient from "socket.io-client";
 
 const socketURL =
-  process.env.NODE_ENV === 'production'
-    ? window.location.hostname
-    : 'localhost:8800';
-    
-const socket = socketIOClient(socketURL, {'transports': ['websocket', 'polling']});
+	process.env.NODE_ENV === 'production'
+		? window.location.hostname
+		: 'localhost:8800';
+
+const socket = socketIOClient(socketURL, { 'transports': ['websocket', 'polling'] });
 
 class Signup extends React.Component {
 	constructor(props) {
 		super(props);
-        this.state = {
-            username: '',
-            email: '',
-            password: '',
+		this.state = {
+			username: '',
+			email: '',
+			password: '',
 			confirm_password: '',
 			modal_msg: '',
 		};
-        this.send_signup = this.send_signup.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+		this.send_signup = this.send_signup.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 	componentWillMount() {
-		if(localStorage.getItem('email')) {
+		if (localStorage.getItem('email')) {
 			window.location = "/dashboard";
 		}
 	}
-    async send_signup() {
+	async send_signup() {
 		let self = this;
 		var f = new Fingerprint().get();
 		var _fingerprint = f.toString();
 		var _role = ["normal"];
 		const { username, email, password, confirm_password } = this.state;
 		const { onSubmitNotification } = this.props;
-        try {
-			if (password != confirm_password) throw { text: 'Please check your password confirmation'};
+		try {
+			if (password != confirm_password) throw { text: 'Please check your password confirmation' };
 			await API.signup({ username, email, password, _fingerprint, _role })
-			.then((res) => {
-				self.setState({
-					modal_msg: res.data.text
-				}, () => {
-					$('#signup_modal').modal('toggle');
-                    socket.emit("USER_UPDATED", res.data.text);
-					return axios.post('/api/notifications', {
-                        type: 'User Account Created',
-                        description: '\''+email+'\' created an account as \''+username+'\'',
-                        author: email
-                    })
-                    .then((res_n) => onSubmitNotification(res_n.data))
-                    .catch(error => {
-                        console.log(error)
-                    });
+				.then((res) => {
+					self.setState({
+						modal_msg: res.data.text
+					}, () => {
+						$('#signup_modal').modal('toggle');
+						socket.emit("USER_UPDATED", res.data.text);
+						return axios.post('/api/notifications', {
+							type: 'User Account Created',
+							description: '\'' + email + '\' created an account as \'' + username + '\'',
+							author: email
+						})
+							.then((res_n) => onSubmitNotification(res_n.data))
+							.catch(error => {
+								console.log(error)
+							});
+					});
+				})
+				.catch((error) => {
+					self.setState({
+						modal_msg: error.response.data.text
+					}, () => {
+						$('#signup_modal').modal('toggle');
+					});
 				});
-			})
-			.catch((error) => {
-				self.setState({
-					modal_msg: error.response.data.text
-				}, () => {
-					$('#signup_modal').modal('toggle');
-				});
-			});
-        } catch (error) {
+		} catch (error) {
 			self.setState({
 				modal_msg: JSON.stringify(error)
 			}, () => {
 				$('#signup_modal').modal('toggle');
 			});
-        }
-    }
+		}
+	}
 	handleChange(event) {
 		this.setState({
 			[event.target.id]: event.target.value
@@ -133,59 +133,59 @@ class Signup extends React.Component {
 										</div>
 									</div>
 									<div className="Signup">
-										<div className='row'>
+										<div className="row">
 											<div className='input-field col s12'>
-												<input 
-												className='validate form-group-input' 
-												type='text' 
-												name='username' 
-												id='username' 
+											<input
+												className='validate form-group-input'
+												type='text'
+												name='username'
+												id='username'
 												required="required"
-												value={username} 
+												value={username}
 												onChange={this.handleChange}
-												/>
-												<label htmlFor='username' className={username ? 'active' : ''}>username</label>
-												<div className="form-group-line"></div>
-											</div>
+											/>
+											<label htmlFor='username' className={username ? 'active' : ''}>username</label>
+											<div className="form-group-line"></div>
 										</div>
-										<div className='row'>
+										</div>
+										<div className="row">
 											<div className='input-field col s12'>
-												<input 
-												className='validate form-group-input' 
-												type='email' 
-												name='email' 
-												id='email' 
-												required="required"
-												value={email} 
-												onChange={this.handleChange}
+												<input
+													className='validate form-group-input'
+													type='email'
+													name='email'
+													id='email'
+													required="required"
+													value={email}
+													onChange={this.handleChange}
 												/>
 												<label htmlFor='email' className={email ? 'active' : ''}>Email</label>
 												<div className="form-group-line"></div>
 											</div>
 										</div>
-										<div className='row'>
+										<div className="row">
 											<div className='input-field col s6'>
-												<input 
-												className='validate form-group-input' 
-												type='password' 
-												name='password' 
-												id='password' 
-												required="required" 
-												value={password} 
-												onChange={this.handleChange}
+												<input
+													className='validate form-group-input'
+													type='password'
+													name='password'
+													id='password'
+													required="required"
+													value={password}
+													onChange={this.handleChange}
 												/>
 												<label htmlFor='password' className={password ? 'active' : ''}>Password</label>
 												<div className="form-group-line"></div>
 											</div>
 											<div className='input-field col s6'>
-												<input 
-												className='validate form-group-input' 
-												type='password' 
-												name='confirm_password' 
-												id='confirm_password' 
-												required="required" 
-												value={confirm_password} 
-												onChange={this.handleChange}
+												<input
+													className='validate form-group-input'
+													type='password'
+													name='confirm_password'
+													id='confirm_password'
+													required="required"
+													value={confirm_password}
+													onChange={this.handleChange}
 												/>
 												<label htmlFor='confirm_password' className={confirm_password ? 'active' : ''}>Password</label>
 												<div className="form-group-line"></div>
@@ -193,21 +193,21 @@ class Signup extends React.Component {
 										</div>
 										<div className="row">
 											<div className="input-field col s12">
-												<button 
-													className="pull-right" 
-													type="submit"
-													name='btn_login' 
-													onClick={this.send_signup}
-												>
+											<button
+												className="pull-right"
+												type="submit"
+												name='btn_login'
+												onClick={this.send_signup}
+											>
+												<span>
 													<span>
-														<span>
-															<span data-attr-span="signup.">
-																signup.
+														<span data-attr-span="signup.">
+															signup.
 															</span>
-														</span>
 													</span>
-												</button>
-											</div>
+												</span>
+											</button>
+										</div>
 										</div>
 									</div>
 								</div>
@@ -220,7 +220,7 @@ class Signup extends React.Component {
 	}
 }
 
-const mapDispatchToProps = dispatch => ({ onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data })})
+const mapDispatchToProps = dispatch => ({ onSubmitNotification: data => dispatch({ type: 'SUBMIT_NOTIFICATION', data }) })
 const mapStateToProps = state => ({})
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(Signup) 

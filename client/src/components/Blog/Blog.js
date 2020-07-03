@@ -61,6 +61,19 @@ class Blog extends React.Component {
 	componentDidMount() {
 		this._handleMouseMove();
 		this._handleModal();
+		if(window.innerHeight > window.innerWidth){
+			if($(window).width() <= 640) {
+				this.setState({
+					todosPerPage: 2
+				});
+			}
+		} else {
+			if($(window).width() <= 640) {
+				this.setState({
+					todosPerPage: 4
+				});
+			}
+		}
 	}
 	_handleDrag() {
 		var mySwiper = new Swiper ('.swiper-container', {
@@ -245,6 +258,7 @@ class Blog extends React.Component {
 						modal.addClass(expandedClass, 500);
 						wrapper.classList.add(hasExpandedClass);
 						document.getElementById('second_section_blog').parentElement.style.height = 'initial';
+						document.getElementById('second_section_blog').parentElement.style.minHeight = '100vh';
 						$('.fixedHeaderContainer').toggleClass('blog_header');
 						$('.modal-top-filter input.tags').focus(() => {
 							$('.modal-top-filter label#tags_label').toggleClass('active');
@@ -370,7 +384,7 @@ class Blog extends React.Component {
 											</div>
 										</div>
 										<div className="modal-top-filter">
-											<div className="input-field col">
+											<div className="input-field">
 												<select 
 													value={sort}
 													onChange={(ev) => this.handleChangeField('sort', ev)}
@@ -386,7 +400,7 @@ class Blog extends React.Component {
 												<label htmlFor='sort' className={sort ? 'active' : ''}>sort</label>
 												<div className="form-group-line"></div>
 											</div>
-											<div className="input-field col">
+											<div className="input-field">
 												<select 
 													value={timeframe}
 													onChange={(ev) => this.handleChangeField('timeframe', ev)}
@@ -403,7 +417,7 @@ class Blog extends React.Component {
 												<label htmlFor='timeframe' className={timeframe ? 'active' : ''}>timeframe</label>
 												<div className="form-group-line"></div>
 											</div>
-											<div className="input-field col">
+											<div className="input-field">
 												<select 
 													value={categorie}
 													onChange={(ev) => this.handleChangeField('categorie', ev)}
@@ -420,7 +434,7 @@ class Blog extends React.Component {
 												<label htmlFor='categorie' className={categorie ? 'active' : ''}>categorie</label>
 												<div className="form-group-line"></div>
 											</div>
-											<div className="input-field col">
+											<div className="input-field">
 												<Autocomplete
 													items={_.flattenDeep(_.map(_.filter(articles, (_a) => { return !_a._hide }), 'tag'))}
 													getItemValue={(item) => item}
@@ -469,8 +483,9 @@ class Blog extends React.Component {
 																<div className="card-body">
 																	<figure>{this.handleJSONTOHTMLIMAGE(article.body, index)}</figure>
 																	<div className="text">
-																		<p className="categorie">{article.categorie}</p>
+																		<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
 																		<h4>{article.title}</h4>
+																		<p className="categorie">{article.categorie}</p>
 																		<ul className="text-muted tags">
 																			{
 																				article.tag.map((t, i) => {
@@ -488,14 +503,12 @@ class Blog extends React.Component {
 																				</button>
 																			</div>
 																		</Link>
-																		<br/>
 																		<div className="comments_up_down">
 																			<p className="text-muted views"><b>{_.size(article.view)}</b><i className="fas fa-eye"></i></p>
 																			<p className="text-muted comments"><b>{_.size(article.comment)}</b> <i className="fas fa-comment-alt"></i></p>
 																			<p className="text-muted upvotes"><b>{_.size(article.upvotes)}</b> <i className="fas fa-thumbs-up"></i></p>
 																			<p className="text-muted downvotes"><b>{_.size(article.downvotes)}</b> <i className="fas fa-thumbs-down"></i></p>
 																		</div>
-																		<p className="text-muted author">by <b>{article.author}</b>, {moment(new Date(article.createdAt)).fromNow()}</p>
 																	</div>
 																</div>
 															</div>

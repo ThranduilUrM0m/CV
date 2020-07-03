@@ -432,11 +432,12 @@ img {
     &.col,
     & {
         position: relative;
-        margin: 0 1vh 1vh 1vh;
+        margin: 0 1vh 1vh 0;
         padding: 0;
 
         input:not([type=checkbox]),
         select {
+            display: initial;
             box-sizing: border-box;
             color: $color1;
             height: 100%;
@@ -460,9 +461,9 @@ img {
             font-size: 2vh;
             font-weight: 500;
             top: 50%;
-            left: 0;
+            left: 5px;
             margin: 0;
-            transform: translate(0, -25%) !important;
+            transform: translate(0, -50%) !important;
             transition: all .25s ease-out;
 
             &.active {
@@ -3301,25 +3302,10 @@ html {
             overflow: hidden;
 
             .modal {
-                display: block;
-                max-height: unset;
-                padding-right: 0 !important;
-                margin: 0;
-                background: transparent;
-                border-radius: 0;
-                border: 0;
-                overflow: hidden;
-                position: absolute;
-                width: 30.75vh;
-                height: 7.5vh;
-                top: 25.5vh;
-                right: 7.5vh;
-                left: unset;
-                box-shadow: unset;
 
                 &.is-expanded {
-
                     position: relative;
+                    display: block;
                     width: 100%;
                     height: fit-content;
                     top: 0;
@@ -3329,7 +3315,7 @@ html {
                     opacity: 1;
 
                     .modal-content {
-                        padding-top: 15.25vh;
+                        padding-top: 10vh;
                     }
                 }
 
@@ -3347,449 +3333,438 @@ html {
 
                     .modal-content {
                         height: fit-content;
+                        padding: 3.5vh;
                         border-radius: 0;
                         border: 0;
-                        background: #f5f5f4;
+                        background: hsl(0, 0, 90%);
 
-                        .modal-top {
-                            position: relative;
-                            width: 100%;
-                            display: flex;
-                            justify-content: space-between;
-                            margin-bottom: 2.5vh;
+                        .modal-body {
+                            display: grid;
+                            grid-template-rows: 7.5vh auto minmax(60vh, 120vh) auto;
+                            place-items: stretch;
+                            place-content: stretch;
 
-                            h5 {
-                                color: #aaa;
-                                font-size: 80%;
-                                text-align: center;
+                            .modal-top {
+                                position: relative;
+                                display: grid;
+                                grid-template-columns: auto auto;
+                                align-self: center;
+                                place-content: space-between;
+
+                                h5 {
+                                    color: #aaa;
+                                    font-size: 80%;
+                                    text-align: center;
+                                }
+
+                                .filter {
+                                    position: relative;
+                                    color: #aaa;
+                                    text-align: center;
+                                    text-decoration: none;
+                                    margin-right: 3.25vh;
+                                    cursor: pointer;
+
+                                    &::before {
+                                        position: absolute;
+                                        content: '';
+                                        width: 0;
+                                        height: 0;
+                                        top: 50%;
+                                        left: 50%;
+                                        transform: translate(-50%, -50%);
+                                        background: rgba($color: $main-color, $alpha: .25);
+                                        border-radius: 100%;
+                                        transition: all .5s ease-out;
+                                    }
+
+                                    &.expand {
+                                        &::before {
+                                            width: 5vh;
+                                            height: 5vh;
+                                        }
+                                    }
+                                }
+
+                                .modal-close {
+                                    color: #aaa;
+                                    font-size: 80%;
+                                    text-align: center;
+                                    text-decoration: none;
+                                }
                             }
 
-                            .filter {
+                            .modal-top-filter {
                                 position: relative;
-                                color: #aaa;
-                                text-align: center;
-                                text-decoration: none;
-                                margin-right: 3.25vh;
-                                cursor: pointer;
-
-                                &::before {
-                                    position: absolute;
-                                    content: '';
-                                    width: 0;
-                                    height: 0;
-                                    top: 50%;
-                                    left: 50%;
-                                    transform: translate(-50%, -50%);
-                                    background: rgba($color: $main-color, $alpha: .25);
-                                    border-radius: 100%;
-                                    transition: all .5s ease-out;
-                                }
+                                transition: all .25s ease-out;
+                                display: grid;
+                                grid-template-columns: repeat(4, 1fr);
+                                place-items: stretch;
+                                place-content: stretch;
+                                opacity: 0;
+                                height: 1px;
 
                                 &.expand {
-                                    &::before {
-                                        width: 5vh;
-                                        height: 5vh;
-                                    }
-                                }
-                            }
-
-                            .modal-close {
-                                color: #aaa;
-                                font-size: 80%;
-                                text-align: center;
-                                text-decoration: none;
-                            }
-                        }
-
-                        .modal-top-filter {
-                            width: 100%;
-                            margin: 0 auto;
-                            position: relative;
-                            display: none;
-                            justify-content: flex-end;
-                            margin-top: 2.5vh;
-                            transition: all .25s ease-out;
-
-                            &.expand {
-                                display: flex;
-                            }
-
-                            .input-field {
-                                position: relative;
-                                margin: 0 0 1.25vh 0;
-                                padding: 0 1.25vh;
-
-                                &>div {
-                                    width: 100%;
-
-                                    &>div {
-                                        position: absolute !important;
-                                        top: 100% !important;
-                                        left: 0 !important;
-                                        width: 100%;
-                                        transform: translate(2vh, 0) !important;
-                                        max-height: 25vh !important;
-                                        border: .15vh solid $main-color !important;
-                                        padding: .5vh !important;
-                                        font-size: 2.5vh !important;
-                                        margin: 0 auto !important;
-                                        background-color: #fff !important;
-                                        border-radius: .75vh !important;
-                                        z-index: 10 !important;
-
-                                        .item {
-                                            cursor: pointer !important;
-                                            line-height: 1 !important;
-                                            padding: 1.25vh 2vh !important;
-                                            white-space: nowrap;
-                                        }
-                                    }
-                                }
-
-                                select,
-                                input {
-                                    display: initial;
-                                    background-color: transparent;
-                                    border: none;
-                                    border-bottom: .15vh solid lighten($color: #9e9e9e, $amount: 10);
-                                    border-radius: 0;
-                                    outline: none;
+                                    opacity: 1;
                                     height: 7.5vh;
-                                    width: 100%;
-                                    font-size: 2.5vh;
-                                    margin: 0 0 1.25vh 0;
-                                    padding: 0;
-                                    box-shadow: none;
-                                    box-sizing: content-box;
-                                    transition: box-shadow .3s ease-out, border .3s ease-out;
                                 }
 
-                                label {
-                                    font-weight: 400;
-
-                                    &.active {
-                                        transform: translateY(-80%);
-                                    }
-                                }
-
-                                .form-group-line {
-                                    position: absolute;
-                                    bottom: 0;
-                                    left: 1.25vh;
-                                    width: calc(100% - 2.5vh) !important;
-                                }
-
-                                .form-group-input:focus~.form-group-line,
-                                .form-group-input:valid~.form-group-line {
-                                    animation: input3 .5s 1 ease-out;
-                                    width: calc(100% - 3.75vh);
-                                }
-                            }
-                        }
-
-                        ul#page {
-                            width: 75.5%;
-                            height: fit-content;
-                            display: flex;
-                            flex-wrap: wrap;
-                            margin: 0 auto;
-                            border-top: .25vh solid rgba($color: #aaa, $alpha: .25);
-                            padding-top: 3.25vh;
-
-                            .article_card {
-                                position: relative;
-                                display: flex;
-                                width: 33.333%;
-                                height: 65vh;
-                                padding: 0 1.5vh;
-                                margin-bottom: 3.25vh;
-                                transition: all .5s ease-out;
-
-                                .card {
-                                    background: #fff;
-                                    border: 0;
-                                    box-shadow: none;
-                                    overflow: hidden;
-                                    padding: 0;
-                                    margin: 0;
-                                    transition: all .6s ease-out 0s;
-
-                                    * {
-                                        transition: all .6s ease-out 0s;
-                                    }
-
-                                    &-body {
-                                        position: relative;
-                                        display: flex;
-                                        flex-direction: column;
-
-                                        figure {
-                                            position: relative;
-                                            margin: 0;
-                                            width: calc(100% + 6.5vh);
-                                            height: 50%;
-                                            margin-left: -3.25vh;
-                                            margin-top: -3.25vh;
-
-                                            img {
-                                                width: 100%;
-                                                height: 100%;
-                                                object-fit: cover;
-                                                object-position: top;
-                                            }
+                                .input-field {
+                                    &:last-of-type {
+                                        &>div:first-of-type {
+                                            width: 100%;
+                                            height: 100%;
                                         }
 
-                                        div.text {
-                                            display: flex;
-                                            flex-direction: column;
-                                            height: calc(50% + 3.25vh);
-                                            padding-top: 2.5vh;
-
-                                            .categorie {
-                                                text-align: -webkit-right;
-                                                font-size: 2vh;
-                                                color: black;
-                                                border: .15vh solid black;
-                                                padding: .5vh 1.25vh;
-                                                margin-bottom: .5vh;
-                                                width: fit-content;
-                                            }
-
-                                            h4 {
-                                                color: black;
-                                                text-align: -webkit-left;
-                                                letter-spacing: 0;
-                                                transition: all .15s ease-out 0s;
-                                                position: relative;
-                                                z-index: 10;
-                                                margin: 0;
-                                                overflow-x: hidden;
-                                                white-space: nowrap;
-                                                text-overflow: ellipsis;
-                                            }
-
-                                            .tags {
-                                                margin-bottom: 0 !important;
-                                                display: flex;
-                                                flex-direction: initial;
-                                                align-items: flex-start;
-                                                margin-top: 1.25vh;
-                                                flex: auto;
-                                                overflow-x: hidden;
-
-                                                li {
-                                                    font-size: 1.5vh;
-                                                    border: .15vh solid #ddd;
-                                                    background: #eee;
-                                                    display: inline-block;
-                                                    padding: .75vh;
-                                                    margin: 0 .75vh;
-                                                    border-radius: .75vh;
-                                                    height: fit-content;
-                                                }
-                                            }
-
-                                            a {
-                                                align-self: flex-end;
-                                                text-decoration: underline;
-                                                margin-top: auto;
-
-                                                .readmore {
-                                                    button {
-                                                        border: none;
-                                                        background-color: transparent;
-                                                    }
-
-                                                    [data-am-linearrow] {
-                                                        position: relative;
-                                                        padding: 2.25vh;
-                                                        cursor: pointer;
-                                                        width: (($arrow-width * 2) - $arrow-height);
-                                                        height: $arrow-height;
-                                                        box-sizing: content-box;
-
-                                                        .line {
-                                                            position: absolute;
-                                                            top: 50%;
-                                                            margin-top: -($arrow-height / 2);
-                                                            width: $arrow-width;
-                                                            height: $arrow-height;
-                                                            background-color: black;
-                                                            transition: transform $transition-speed ease-out, background-color $transition-speed ease-out;
-                                                        }
-
-                                                        .line-1 {
-                                                            right: 50%;
-                                                            margin-right: -($arrow-height / 2);
-                                                        }
-
-                                                        .line-2 {
-                                                            left: 50%;
-                                                            margin-left: -($arrow-height / 2);
-                                                        }
-
-                                                        &:hover,
-                                                        &:focus {
-                                                            .line-1 {
-                                                                transform: rotate($arrow-angle);
-                                                            }
-
-                                                            .line-2 {
-                                                                transform: rotate(-($arrow-angle));
-                                                            }
-                                                        }
-
-                                                        &:focus {
-                                                            outline: none;
-
-                                                            .line {
-                                                                background-color: darken(black, 20%);
-                                                            }
-                                                        }
-                                                    }
-
-                                                    [data-am-linearrow~="inverted"] {
-
-                                                        &:hover,
-                                                        &:focus {
-                                                            .line-1 {
-                                                                transform: rotate(-($arrow-angle));
-                                                            }
-
-                                                            .line-2 {
-                                                                transform: rotate($arrow-angle);
-                                                            }
-                                                        }
-                                                    }
-
-                                                    [data-am-linearrow~="tooltip"] {
-                                                        &:after {
-                                                            content: attr(display-name);
-                                                            font-size: 1.6vh;
-                                                            white-space: nowrap;
-                                                            position: absolute;
-                                                            left: 50%;
-                                                            transform: translateX(-50%) translateY(-50%);
-                                                            transition: opacity $transition-speed ease-out, color $transition-speed ease-out;
-                                                            opacity: 0;
-                                                            color: black;
-                                                        }
-
-                                                        &:hover,
-                                                        &:focus {
-                                                            &:after {
-                                                                opacity: 1;
-                                                            }
-                                                        }
-
-                                                        &:focus {
-                                                            &:after {
-                                                                color: darken(black, 20%);
-                                                            }
-                                                        }
-                                                    }
-
-                                                    [data-am-linearrow~="tooltip-top"] {
-                                                        &:after {
-                                                            bottom: 100%;
-                                                        }
-                                                    }
-
-                                                    [data-am-linearrow~="tooltip-bottom"] {
-                                                        &:after {
-                                                            top: 100%;
-                                                        }
-                                                    }
-
-                                                }
-                                            }
-
-                                            .comments_up_down {
-                                                display: inline-flex;
+                                        &>div {
+                                            &>div {
+                                                position: absolute !important;
+                                                max-height: 25vh !important;
                                                 width: 100%;
+                                                font-size: 2.5vh !important;
+                                                margin: 0 auto !important;
+                                                padding: .5vh !important;
+                                                top: 100% !important;
+                                                left: 0 !important;
+                                                transform: translate(0, 0) !important;
+                                                background-color: #fff !important;
+                                                border: 1px solid $main-color !important;
+                                                border-radius: 4px !important;
+                                                z-index: 10 !important;
 
-                                                .views {
+                                                .item {
+                                                    cursor: pointer !important;
+                                                    line-height: 1 !important;
+                                                    padding: 1.25vh 2vh !important;
+                                                    white-space: nowrap;
+
+                                                    &:hover {
+                                                        background-color: rgba($color: #000000, $alpha: .25);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            ul#page {
+                                width: 75.5%;
+                                padding-top: 1.25vh;
+                                justify-self: center;
+
+                                display: grid;
+                                grid-template-rows: repeat(2, 60vh);
+                                grid-template-columns: repeat(3, 1fr);
+                                place-items: stretch;
+                                place-content: stretch;
+
+                                .article_card {
+                                    position: relative;
+                                    display: initial;
+                                    padding: 0 1.5vh;
+                                    margin-bottom: 3.25vh;
+                                    transition: all .5s ease-out;
+
+                                    .card {
+                                        background: #fff;
+                                        border: 0;
+                                        box-shadow: none;
+                                        overflow: hidden;
+                                        padding: 0;
+                                        margin: 0;
+                                        height: 100%;
+                                        width: 100%;
+                                        transition: all .6s ease-out 0s;
+
+                                        * {
+                                            transition: all .6s ease-out 0s;
+                                        }
+
+                                        &-body {
+                                            position: relative;
+                                            height: 100%;
+                                            width: 100%;
+                                            padding: 3vh;
+
+                                            display: grid;
+                                            grid-template-rows: 40% 1fr;
+                                            place-items: stretch;
+                                            place-content: stretch;
+
+                                            figure {
+                                                position: relative;
+                                                margin: -3.25vh auto 0 -3.25vh;
+                                                width: calc(100% + 6.5vh);
+                                                overflow: hidden;
+
+                                                img {
+                                                    width: 100%;
+                                                }
+                                            }
+
+                                            div.text {
+                                                padding-top: 1.25vh;
+
+                                                display: grid;
+                                                grid-template-rows: auto auto auto 1fr auto auto;
+                                                place-items: stretch;
+                                                place-content: stretch;
+
+                                                .author {
                                                     text-align: -webkit-left;
                                                     font-size: 1.5vh;
-                                                    flex: 1;
-                                                    margin-bottom: .5vh;
+                                                    margin: 0;
+                                                    padding-bottom: .25vh;
+                                                }
 
-                                                    i {
-                                                        padding-left: .5vh;
+                                                h4 {
+                                                    position: relative;
+                                                    color: black;
+                                                    text-align: -webkit-left;
+                                                    letter-spacing: 0;
+                                                    margin: 0;
+                                                    padding-bottom: .25vh;
+                                                    overflow-x: hidden;
+                                                    white-space: nowrap;
+                                                    text-overflow: ellipsis;
+                                                    transition: all .15s ease-out 0s;
+                                                    z-index: 10;
+                                                }
+
+                                                .categorie {
+                                                    justify-self: right;
+
+                                                    width: fit-content;
+                                                    font-size: 2vh;
+                                                    color: black;
+                                                    border: .15vh solid black;
+                                                    padding: .5vh 1.25vh;
+                                                    margin-bottom: 0;
+                                                }
+
+                                                .tags {
+                                                    margin-bottom: 0 !important;
+                                                    padding-top: .25vh;
+                                                    display: flex;
+                                                    flex-direction: initial;
+                                                    align-items: flex-start;
+                                                    flex: auto;
+                                                    overflow-x: hidden;
+
+                                                    li {
+                                                        font-size: 1.5vh;
+                                                        border: .15vh solid #ddd;
+                                                        background: #eee;
+                                                        display: inline-block;
+                                                        padding: .75vh;
+                                                        margin: 0 .75vh;
+                                                        border-radius: .75vh;
+                                                        height: fit-content;
                                                     }
                                                 }
 
-                                                .upvotes,
-                                                .downvotes,
-                                                .comments {
-                                                    margin-left: 2.5vh;
-                                                    text-align: -webkit-right;
-                                                    font-size: 1.6vh;
-                                                    margin-bottom: .5vh;
+                                                a {
+                                                    text-decoration: underline;
+                                                    padding-bottom: 1.6vh;
+                                                    width: fit-content;
+                                                    justify-self: right;
 
-                                                    i {
-                                                        padding-left: .5vh;
+                                                    .readmore {
+                                                        button {
+                                                            border: none;
+                                                            background-color: transparent;
+                                                        }
+
+                                                        [data-am-linearrow] {
+                                                            position: relative;
+                                                            padding: 2.25vh;
+                                                            cursor: pointer;
+                                                            width: (($arrow-width * 2) - $arrow-height);
+                                                            height: $arrow-height;
+                                                            box-sizing: content-box;
+
+                                                            .line {
+                                                                position: absolute;
+                                                                top: 50%;
+                                                                margin-top: -($arrow-height / 2);
+                                                                width: $arrow-width;
+                                                                height: $arrow-height;
+                                                                background-color: black;
+                                                                transition: transform $transition-speed ease-out, background-color $transition-speed ease-out;
+                                                            }
+
+                                                            .line-1 {
+                                                                right: 50%;
+                                                                margin-right: -($arrow-height / 2);
+                                                            }
+
+                                                            .line-2 {
+                                                                left: 50%;
+                                                                margin-left: -($arrow-height / 2);
+                                                            }
+
+                                                            &:hover,
+                                                            &:focus {
+                                                                .line-1 {
+                                                                    transform: rotate($arrow-angle);
+                                                                }
+
+                                                                .line-2 {
+                                                                    transform: rotate(-($arrow-angle));
+                                                                }
+                                                            }
+
+                                                            &:focus {
+                                                                outline: none;
+
+                                                                .line {
+                                                                    background-color: darken(black, 20%);
+                                                                }
+                                                            }
+                                                        }
+
+                                                        [data-am-linearrow~="inverted"] {
+
+                                                            &:hover,
+                                                            &:focus {
+                                                                .line-1 {
+                                                                    transform: rotate(-($arrow-angle));
+                                                                }
+
+                                                                .line-2 {
+                                                                    transform: rotate($arrow-angle);
+                                                                }
+                                                            }
+                                                        }
+
+                                                        [data-am-linearrow~="tooltip"] {
+                                                            &:after {
+                                                                content: attr(display-name);
+                                                                font-size: 1.6vh;
+                                                                white-space: nowrap;
+                                                                position: absolute;
+                                                                left: 50%;
+                                                                transform: translateX(-50%) translateY(-50%);
+                                                                transition: opacity $transition-speed ease-out, color $transition-speed ease-out;
+                                                                opacity: 0;
+                                                                color: black;
+                                                            }
+
+                                                            &:hover,
+                                                            &:focus {
+                                                                &:after {
+                                                                    opacity: 1;
+                                                                }
+                                                            }
+
+                                                            &:focus {
+                                                                &:after {
+                                                                    color: darken(black, 20%);
+                                                                }
+                                                            }
+                                                        }
+
+                                                        [data-am-linearrow~="tooltip-top"] {
+                                                            &:after {
+                                                                bottom: 100%;
+                                                            }
+                                                        }
+
+                                                        [data-am-linearrow~="tooltip-bottom"] {
+                                                            &:after {
+                                                                top: 100%;
+                                                            }
+                                                        }
+
                                                     }
                                                 }
-                                            }
 
-                                            .author {
-                                                text-align: -webkit-right;
-                                                font-size: 1.5vh;
-                                                margin: 0;
+                                                .comments_up_down {
+                                                    display: inline-flex;
+                                                    justify-content: center;
+                                                    padding: 1.25vh;
+                                                    margin-left: -3vh;
+                                                    margin-bottom: -3vh;
+                                                    width: calc(100% + 6vh);
+                                                    background: hsl(0, 0, 97%);
+
+                                                    .views {
+                                                        text-align: -webkit-left;
+                                                        font-size: 1.5vh;
+                                                        flex: 1;
+                                                        margin-bottom: .5vh;
+
+                                                        i {
+                                                            padding-left: .5vh;
+                                                        }
+                                                    }
+
+                                                    .upvotes,
+                                                    .downvotes,
+                                                    .comments {
+                                                        margin-left: 2.5vh;
+                                                        text-align: -webkit-right;
+                                                        font-size: 1.6vh;
+                                                        margin-bottom: .5vh;
+
+                                                        i {
+                                                            padding-left: .5vh;
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
-                                    }
 
-                                    &:hover {
-                                        box-shadow: .75vh .75vh 3.25vh 0 rgba(0, 0, 0, .75);
+                                        &:hover {
+                                            box-shadow: .75vh .75vh 3.25vh 0 rgba(0, 0, 0, .75);
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        ul#page-numbers {
-                            list-style: none;
-                            display: flex;
-                            justify-content: center;
-                            width: 75.5%;
-                            margin: 0 auto;
+                            ul#page-numbers {
+                                list-style: none;
+                                display: flex;
+                                justify-content: center;
+                                width: 75.5%;
+                                margin: 0 auto;
 
-                            li {
-                                position: relative;
-                                width: 2.5vh;
-                                height: 2.5vh;
-                                display: block;
-                                border-radius: 2.5vh;
-                                background: #062744;
-                                opacity: .2;
-                                margin: .5vh;
-                                border: none;
-                                transition: all .3s ease-out;
-                                cursor: pointer;
-
-                                &.current {
+                                li {
+                                    position: relative;
+                                    width: 2.5vh;
                                     height: 2.5vh;
-                                    width: 5vh;
-                                    opacity: 1;
-                                    background: $main-color;
-                                    box-shadow: 0 0 3.25vh rgba($main-color, .3);
+                                    display: block;
+                                    border-radius: 2.5vh;
+                                    background: #062744;
+                                    opacity: .2;
+                                    margin: .5vh;
+                                    border: none;
+                                    transition: all .3s ease-out;
+                                    cursor: pointer;
+
+                                    &.current {
+                                        width: 5vh;
+                                        opacity: 1;
+                                        background: $main-color;
+                                        box-shadow: 0 0 3.25vh rgba($main-color, .3);
+
+                                        .shadow_page {
+                                            opacity: .25;
+                                        }
+                                    }
 
                                     .shadow_page {
-                                        opacity: .25;
+                                        position: absolute;
+                                        top: 100%;
+                                        left: 100%;
+                                        transform: translate(0, -50%);
+                                        font-size: 6.5vh;
+                                        opacity: 0;
+                                        font-weight: bold;
+                                        color: lighten($color: $main-color, $amount: 2);
+                                        z-index: -1;
                                     }
-                                }
-
-                                .shadow_page {
-                                    position: absolute;
-                                    top: 100%;
-                                    left: 100%;
-                                    transform: translate(0, -50%);
-                                    font-size: 6.5vh;
-                                    opacity: 0;
-                                    font-weight: bold;
-                                    color: lighten($color: $main-color, $amount: 2);
-                                    z-index: -1;
                                 }
                             }
                         }
@@ -8295,7 +8270,6 @@ html {
                                         cursor: pointer;
 
                                         &.current {
-                                            height: 2.5vh;
                                             width: 5vh;
                                             opacity: 1;
                                             background: $main-color;
@@ -8439,56 +8413,18 @@ html {
                             position: relative;
                             width: 100%;
                             height: fit-content;
-                            padding: 5vh 3.75vh 0 3.75vh;
+                            padding: 3.75vh 3.75vh 1.25vh 3.75vh;
                             background: #474A59;
                             box-shadow: 1.25vh 1.25vh 4.5vh -2.5vh rgba(0, 0, 0, .5);
                             z-index: 1;
 
+                            display: grid;
+                            grid-template-rows: 7.5vh 7.5vh 7.5vh 7.5vh;
+
                             .row {
                                 margin-right: 0;
                                 margin-left: 0;
-                                margin-bottom: 2.5vh;
-
-                                .input-field {
-                                    position: relative;
-                                    margin: 0 0 1.25vh 0;
-
-                                    &.s12,
-                                    &.s6 {
-                                        input {
-                                            color: $color1;
-                                            height: 5vh;
-                                            padding: 0;
-                                            margin: 0;
-                                        }
-
-                                        .form-group-line {
-                                            bottom: 0 !important;
-                                        }
-                                    }
-
-                                    label {
-                                        font-weight: 400;
-                                        top: 50%;
-                                        transform: translateY(-50%);
-
-                                        &.active {
-                                            top: 0;
-                                        }
-                                    }
-
-                                    .form-group-line {
-                                        position: absolute;
-                                        bottom: 1.25vh;
-                                        left: 2vh;
-                                    }
-
-                                    .form-group-input:focus~.form-group-line,
-                                    .form-group-input:valid~.form-group-line {
-                                        animation: input3 .5s 1 ease-out;
-                                        width: calc(100% - 3.75vh);
-                                    }
-                                }
+                                margin-bottom: 0;
 
                                 &:last-of-type {
                                     button {
@@ -9049,55 +8985,18 @@ html {
                             position: relative;
                             width: 100%;
                             height: fit-content;
-                            padding: 5vh 3.75vh 0 3.75vh;
+                            padding: 3.75vh 3.75vh 1.25vh 3.75vh;
                             background: #474A59;
                             box-shadow: 1.25vh 1.25vh 4.5vh -2.5vh rgba(0, 0, 0, .5);
                             z-index: 1;
 
+                            display: grid;
+                            grid-template-rows: 7.5vh 7.5vh 7.5vh;
+
                             .row {
                                 margin-right: 0;
                                 margin-left: 0;
-                                margin-bottom: 2.5vh;
-
-                                .input-field {
-                                    position: relative;
-                                    margin: 0 0 1.25vh 0;
-
-                                    &.s12 {
-                                        input {
-                                            color: $color1;
-                                            height: 5vh;
-                                            padding: 0;
-                                            margin: 0;
-                                        }
-
-                                        .form-group-line {
-                                            bottom: 0 !important;
-                                        }
-                                    }
-
-                                    label {
-                                        font-weight: 400;
-                                        top: 50%;
-                                        transform: translateY(-50%);
-
-                                        &.active {
-                                            top: 0;
-                                        }
-                                    }
-
-                                    .form-group-line {
-                                        position: absolute;
-                                        bottom: 1.25vh;
-                                        left: 2vh;
-                                    }
-
-                                    .form-group-input:focus~.form-group-line,
-                                    .form-group-input:valid~.form-group-line {
-                                        animation: input3 .5s 1 ease-out;
-                                        width: calc(100% - 3.75vh);
-                                    }
-                                }
+                                margin-bottom: 0;
 
                                 &:last-of-type {
                                     button {
@@ -10273,6 +10172,16 @@ html {
             }
 
             .second_section_blog {
+                .modal-dialog {
+                    .modal-content {
+                        .modal-body {
+                            ul#page {
+                                width: 87.5%;
+                            }
+                        }
+                    }
+                }
+
                 .wrapper_full {
                     .articles_slider {
                         grid-template-columns: 4vh calc(30vw - 12vh) 2vh auto;
@@ -10378,6 +10287,18 @@ html {
                     }
                 }
             }
+
+            .second_section_blog {
+                .modal-dialog {
+                    .modal-content {
+                        .modal-body {
+                            ul#page {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -10468,6 +10389,16 @@ html {
             }
 
             .second_section_blog {
+                .modal-dialog {
+                    .modal-content {
+                        .modal-body {
+                            ul#page {
+                                width: 95%;
+                            }
+                        }
+                    }
+                }
+
                 .wrapper_full {
                     .articles_slider {
                         grid-template-columns: 4vh calc(30vw - 12vh) 2vh auto;
@@ -10623,6 +10554,52 @@ html {
                         .lorem {
                             margin-top: 2.5vh;
                             margin-bottom: 2.5vh;
+                        }
+                    }
+                }
+            }
+
+            .second_section_blog {
+                .modal-dialog {
+                    .modal-content {
+                        .modal-body {
+                            ul#page {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section_signup {
+                .wrapper_full {
+                    .Content {
+                        .card {
+                            width: 40vw;
+                        }
+                    }
+                    .Sidebar {
+                        div {
+                            &.wrap {
+                                width: 75%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section_login {
+                .wrapper_full {
+                    .Content {
+                        .card {
+                            width: 40vw;
+                        }
+                    }
+                    .Sidebar {
+                        div {
+                            &.wrap {
+                                width: 75%;
+                            }
                         }
                     }
                 }
@@ -11435,6 +11412,158 @@ html {
             }
 
             .second_section_blog {
+                .modal {
+                    &-dialog {
+                        .modal-content {
+                            padding: 3.5vw;
+
+                            .modal-body {
+                                padding: 2.5vw;
+                                grid-template-rows: 7.5vw auto minmax(60vw, 180vw) auto;
+
+                                .modal-top {
+                                    .filter {
+                                        &.expand {
+                                            &::before {
+                                                width: 5vw;
+                                                height: 5vw;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .modal-top-filter {
+                                    grid-template-columns: repeat(2, 1fr);
+                                    grid-template-rows: repeat(2, 1fr);
+
+                                    &.expand {
+                                        height: 14vw;
+                                    }
+
+                                    .input-field {
+                                        margin: 0 1vw 1vw 1vw;
+
+                                        label {
+                                            font-size: 2vw;
+
+                                            &.active {
+                                                font-size: 1.5vw;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                ul#page {
+                                    width: 100%;
+                                    grid-template-rows: repeat(3, 60vw);
+                                    grid-template-columns: repeat(2, 1fr);
+
+                                    .article_card {
+                                        padding: 0 1.5vw;
+                                        margin-bottom: 3.25vw;
+
+                                        .card-body {
+                                            padding: 3vw;
+
+                                            figure {
+                                                margin: -3.25vw auto 0 -3.25vw;
+                                                width: calc(100% + 6.5vw);
+                                            }
+
+                                            div.text {
+                                                padding-top: 1.25vw;
+
+                                                .author {
+                                                    font-size: 1.5vw;
+                                                }
+
+                                                h4 {
+                                                    font-size: 3.75vw;
+                                                }
+
+                                                .categorie {
+                                                    font-size: 2vw;
+                                                    border: .15vw solid black;
+                                                    padding: .5vw 1.25vw;
+                                                }
+
+                                                .tags {
+                                                    li {
+                                                        font-size: 1.5vw;
+                                                        border: .15vw solid #ddd;
+                                                        padding: .75vw;
+                                                        margin: 0 .75vw;
+                                                        border-radius: .75vw;
+                                                    }
+                                                }
+
+                                                a {
+                                                    padding-bottom: 1.6vw;
+
+                                                    .readmore {
+                                                        [data-am-linearrow] {
+                                                            padding: 2.25vw;
+                                                            width: 4.25vw;
+                                                            height: 0.75vw;
+
+                                                            .line {
+                                                                margin-top: -0.375vw;
+                                                                width: 2.5vw;
+                                                                height: 0.75vw;
+                                                            }
+
+                                                            .line-1 {
+                                                                margin-right: -0.375vw;
+                                                            }
+
+                                                            .line-2 {
+                                                                margin-left: -0.375vw;
+                                                            }
+                                                        }
+
+                                                        [data-am-linearrow~="tooltip"] {
+                                                            &::after {
+                                                                font-size: 1.6vw;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                .comments_up_down {
+                                                    padding: 1.25vw;
+                                                    margin-left: -3vw;
+                                                    margin-bottom: -3vw;
+                                                    width: calc(100% + 6vw);
+
+                                                    .views,
+                                                    .comments,
+                                                    .upvotes,
+                                                    .downvotes {
+                                                        margin-left: 2.5vw;
+                                                        font-size: 1.6vw;
+                                                        margin-bottom: .5vw;
+                                                        margin-top: .5vw;
+                                                    }
+
+                                                    .views {
+                                                        margin-left: 0;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.is-expanded {
+                        .modal-content {
+                            padding-top: 10vw;
+                        }
+                    }
+                }
+
                 .wrapper_full {
                     &>span {
                         top: calc(35% - 33.25vw);
@@ -11648,6 +11777,178 @@ html {
                 }
             }
 
+            .first_section_signup {
+                .wrapper_full {
+                    .Content {
+                        padding: 12vw 3.25vw;
+                        .card {
+                            width: 75vw;
+                            height: 25vh;
+                            top: 25%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+
+                            .face {
+                                &.face2 {
+                                    .content {
+                                        a {
+                                            height: 6.5vw;
+                                            font-size: 2.5vw;
+                                            span {
+                                                line-height: 6.5vw;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .Sidebar {
+                        width: calc(100% - 6.5vw);
+                        height: calc(50% - 6.5vw);
+                        padding: 3.25vw;
+                        margin: 3.25vw;
+                        top: 50%;
+                        right: 0;
+
+                        div.wrap {
+                            width: 70%;
+
+                            .Head_Signup {
+                                width: calc(100% + 12vw);
+                                padding: 5vw 0;
+
+                                div {
+                                    h3 {
+                                        font-size: 5vw;
+                                        margin-left: 5vw;
+
+                                        &::before {
+                                            width: .5vw;
+                                            transform: translate(-3.25vw, 0);
+                                        }
+                                    }
+                                }
+                            }
+                            .Signup {
+                                padding: 3.75vw 3.75vw 1.25vw 3.75vw;
+                                grid-template-rows: 7.5vw 7.5vw 7.5vw 7.5vw;
+
+                                .row {
+                                    .input-field {
+                                        margin: 0 1vw 1vw 0;
+
+                                        label {
+                                            font-size: 2vw;
+
+                                            &.active {
+                                                font-size: 1.5vw;
+                                            }
+                                        }
+                                    }
+                                    
+                                    &:last-of-type {
+                                        button {
+                                            height: 6.5vw;
+                                            font-size: 2.5vw;
+                                            span {
+                                                line-height: 6.5vw;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section_login {
+                .wrapper_full {
+                    .Content {
+                        padding: 12vw 3.25vw;
+                        .card {
+                            width: 75vw;
+                            height: 25vh;
+                            top: 75%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+
+                            .face {
+                                &.face2 {
+                                    .content {
+                                        a {
+                                            height: 6.5vw;
+                                            font-size: 2.5vw;
+                                            span {
+                                                line-height: 6.5vw;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .Sidebar {
+                        width: calc(100% - 6.5vw);
+                        height: calc(50% - 6.5vw);
+                        padding: 3.25vw;
+                        margin: 3.25vw;
+                        top: 0;
+                        right: 0;
+
+                        div.wrap {
+                            width: 70%;
+
+                            .Head_Login {
+                                width: calc(100% + 12vw);
+                                padding: 5vw 0;
+
+                                div {
+                                    h3 {
+                                        font-size: 5vw;
+                                        margin-left: 5vw;
+
+                                        &::before {
+                                            width: .5vw;
+                                            transform: translate(-3.25vw, 0);
+                                        }
+                                    }
+                                }
+                            }
+                            .Login {
+                                padding: 3.75vw 3.75vw 1.25vw 3.75vw;
+                                grid-template-rows: 7.5vw 7.5vw 7.5vw;
+
+                                .row {
+                                    .input-field {
+                                        margin: 0 1vw 1vw 0;
+
+                                        label {
+                                            font-size: 2vw;
+
+                                            &.active {
+                                                font-size: 1.5vw;
+                                            }
+                                        }
+                                    }
+                                    
+                                    &:last-of-type {
+                                        button {
+                                            height: 6.5vw;
+                                            font-size: 2.5vw;
+                                            span {
+                                                line-height: 6.5vw;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             .footer {
                 .wrapper {
                     font-size: 1.5vw;
@@ -11846,6 +12147,37 @@ html {
                                                 padding-left: 0;
                                                 padding-right: 0;
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .second_section_blog {
+                .modal {
+                    &-dialog {
+                        .modal-content {
+                            .modal-body {
+                                grid-template-rows: 7.5vw auto minmax(60vw, 120vw) auto;
+
+                                ul#page {
+                                    width: 80%;
+                                    grid-template-rows: repeat(2, 60vw);
+                                    grid-template-columns: 1fr;
+                                }
+
+                                ul#page-numbers {
+                                    li {
+                                        width: 2.5vw;
+                                        height: 2.5vw;
+                                        border-radius: 2.5vw;
+                                        margin: .5vw;
+
+                                        &.current {
+                                            width: 5vw;
                                         }
                                     }
                                 }
@@ -12094,6 +12426,40 @@ html {
             }
 
             .second_section_blog {
+                .modal-dialog {
+                    .modal-content {
+                        .modal-body {
+                            ul#page {
+                                .article_card {
+                                    .card-body {
+                                        div.text {
+                                            a {
+                                                .readmore {
+                                                    [data-am-linearrow] {
+                                                        .line-1 {
+                                                            transform: rotate($arrow-angle);
+                                                        }
+
+                                                        .line-2 {
+                                                            transform: rotate(-($arrow-angle));
+                                                        }
+                                                    }
+
+                                                    [data-am-linearrow~="tooltip"] {
+                                                        &:after {
+                                                            opacity: 1;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 .wrapper_full {
                     .articles_slider {
                         .articles_caption {
@@ -12131,6 +12497,238 @@ html {
                                                     &:after {
                                                         opacity: 1;
                                                     }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section_signup {
+                .wrapper_full {
+                    .Sidebar {
+                        div{
+                            &.wrap {
+                                .Signup {
+                                    .row {
+                                        &:last-of-type {
+                                            button {
+                                                &>span {
+                                                    &::after {
+                                                        width: 50% !important;
+                                                        height: 100% !important;
+                                                    }
+            
+                                                    &::before {
+                                                        width: 50% !important;
+                                                        height: 100% !important;
+                                                    }
+            
+                                                    &>span {
+                                                        &::after {
+                                                            opacity: 1 !important;
+                                                            border-bottom: .15vh solid $color1 !important;
+                                                            width: calc(50%) !important;
+                                                            height: .15vh !important;
+                                                            transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                        }
+            
+                                                        &::before {
+                                                            opacity: 1 !important;
+                                                            border-bottom: .15vh solid $color1 !important;
+                                                            width: calc(50%) !important;
+                                                            height: .15vh !important;
+                                                            transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                        }
+            
+                                                        &>span {
+                                                            color: $color1 !important;
+                                                            &::after {
+                                                                width: 100%;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .Content {
+                        .card {
+                            box-shadow: 1.25vh 1.25vh 4.5vh -2.5vh rgba(0, 0, 0, .5);
+
+                            .face {
+                                &.face1 {
+                                    background: $main-color;
+                                    transform: translateY(0);
+                                    box-shadow: none;
+
+                                    .content {
+                                        opacity: 1;
+
+                                        h4 {
+                                            font-size: 4.5vh;
+                                        }
+                                    }
+                                }
+
+                                &.face2 {
+                                    transform: translateY(0);
+
+                                    a {
+                                        &>span {
+                                            &::after {
+                                                width: 50% !important;
+                                                height: 100% !important;
+                                            }
+
+                                            &::before {
+                                                width: 50% !important;
+                                                height: 100% !important;
+                                            }
+
+                                            &>span {
+                                                &::after {
+                                                    opacity: 1 !important;
+                                                    border-bottom: .15vh solid $color1 !important;
+                                                    width: calc(50%) !important;
+                                                    height: .15vh !important;
+                                                    transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                }
+
+                                                &::before {
+                                                    opacity: 1 !important;
+                                                    border-bottom: .15vh solid $color1 !important;
+                                                    width: calc(50%) !important;
+                                                    height: .15vh !important;
+                                                    transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                }
+
+                                                &>span {
+                                                    color: $color1 !important;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section_login {
+                .wrapper_full {
+                    .Sidebar {
+                        div{
+                            &.wrap {
+                                .Login {
+                                    .row {
+                                        &:last-of-type {
+                                            button {
+                                                &>span {
+                                                    &::after {
+                                                        width: 50% !important;
+                                                        height: 100% !important;
+                                                    }
+            
+                                                    &::before {
+                                                        width: 50% !important;
+                                                        height: 100% !important;
+                                                    }
+            
+                                                    &>span {
+                                                        &::after {
+                                                            opacity: 1 !important;
+                                                            border-bottom: .15vh solid $color1 !important;
+                                                            width: calc(50%) !important;
+                                                            height: .15vh !important;
+                                                            transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                        }
+            
+                                                        &::before {
+                                                            opacity: 1 !important;
+                                                            border-bottom: .15vh solid $color1 !important;
+                                                            width: calc(50%) !important;
+                                                            height: .15vh !important;
+                                                            transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                        }
+            
+                                                        &>span {
+                                                            color: $color1 !important;
+                                                            &::after {
+                                                                width: 100%;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .Content {
+                        .card {
+                            box-shadow: 1.25vh 1.25vh 4.5vh -2.5vh rgba(0, 0, 0, .5);
+
+                            .face {
+                                &.face1 {
+                                    background: $main-color;
+                                    transform: translateY(0);
+                                    box-shadow: none;
+
+                                    .content {
+                                        opacity: 1;
+
+                                        h4 {
+                                            font-size: 4.5vh;
+                                        }
+                                    }
+                                }
+
+                                &.face2 {
+                                    transform: translateY(0);
+
+                                    a {
+                                        &>span {
+                                            &::after {
+                                                width: 50% !important;
+                                                height: 100% !important;
+                                            }
+
+                                            &::before {
+                                                width: 50% !important;
+                                                height: 100% !important;
+                                            }
+
+                                            &>span {
+                                                &::after {
+                                                    opacity: 1 !important;
+                                                    border-bottom: .15vh solid $color1 !important;
+                                                    width: calc(50%) !important;
+                                                    height: .15vh !important;
+                                                    transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                }
+
+                                                &::before {
+                                                    opacity: 1 !important;
+                                                    border-bottom: .15vh solid $color1 !important;
+                                                    width: calc(50%) !important;
+                                                    height: .15vh !important;
+                                                    transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                }
+
+                                                &>span {
+                                                    color: $color1 !important;
                                                 }
                                             }
                                         }
