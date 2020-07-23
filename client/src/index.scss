@@ -810,7 +810,7 @@ html {
 
                         &.small {
                             img {
-                                height: 10.25vh;
+                                height: 8vh;
                             }
                         }
 
@@ -2231,7 +2231,7 @@ html {
 
                             #prev {
                                 position: relative;
-                                font-size: 2vw;
+                                font-size: 2vh;
                                 transform-origin: right center;
                                 transform: translate(-50%, -50%) rotate(-90deg);
                                 color: $text-color;
@@ -2258,7 +2258,7 @@ html {
 
                             #next {
                                 position: relative;
-                                font-size: 2vw;
+                                font-size: 2vh;
                                 transform-origin: left center;
                                 transform: translate(50%, 50%) rotate(-90deg);
                                 color: $text-color;
