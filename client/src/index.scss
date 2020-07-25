@@ -600,6 +600,12 @@ html {
                     line-height: 6.5vh;
                     margin: 0 .75vh;
 
+                    &.linkedin {
+                        span {
+                            background-color: #0072b1;
+                        }
+                    }
+
                     &.instagram {
                         span {
                             background-color: #e4405f;
@@ -612,9 +618,15 @@ html {
                         }
                     }
 
-                    &.github {
+                    &.pinterest {
                         span {
-                            background-color: #211F1F;
+                            background-color: #E60023;
+                        }
+                    }
+
+                    &.dribbble {
+                        span {
+                            background-color: #ea4c89;
                         }
                     }
 
@@ -650,9 +662,11 @@ html {
                         }
                     }
 
+                    &.linkedin,
                     &.instagram,
                     &.facebook,
-                    &.github {
+                    &.pinterest,
+                    &.dribbble {
                         i {
                             position: absolute;
                             left: 0;
@@ -694,15 +708,11 @@ html {
                             margin: -3.25vh;
                         }
 
-                        .icon-facebook {
-                            color: $liteBg;
-                        }
-
-                        .fa-instagram {
-                            color: $liteBg;
-                        }
-
-                        .fa-github {
+                        .icon-facebook,
+                        .fa-instagram,
+                        .fa-pinterest,
+                        .fa-linkedin-in,
+                        .fa-dribbble {
                             color: $liteBg;
                         }
                     }

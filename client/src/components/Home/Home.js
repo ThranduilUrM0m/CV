@@ -372,7 +372,9 @@ class Home extends React.Component {
                         </div>
                         <div id="social_media">
                             <div className="icons_gatherer">
-                                <a href="# " className="icon-button github"><i className="fab fa-github"></i><span></span></a>
+                                <a href="# " className="icon-button dribbble"><i className="fab fa-dribbble"></i><span></span></a>
+                                <a href="# " className="icon-button linkedin"><i className="fab fa-linkedin-in"></i><span></span></a>
+                                <a href="# " className="icon-button pinterest"><i className="fab fa-pinterest"></i><span></span></a>
                                 <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
                                 <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
                                 <a href="# " className="icon-button scroll">
@@ -391,7 +393,7 @@ class Home extends React.Component {
                                     <p>ZAKARIAE</p><p>BOUTALEB</p>
                                 </div>
                                 <div>
-                                    <p>Website and user interface developer.</p>
+                                    <p>Full-Stack Developer & a Graphic Designer.</p>
                                     <p>Based in <b className='web'>Morocco.</b></p>
                                 </div>
                                 <p className="text">So no one told you life was gonna be this way. When it hasn't been your day, your week, your month...</p>
@@ -480,8 +482,8 @@ class Home extends React.Component {
                                 <div className="card-body">
                                     <div className="column column_1">
                                         <div className="head">
-                                            <i className="fas fa-file-code"></i>
-                                            <span>Front-end Developer</span>
+                                            <i className="fab fa-js"></i>
+                                            <span>Full-Stack Developer.</span>
                                         </div>
                                         <div className="content">
                                             <h6>Languages i'm fluent at</h6>
@@ -493,35 +495,6 @@ class Home extends React.Component {
                                                 <li className="tag_item">Css Grid</li>
                                                 <li className="tag_item">HTML</li>
                                                 <li className="tag_item">ReactJS</li>
-                                            </ul>
-                                            <h6>Tools i use</h6>
-                                            <ul className="text-muted tags">
-                                                <li className="tag_item">Bootstrap</li>
-                                                <li className="tag_item">Css Grid</li>
-                                                <li className="tag_item">Illustrator</li>
-                                                <li className="tag_item">Photohsop</li>
-                                                <li className="tag_item">Pen & Paper</li>
-                                                <li className="tag_item">Visual Studio Code</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="column column_2">
-                                        <div className="head">
-                                            <i className="fas fa-icons"></i>
-                                            <span>Design.</span>
-                                        </div>
-                                        <div className="content">
-                                            <div></div>
-                                        </div>
-                                    </div>
-                                    <div className="column column_3">
-                                        <div className="head">
-                                            <i className="fab fa-js"></i>
-                                            <span>Back-end Developer</span>
-                                        </div>
-                                        <div className="content">
-                                            <h6>Languages i'm fluent at</h6>
-                                            <ul className="text-muted tags">
                                                 <li className="tag_item">JSON</li>
                                                 <li className="tag_item">NoSQL</li>
                                                 <li className="tag_item">JavaScript</li>
@@ -532,7 +505,49 @@ class Home extends React.Component {
                                             </ul>
                                             <h6>Tools i use</h6>
                                             <ul className="text-muted tags">
+                                                <li className="tag_item">Bootstrap</li>
+                                                <li className="tag_item">Css Grid</li>
+                                                <li className="tag_item">Illustrator</li>
+                                                <li className="tag_item">Photohsop</li>
+                                                <li className="tag_item">Pen & Paper</li>
+                                                <li className="tag_item">Visual Studio Code</li>
                                                 <li className="tag_item">Git</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="column column_2">
+                                        <div className="head">
+                                            <i className="fas fa-icons"></i>
+                                            <span></span>
+                                        </div>
+                                        <div className="content">
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <div className="column column_3">
+                                        <div className="head">
+                                            <i className="fas fa-swatchbook"></i>
+                                            <span>Graphic Designer.</span>
+                                        </div>
+                                        <div className="content">
+                                            <h6>What I Make</h6>
+                                            <ul className="text-muted tags">
+                                                <li className="tag_item">Art direction</li>
+                                                <li className="tag_item">Branding</li>
+                                                <li className="tag_item">Branding Identity</li>
+                                                <li className="tag_item">Illustration</li>
+                                                <li className="tag_item">Interface Design</li>
+                                                <li className="tag_item">Product Design</li>
+                                                <li className="tag_item">Strategy</li>
+                                                <li className="tag_item">Web Design</li>
+                                                <li className="tag_item">UI</li>
+                                                <li className="tag_item">UX</li>
+                                            </ul>
+                                            <h6>Tools I Use</h6>
+                                            <ul className="text-muted tags">
+                                                <li className="tag_item">Adobe Photoshop</li>
+                                                <li className="tag_item">Adobe Illustrator</li>
+                                                <li className="tag_item">Sketch</li>
                                             </ul>
                                         </div>
                                     </div>
