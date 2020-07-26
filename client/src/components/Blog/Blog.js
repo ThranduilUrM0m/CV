@@ -289,7 +289,7 @@ class Blog extends React.Component {
 		const { currentPage, todosPerPage, sort, timeframe, categorie, tags } = this.state;
 		
 		return (
-			<FullPage scrollMode={'normal'}>
+			<FullPage scrollMode={'full-page'}>
 				<Slide>
 					<section className="active first_section_blog">
 						<span className="parallax-layer parallax-layer__1 l_name" data-parallax-direction="plus" data-parallax-deep="1000">Boutaleb<span className="outlined">Boutaleb</span>BoutalebBoutaleb</span>
@@ -300,15 +300,17 @@ class Blog extends React.Component {
 								<p>My father was an educator, My grandfather was an educator, i was born to educate, and my sons will also educate.</p>
 							</div>
 							<div id="social_media">
-                                <div className="icons_gatherer">
-                                    <a href="# " className="icon-button github"><i className="fab fa-github"></i><span></span></a>
-                                    <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                    <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-                                    <a href="# " className="icon-button scroll">
-                                        
-                                    </a>
-                                </div>
-                            </div>
+								<div className="icons_gatherer">
+									<a href="# " className="icon-button dribbble"><i className="fab fa-dribbble"></i><span></span></a>
+									<a href="# " className="icon-button behance"><i className="fab fa-behance"></i><span></span></a>
+									<a href="# " className="icon-button linkedin"><i className="fab fa-linkedin-in"></i><span></span></a>
+									<a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+									<a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+									<a href="# " className="icon-button scroll">
+										
+									</a>
+								</div>
+							</div>
 						</div>
 						<div className="wrapper right_part">
 							<div className="caption">

@@ -6,7 +6,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const cluster = require('cluster');
 
-const http = require('http');
+const https = require('https');
 const socketIO = require('socket.io');
 
 let workers = [];
@@ -104,7 +104,7 @@ const setUpExpress = () => {
     const port = process.env.PORT || 8800;
 
     //our server instance
-    const server = http.createServer(app);
+    const server = https.createServer(app);
 
     //This creates our socket using the instance of the server
     const io = socketIO(server);

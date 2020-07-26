@@ -350,7 +350,7 @@ class Home extends React.Component {
     render() {
         const { articles, projects } = this.props;
         return (
-            <FullPage scrollMode={'normal'}>
+            <FullPage scrollMode={'full-page'}>
                 <Slide>
                     <section className="second_section">
                         <div className="Hello">
@@ -373,8 +373,8 @@ class Home extends React.Component {
                         <div id="social_media">
                             <div className="icons_gatherer">
                                 <a href="# " className="icon-button dribbble"><i className="fab fa-dribbble"></i><span></span></a>
+                                <a href="# " className="icon-button behance"><i className="fab fa-behance"></i><span></span></a>
                                 <a href="# " className="icon-button linkedin"><i className="fab fa-linkedin-in"></i><span></span></a>
-                                <a href="# " className="icon-button pinterest"><i className="fab fa-pinterest"></i><span></span></a>
                                 <a href="# " className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
                                 <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
                                 <a href="# " className="icon-button scroll">
