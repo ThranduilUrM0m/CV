@@ -8,12 +8,12 @@ const cluster = require('cluster');
 
 const https = require('https');
 const fs = require('fs');
+const socketIO = require('socket.io');
+
 const options = {
     key: fs.readFileSync('key.pem'),
     cert: fs.readFileSync('cert.pem')
 };
-
-const socketIO = require('socket.io');
 
 let workers = [];
 
