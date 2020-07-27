@@ -7,7 +7,7 @@ import rootReducer from './reducers';
 const socketURL =
   process.env.NODE_ENV === 'production'
     ? window.location.hostname
-    : 'http://localhost:8800';
+    : 'https://localhost:8800';
 
 const initialState = {},
       socket = io(socketURL, {'transports': ['websocket', 'polling']}),
