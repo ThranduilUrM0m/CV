@@ -308,7 +308,7 @@ class Footer extends React.Component {
                                 </div>
                                 <div>
                                     <i className="fas fa-envelope"></i>
-                                    <span>zakariaeboutaleb@gmail.com</span>
+                                    <span>contact@boutaleb.dev</span>
                                 </div>
                             </div>
                             <div className="modal-content">

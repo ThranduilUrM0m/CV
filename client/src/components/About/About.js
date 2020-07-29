@@ -103,7 +103,7 @@ class About extends React.Component {
                                 <a href="https://www.behance.net/zakariaboutale" className="icon-button behance"><i className="fab fa-behance"></i><span></span></a>
                                 <a href="https://www.linkedin.com/in/zakariae-bou-taleb-657953122/" className="icon-button linkedin"><i className="fab fa-linkedin-in"></i><span></span></a>
                                 <a href="https://www.instagram.com/iamboutaleb/" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                <a href="# " className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                <a href="https://fb.me/iamboutaleb" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
                                 <a href="# " className="icon-button scroll">
                                     
                                 </a>

@@ -14,7 +14,7 @@ async function verification_email(user_email, text) {
         }
     });
     let info = await transporter.sendMail({
-        from: 'yassmineboutalebqlii@gmail.com', // sender address
+        from: 'contact@boutaleb.dev', // sender address
         to: user_email, // list of receivers
         subject: 'Hello ✔ and Welcome', // Subject line
         text: text, // plain text body
@@ -32,7 +32,7 @@ async function main(mail_username, mail_location, mail_email, mail_phone, mail_c
     // send mail with defined transport object
     let info = await transporter.sendMail({
         from: mail_email, // sender address
-        to: 'zakariaeboutaleb@gmail.com', // list of receivers
+        to: 'contact@boutaleb.dev', // list of receivers
         subject: 'username : '+mail_username+' location : '+mail_location+' phone : '+mail_phone, // Subject line
         text: mail_content, // plain text body
     });
