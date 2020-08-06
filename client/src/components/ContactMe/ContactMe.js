@@ -84,7 +84,7 @@ class ContactMe extends React.Component {
     }
     render() {
         return(
-            <FullPage scrollMode={'full-page'}>
+            <FullPage scrollMode={'normal'}>
 				<Slide>
 					<section className="first_section_contact">
                         <div className="wrapper_full">
