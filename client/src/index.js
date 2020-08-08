@@ -22,6 +22,9 @@ import Dashboard from './components/Dashboard/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import Confirmation from './components/Confirmation/Confirmation';
 import * as serviceWorker from './serviceWorker';
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-174900398-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(
     <Router>
