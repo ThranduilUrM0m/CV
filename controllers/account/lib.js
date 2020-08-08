@@ -2,15 +2,31 @@ const User = require('../../models/Users.js');
 const Token = require('../../models/Tokens.js');
 const passwordHash = require("password-hash");
 const nodemailer = require('nodemailer');
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
 const crypto = require('crypto');
 require('dotenv').config()
+
+const myOAuth2Client = new OAuth2(
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET,
+    'https://developers.google.com/oauthplayground'
+);
+myOAuth2Client.setCredentials({
+    refresh_token: process.env.REFRESH_TOKEN
+});
+const myAccessToken = oauth2Client.getAccessToken();
 
 async function verification_email(user_email, text) {
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.EMAIL, // generated ethereal user
-            pass: process.env.PASSWORD // generated ethereal password
+            type: "OAuth2",
+            user: process.env.EMAIL, //your gmail account you used to set the project up in google cloud console"
+            clientId: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            refreshToken: process.env.REFRESH_TOKEN,
+            accessToken: myAccessToken //access token variable we defined earlier
         }
     });
     let info = await transporter.sendMail({
@@ -25,8 +41,12 @@ async function main(mail_username, mail_location, mail_email, mail_phone, mail_c
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.EMAIL, // generated ethereal user
-            pass: process.env.PASSWORD // generated ethereal password
+            type: "OAuth2",
+            user: process.env.EMAIL, //your gmail account you used to set the project up in google cloud console"
+            clientId: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            refreshToken: process.env.REFRESH_TOKEN,
+            accessToken: myAccessToken //access token variable we defined earlier
         }
     });
     // send mail with defined transport object
