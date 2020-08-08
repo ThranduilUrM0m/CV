@@ -15,7 +15,7 @@ const myOAuth2Client = new OAuth2(
 myOAuth2Client.setCredentials({
     refresh_token: process.env.REFRESH_TOKEN
 });
-const myAccessToken = oauth2Client.getAccessToken();
+const myAccessToken = myOAuth2Client.getAccessToken();
 
 async function verification_email(user_email, text) {
     let transporter = nodemailer.createTransport({
