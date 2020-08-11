@@ -73,8 +73,8 @@ const setUpExpress = () => {
     mongoose.set('debug', true);
 
     var db = mongoose.connection;
-    db.on('error', ()=> {console.log( '---Gethyl FAILED to connect to mongoose')});
-    db.once('open', () => {console.log( '+++Gethyl connected to mongoose')});
+    db.on('error', ()=> {console.log( '---FAILED to connect to mongoose')});
+    db.once('open', () => {console.log( '+++Connected to mongoose')});
 
     app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
     app.use(bodyParser.json({ limit: '50mb' }));

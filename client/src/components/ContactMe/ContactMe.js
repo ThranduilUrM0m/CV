@@ -13,7 +13,8 @@ class ContactMe extends React.Component {
         this.handleGradient = this.handleGradient.bind(this);
     }
     componentDidMount() {
-        this.handleGradient();
+        //this.handleGradient();
+        $('.fixedHeaderContainer').addClass('dark_mode');
     }
     handleClick(href) {
         $('html,body').animate({scrollTop: $('#'+href).offset().top}, 200, function() {
@@ -22,12 +23,12 @@ class ContactMe extends React.Component {
     }
     handleGradient() {
         var colors = new Array(
-            [210, 215, 211],
-            [238, 238, 238],
-            [189, 195, 199],
-            [218, 223, 255],
-            [191, 191, 191],
-            [107, 185, 240]
+            [45, 45, 45],
+            [40, 40, 40],
+            [35, 35, 35],
+            [30, 30, 30],
+            [25, 25, 25],
+            [20, 20, 20]
         );
           
         var step = 0;
@@ -39,7 +40,7 @@ class ContactMe extends React.Component {
         var colorIndices = [0,1,2,3];
           
         //transition speed
-        var gradientSpeed = 0.002;
+        var gradientSpeed = 0.05;
           
         function updateGradient() {
             
@@ -62,7 +63,7 @@ class ContactMe extends React.Component {
             var color2 = "rgb("+r2+","+g2+","+b2+")";
           
             $('#gradient').css({
-                background: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"
+                borderColor: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"
             }).css({
                 background: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"
             });
@@ -83,11 +84,11 @@ class ContactMe extends React.Component {
         setInterval(updateGradient,10);
     }
     render() {
-        return(
+        return (
             <FullPage scrollMode={'normal'}>
 				<Slide>
 					<section className="first_section_contact">
-                        <div className="wrapper_full">
+                        <div className="wrapper_full" id="gradient">
 							<div id="social_media">
                                 <div className="icons_gatherer">
                                     <a href="https://dribbble.com/iamboutaleb" className="icon-button dribbble"><i className="fab fa-dribbble"></i><span></span></a>
@@ -100,8 +101,17 @@ class ContactMe extends React.Component {
                                     </a>
                                 </div>
                             </div>
-                            <div className="text" id="gradient">
-                                <span className="circle"></span>
+                            <div className="text">
+                                <div className="scene">
+                                    <div class="cube">
+                                        <div class="cube__face cube__face--front"></div>
+                                        <div class="cube__face cube__face--back"></div>
+                                        <div class="cube__face cube__face--right"></div>
+                                        <div class="cube__face cube__face--left"></div>
+                                        <div class="cube__face cube__face--top"></div>
+                                        <div class="cube__face cube__face--bottom"></div>
+                                    </div>
+                                </div>
                                 <div className="email_me">
                                     <h6>For Inquiries</h6>
                                     <button id="reach_out_button" onClick={() => this.handleClick('footer_to')} type="button">

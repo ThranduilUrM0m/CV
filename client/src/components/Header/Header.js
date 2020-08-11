@@ -413,8 +413,8 @@ class Header extends React.Component {
                     <li><span className="item item-0"></span></li>
                     <li><span className="item item-1"><Link to='/' className="nav-link" id="_home_link"> Home. </Link></span></li>
                     <li><span className="item item-2"><Link to='/blog' className="nav-link" id="_blog_link"> Blog. </Link></span></li>
-                    <li><span className="item item-3"><Link to='/about' className="nav-link" id="_about_link"> About Me. </Link></span></li>
                     <li><span className="item item-4"><Link to='/minttea' className="nav-link" id="_minttea_link"> Mint Tea. </Link></span></li>
+                    <li><span className="item item-3"><Link to='/about' className="nav-link" id="_about_link"> About Me. </Link></span></li>
                     <li><span className="item item-5"><Link to='/contact' className="nav-link" id="_contact_link"> Contact Me. </Link></span></li>
                 </ul>
             </>

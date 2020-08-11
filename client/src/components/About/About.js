@@ -28,7 +28,7 @@ class About extends React.Component {
     }
     componentDidMount() {
         this.typewriting();
-        $('.fixedHeaderContainer').removeClass('blog_header');
+        $('.fixedHeaderContainer').addClass('dark_mode');
     }
     typewriting() {
         var TxtType = function(el, toRotate, period) {
@@ -130,18 +130,16 @@ class About extends React.Component {
                                         <span>I'm</span>
                                     </h1>
                                     <h1>
-                                        <div className="typewrite" data-period="2000" data-type='[ "Zakariae.", "Boutaleb.", "A developer.", "A Teacher." ]'>
+                                        <div className="typewrite" data-period="2000" data-type='[ "boutaleb.", "A Web Designer.", "A Teacher." ]'>
                                             <span className="wrap"></span>
                                         </div>
                                     </h1>
                                 </div>
                                 <span className="lorem">
-                                    <p>I'm an elemantary teacher indeed, & I'm also a multidisciplinary developer who learned to design at a very young age, to yarn people's stories visually, & now i specialize in responsive web apps and websites.</p>
-                                    <p>I concentrate on needs in order to come up with a product to be remembered.</p>
-                                    <p>I am now a <b>Freelancer</b> and if you would like to know more about me,</p>
-                                    <p>How about you read something i wrote for you ?</p>
+                                    <h5><b>Freelancer</b> Web Designer, UI/UX Designer,</h5>
+                                    <h6>How about you read something i wrote for you !</h6>
                                 </span>
-                                <Link to={`blog/${_.get(_.find(articles, {'title': 'about me'}), '_id')}`}>
+                                <Link to={`blog/${_.get(_.find(articles, {'title': 'boutaleb.'}), '_id')}`}>
                                     <div className="readmore">
                                         <button data-am-linearrow="tooltip tooltip-bottom" display-name="Read More">
                                             <div className="line line-1"></div>

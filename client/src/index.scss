@@ -8,6 +8,7 @@
 
 $main-color: #3dc1d3;
 $purple: #f985de;
+$black: #2d2d2d;
 $text-color: #777;
 $text-color-light: #ccc;
 $border-color: #eee;
@@ -19,7 +20,6 @@ Helvetica,
 Arial,
 sans-serif;
 $calendar-red: #DD5044;
-$black: #111;
 $white: #fff;
 $dark-blue: tint(#2E3C4A, 15%);
 $light-blue: tint($dark-blue, 25%);
@@ -47,12 +47,9 @@ $itemBg3: #344e5c;
 $itemBg4: #7ed6df;
 $liteBg: #e1e8ee;
 $warmWhite: #e9eced;
-$color1: rgba(41, 41, 41, 1);
-$color1Faded: rgba(41, 41, 41, .2);
 $green: #4CAF50;
 $mainFont: 'Roboto',
 sans-serif;
-$mainColor: #333;
 $liteBg_gray: #E1DFE0;
 
 $Gradient: $main-color;
@@ -173,11 +170,11 @@ $strips-angle: 45deg;
 
 @keyframes pulse {
     from {
-        box-shadow: 0 0 0 0 rgba($color1, .4);
+        box-shadow: 0 0 0 0 rgba($black, .4);
     }
 
     to {
-        box-shadow: 0 0 0 7.5vh rgba($color1, 0);
+        box-shadow: 0 0 0 7.5vh rgba($black, 0);
     }
 }
 
@@ -439,7 +436,7 @@ img {
         select {
             display: initial;
             box-sizing: border-box;
-            color: $color1;
+            color: $black;
             height: 100%;
             margin: 0;
             box-shadow: none;
@@ -448,7 +445,7 @@ img {
 
         textarea {
             box-sizing: border-box;
-            color: $color1;
+            color: $black;
             height: calc(100% - 1vh);
             margin: 1vh 0 0 0;
             padding: 0;
@@ -555,7 +552,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
 //Animations DAROUUURI, like as if you're making a motion video with premiere pro
 body,
 html {
-    color: black;
+    color: $black;
     background-color: white;
     height: 100%;
     font-family: $mainFont;
@@ -637,7 +634,7 @@ html {
                         &::before {
                             content: '';
                             position: absolute;
-                            border: .5vh solid #000;
+                            border: .5vh solid $black;
 
                             height: calc(100% - 1.5vh);
                             width: 3.25vh;
@@ -657,7 +654,7 @@ html {
                             width: .75vh;
                             height: .75vh;
                             border-radius: .75vh;
-                            background: #000;
+                            background: $black;
                             animation: scroll .5s infinite ease-out;
                         }
                     }
@@ -672,7 +669,7 @@ html {
                             left: 0;
                             top: 0;
                             background: none;
-                            color: #000;
+                            color: $black;
                             transition: all .3s ease-out;
                             z-index: 10;
 
@@ -712,8 +709,9 @@ html {
                         .fa-instagram,
                         .fa-pinterest,
                         .fa-linkedin-in,
-                        .fa-dribbble {
-                            color: $liteBg;
+                        .fa-dribbble,
+                        .fa-behance {
+                            color: white;
                         }
                     }
                 }
@@ -725,7 +723,7 @@ html {
                     height: 25.5vh;
                     left: 50%;
                     transform: translate(-50%, -120%);
-                    background: #000;
+                    background: $black;
                     cursor: default;
                 }
             }
@@ -753,9 +751,9 @@ html {
                     flex-flow: row nowrap;
 
                     .navToggle {
-                        fill: black;
-                        stroke: black;
-                        color: black;
+                        fill: $black;
+                        stroke: $black;
+                        color: $black;
                         cursor: pointer;
                         display: flex;
                         align-items: center;
@@ -838,7 +836,7 @@ html {
                             position: absolute;
                             content: "";
                             display: inline-block;
-                            background: black;
+                            background: $black;
                             top: 100%;
                             transform: translate(0, -100%);
 
@@ -858,7 +856,7 @@ html {
                             height: 7.5vh;
 
                             input {
-                                background: black;
+                                background: $black;
                                 color: $liteBg;
                                 outline: none;
                                 overflow: hidden;
@@ -908,7 +906,7 @@ html {
 
                                 width: 2.5vh;
                                 height: 2.5vh;
-                                border: .5vh solid black;
+                                border: .5vh solid $black;
                                 right: 3.75vh;
 
                                 &::before,
@@ -934,7 +932,7 @@ html {
                                     left: 100%;
                                     transform-origin: left;
                                     transform: translate(25%, 25%) rotate(45deg);
-                                    background: black;
+                                    background: $black;
                                 }
 
                                 &.active {
@@ -1003,64 +1001,10 @@ html {
                 }
             }
 
-            /* &.blog_header {
+            &.dark_mode {
 				.wrapper {
 					header {
-						form {
-							&::before {
-								background: white;
-							}
-							.search-wrapper {
-								input {
-									background: white;
-									color: black;
-									&::placeholder {
-										color: #000;
-									}
-								}
-								.search {
-									color: black;
-									border: .5vh solid white;
-									&:after {
-										background: white;
-									}
-									&.active {
-										border-color: black;
-									}
-									&.active:before {
-										background: black;
-									}
-									&.active:after {
-										background: black;
-									}
-								}
-								.hover_effect {
-									border-radius: 0;
-									display: block;
-									height: 0;
-									left: 50%;
-									margin: 0;
-									position: absolute;
-									top: 50%;
-									transition: all .3s ease-out;
-									width: 0;
-									background-color: $main-color;
-								}
-								&:hover .hover_effect {
-									width: 6.5vh;
-									height: 6.5vh;
-									border-radius: 6.5vh;
-									margin: -3.25vh;
-								}
-								&:hover .search {
-									border-color: black;
-								}
-								&:hover .search:after {
-									background: black;
-								}
-							}
-						}
-						.navToggle {
+						.navToggle:not(.active) {
 							fill: white;
 							stroke: white;
 							color: white;
@@ -1071,9 +1015,51 @@ html {
 								box-shadow: 2.5vh 2.5vh 1.25vh -3.25vh rgba(255, 255, 255, .6);
 							}
 						}
+						form {
+							&::before {
+								background: white;
+							}
+							.search-wrapper {
+								input {
+									background: white;
+									color: $black;
+									&::placeholder {
+										color: $black;
+									}
+                                }
+                                label {
+                                    color: $black;
+                                }
+								.search {
+									color: $black;
+									border: .5vh solid white;
+									&:after {
+										background: white;
+									}
+									&.active {
+										border-color: $black;
+									}
+									&.active:before {
+										background: $black;
+									}
+									&.active:after {
+										background: $black;
+									}
+								}
+								.hover_effect {
+									background-color: white;
+								}
+								&:hover .search {
+									border-color: $black;
+								}
+								&:hover .search:after {
+									background: $black;
+								}
+							}
+						}
 					}
 				}
-			} */
+			}
         }
 
         #search-modal {
@@ -1189,15 +1175,15 @@ html {
                                         .categorie {
                                             text-align: -webkit-right;
                                             font-size: 2vh;
-                                            color: black;
-                                            border: .15vh solid black;
+                                            color: $black;
+                                            border: .15vh solid $black;
                                             padding: .5vh 1.25vh;
                                             margin-bottom: .5vh;
                                             width: fit-content;
                                         }
 
                                         h4 {
-                                            color: black;
+                                            color: $black;
                                             text-align: left;
                                             letter-spacing: 0;
                                             transition: all .15s ease-out 0s;
@@ -1237,7 +1223,7 @@ html {
                                                         margin-top: -($arrow-height / 2);
                                                         width: $arrow-width;
                                                         height: $arrow-height;
-                                                        background-color: black;
+                                                        background-color: $black;
                                                         transition: transform $transition-speed ease-out, background-color $transition-speed ease-out;
                                                     }
 
@@ -1266,7 +1252,7 @@ html {
                                                         outline: none;
 
                                                         .line {
-                                                            background-color: darken(black, 20%);
+                                                            background-color: darken( $black, 20%);
                                                         }
                                                     }
                                                 }
@@ -1295,7 +1281,7 @@ html {
                                                         transform: translateX(-50%) translateY(-50%);
                                                         transition: opacity $transition-speed ease-out, color $transition-speed ease-out;
                                                         opacity: 0;
-                                                        color: black;
+                                                        color: $black;
                                                     }
 
                                                     &:hover,
@@ -1307,7 +1293,7 @@ html {
 
                                                     &:focus {
                                                         &:after {
-                                                            color: darken(black, 20%);
+                                                            color: darken( $black, 20%);
                                                         }
                                                     }
                                                 }
@@ -1449,7 +1435,7 @@ html {
             position: fixed;
             height: 100vh;
             width: 100vw;
-            background: black;
+            background: $black;
             transition: opacity .3s ease-out 0s;
             opacity: .9;
             display: initial;
@@ -1483,7 +1469,7 @@ html {
                 margin: 0 auto;
 
                 .item {
-                    color: $color1;
+                    color: $black;
                     width: 100%;
                     height: fit-content;
                     display: block;
@@ -1500,7 +1486,7 @@ html {
                         text-align: -webkit-auto;
                         margin: 0;
                         padding: 0;
-                        color: $color1;
+                        color: $black;
                         transition: all .3s ease-out;
                         padding: 0;
                         display: flex;
@@ -1509,7 +1495,7 @@ html {
                         font-size: 3.75vh;
 
                         &.active {
-                            color: $color1;
+                            color: $black;
                             font-size: 5vh;
 
                             &::after {
@@ -1552,7 +1538,7 @@ html {
 
                     &:hover {
                         .nav-link:not(.active) {
-                            color: black;
+                            color: $black;
                             box-shadow: 0 0 .33vh rgba(white, .1);
 
                             &::before {
@@ -1980,7 +1966,7 @@ html {
                                     position: relative;
 
                                     h2 {
-                                        color: $color1;
+                                        color: $black;
                                         letter-spacing: 0;
                                         transition: all .15s ease-out 0s;
                                         position: relative;
@@ -1997,7 +1983,7 @@ html {
                                         -webkit-appearance: none;
                                         border: none;
                                         background: none;
-                                        color: black;
+                                        color: $black;
                                         width: 38.5vh;
                                         height: 7.5vh;
                                         font-size: 3vh;
@@ -2169,7 +2155,7 @@ html {
                                                     }
 
                                                     &>span {
-                                                        color: $color1;
+                                                        color: $black;
                                                     }
                                                 }
                                             }
@@ -2192,7 +2178,7 @@ html {
                                 }
 
                                 .body {
-                                    border-left: .15vh solid black;
+                                    border-left: .15vh solid $black;
                                     padding-left: 2.5vh;
                                 }
                             }
@@ -2427,7 +2413,7 @@ html {
 
                         .name {
                             font-weight: normal;
-                            color: rgba($color: black, $alpha: .8);
+                            color: rgba($color: $black, $alpha: .8);
                             margin-bottom: .5vh;
                             margin-top: .5vh;
 
@@ -2491,7 +2477,7 @@ html {
                                 font-style: normal;
                                 font-size: 2.5vh;
                                 line-height: 2.5vh;
-                                color: rgba($color: black, $alpha: .8);
+                                color: rgba($color: $black, $alpha: .8);
                                 margin-bottom: .5vh;
                                 margin-top: .5vh;
                                 margin-left: 14vh;
@@ -2502,7 +2488,7 @@ html {
                                     position: absolute;
                                     width: 12vh;
                                     height: .15vh;
-                                    background-color: black;
+                                    background-color: $black;
                                     left: -1.25vh;
                                     top: 0;
                                     transform: translate(-100%, 1.25vh);
@@ -2514,7 +2500,7 @@ html {
                             -webkit-appearance: none;
                             border: none;
                             background: none;
-                            color: black;
+                            color: $black;
                             width: 38.5vh;
                             height: 7.5vh;
                             font-size: 3vh;
@@ -2684,7 +2670,7 @@ html {
                                     position: relative;
 
                                     h2 {
-                                        color: $color1;
+                                        color: $black;
                                         letter-spacing: 0;
                                         transition: all .15s ease-out 0s;
                                         position: relative;
@@ -2724,16 +2710,16 @@ html {
                                             }
 
                                             &::before {
-                                                border-top: .5vh solid $color1;
-                                                border-right: .5vh solid $color1;
+                                                border-top: .5vh solid $black;
+                                                border-right: .5vh solid $black;
                                                 top: -.5vh;
                                                 left: -.5vh;
                                                 transition: width .1s ease-out .3s, height .1s ease-out .2s, visibility 0s .4s ease-out;
                                             }
 
                                             &::after {
-                                                border-left: .5vh solid $color1;
-                                                border-bottom: .5vh solid $color1;
+                                                border-left: .5vh solid $black;
+                                                border-bottom: .5vh solid $black;
                                                 bottom: 0;
                                                 right: 0;
                                                 transition: width .1s ease-out .1s, height .1s ease-out, visibility 0s .2s ease-out;
@@ -2821,7 +2807,7 @@ html {
                                                     }
 
                                                     &>span {
-                                                        color: $color1;
+                                                        color: $black;
                                                     }
                                                 }
                                             }
@@ -2844,7 +2830,7 @@ html {
                                 }
 
                                 .body {
-                                    border-left: .15vh solid black;
+                                    border-left: .15vh solid $black;
                                     padding-left: 2.5vh;
                                 }
                             }
@@ -3084,7 +3070,7 @@ html {
                                     li {
                                         position: relative;
                                         box-sizing: border-box;
-                                        color: #000;
+                                        color: $black;
                                         background: lighten($color: $main-color, $amount: 20);
                                         height: 4.5vh;
                                         border-radius: .5vh 0 0 .5vh;
@@ -3221,7 +3207,7 @@ html {
             .l_name {
                 top: calc(25% + 20.5vh);
                 right: 0;
-                color: rgba($color: black, $alpha: .8);
+                color: rgba($color: $black, $alpha: .8);
             }
 
             .wrapper {
@@ -3233,7 +3219,7 @@ html {
                     position: relative;
 
                     .caption {
-                        color: black;
+                        color: $black;
                         position: absolute;
                         top: 60%;
                         left: 0;
@@ -3263,7 +3249,7 @@ html {
                     position: relative;
 
                     .caption {
-                        color: black;
+                        color: $black;
                         position: absolute;
                         top: 60%;
                         right: 0;
@@ -3449,7 +3435,7 @@ html {
                                                     white-space: nowrap;
 
                                                     &:hover {
-                                                        background-color: rgba($color: #000000, $alpha: .25);
+                                                        background-color: rgba($color: $black, $alpha: .25);
                                                     }
                                                 }
                                             }
@@ -3530,7 +3516,7 @@ html {
 
                                                 h4 {
                                                     position: relative;
-                                                    color: black;
+                                                    color: $black;
                                                     text-align: -webkit-left;
                                                     letter-spacing: 0;
                                                     margin: 0;
@@ -3547,8 +3533,8 @@ html {
 
                                                     width: fit-content;
                                                     font-size: 2vh;
-                                                    color: black;
-                                                    border: .15vh solid black;
+                                                    color: $black;
+                                                    border: .15vh solid $black;
                                                     padding: .5vh 1.25vh;
                                                     margin-bottom: 0;
                                                 }
@@ -3600,7 +3586,7 @@ html {
                                                                 margin-top: -($arrow-height / 2);
                                                                 width: $arrow-width;
                                                                 height: $arrow-height;
-                                                                background-color: black;
+                                                                background-color: $black;
                                                                 transition: transform $transition-speed ease-out, background-color $transition-speed ease-out;
                                                             }
 
@@ -3629,7 +3615,7 @@ html {
                                                                 outline: none;
 
                                                                 .line {
-                                                                    background-color: darken(black, 20%);
+                                                                    background-color: darken( $black, 20%);
                                                                 }
                                                             }
                                                         }
@@ -3658,7 +3644,7 @@ html {
                                                                 transform: translateX(-50%) translateY(-50%);
                                                                 transition: opacity $transition-speed ease-out, color $transition-speed ease-out;
                                                                 opacity: 0;
-                                                                color: black;
+                                                                color: $black;
                                                             }
 
                                                             &:hover,
@@ -3670,7 +3656,7 @@ html {
 
                                                             &:focus {
                                                                 &:after {
-                                                                    color: darken(black, 20%);
+                                                                    color: darken( $black, 20%);
                                                                 }
                                                             }
                                                         }
@@ -3802,7 +3788,7 @@ html {
                     font-size: 33.25vh;
                     line-height: 33.25vh;
                     font-weight: bold;
-                    color: black;
+                    color: $black;
                     transform: translate(0, 35%);
                     z-index: 1;
 
@@ -3824,7 +3810,7 @@ html {
                 .caption {
                     position: relative;
                     font-size: 6.5vh;
-                    background-color: black;
+                    background-color: $black;
 
 
                     display: flex;
@@ -3859,7 +3845,7 @@ html {
                         place-content: stretch;
 
                         h1 {
-                            color: black;
+                            color: $black;
                             font-weight: lighter;
 
                             strong {
@@ -3871,7 +3857,7 @@ html {
                             -webkit-appearance: none;
                             border: none;
                             background: none;
-                            color: black;
+                            color: $black;
                             width: 100%;
                             height: 7.5vh;
                             font-size: 3vh;
@@ -4056,7 +4042,7 @@ html {
                                             }
 
                                             h4 {
-                                                color: $color1;
+                                                color: $black;
                                                 text-align: -webkit-left;
                                                 letter-spacing: 0;
                                                 transition: all .15s ease-out 0s;
@@ -4142,7 +4128,7 @@ html {
                                                             margin-top: -($arrow-height / 2);
                                                             width: $arrow-width;
                                                             height: $arrow-height;
-                                                            background-color: black;
+                                                            background-color: $black;
                                                             transition: transform $transition-speed ease-out, background-color $transition-speed ease-out;
                                                         }
 
@@ -4171,7 +4157,7 @@ html {
                                                             outline: none;
 
                                                             .line {
-                                                                background-color: darken(black, 20%);
+                                                                background-color: darken( $black, 20%);
                                                             }
                                                         }
                                                     }
@@ -4200,7 +4186,7 @@ html {
                                                             transform: translateX(-50%) translateY(-50%);
                                                             transition: opacity $transition-speed ease-out, color $transition-speed ease-out;
                                                             opacity: 0;
-                                                            color: black;
+                                                            color: $black;
                                                         }
 
                                                         &:hover,
@@ -4212,7 +4198,7 @@ html {
 
                                                         &:focus {
                                                             &:after {
-                                                                color: darken(black, 20%);
+                                                                color: darken( $black, 20%);
                                                             }
                                                         }
                                                     }
@@ -4297,16 +4283,16 @@ html {
                                         }
 
                                         &::before {
-                                            border-top: 2.5vh solid $color1;
-                                            border-right: 2.5vh solid $color1;
+                                            border-top: 2.5vh solid $black;
+                                            border-right: 2.5vh solid $black;
                                             transition: width .1s ease-out .3s, height .1s ease-out .2s, visibility 0s .4s ease-out;
                                             top: -2.5vh;
                                             left: -2.5vh;
                                         }
 
                                         &::after {
-                                            border-left: 2.5vh solid $color1;
-                                            border-bottom: 2.5vh solid $color1;
+                                            border-left: 2.5vh solid $black;
+                                            border-bottom: 2.5vh solid $black;
                                             bottom: -2.5vh;
                                             right: -2.5vh;
                                             transition: width .1s ease-out .1s, height .1s ease-out, visibility 0s .2s ease-out;
@@ -4351,7 +4337,7 @@ html {
                                 width: 2vh;
                                 height: 2vh;
                                 display: inline-block;
-                                background: #000;
+                                background: $black;
                                 opacity: .2;
                                 margin: 0 .75vh;
                                 border-radius: 3.25vh;
@@ -4361,7 +4347,7 @@ html {
 
                             .swiper-pagination-bullet-active {
                                 opacity: 1;
-                                background: #000000;
+                                background: $black;
                                 width: 4.5vh;
                                 transition-delay: 0s;
 
@@ -4384,7 +4370,7 @@ html {
                             padding: 0;
                             margin: 0;
                             border: 0;
-                            color: rgba($color: black, $alpha: .8);
+                            color: rgba($color: $black, $alpha: .8);
                             background: rgba(0, 0, 0, 0);
                             backdrop-filter: blur(.5vh);
                             outline: none;
@@ -4392,7 +4378,7 @@ html {
                             z-index: 999;
 
                             &:hover {
-                                color: rgba($color: black, $alpha: 1.0);
+                                color: rgba($color: $black, $alpha: 1.0);
                                 background: rgba(0, 0, 0, .2);
                             }
 
@@ -4726,7 +4712,7 @@ html {
                                         margin-bottom: 2.5vh;
 
                                         textarea.materialize-textarea {
-                                            color: $color1;
+                                            color: $black;
                                             padding: 0;
                                             margin: 0;
                                             height: calc(100% - .15vh);
@@ -4764,7 +4750,7 @@ html {
                                         -webkit-appearance: none;
                                         border: none;
                                         background: none;
-                                        color: black;
+                                        color: $black;
                                         width: 38.5vh;
                                         height: 7.5vh;
                                         font-size: 2.5vh;
@@ -5016,6 +5002,7 @@ html {
             padding: 0;
             margin: 0 auto;
             overflow: hidden;
+            background-color: $black;
 
             display: grid;
             grid-template-columns: 8vh auto 8vh;
@@ -5023,16 +5010,45 @@ html {
             place-items: stretch;
             place-content: stretch;
 
-            .shadowHi {
-                position: absolute;
-                opacity: .1;
-                width: 38vw;
-                height: 38vw;
-                top: 0;
-                left: 50%;
-                align-self: center;
-                border: 4vw solid #3dc1d3;
-                transform: translate(0, 12vh);
+            #social_media{
+                .icons_gatherer {
+                    .icon-button {
+                        &.linkedin,
+                        &.instagram,
+                        &.facebook,
+                        &.behance,
+                        &.dribbble {
+                            i {
+                                color: white;
+                            }
+                        }
+
+                        &.scroll {
+                            &::before {
+                                border-color: white;
+                            }
+
+                            &::after {
+                                background: white;
+                            }
+                        }
+
+                        &:hover {
+                            .icon-facebook,
+                            .fa-instagram,
+                            .fa-pinterest,
+                            .fa-linkedin-in,
+                            .fa-dribbble,
+                            .fa-behance {
+                                color: $black;
+                            }
+                        }
+                    }
+
+                    &::before {
+                        background: white;
+                    }
+                }
             }
 
             .wrapper_full {
@@ -5055,10 +5071,11 @@ html {
                     }
 
                     &.artsy {
+                        position: relative;
                         width: 100%;
                         height: 100%;
-                        background: url('THREE.png') no-repeat;
-                        background-size: contain;
+                        background: url('b_white_orange..svg') no-repeat;
+                        background-size: 30%;
                         background-position: center;
                     }
 
@@ -5066,31 +5083,31 @@ html {
                         display: grid;
                         grid-template-rows: auto auto auto auto auto;
                         place-items: stretch;
-                        place-content: center;
+                        align-content: center;
 
-                        p {
+                        p.text-muted {
                             text-align: -webkit-left;
-                            font-size: 1.5vh;
+                            font-size: 1.75vh;
                             margin-bottom: .75vh;
+                            color: rgba(255, 255, 255, .85) !important;
                         }
 
-                        &>button {
+                        button {
+                            position: relative;
                             -webkit-appearance: none;
                             border: none;
                             background: none;
-                            color: black;
-                            width: 38.5vh;
-                            height: 7.5vh;
-                            font-size: 3vh;
-                            margin: 1.25vh 0;
+                            color: white;
+                            width: 25vh;
+                            height: 6.5vh;
+                            font-size: 2.5vh;
                             padding: 0;
                             outline: none;
-                            z-index: 10;
 
                             span {
                                 display: block;
                                 position: relative;
-                                line-height: 7.5vh;
+                                line-height: 6.5vh;
                                 height: 100%;
                                 cursor: pointer;
                             }
@@ -5105,18 +5122,20 @@ html {
                                             position: absolute;
                                             top: 0;
                                             left: 0;
-                                            color: $liteBg_gray;
+                                            right: 0;
+                                            bottom: 0;
+                                            color: $black;
                                             content: attr(data-attr-span);
                                             width: 0;
-                                            height: 0;
-                                            background: $main-color;
+                                            height: 100%;
+                                            background: white;
                                             white-space: nowrap;
                                             text-align: center;
                                             margin: auto;
                                             overflow: hidden;
                                             display: flex;
                                             justify-content: center;
-                                            transition: all .2s ease-out;
+                                            transition: width .2s ease-out;
                                         }
                                     }
 
@@ -5124,7 +5143,7 @@ html {
                                         content: '';
                                         position: absolute;
                                         bottom: 0;
-                                        right: 0;
+                                        left: 0;
                                         width: .15vh;
                                         height: .15vh;
                                         opacity: 0;
@@ -5133,8 +5152,8 @@ html {
                                     &::after {
                                         content: '';
                                         position: absolute;
-                                        bottom: 0;
-                                        left: 0;
+                                        top: 0;
+                                        right: 0;
                                         width: .15vh;
                                         height: .15vh;
                                         opacity: 0;
@@ -5145,15 +5164,13 @@ html {
                                     content: '';
                                     position: absolute;
                                     top: 0;
-                                    right: 100%;
-                                    transform-origin: top right;
-                                    transform: rotate(-90deg);
-                                    width: 3.25vh;
+                                    left: 0;
+                                    width: 1.25vh;
                                     height: 0;
-                                    border: 1.25vh solid $main-color;
+                                    border: .15vh solid white;
                                     border-right: none;
                                     border-bottom: none;
-                                    transition: height .15s ease-out, width .15s ease-out .15s;
+                                    transition: width .15s ease-out, height .15s ease-out .15s;
                                 }
 
                                 &::after {
@@ -5161,29 +5178,58 @@ html {
                                     position: absolute;
                                     top: 0;
                                     left: 0;
-                                    width: 3.25vh;
-                                    height: 0;
-                                    border: 1.25vh solid $main-color;
-                                    border-left: none;
-                                    border-bottom: none;
+                                    width: 0;
+                                    height: 1.25vh;
+                                    border: .15vh solid white;
+                                    border-right: none;
+                                    border-top: none;
                                     transition: height .15s ease-out, width .15s ease-out .15s;
                                 }
                             }
 
                             &:hover {
-                                .button_border {
-                                    width: 100%;
-                                    height: 100%;
-                                    box-shadow: -1.5vh -1.5vh .33vh 0 rgba(0, 0, 0, .15);
-                                }
-
                                 &>span {
                                     &>span {
                                         &>span {
                                             &::after {
                                                 width: 100%;
-                                                height: 100%;
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &:hover {
+                            button {
+                                &>span {
+                                    &::after {
+                                        height: 100% !important;
+                                    }
+
+                                    &::before {
+                                        width: 100% !important;
+                                    }
+
+                                    &>span {
+                                        &::after {
+                                            opacity: 1 !important;
+                                            border-right: .15vh solid white !important;
+                                            height: 100% !important;
+                                            width: .15vh !important;
+                                            transition: opacity 0s ease-out .29s, height .15s ease-out .3s !important;
+                                        }
+
+                                        &::before {
+                                            opacity: 1 !important;
+                                            border-bottom: .15vh solid white !important;
+                                            height: .15vh !important;
+                                            width: 100% !important;
+                                            transition: opacity 0s ease-out .29s, height .15s ease-out .3s !important;
+                                        }
+
+                                        &>span {
+                                            color: white !important;
                                         }
                                     }
                                 }
@@ -5193,12 +5239,14 @@ html {
                         div.title {
                             display: flex;
                             align-self: center;
-                        }
-
-                        h1:first-child {
-                            margin-right: 2.5vh;
-                            color: $purple;
-                            position: relative;
+                            h1 {
+                                color: white;
+                                &:first-child {
+                                    margin-right: 2.5vh;
+                                    color: $purple;
+                                    position: relative;
+                                }
+                            }
                         }
 
                         .wrap {
@@ -5220,8 +5268,11 @@ html {
                         .lorem {
                             flex: 100%;
                             text-align: left;
-                            font-size: 2vh;
-                            margin-top: 5vh;
+                            margin-top: 3.5vh;
+                            color: white;
+                            h5, h6 {
+                                font-weight: lighter;
+                            }
                         }
 
                         a {
@@ -5250,7 +5301,7 @@ html {
                                         margin-top: -($arrow-height / 2);
                                         width: $arrow-width;
                                         height: $arrow-height;
-                                        background-color: black;
+                                        background-color: white;
                                         transition: transform $transition-speed ease-out, background-color $transition-speed ease-out;
                                     }
 
@@ -5279,7 +5330,7 @@ html {
                                         outline: none;
 
                                         .line {
-                                            background-color: darken(black, 20%);
+                                            background-color: darken(white, 20%);
                                         }
                                     }
                                 }
@@ -5308,7 +5359,7 @@ html {
                                         transform: translateX(-50%) translateY(-50%);
                                         transition: opacity $transition-speed ease-out, color $transition-speed ease-out;
                                         opacity: 0;
-                                        color: black;
+                                        color: white;
                                     }
 
                                     &:hover,
@@ -5320,7 +5371,7 @@ html {
 
                                     &:focus {
                                         &:after {
-                                            color: darken(black, 20%);
+                                            color: darken(white, 20%);
                                         }
                                     }
                                 }
@@ -5340,32 +5391,6 @@ html {
                         }
                     }
                 }
-            }
-
-            &::after {
-                content: '';
-                position: absolute;
-                width: 12vh;
-                height: 12vh;
-                border: 1.25vh solid $main-color;
-                bottom: 10%;
-                right: 40%;
-                transform: translate(50%, 0);
-                z-index: -1;
-            }
-
-            &::before {
-                content: '';
-                position: absolute;
-                width: 14vh;
-                height: 14vh;
-                border: 1.25vh solid white;
-                background: $main-color;
-                bottom: calc(10% - 2.5vh);
-                right: calc(40% + 2.5vh);
-                transform: translate(50%, 0);
-                opacity: .2;
-                z-index: -2;
             }
         }
 
@@ -5493,7 +5518,7 @@ html {
                                                 -webkit-appearance: none;
                                                 border: none;
                                                 background: none;
-                                                color: black;
+                                                color: $black;
                                                 width: 100%;
                                                 height: 7.5vh;
                                                 font-size: 3vh;
@@ -5791,32 +5816,92 @@ html {
             height: 100%;
             padding: 0;
             margin: 0 auto;
-            border: 1.25vh solid $color1;
+            border: 1.25vh solid $black;
 
             .wrapper_full {
                 overflow: hidden;
                 position: relative;
                 height: 100%;
                 line-height: 0;
+                background: $black;
 
                 #social_media {
                     height: 100%;
+                    .icons_gatherer {
+                        .icon-button {
+                            &.linkedin,
+                            &.instagram,
+                            &.facebook,
+                            &.behance,
+                            &.dribbble {
+                                i {
+                                    color: white;
+                                }
+                            }
+    
+                            &.scroll {
+                                &::before {
+                                    border-color: white;
+                                }
+    
+                                &::after {
+                                    background: white;
+                                }
+                            }
+    
+                            &:hover {
+                                .icon-facebook,
+                                .fa-instagram,
+                                .fa-pinterest,
+                                .fa-linkedin-in,
+                                .fa-dribbble,
+                                .fa-behance {
+                                    color: $black;
+                                }
+                            }
+                        }
+    
+                        &::before {
+                            background: white;
+                        }
+                    }
                 }
 
                 .text {
                     width: 100%;
                     height: 100%;
-                    background: url('');
+                    background: url('CONTACT.png') no-repeat;
+                    background-size: 40%;
+                    background-position: left center;
 
-                    .circle {
+                    .scene {
                         position: absolute;
                         left: 50%;
                         top: 50%;
-                        transform: translate(100%, -75%);
-                        height: 50vh;
-                        width: 50vh;
-                        border: .05vh solid black;
-                        border-radius: 100%;
+                        transform: translate(150%, -75%);
+                        height: 32vh;
+                        width: 32vh;
+                        perspective: -64vh;
+                        .cube {
+                            width: 32vh;
+                            height: 32vh;
+                            position: relative;
+                            transform-style: preserve-3d;
+                            transform: translateZ(-16vh) rotateY(0) rotateX(80deg) rotateZ(-30deg);
+                            &__face {
+                                position: absolute;
+                                width: 32vh;
+                                height: 32vh;
+                                border: .05vh solid white;
+                                line-height: 32vh;
+                            }
+                            &__face--front  { transform: rotateY(  0deg) translateZ(16vh); }
+                            &__face--right  { transform: rotateY( 90deg) translateZ(16vh); }
+                            &__face--back   { transform: rotateY(180deg) translateZ(16vh); }
+                            &__face--left   { transform: rotateY(-90deg) translateZ(16vh); }
+                            &__face--top    { transform: rotateX( 90deg) translateZ(16vh); }
+                            &__face--bottom { transform: rotateX(-90deg) translateZ(16vh); }
+                        }
                     }
 
                     .email_me {
@@ -5827,12 +5912,16 @@ html {
                         bottom: 0;
                         transform: translate(100%, -100%);
 
+                        h6 {
+                            color: white;
+                        }
+
                         button {
                             position: relative;
                             -webkit-appearance: none;
                             border: none;
                             background: none;
-                            color: black;
+                            color: white;
                             width: 25vh;
                             height: 6.5vh;
                             font-size: 2.5vh;
@@ -5859,11 +5948,11 @@ html {
                                             left: 0;
                                             right: 0;
                                             bottom: 0;
-                                            color: $liteBg_gray;
+                                            color: $black;
                                             content: attr(data-attr-span);
                                             width: 0;
                                             height: 100%;
-                                            background: $color1;
+                                            background: white;
                                             white-space: nowrap;
                                             text-align: center;
                                             margin: auto;
@@ -5878,7 +5967,7 @@ html {
                                         content: '';
                                         position: absolute;
                                         bottom: 0;
-                                        right: 0;
+                                        left: 0;
                                         width: .15vh;
                                         height: .15vh;
                                         opacity: 0;
@@ -5898,24 +5987,24 @@ html {
                                 &::before {
                                     content: '';
                                     position: absolute;
-                                    bottom: 50%;
+                                    top: 0;
                                     left: 0;
-                                    width: 0;
-                                    height: 1.25vh;
-                                    border: .15vh solid $color1;
+                                    width: 1.25vh;
+                                    height: 0;
+                                    border: .15vh solid white;
                                     border-right: none;
                                     border-bottom: none;
-                                    transition: height .15s ease-out, width .15s ease-out .15s;
+                                    transition: width .15s ease-out, height .15s ease-out .15s;
                                 }
 
                                 &::after {
                                     content: '';
                                     position: absolute;
-                                    top: 50%;
+                                    top: 0;
                                     left: 0;
                                     width: 0;
                                     height: 1.25vh;
-                                    border: .15vh solid $color1;
+                                    border: .15vh solid white;
                                     border-right: none;
                                     border-top: none;
                                     transition: height .15s ease-out, width .15s ease-out .15s;
@@ -5939,34 +6028,32 @@ html {
                             button {
                                 &>span {
                                     &::after {
-                                        height: 50% !important;
-                                        width: 100% !important;
+                                        height: 100% !important;
                                     }
 
                                     &::before {
-                                        height: 50% !important;
                                         width: 100% !important;
                                     }
 
                                     &>span {
                                         &::after {
                                             opacity: 1 !important;
-                                            border-right: .15vh solid $color1 !important;
-                                            height: calc(50%) !important;
+                                            border-right: .15vh solid white !important;
+                                            height: 100% !important;
                                             width: .15vh !important;
                                             transition: opacity 0s ease-out .29s, height .15s ease-out .3s !important;
                                         }
 
                                         &::before {
                                             opacity: 1 !important;
-                                            border-right: .15vh solid $color1 !important;
-                                            height: calc(50%) !important;
-                                            width: .15vh !important;
+                                            border-bottom: .15vh solid white !important;
+                                            height: .15vh !important;
+                                            width: 100% !important;
                                             transition: opacity 0s ease-out .29s, height .15s ease-out .3s !important;
                                         }
 
                                         &>span {
-                                            color: $color1 !important;
+                                            color: white !important;
                                         }
                                     }
                                 }
@@ -5981,6 +6068,7 @@ html {
                         transform: translate(-50%, 0);
                         font-size: 4rem;
                         font-family: 'Abril Fatface', cursive;
+                        color: white;
                     }
                 }
             }
@@ -6170,7 +6258,7 @@ html {
                                 }
 
                                 &:hover {
-                                    color: black;
+                                    color: $black;
                                 }
                             }
 
@@ -6313,7 +6401,7 @@ html {
                                                                 font-size: 7.5vh;
                                                                 line-height: 7.5vh;
                                                                 font-weight: 600;
-                                                                color: black;
+                                                                color: $black;
                                                                 margin: 0;
                                                                 left: 0;
                                                                 transform: translateY(0);
@@ -6492,7 +6580,7 @@ html {
 
                                                                                         span {
                                                                                             i {
-                                                                                                color: black;
+                                                                                                color: $black;
                                                                                             }
                                                                                         }
                                                                                     }
@@ -6504,7 +6592,7 @@ html {
                                                                                 h4,
                                                                                 h5,
                                                                                 h6 {
-                                                                                    color: $color1;
+                                                                                    color: $black;
                                                                                     text-align: -webkit-left;
                                                                                     letter-spacing: 0;
                                                                                     position: relative;
@@ -6666,7 +6754,7 @@ html {
                                                                     width: 2vh;
                                                                     height: 2vh;
                                                                     display: inline-block;
-                                                                    background: #000;
+                                                                    background: $black;
                                                                     opacity: .2;
                                                                     margin: 0 .75vh;
                                                                     border-radius: 3.25vh;
@@ -6676,7 +6764,7 @@ html {
 
                                                                 .swiper-pagination-bullet-active {
                                                                     opacity: 1;
-                                                                    background: #000000;
+                                                                    background: $black;
                                                                     width: 4.5vh;
                                                                     transition-delay: 0s;
 
@@ -6706,7 +6794,7 @@ html {
                                                                     cursor: pointer;
 
                                                                     i {
-                                                                        color: black;
+                                                                        color: $black;
                                                                     }
 
                                                                     &.dropdown-toggle::after {
@@ -7194,7 +7282,7 @@ html {
                                                                         &.s6,
                                                                         &.s3 {
                                                                             input {
-                                                                                color: $color1;
+                                                                                color: $black;
                                                                                 height: 5vh;
                                                                                 padding: 0;
                                                                                 margin: 0;
@@ -7230,9 +7318,9 @@ html {
                                                                 }
 
                                                                 button {
-                                                                    color: black;
+                                                                    color: $black;
                                                                     background: none;
-                                                                    border: solid .15vh black;
+                                                                    border: solid .15vh $black;
                                                                     display: inline-block;
                                                                     position: relative;
                                                                     border-radius: 0;
@@ -7290,7 +7378,7 @@ html {
                                                                 }
 
                                                                 th {
-                                                                    color: rgba($color: #000000, $alpha: .25);
+                                                                    color: rgba($color: $black, $alpha: .25);
                                                                     display: none;
                                                                 }
 
@@ -7314,7 +7402,7 @@ html {
                                                                         content: attr(data-th)": ";
                                                                         font-weight: bold;
                                                                         width: 6.5em;
-                                                                        color: rgba($color: #000000, $alpha: .25);
+                                                                        color: rgba($color: $black, $alpha: .25);
                                                                         display: inline-block;
 
                                                                         @media (min-width: $breakpoint-alpha) {
@@ -7581,8 +7669,8 @@ html {
                                             .is_private {
                                                 text-align: -webkit-right;
                                                 font-size: 2vh;
-                                                color: black;
-                                                border: .15vh solid black;
+                                                color: $black;
+                                                border: .15vh solid $black;
                                                 padding: .5vh 1.25vh;
                                                 margin-bottom: .5vh;
                                                 width: fit-content;
@@ -7948,8 +8036,8 @@ html {
                                                     .categorie {
                                                         text-align: -webkit-right;
                                                         font-size: 2vh;
-                                                        color: black;
-                                                        border: .15vh solid black;
+                                                        color: $black;
+                                                        border: .15vh solid $black;
                                                         padding: .5vh 1.25vh;
                                                         margin-bottom: .5vh;
                                                         margin-right: .5vh;
@@ -7968,7 +8056,7 @@ html {
                                                                 cursor: pointer;
 
                                                                 i {
-                                                                    color: black;
+                                                                    color: $black;
                                                                 }
 
                                                                 &.dropdown-toggle::after {
@@ -8024,7 +8112,7 @@ html {
                                                     }
 
                                                     h4 {
-                                                        color: black;
+                                                        color: $black;
                                                         text-align: -webkit-left;
                                                         letter-spacing: 0;
                                                         transition: all .15s ease-out 0s;
@@ -8082,7 +8170,7 @@ html {
                                                                     margin-top: -($arrow-height / 2);
                                                                     width: $arrow-width;
                                                                     height: $arrow-height;
-                                                                    background-color: black;
+                                                                    background-color: $black;
                                                                     transition: transform $transition-speed ease-out, background-color $transition-speed ease-out;
                                                                 }
 
@@ -8111,7 +8199,7 @@ html {
                                                                     outline: none;
 
                                                                     .line {
-                                                                        background-color: darken(black, 20%);
+                                                                        background-color: darken( $black, 20%);
                                                                     }
                                                                 }
                                                             }
@@ -8140,7 +8228,7 @@ html {
                                                                     transform: translateX(-50%) translateY(-50%);
                                                                     transition: opacity $transition-speed ease-out, color $transition-speed ease-out;
                                                                     opacity: 0;
-                                                                    color: black;
+                                                                    color: $black;
                                                                 }
 
                                                                 &:hover,
@@ -8152,7 +8240,7 @@ html {
 
                                                                 &:focus {
                                                                     &:after {
-                                                                        color: darken(black, 20%);
+                                                                        color: darken( $black, 20%);
                                                                     }
                                                                 }
                                                             }
@@ -8269,7 +8357,7 @@ html {
                                                             cursor: pointer;
 
                                                             i {
-                                                                color: black;
+                                                                color: $black;
                                                             }
 
                                                             &.dropdown-toggle::after {
@@ -8330,7 +8418,7 @@ html {
                                                 h4,
                                                 h5,
                                                 h6 {
-                                                    color: $color1;
+                                                    color: $black;
                                                     text-align: -webkit-left;
                                                     letter-spacing: 0;
                                                     position: relative;
@@ -8344,8 +8432,8 @@ html {
                                                 .is_private {
                                                     text-align: -webkit-right;
                                                     font-size: 2vh;
-                                                    color: black;
-                                                    border: .15vh solid black;
+                                                    color: $black;
+                                                    border: .15vh solid $black;
                                                     padding: .5vh 1.25vh;
                                                     margin-bottom: .5vh;
                                                     width: fit-content;
@@ -8616,7 +8704,7 @@ html {
                                         -webkit-appearance: none;
                                         border: none;
                                         background: none;
-                                        color: black;
+                                        color: $black;
                                         width: 100%;
                                         height: 6.5vh;
                                         font-size: 2.5vh;
@@ -8649,7 +8737,7 @@ html {
                                                         content: attr(data-attr-span);
                                                         width: 0;
                                                         height: 100%;
-                                                        background: $color1;
+                                                        background: $black;
                                                         white-space: nowrap;
                                                         text-align: center;
                                                         margin: auto;
@@ -8688,7 +8776,7 @@ html {
                                                 right: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: .15vh solid $color1;
+                                                border: .15vh solid $black;
                                                 border-right: none;
                                                 border-bottom: none;
                                                 transition: width .15s ease-out, height .15s ease-out .15s;
@@ -8701,7 +8789,7 @@ html {
                                                 left: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: .15vh solid $color1;
+                                                border: .15vh solid $black;
                                                 border-left: none;
                                                 border-bottom: none;
                                                 transition: width .15s ease-out, height .15s ease-out .15s;
@@ -8739,7 +8827,7 @@ html {
                                         &>span {
                                             &::after {
                                                 opacity: 1 !important;
-                                                border-bottom: .15vh solid $color1 !important;
+                                                border-bottom: .15vh solid $black !important;
                                                 width: calc(50%) !important;
                                                 height: .15vh !important;
                                                 transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
@@ -8747,14 +8835,14 @@ html {
 
                                             &::before {
                                                 opacity: 1 !important;
-                                                border-bottom: .15vh solid $color1 !important;
+                                                border-bottom: .15vh solid $black !important;
                                                 width: calc(50%) !important;
                                                 height: .15vh !important;
                                                 transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                             }
 
                                             &>span {
-                                                color: $color1 !important;
+                                                color: $black !important;
                                             }
                                         }
                                     }
@@ -8842,7 +8930,7 @@ html {
                                             &>span {
                                                 &::after {
                                                     opacity: 1 !important;
-                                                    border-bottom: .15vh solid $color1 !important;
+                                                    border-bottom: .15vh solid $black !important;
                                                     width: calc(50%) !important;
                                                     height: .15vh !important;
                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
@@ -8850,14 +8938,14 @@ html {
 
                                                 &::before {
                                                     opacity: 1 !important;
-                                                    border-bottom: .15vh solid $color1 !important;
+                                                    border-bottom: .15vh solid $black !important;
                                                     width: calc(50%) !important;
                                                     height: .15vh !important;
                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                 }
 
                                                 &>span {
-                                                    color: $color1 !important;
+                                                    color: $black !important;
                                                 }
                                             }
                                         }
@@ -8944,7 +9032,7 @@ html {
                                         -webkit-appearance: none;
                                         border: none;
                                         background: none;
-                                        color: black;
+                                        color: $black;
                                         width: 100%;
                                         height: 6.5vh;
                                         font-size: 2.5vh;
@@ -8978,7 +9066,7 @@ html {
                                                         content: attr(data-attr-span);
                                                         width: 0;
                                                         height: 100%;
-                                                        background: $color1;
+                                                        background: $black;
                                                         white-space: nowrap;
                                                         text-align: center;
                                                         margin: auto;
@@ -9017,7 +9105,7 @@ html {
                                                 right: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: .15vh solid $color1;
+                                                border: .15vh solid $black;
                                                 border-right: none;
                                                 border-bottom: none;
                                                 transition: width .15s ease-out, height .15s ease-out .15s;
@@ -9030,7 +9118,7 @@ html {
                                                 left: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: .15vh solid $color1;
+                                                border: .15vh solid $black;
                                                 border-left: none;
                                                 border-bottom: none;
                                                 transition: width .15s ease-out, height .15s ease-out .15s;
@@ -9188,7 +9276,7 @@ html {
                                         -webkit-appearance: none;
                                         border: none;
                                         background: none;
-                                        color: black;
+                                        color: $black;
                                         width: 100%;
                                         height: 6.5vh;
                                         font-size: 2.5vh;
@@ -9221,7 +9309,7 @@ html {
                                                         content: attr(data-attr-span);
                                                         width: 0;
                                                         height: 100%;
-                                                        background: $color1;
+                                                        background: $black;
                                                         white-space: nowrap;
                                                         text-align: center;
                                                         margin: auto;
@@ -9260,7 +9348,7 @@ html {
                                                 right: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: .15vh solid $color1;
+                                                border: .15vh solid $black;
                                                 border-right: none;
                                                 border-bottom: none;
                                                 transition: width .15s ease-out, height .15s ease-out .15s;
@@ -9273,7 +9361,7 @@ html {
                                                 left: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: .15vh solid $color1;
+                                                border: .15vh solid $black;
                                                 border-left: none;
                                                 border-bottom: none;
                                                 transition: width .15s ease-out, height .15s ease-out .15s;
@@ -9311,7 +9399,7 @@ html {
                                         &>span {
                                             &::after {
                                                 opacity: 1 !important;
-                                                border-bottom: .15vh solid $color1 !important;
+                                                border-bottom: .15vh solid $black !important;
                                                 width: calc(50%) !important;
                                                 height: .15vh !important;
                                                 transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
@@ -9319,14 +9407,14 @@ html {
 
                                             &::before {
                                                 opacity: 1 !important;
-                                                border-bottom: .15vh solid $color1 !important;
+                                                border-bottom: .15vh solid $black !important;
                                                 width: calc(50%) !important;
                                                 height: .15vh !important;
                                                 transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                             }
 
                                             &>span {
-                                                color: $color1 !important;
+                                                color: $black !important;
                                             }
                                         }
                                     }
@@ -9414,7 +9502,7 @@ html {
                                             &>span {
                                                 &::after {
                                                     opacity: 1 !important;
-                                                    border-bottom: .15vh solid $color1 !important;
+                                                    border-bottom: .15vh solid $black !important;
                                                     width: calc(50%) !important;
                                                     height: .15vh !important;
                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
@@ -9422,14 +9510,14 @@ html {
 
                                                 &::before {
                                                     opacity: 1 !important;
-                                                    border-bottom: .15vh solid $color1 !important;
+                                                    border-bottom: .15vh solid $black !important;
                                                     width: calc(50%) !important;
                                                     height: .15vh !important;
                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                 }
 
                                                 &>span {
-                                                    color: $color1 !important;
+                                                    color: $black !important;
                                                 }
                                             }
                                         }
@@ -9516,7 +9604,7 @@ html {
                                         -webkit-appearance: none;
                                         border: none;
                                         background: none;
-                                        color: black;
+                                        color: $black;
                                         width: 100%;
                                         height: 6.5vh;
                                         font-size: 2.5vh;
@@ -9550,7 +9638,7 @@ html {
                                                         content: attr(data-attr-span);
                                                         width: 0;
                                                         height: 100%;
-                                                        background: $color1;
+                                                        background: $black;
                                                         white-space: nowrap;
                                                         text-align: center;
                                                         margin: auto;
@@ -9589,7 +9677,7 @@ html {
                                                 right: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: .15vh solid $color1;
+                                                border: .15vh solid $black;
                                                 border-right: none;
                                                 border-bottom: none;
                                                 transition: width .15s ease-out, height .15s ease-out .15s;
@@ -9602,7 +9690,7 @@ html {
                                                 left: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: .15vh solid $color1;
+                                                border: .15vh solid $black;
                                                 border-left: none;
                                                 border-bottom: none;
                                                 transition: width .15s ease-out, height .15s ease-out .15s;
@@ -9675,7 +9763,7 @@ html {
                     font-weight: bold;
                     font-size: 20.5vh;
                     line-height: 1;
-                    color: rgba($color: black, $alpha: .5);
+                    color: rgba($color: $black, $alpha: .5);
 
                     * {
                         line-height: 1;
@@ -9683,7 +9771,7 @@ html {
 
                     span.O {
                         position: relative;
-                        color: rgba($color: #000000, $alpha: 0);
+                        color: rgba($color: $black, $alpha: 0);
 
                         &::after {
                             content: '';
@@ -9733,7 +9821,7 @@ html {
                                 margin-top: -($arrow-height / 2);
                                 width: $arrow-width;
                                 height: $arrow-height;
-                                background-color: black;
+                                background-color: $black;
                                 transition: transform $transition-speed ease-out, background-color $transition-speed ease-out;
                             }
 
@@ -9762,7 +9850,7 @@ html {
                                 outline: none;
 
                                 .line {
-                                    background-color: darken(black, 20%);
+                                    background-color: darken( $black, 20%);
                                 }
                             }
                         }
@@ -9791,7 +9879,7 @@ html {
                                 transform: translateX(-50%) translateY(-50%);
                                 transition: opacity $transition-speed ease-out, color $transition-speed ease-out;
                                 opacity: 0;
-                                color: black;
+                                color: $black;
                             }
 
                             &:hover,
@@ -9803,7 +9891,7 @@ html {
 
                             &:focus {
                                 &:after {
-                                    color: darken(black, 20%);
+                                    color: darken( $black, 20%);
                                 }
                             }
                         }
@@ -9896,7 +9984,7 @@ html {
 
             a,
             a:hover {
-                color: black;
+                color: $black;
                 text-decoration: none;
             }
 
@@ -9938,7 +10026,7 @@ html {
                             position: absolute;
                             display: inline-block;
                             content: "";
-                            background: black;
+                            background: $black;
                             width: 12vh;
                             height: .5vh;
                             left: 2.5vh;
@@ -9947,7 +10035,7 @@ html {
 
                         h6 {
                             white-space: nowrap;
-                            color: black;
+                            color: $black;
                         }
 
                         ul {
@@ -9956,7 +10044,7 @@ html {
                             li {
                                 span {
                                     font-size: 2vh;
-                                    color: black;
+                                    color: $black;
                                     transition: all .5s ease-out;
 
                                     &:hover {
@@ -10062,7 +10150,7 @@ html {
                                             -webkit-appearance: none;
                                             border: none;
                                             background: none;
-                                            color: black;
+                                            color: $black;
                                             width: 38.5vh;
                                             height: 7.5vh;
                                             font-size: 3vh;
@@ -10200,14 +10288,14 @@ html {
                         position: relative;
                         height: 100%;
                         margin-left: 15vh;
-                        color: black;
+                        color: $black;
                         display: flex;
 
                         &::before {
                             position: absolute;
                             display: inline-block;
                             content: "";
-                            background: black;
+                            background: $black;
                             width: 10vh;
                             height: .25vh;
                             left: -12vh;
@@ -10224,7 +10312,7 @@ html {
                                 margin-right: 2vh;
 
                                 &:last-of-type {
-                                    color: rgba($color: black, $alpha: .8);
+                                    color: rgba($color: $black, $alpha: .8);
                                     font-weight: 500;
                                 }
                             }
@@ -10232,7 +10320,7 @@ html {
                     }
 
                     .push-right {
-                        color: black;
+                        color: $black;
                         height: 100%;
                         display: flex;
 
@@ -10862,7 +10950,7 @@ html {
 
                         &.scroll {
                             &::before {
-                                border: .5vw solid #000;
+                                border: .5vw solid $black;
                                 height: calc(100% - 1.5vw);
                                 width: 3.25vw;
                                 border-radius: 3.25vw;
@@ -10941,7 +11029,7 @@ html {
                                 .search {
                                     width: 2.5vw;
                                     height: 2.5vw;
-                                    border: .5vw solid black;
+                                    border: .5vw solid $black;
                                     right: 3.75vw;
 
                                     &::after,
@@ -11668,7 +11756,7 @@ html {
 
                                                 .categorie {
                                                     font-size: 2vw;
-                                                    border: .15vw solid black;
+                                                    border: .15vw solid $black;
                                                     padding: .5vw 1.25vw;
                                                 }
 
@@ -11903,15 +11991,15 @@ html {
                                             }
 
                                             &::before {
-                                                border-top: 2.5vw solid $color1;
-                                                border-right: 2.5vw solid $color1;
+                                                border-top: 2.5vw solid $black;
+                                                border-right: 2.5vw solid $black;
                                                 top: -2.5vw;
                                                 left: -2.5vw;
                                             }
 
                                             &::after {
-                                                border-left: 2.5vw solid $color1;
-                                                border-bottom: 2.5vw solid $color1;
+                                                border-left: 2.5vw solid $black;
+                                                border-bottom: 2.5vw solid $black;
                                                 bottom: -2.5vw;
                                                 right: -2.5vw;
                                             }
@@ -12501,7 +12589,7 @@ html {
                                                     }
 
                                                     &>span {
-                                                        color: $color1;
+                                                        color: $black;
 
                                                         &::after {
                                                             width: 100%;
@@ -12716,7 +12804,7 @@ html {
                                                     &>span {
                                                         &::after {
                                                             opacity: 1 !important;
-                                                            border-bottom: .15vh solid $color1 !important;
+                                                            border-bottom: .15vh solid $black !important;
                                                             width: calc(50%) !important;
                                                             height: .15vh !important;
                                                             transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
@@ -12724,14 +12812,14 @@ html {
             
                                                         &::before {
                                                             opacity: 1 !important;
-                                                            border-bottom: .15vh solid $color1 !important;
+                                                            border-bottom: .15vh solid $black !important;
                                                             width: calc(50%) !important;
                                                             height: .15vh !important;
                                                             transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                         }
             
                                                         &>span {
-                                                            color: $color1 !important;
+                                                            color: $black !important;
                                                             &::after {
                                                                 width: 100%;
                                                             }
@@ -12782,7 +12870,7 @@ html {
                                             &>span {
                                                 &::after {
                                                     opacity: 1 !important;
-                                                    border-bottom: .15vh solid $color1 !important;
+                                                    border-bottom: .15vh solid $black !important;
                                                     width: calc(50%) !important;
                                                     height: .15vh !important;
                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
@@ -12790,14 +12878,14 @@ html {
 
                                                 &::before {
                                                     opacity: 1 !important;
-                                                    border-bottom: .15vh solid $color1 !important;
+                                                    border-bottom: .15vh solid $black !important;
                                                     width: calc(50%) !important;
                                                     height: .15vh !important;
                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                 }
 
                                                 &>span {
-                                                    color: $color1 !important;
+                                                    color: $black !important;
                                                 }
                                             }
                                         }
@@ -12832,7 +12920,7 @@ html {
                                                     &>span {
                                                         &::after {
                                                             opacity: 1 !important;
-                                                            border-bottom: .15vh solid $color1 !important;
+                                                            border-bottom: .15vh solid $black !important;
                                                             width: calc(50%) !important;
                                                             height: .15vh !important;
                                                             transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
@@ -12840,14 +12928,14 @@ html {
             
                                                         &::before {
                                                             opacity: 1 !important;
-                                                            border-bottom: .15vh solid $color1 !important;
+                                                            border-bottom: .15vh solid $black !important;
                                                             width: calc(50%) !important;
                                                             height: .15vh !important;
                                                             transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                         }
             
                                                         &>span {
-                                                            color: $color1 !important;
+                                                            color: $black !important;
                                                             &::after {
                                                                 width: 100%;
                                                             }
@@ -12898,7 +12986,7 @@ html {
                                             &>span {
                                                 &::after {
                                                     opacity: 1 !important;
-                                                    border-bottom: .15vh solid $color1 !important;
+                                                    border-bottom: .15vh solid $black !important;
                                                     width: calc(50%) !important;
                                                     height: .15vh !important;
                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
@@ -12906,14 +12994,14 @@ html {
 
                                                 &::before {
                                                     opacity: 1 !important;
-                                                    border-bottom: .15vh solid $color1 !important;
+                                                    border-bottom: .15vh solid $black !important;
                                                     width: calc(50%) !important;
                                                     height: .15vh !important;
                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                 }
 
                                                 &>span {
-                                                    color: $color1 !important;
+                                                    color: $black !important;
                                                 }
                                             }
                                         }
