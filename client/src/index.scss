@@ -868,7 +868,6 @@ html {
                                 box-shadow: none;
 
                                 height: 6.5vh;
-                                width: 0;
                             }
 
                             label,
@@ -1002,64 +1001,78 @@ html {
             }
 
             &.dark_mode {
-				.wrapper {
-					header {
-						.navToggle:not(.active) {
-							fill: white;
-							stroke: white;
-							color: white;
-							svg {
-								filter: drop-shadow( .33vh .33vh 1.5vh rgba(255, 255, 255, .2) );
-							}
-							&:hover {
-								box-shadow: 2.5vh 2.5vh 1.25vh -3.25vh rgba(255, 255, 255, .6);
-							}
-						}
-						form {
-							&::before {
-								background: white;
-							}
-							.search-wrapper {
-								input {
-									background: white;
-									color: $black;
-									&::placeholder {
-										color: $black;
-									}
+                .wrapper {
+                    header {
+                        .navToggle:not(.active) {
+                            fill: white;
+                            stroke: white;
+                            color: white;
+
+                            svg {
+                                filter: drop-shadow(.33vh .33vh 1.5vh rgba(255, 255, 255, .2));
+                            }
+
+                            &:hover {
+                                box-shadow: 2.5vh 2.5vh 1.25vh -3.25vh rgba(255, 255, 255, .6);
+                            }
+                        }
+
+                        form {
+                            &::before {
+                                background: white;
+                            }
+
+                            .search-wrapper {
+                                input {
+                                    background: white;
+                                    color: $black;
+
+                                    &::placeholder {
+                                        color: $black;
+                                    }
                                 }
+
                                 label {
                                     color: $black;
                                 }
-								.search {
-									color: $black;
-									border: .5vh solid white;
-									&:after {
-										background: white;
-									}
-									&.active {
-										border-color: $black;
-									}
-									&.active:before {
-										background: $black;
-									}
-									&.active:after {
-										background: $black;
-									}
-								}
-								.hover_effect {
-									background-color: white;
-								}
-								&:hover .search {
-									border-color: $black;
-								}
-								&:hover .search:after {
-									background: $black;
-								}
-							}
-						}
-					}
-				}
-			}
+
+                                .search {
+                                    color: $black;
+                                    border: .5vh solid white;
+
+                                    &:after {
+                                        background: white;
+                                    }
+
+                                    &.active {
+                                        border-color: $black;
+                                    }
+
+                                    &.active:before {
+                                        background: $black;
+                                    }
+
+                                    &.active:after {
+                                        background: $black;
+                                    }
+                                }
+
+                                .hover_effect {
+                                    background-color: white;
+                                }
+
+                                &:hover .search {
+                                    border-color: $black;
+                                }
+
+                                &:hover .search:after {
+                                    background: $black;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         #search-modal {
@@ -1252,7 +1265,7 @@ html {
                                                         outline: none;
 
                                                         .line {
-                                                            background-color: darken( $black, 20%);
+                                                            background-color: darken($black, 20%);
                                                         }
                                                     }
                                                 }
@@ -1293,7 +1306,7 @@ html {
 
                                                     &:focus {
                                                         &:after {
-                                                            color: darken( $black, 20%);
+                                                            color: darken($black, 20%);
                                                         }
                                                     }
                                                 }
@@ -3615,7 +3628,7 @@ html {
                                                                 outline: none;
 
                                                                 .line {
-                                                                    background-color: darken( $black, 20%);
+                                                                    background-color: darken($black, 20%);
                                                                 }
                                                             }
                                                         }
@@ -3656,7 +3669,7 @@ html {
 
                                                             &:focus {
                                                                 &:after {
-                                                                    color: darken( $black, 20%);
+                                                                    color: darken($black, 20%);
                                                                 }
                                                             }
                                                         }
@@ -4157,7 +4170,7 @@ html {
                                                             outline: none;
 
                                                             .line {
-                                                                background-color: darken( $black, 20%);
+                                                                background-color: darken($black, 20%);
                                                             }
                                                         }
                                                     }
@@ -4198,7 +4211,7 @@ html {
 
                                                         &:focus {
                                                             &:after {
-                                                                color: darken( $black, 20%);
+                                                                color: darken($black, 20%);
                                                             }
                                                         }
                                                     }
@@ -5010,9 +5023,10 @@ html {
             place-items: stretch;
             place-content: stretch;
 
-            #social_media{
+            #social_media {
                 .icons_gatherer {
                     .icon-button {
+
                         &.linkedin,
                         &.instagram,
                         &.facebook,
@@ -5034,6 +5048,7 @@ html {
                         }
 
                         &:hover {
+
                             .icon-facebook,
                             .fa-instagram,
                             .fa-pinterest,
@@ -5059,7 +5074,7 @@ html {
                 grid-row: 2 / 3;
 
                 display: grid;
-                grid-template-columns: 45% 55%;
+                grid-template-columns: 40% 60%;
                 place-items: stretch;
                 place-content: stretch;
 
@@ -5075,7 +5090,7 @@ html {
                         width: 100%;
                         height: 100%;
                         background: url('b_white_orange..svg') no-repeat;
-                        background-size: 30%;
+                        background-size: 50%;
                         background-position: center;
                     }
 
@@ -5239,8 +5254,11 @@ html {
                         div.title {
                             display: flex;
                             align-self: center;
+                            margin-top: 3.5vh;
+
                             h1 {
                                 color: white;
+
                                 &:first-child {
                                     margin-right: 2.5vh;
                                     color: $purple;
@@ -5270,7 +5288,9 @@ html {
                             text-align: left;
                             margin-top: 3.5vh;
                             color: white;
-                            h5, h6 {
+
+                            h5,
+                            h6 {
                                 font-weight: lighter;
                             }
                         }
@@ -5816,7 +5836,7 @@ html {
             height: 100%;
             padding: 0;
             margin: 0 auto;
-            border: 1.25vh solid lighten($color: $black, $amount: 10);
+            border: 1.25vh solid lighten($color: $black, $amount: 5);
 
             .wrapper_full {
                 overflow: hidden;
@@ -5827,8 +5847,10 @@ html {
 
                 #social_media {
                     height: 100%;
+
                     .icons_gatherer {
                         .icon-button {
+
                             &.linkedin,
                             &.instagram,
                             &.facebook,
@@ -5838,18 +5860,19 @@ html {
                                     color: white;
                                 }
                             }
-    
+
                             &.scroll {
                                 &::before {
                                     border-color: white;
                                 }
-    
+
                                 &::after {
                                     background: white;
                                 }
                             }
-    
+
                             &:hover {
+
                                 .icon-facebook,
                                 .fa-instagram,
                                 .fa-pinterest,
@@ -5860,7 +5883,7 @@ html {
                                 }
                             }
                         }
-    
+
                         &::before {
                             background: white;
                         }
@@ -5882,12 +5905,14 @@ html {
                         height: 32vh;
                         width: 32vh;
                         perspective: -64vh;
+
                         .cube {
                             width: 32vh;
                             height: 32vh;
                             position: relative;
                             transform-style: preserve-3d;
                             transform: translateZ(-16vh) rotateY(0) rotateX(80deg) rotateZ(-30deg);
+
                             &__face {
                                 position: absolute;
                                 width: 32vh;
@@ -5895,12 +5920,30 @@ html {
                                 border: .05vh solid white;
                                 line-height: 32vh;
                             }
-                            &__face--front  { transform: rotateY(  0deg) translateZ(16vh); }
-                            &__face--right  { transform: rotateY( 90deg) translateZ(16vh); }
-                            &__face--back   { transform: rotateY(180deg) translateZ(16vh); }
-                            &__face--left   { transform: rotateY(-90deg) translateZ(16vh); }
-                            &__face--top    { transform: rotateX( 90deg) translateZ(16vh); }
-                            &__face--bottom { transform: rotateX(-90deg) translateZ(16vh); }
+
+                            &__face--front {
+                                transform: rotateY(0deg) translateZ(16vh);
+                            }
+
+                            &__face--right {
+                                transform: rotateY(90deg) translateZ(16vh);
+                            }
+
+                            &__face--back {
+                                transform: rotateY(180deg) translateZ(16vh);
+                            }
+
+                            &__face--left {
+                                transform: rotateY(-90deg) translateZ(16vh);
+                            }
+
+                            &__face--top {
+                                transform: rotateX(90deg) translateZ(16vh);
+                            }
+
+                            &__face--bottom {
+                                transform: rotateX(-90deg) translateZ(16vh);
+                            }
                         }
                     }
 
@@ -6062,13 +6105,14 @@ html {
                     }
 
                     .talk_to_me {
+                        font-family: 'Abril Fatface', cursive;
+                        font-size: 4rem;
+                        color: white;
+                        white-space: nowrap;
                         position: absolute;
                         top: 50%;
                         left: 50%;
                         transform: translate(-50%, 0);
-                        font-size: 4rem;
-                        font-family: 'Abril Fatface', cursive;
-                        color: white;
                     }
                 }
             }
@@ -8199,7 +8243,7 @@ html {
                                                                     outline: none;
 
                                                                     .line {
-                                                                        background-color: darken( $black, 20%);
+                                                                        background-color: darken($black, 20%);
                                                                     }
                                                                 }
                                                             }
@@ -8240,7 +8284,7 @@ html {
 
                                                                 &:focus {
                                                                     &:after {
-                                                                        color: darken( $black, 20%);
+                                                                        color: darken($black, 20%);
                                                                     }
                                                                 }
                                                             }
@@ -9850,7 +9894,7 @@ html {
                                 outline: none;
 
                                 .line {
-                                    background-color: darken( $black, 20%);
+                                    background-color: darken($black, 20%);
                                 }
                             }
                         }
@@ -9891,7 +9935,7 @@ html {
 
                             &:focus {
                                 &:after {
-                                    color: darken( $black, 20%);
+                                    color: darken($black, 20%);
                                 }
                             }
                         }
@@ -10444,6 +10488,18 @@ html {
                 }
             }
 
+            .first_section_contact {
+                .wrapper_full {
+                    .text {
+                        background-size: 55%;
+
+                        .scene {
+                            transform: translate(100%, -75%);
+                        }
+                    }
+                }
+            }
+
             .second_section_blog {
                 .modal-dialog {
                     .modal-content {
@@ -10547,8 +10603,11 @@ html {
                     div.type {
                         div {
                             &.title {
+                                margin-top: 2.5vh;
+                                margin-bottom: 2.5vh;
+
                                 h1 {
-                                    font-size: 8vh;
+                                    font-size: 7.5vh;
                                 }
                             }
                         }
@@ -10556,6 +10615,18 @@ html {
                         .lorem {
                             margin-top: 2.5vh;
                             margin-bottom: 2.5vh;
+                        }
+                    }
+                }
+            }
+
+            .first_section_contact {
+                .wrapper_full {
+                    .text {
+                        background-size: 55%;
+
+                        .scene {
+                            transform: translate(100%, -75%);
                         }
                     }
                 }
@@ -10647,6 +10718,9 @@ html {
                     div.type {
                         div {
                             &.title {
+                                margin-top: 2.5vh;
+                                margin-bottom: 2.5vh;
+
                                 h1 {
                                     font-size: 8vh;
                                 }
@@ -10656,6 +10730,18 @@ html {
                         .lorem {
                             margin-top: 2.5vh;
                             margin-bottom: 2.5vh;
+                        }
+                    }
+                }
+            }
+
+            .first_section_contact {
+                .wrapper_full {
+                    .text {
+                        background-size: 55%;
+
+                        .scene {
+                            transform: translate(100%, -75%);
                         }
                     }
                 }
@@ -10719,6 +10805,7 @@ html {
     body,
     html {
         .container-fluid {
+
             .footer {
                 .wrapper {
                     grid-template-columns: 2.5% auto 2.5%;
@@ -10818,8 +10905,11 @@ html {
                     div.type {
                         div {
                             &.title {
+                                margin-top: 2.5vh;
+                                margin-bottom: 2.5vh;
+
                                 h1 {
-                                    font-size: 8vh;
+                                    font-size: 7vh;
                                 }
                             }
                         }
@@ -10827,6 +10917,18 @@ html {
                         .lorem {
                             margin-top: 2.5vh;
                             margin-bottom: 2.5vh;
+                        }
+                    }
+                }
+            }
+
+            .first_section_contact {
+                .wrapper_full {
+                    .text {
+                        background-size: 55%;
+
+                        .scene {
+                            transform: translate(50%, -75%);
                         }
                     }
                 }
@@ -10851,6 +10953,7 @@ html {
                             width: 40vw;
                         }
                     }
+
                     .Sidebar {
                         div {
                             &.wrap {
@@ -10868,6 +10971,7 @@ html {
                             width: 40vw;
                         }
                     }
+
                     .Sidebar {
                         div {
                             &.wrap {
@@ -11016,6 +11120,7 @@ html {
                             .search-wrapper {
                                 width: 7.5vw;
                                 height: 7.5vw;
+                                margin: 0;
 
                                 input {
                                     font-size: 2.5vw;
@@ -11054,6 +11159,31 @@ html {
                                         left: 2.5vw;
                                         width: calc(100% - 2.5vw);
                                         font-size: 2vw;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.dark_mode {
+                    .wrapper {
+                        header {
+                            .navToggle:not(.active) {
+
+                                svg {
+                                    filter: drop-shadow(.33vw .33vw 1.5vw rgba(255, 255, 255, .2));
+                                }
+
+                                &:hover {
+                                    box-shadow: 2.5vw 2.5vw 1.25vw -3.25vw rgba(255, 255, 255, .6);
+                                }
+                            }
+
+                            form {
+                                .search-wrapper {
+                                    .search {
+                                        border: .5vw solid white;
                                     }
                                 }
                             }
@@ -11572,9 +11702,13 @@ html {
                     grid-template-columns: 1fr;
                     grid-template-rows: 45% 55%;
 
+                    div.artsy {
+                        background-size: 50%;
+                    }
+
                     div.type {
-                        p {
-                            font-size: 1.5vw;
+                        p.text-muted {
+                            font-size: 2.5vw;
                         }
 
                         &>button {
@@ -11591,6 +11725,7 @@ html {
                         div.title {
                             h1 {
                                 font-size: 8vw;
+                                margin-top: .5rem;
                             }
                         }
 
@@ -11619,6 +11754,59 @@ html {
                                 [data-am-linearrow~="tooltip"] {
                                     &::after {
                                         font-size: 1.6vw;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section_contact {
+                .wrapper_full {
+                    .text {
+                        background-size: 100%;
+
+                        .scene {
+                            transform: translate(50%, -100%);
+                        }
+
+                        .email_me {
+                            right: 50%;
+                            bottom: 0;
+                            transform: translate(-50%, -100%);
+
+                            button {
+                                width: 25vw;
+                                height: 6.5vw;
+                                font-size: 2.5vw;
+
+                                span {
+                                    line-height: 6.5vw;
+                                }
+
+                                &>span {
+                                    &::before {
+                                        width: 1.25vw;
+                                        border: .15vw solid white;
+                                    }
+
+                                    &::after {
+                                        height: 1.25vw;
+                                        border: .15vw solid white;
+                                    }
+
+                                    &>span {
+                                        &::before {
+                                            width: .15vw;
+                                            height: .15vw;
+                                        }
+
+
+                                        &::after {
+                                            width: .15vw;
+                                            height: .15vw;
+                                        }
                                     }
                                 }
                             }
@@ -12054,6 +12242,7 @@ html {
                 .wrapper_full {
                     .Content {
                         padding: 12vw 3.25vw;
+
                         .card {
                             width: 75vw;
                             height: 25vh;
@@ -12067,6 +12256,7 @@ html {
                                         a {
                                             height: 6.5vw;
                                             font-size: 2.5vw;
+
                                             span {
                                                 line-height: 6.5vw;
                                             }
@@ -12076,6 +12266,7 @@ html {
                             }
                         }
                     }
+
                     .Sidebar {
                         width: calc(100% - 6.5vw);
                         height: calc(50% - 6.5vw);
@@ -12103,6 +12294,7 @@ html {
                                     }
                                 }
                             }
+
                             .Signup {
                                 padding: 3.75vw 3.75vw 1.25vw 3.75vw;
                                 grid-template-rows: 7.5vw 7.5vw 7.5vw 7.5vw;
@@ -12119,11 +12311,12 @@ html {
                                             }
                                         }
                                     }
-                                    
+
                                     &:last-of-type {
                                         button {
                                             height: 6.5vw;
                                             font-size: 2.5vw;
+
                                             span {
                                                 line-height: 6.5vw;
                                             }
@@ -12140,6 +12333,7 @@ html {
                 .wrapper_full {
                     .Content {
                         padding: 12vw 3.25vw;
+
                         .card {
                             width: 75vw;
                             height: 25vh;
@@ -12153,6 +12347,7 @@ html {
                                         a {
                                             height: 6.5vw;
                                             font-size: 2.5vw;
+
                                             span {
                                                 line-height: 6.5vw;
                                             }
@@ -12162,6 +12357,7 @@ html {
                             }
                         }
                     }
+
                     .Sidebar {
                         width: calc(100% - 6.5vw);
                         height: calc(50% - 6.5vw);
@@ -12189,6 +12385,7 @@ html {
                                     }
                                 }
                             }
+
                             .Login {
                                 padding: 3.75vw 3.75vw 1.25vw 3.75vw;
                                 grid-template-rows: 7.5vw 7.5vw 7.5vw;
@@ -12205,11 +12402,12 @@ html {
                                             }
                                         }
                                     }
-                                    
+
                                     &:last-of-type {
                                         button {
                                             height: 6.5vw;
                                             font-size: 2.5vw;
+
                                             span {
                                                 line-height: 6.5vw;
                                             }
@@ -12784,7 +12982,7 @@ html {
             .first_section_signup {
                 .wrapper_full {
                     .Sidebar {
-                        div{
+                        div {
                             &.wrap {
                                 .Signup {
                                     .row {
@@ -12795,12 +12993,12 @@ html {
                                                         width: 50% !important;
                                                         height: 100% !important;
                                                     }
-            
+
                                                     &::before {
                                                         width: 50% !important;
                                                         height: 100% !important;
                                                     }
-            
+
                                                     &>span {
                                                         &::after {
                                                             opacity: 1 !important;
@@ -12809,7 +13007,7 @@ html {
                                                             height: .15vh !important;
                                                             transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                         }
-            
+
                                                         &::before {
                                                             opacity: 1 !important;
                                                             border-bottom: .15vh solid $black !important;
@@ -12817,9 +13015,10 @@ html {
                                                             height: .15vh !important;
                                                             transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                         }
-            
+
                                                         &>span {
                                                             color: $black !important;
+
                                                             &::after {
                                                                 width: 100%;
                                                             }
@@ -12833,6 +13032,7 @@ html {
                             }
                         }
                     }
+
                     .Content {
                         .card {
                             box-shadow: 1.25vh 1.25vh 4.5vh -2.5vh rgba(0, 0, 0, .5);
@@ -12900,7 +13100,7 @@ html {
             .first_section_login {
                 .wrapper_full {
                     .Sidebar {
-                        div{
+                        div {
                             &.wrap {
                                 .Login {
                                     .row {
@@ -12911,12 +13111,12 @@ html {
                                                         width: 50% !important;
                                                         height: 100% !important;
                                                     }
-            
+
                                                     &::before {
                                                         width: 50% !important;
                                                         height: 100% !important;
                                                     }
-            
+
                                                     &>span {
                                                         &::after {
                                                             opacity: 1 !important;
@@ -12925,7 +13125,7 @@ html {
                                                             height: .15vh !important;
                                                             transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                         }
-            
+
                                                         &::before {
                                                             opacity: 1 !important;
                                                             border-bottom: .15vh solid $black !important;
@@ -12933,9 +13133,10 @@ html {
                                                             height: .15vh !important;
                                                             transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                         }
-            
+
                                                         &>span {
                                                             color: $black !important;
+
                                                             &::after {
                                                                 width: 100%;
                                                             }
@@ -12949,6 +13150,7 @@ html {
                             }
                         }
                     }
+
                     .Content {
                         .card {
                             box-shadow: 1.25vh 1.25vh 4.5vh -2.5vh rgba(0, 0, 0, .5);
