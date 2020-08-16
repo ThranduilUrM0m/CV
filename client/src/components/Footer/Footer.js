@@ -407,13 +407,13 @@ class Footer extends React.Component {
                         <span className="push-left">
                             <ul className="list-inline">
                                 <li className="list-inline-item">
-                                    <a href="# ">Instagram</a>
+                                    <a href="https://www.instagram.com/boutaleblcoder/">Instagram</a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <a href="# ">Facebook</a>
+                                    <a href="https://fb.me/boutaleblcoder">Facebook</a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <a href="# ">Github</a>
+                                    <a href="https://www.behance.net/boutaleblcoder/">Behance</a>
                                 </li>
                                 <li className="list-inline-item">
                                     <i className="far fa-copyright"></i>

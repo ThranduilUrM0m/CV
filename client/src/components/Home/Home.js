@@ -372,11 +372,11 @@ class Home extends React.Component {
                         </div>
                         <div id="social_media">
                             <div className="icons_gatherer">
-                                <a href="https://dribbble.com/iamboutaleb" className="icon-button dribbble"><i className="fab fa-dribbble"></i><span></span></a>
-                                <a href="https://www.behance.net/zakariaboutale" className="icon-button behance"><i className="fab fa-behance"></i><span></span></a>
+                                <a href="https://dribbble.com/boutaleblcoder" className="icon-button dribbble"><i className="fab fa-dribbble"></i><span></span></a>
+                                <a href="https://www.behance.net/boutaleblcoder/" className="icon-button behance"><i className="fab fa-behance"></i><span></span></a>
                                 <a href="https://www.linkedin.com/in/zakariae-bou-taleb-657953122/" className="icon-button linkedin"><i className="fab fa-linkedin-in"></i><span></span></a>
-                                <a href="https://www.instagram.com/iamboutaleb/" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-                                <a href="https://fb.me/iamboutaleb" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+                                <a href="https://www.instagram.com/boutaleblcoder/" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+                                <a href="https://fb.me/boutaleblcoder" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
                                 <a href="# " className="icon-button scroll">
                                     
                                 </a>
