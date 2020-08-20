@@ -1,6 +1,6 @@
 import React from "react";
 import axios from 'axios';
-import Swiper from 'swiper';
+import Swiper, { Navigation, Pagination } from 'swiper';
 import moment from 'moment';
 import { Form } from '../Article';
 import { FormProject } from '../Project';
@@ -359,6 +359,9 @@ class Dashboard extends React.Component {
 			.catch(err => console.log('There was an error:' + err));
     }
 	_handleDrag(source) {
+		// configure Swiper to use modules
+		Swiper.use([Navigation, Pagination]);
+		
         if(source != 'testimonies_slider_wrapper'){
             var mySwiper = new Swiper ('.'+source+'.swiper-container', {
                 effect: 'coverflow',

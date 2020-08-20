@@ -1,6 +1,6 @@
 import React from 'react';
 import Autocomplete from 'react-autocomplete';
-import Swiper from 'swiper';
+import Swiper, { Navigation, Pagination } from 'swiper';
 import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -76,6 +76,9 @@ class Blog extends React.Component {
 		}
 	}
 	_handleDrag() {
+		// configure Swiper to use modules
+		Swiper.use([Navigation, Pagination]);
+		
 		var mySwiper = new Swiper ('.swiper-container', {
 			effect: 'coverflow',
 			direction: 'horizontal',
