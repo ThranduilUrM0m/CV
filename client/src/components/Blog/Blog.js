@@ -101,10 +101,6 @@ class Blog extends React.Component {
 				slideShadows: false
 			},
 			simulateTouch: true,
-			pagination: {
-			  el: '.swiper-pagination',
-			  dynamicBullets: true,
-			},
 			navigation: {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev',
@@ -575,7 +571,9 @@ class Blog extends React.Component {
 									<button id='modal_trigger' type="button">
 										<span>
 											<span>
-												<span className="attr" data-attr-span="View All."></span>
+												<span className="attr" data-attr-span="View All.">
+													View All.
+												</span>
 											</span>
 										</span>
 									</button>
@@ -618,7 +616,6 @@ class Blog extends React.Component {
 											})
 										}
 									</div>
-									<div className="articles_slider_pagination swiper-pagination"></div>
 									<div className="slider-btn btn-l swiper-button-prev"><i className="fas fa-long-arrow-alt-left"></i></div>
 									<div className="slider-btn btn-r swiper-button-next"><i className="fas fa-long-arrow-alt-right"></i></div>
 								</div>

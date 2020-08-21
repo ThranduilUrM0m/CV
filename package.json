@@ -18,7 +18,7 @@
         "express": "*",
         "express-session": "*",
         "fs": "*",
-        "googleapis": "^39.2.0",
+        "googleapis": "*",
         "http": "*",
         "https": "*",
         "jwt-simple": "*",
