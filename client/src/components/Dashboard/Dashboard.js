@@ -310,6 +310,8 @@ class Dashboard extends React.Component {
     }
     handleChartArticles(articles) {
         const { _user } = this.state;
+        let _popularity = _.round((_.size(_comments) + _.size(_upvotes))*100/_.size(_views));
+
         Chart.defaults.global.legend.display = false;
         Chart.pluginService.register({
             afterUpdate: function (chart) {
@@ -362,16 +364,11 @@ class Dashboard extends React.Component {
         canvas_byViewFollow.width = $('.byViewFollow__item ._content ._byViewFollow_data').width();
         canvas_byViewFollow.height = $('.byViewFollow__item ._content ._byViewFollow_data').height();
 
-        /* let canvas_byPopularity = document.querySelector('#_byPopularity_chart');
-        canvas_byPopularity.width = $('._byPopularity_content .canvas').width() * 0.4;
-        canvas_byPopularity.height = $('._byPopularity_content .canvas').height() * 0.4; */
-
         let ctx_byCategory = $('#_byCategory_chart')[0].getContext('2d'),
             ctx_byUpvote = $('#_byUpvote_chart')[0].getContext('2d'),
             ctx_byView = $('#_byView_chart')[0].getContext('2d'),
             ctx_byComment = $('#_byComment_chart')[0].getContext('2d'),
             ctx_byViewFollow = $('#_byViewFollow_chart')[0].getContext('2d');
-            //ctx_byPopularity = $('#_byPopularity_chart')[0].getContext('2d');
 
         let backgroundColors = [
             'rgba(80,163,164,0.25)',
@@ -397,6 +394,7 @@ class Dashboard extends React.Component {
         let _comments = _.flatten(_.map(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }), (_a) => { return _a.comment }));
         let _values = _.map(_weeks_univ_format, (_week, _index) => {
             return _.size(_.filter(_views, (_v) => {
+                console.log(_views);
                 return _.isUndefined(_weeks_univ_format[_index-1]) ? moment(_v._createdAt).isBefore(_weeks_univ_format[_index]) : moment(_v._createdAt).isBetween(_weeks_univ_format[_index-1], _weeks_univ_format[_index]);
             }));
         });
@@ -485,13 +483,13 @@ class Dashboard extends React.Component {
             }
         });
 
-        /* Chart By ViewFallow */
+        /* Chart By ViewFollow */
         let chart_byViewFollow = new Chart(ctx_byViewFollow, {
             type: 'line',
             data: {
                 labels: _weeks_format,
                 datasets: [{
-                    label: ' Views',
+                    label: 'Views ',
                     data: _values,
                     borderWidth: 2,
                     borderColor: 'rgba(61, 193, 211, 1)',
@@ -518,30 +516,6 @@ class Dashboard extends React.Component {
                 }
             }
         });
-
-        let _popularity = _.round((_.size(_comments) + _.size(_upvotes))*100/_.size(_views));
-        /* Chart By ViewFallow */
-        /* let chart_byPopularity = new Chart(ctx_byPopularity, {
-            type: 'doughnut',
-            data: {
-                labels: ['', ''],
-                datasets: [{
-                    label: [100-_popularity, _popularity],
-                    data: [100-_popularity, _popularity],
-                    backgroundColor: ['rgba(251, 147, 143, 1)', 'rgba(0, 0, 0, 0.5)'],
-                    borderWidth: 0,
-                    weight: 0.2
-                }]
-            },
-            options: {
-                cutoutPercentage: 80,
-                elements: {
-                    arc: {
-                        roundedCornersFor: 0
-                    }
-                }
-            }
-        }); */
     }
     handleEditUser(user) {
         const { setEditUser } = this.props;
