@@ -310,7 +310,6 @@ class Dashboard extends React.Component {
     }
     handleChartArticles(articles) {
         const { _user } = this.state;
-        let _popularity = _.round((_.size(_comments) + _.size(_upvotes))*100/_.size(_views));
 
         Chart.defaults.global.legend.display = false;
         Chart.pluginService.register({
@@ -392,6 +391,7 @@ class Dashboard extends React.Component {
         let _views = _.orderBy(_.flatten(_.map(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }), (_a) => { return _a.view })), '_createdAt', 'asc');
         let _upvotes = _.flatten(_.map(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }), (_a) => { return _a.upvotes }));
         let _comments = _.flatten(_.map(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }), (_a) => { return _a.comment }));
+        let _popularity = _.round((_.size(_comments) + _.size(_upvotes))*100/_.size(_views));
         let _values = _.map(_weeks_univ_format, (_week, _index) => {
             return _.size(_.filter(_views, (_v) => {
                 return _.isUndefined(_weeks_univ_format[_index-1]) ? moment(_v._createdAt).isBefore(_weeks_univ_format[_index]) : moment(_v._createdAt).isBetween(_weeks_univ_format[_index-1], _weeks_univ_format[_index]);
