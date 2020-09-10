@@ -394,7 +394,7 @@ class Dashboard extends React.Component {
         let _comments = _.flatten(_.map(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }), (_a) => { return _a.comment }));
         let _values = _.map(_weeks_univ_format, (_week, _index) => {
             return _.size(_.filter(_views, (_v) => {
-                console.log(_views);
+                console.log(moment(_v._createdAt).isBefore(_weeks_univ_format[_index]));
                 return _.isUndefined(_weeks_univ_format[_index-1]) ? moment(_v._createdAt).isBefore(_weeks_univ_format[_index]) : moment(_v._createdAt).isBetween(_weeks_univ_format[_index-1], _weeks_univ_format[_index]);
             }));
         });
