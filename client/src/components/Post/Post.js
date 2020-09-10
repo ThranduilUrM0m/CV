@@ -187,7 +187,7 @@ class Post extends React.Component {
 
 		if( _.isUndefined( _.find(view, (v) => {return v.viewer === f.toString()}) ) ) {
 			self.setState(state => ({
-				view: [...state.view, {viewer: f.toString()}],
+				view: [...state.view, {viewer: f.toString(), _createdAt: moment().format()}],
 			}), () => {
 				self.handleSubmit()
 				.then(() => {

@@ -9,18 +9,18 @@
 $main-color: #3dc1d3;
 $purple: #f985de;
 $black: #2d2d2d;
+$card_black: #17141d;
 $text-color: #777;
 $text-color-light: #ccc;
 $border-color: #eee;
 $bg-color: #f9f9f9;
-$neutral-color: #fff;
+$white: #fff;
 $Holiday: #D6A2E8;
 $roboto: "Roboto",
 Helvetica,
 Arial,
 sans-serif;
 $calendar-red: #DD5044;
-$white: #fff;
 $dark-blue: tint(#2E3C4A, 15%);
 $light-blue: tint($dark-blue, 25%);
 $border-color: #e3e3e3;
@@ -420,6 +420,10 @@ img {
     max-width: 100%;
 }
 
+.dropdown-toggle::after{
+    display: none;
+}
+
 * {
     -webkit-font-smoothing: antialiased;
 }
@@ -448,7 +452,7 @@ img {
             color: $black;
             height: calc(100% - 1vh);
             margin: 1vh 0 0 0;
-            padding: 0;
+            padding: .75vh 0 0 0;
             box-shadow: none;
             transition: all .3s ease-out;
         }
@@ -4800,65 +4804,24 @@ html {
                                 margin-right: 0;
                                 margin-left: 0;
                                 margin-bottom: 0;
+                                flex: unset;
 
                                 .input-field {
-                                    position: relative;
-                                    margin: 0 0 1.25vh 0;
-
-                                    &.s12 {
-                                        height: 12vh;
-                                        margin-bottom: 2.5vh;
-
-                                        textarea.materialize-textarea {
-                                            color: $black;
-                                            padding: 0;
-                                            margin: 0;
-                                            height: calc(100% - .15vh);
-                                        }
-
-                                        .form-group-line {
-                                            position: absolute;
-                                            bottom: 0 !important;
-                                            left: 2vh;
-                                        }
-                                    }
-
-                                    &.s6 .form-group-line {
-                                        position: absolute;
-                                        top: 7.5vh;
-                                        bottom: unset;
-                                        left: 2vh;
-                                    }
-
-                                    label {
-                                        font-weight: 400;
-
-                                        &.active {
-                                            transform: translateY(-80%);
-                                        }
-                                    }
-
-                                    .form-group-input:focus~.form-group-line,
-                                    .form-group-input:valid~.form-group-line {
-                                        animation: input3 .5s 1 ease-out;
-                                        width: calc(100% - 3.75vh);
-                                    }
-
                                     button {
+                                        position: relative;
                                         -webkit-appearance: none;
                                         border: none;
                                         background: none;
                                         color: $black;
                                         width: 38.5vh;
                                         height: 7.5vh;
-                                        font-size: 2.5vh;
-                                        margin-bottom: 2.5vh;
+                                        font-size: 2.25vh;
+                                        margin-top: 2.5vh;
                                         padding: 0;
                                         outline: none;
-                                        position: relative;
                                         z-index: 10;
                                         box-shadow: none;
-
+            
                                         span {
                                             display: block;
                                             position: relative;
@@ -4866,20 +4829,23 @@ html {
                                             height: 100%;
                                             cursor: pointer;
                                         }
-
+            
                                         &>span {
                                             &>span {
+                                                padding-left: 0;
+                                                padding-right: 0;
+            
                                                 &>span {
                                                     transition: color .15s ease-out .3s;
                                                     color: transparent;
-
+            
                                                     &::after {
                                                         position: absolute;
                                                         top: 0;
                                                         left: 0;
                                                         right: 0;
                                                         bottom: 0;
-                                                        color: $liteBg_gray;
+                                                        color: white;
                                                         content: attr(data-attr-span);
                                                         width: 0;
                                                         height: 100%;
@@ -4890,31 +4856,31 @@ html {
                                                         overflow: hidden;
                                                         display: flex;
                                                         justify-content: center;
-                                                        transition: width .2s ease-out;
+                                                        transition: all .2s ease-out;
                                                     }
                                                 }
-
+            
                                                 &::before {
                                                     content: '';
                                                     position: absolute;
                                                     bottom: 0;
                                                     right: 0;
-                                                    width: .15vh;
-                                                    height: .15vh;
+                                                    width: .5vh;
+                                                    height: .5vh;
                                                     opacity: 0;
                                                 }
-
+            
                                                 &::after {
                                                     content: '';
                                                     position: absolute;
                                                     bottom: 0;
                                                     left: 0;
-                                                    width: .15vh;
-                                                    height: .15vh;
+                                                    width: .5vh;
+                                                    height: .5vh;
                                                     opacity: 0;
                                                 }
                                             }
-
+            
                                             &::before {
                                                 content: '';
                                                 position: absolute;
@@ -4922,12 +4888,15 @@ html {
                                                 right: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: 1.25vh solid $main-color;
+                                                border: .5vh solid $main-color;
                                                 border-right: none;
                                                 border-bottom: none;
-                                                transition: height .15s ease-out, width .15s ease-out .15s;
+            
+                                                transition-property: width, height;
+                                                transition-duration: .15s, .15s;
+                                                transition-delay: .15s, 0s;
                                             }
-
+            
                                             &::after {
                                                 content: '';
                                                 position: absolute;
@@ -4935,14 +4904,18 @@ html {
                                                 left: 50%;
                                                 width: 3.25vh;
                                                 height: 0;
-                                                border: 1.25vh solid $main-color;
+                                                border: .5vh solid $main-color;
                                                 border-left: none;
                                                 border-bottom: none;
-                                                transition: height .15s ease-out, width .15s ease-out .15s;
+            
+                                                transition-property: width, height;
+                                                transition-duration: .15s, .15s;
+                                                transition-delay: .15s, 0s;
                                             }
                                         }
-
+            
                                         &:hover {
+            
                                             &>span {
                                                 &>span {
                                                     &>span {
@@ -4951,6 +4924,46 @@ html {
                                                         }
                                                     }
                                                 }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            &:hover {
+                                button {
+                                    &>span {
+                                        &::after {
+                                            width: 50% !important;
+                                            height: 100% !important;
+                                            transition-delay: 0s, .15s !important;
+                                        }
+    
+                                        &::before {
+                                            width: 50% !important;
+                                            height: 100% !important;
+                                            transition-delay: 0s, .15s !important;
+                                        }
+    
+                                        &>span {
+                                            &::after {
+                                                opacity: 1 !important;
+                                                border-bottom: .5vh solid $main-color !important;
+                                                width: calc(50%) !important;
+                                                height: .5vh !important;
+                                                transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                            }
+    
+                                            &::before {
+                                                opacity: 1 !important;
+                                                border-bottom: .5vh solid $main-color !important;
+                                                width: calc(50%) !important;
+                                                height: .5vh !important;
+                                                transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                            }
+    
+                                            &>span {
+                                                color: $black !important;
                                             }
                                         }
                                     }
@@ -6236,266 +6249,705 @@ html {
         .first_section_dashboard {
             position: relative;
             width: 100%;
-            height: fit-content;
-            min-height: 100vh;
-            padding: 0;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
+            height: 100%;
 
             .wrapper_full {
                 position: relative;
                 width: 100%;
-                height: fit-content;
-                min-height: 100vh;
-                display: flex;
-                background-color: #e2e2e5;
+                height: 100%;
+                background-color: darken($color: $bg-color, $amount: 10);
 
                 .nav {
-                    position: fixed;
-                    display: flex;
-                    margin: 1.25vh;
-                    width: 28%;
-                    height: calc(100vh - 2.5vh);
-                    background: white;
-                    box-shadow: 2.5vh 0 5vh -2.5vh rgba(0, 0, 0, .5);
-                    clip-path: inset(0 calc(100% - 10.25vh) 0 0);
-                    transition: all .1s ease-out;
-                    z-index: 9998;
+                    &.left_nav {
+                        position: fixed;
+                        margin: 1.25vh;
+                        width: 15%;
+                        height: calc(100vh - 2.5vh);
+                        transition: all .1s ease-out;
 
-                    .logoHolder {
-                        border: 0;
-                        color: white;
-                        height: 3.75vh;
-                        margin: 2.5vh auto 2.5vh 10.25vh;
-                        transform-origin: left;
-                        transform: scale(.8);
+                        background: $white;
+                        clip-path: inset(0 calc(100% - 10vh) 0 0);
 
-                        img {
-                            height: 100%;
+                        z-index: 9998;
+
+                        .logoHolder {
+                            width: 10vh;
+                            height: 10vh;
+                            transform: scale(.8);
+
+                            img {
+                                height: 100%;
+                            }
                         }
-                    }
 
-                    .user_info {
-                        margin: 2.5vh 10.25vh 2.5vh 10.25vh;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-
-                        .user_logo {
+                        .settings_dashboard {
                             display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            color: $main-color;
-                            font-weight: bold;
-                            width: 10.25vh;
-                            height: 10.25vh;
-                            border-radius: 2vh;
-                            background: white;
-                            box-shadow: .6vh .6vh 2.5vh -1.25vh rgba(0, 0, 0, .5);
+                            flex: 1;
+                            flex-direction: column;
+                            margin: 0;
+
+                            li {
+                                position: relative;
+                                height: 7.5vh;
+                                font-size: 2vh;
+                                margin: 0;
+
+                                a {
+                                    position: relative;
+                                    display: block;
+                                    text-decoration: none;
+                                    height: 100%;
+                                    line-height: 7.5vh;
+                                    padding-left: 12.5vh;
+                                    color: $textColor--inactive;
+                                    transition: all .1s ease-out;
+
+                                    &:not(.active) {
+                                        opacity: .5;
+                                    }
+
+                                    &.active {
+                                        &::before {
+                                            height: 100%;
+                                        }
+                                    }
+
+                                    &::before {
+                                        content: '';
+                                        position: absolute;
+                                        border-radius: .5vh;
+                                        width: .5vh;
+                                        height: 0;
+                                        left: 0;
+                                        top: 0;
+                                        background-color: $purple;
+                                        transition: all .2s ease-out;
+                                    }
+
+                                    i {
+                                        position: absolute;
+                                        font-size: 2vh;
+                                        top: 50%;
+                                        left: 5vh;
+                                        transform: translate(-50%, -50%);
+                                        color: $textColor--inactive;
+                                    }
+
+                                    &:hover {
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+
+                            li:last-of-type {
+                                margin-top: auto;
+                            }
                         }
 
-                        .user_name {
-                            text-align: right;
-
-                            h4 {
-                                margin-bottom: 0;
-                            }
-
-                            .name {
-                                font-size: 1.6vh;
-                            }
+                        &:hover {
+                            clip-path: inset(0 0 0 0);
                         }
                     }
 
-                    .settings_dashboard {
-                        display: flex;
-                        flex: 1;
-                        flex-direction: column;
-                        margin: 3.25vh 3.25vh 3.25vh 10.25vh;
+                    &.right_nav {
+                        position: fixed;
+                        right: 0;
+                        margin: 0;
+                        width: 22.5%;
+                        height: 100vh;
+                        z-index: 9998;
+                        background-color: $white;
 
-                        li:not(.not_link) {
+
+                        .nav_header {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .header_text {
+                                margin: 1.75vh;
+
+                                h5 {
+                                    font-size: 2.5vh;
+                                    margin: 0;
+                                    color: $black;
+                                }
+                                h6 {
+                                    font-size: 1.75vh;
+                                    margin: 0;
+                                    color: rgba($color: $black, $alpha: 0.5);
+                                }
+                            }
+
+                            .profile_picture {
+                                width: 5vh;
+                                height: 5vh;
+                                border-radius: 1.25vh;
+                                background: url('profil_icon.jpg') no-repeat center;
+                                background-size: cover;
+                                padding: 1vh;
+                                margin: 1.75vh;
+                            }
+                        }
+
+                        .card {
                             position: relative;
-                            font-size: 2.5vh;
-                            margin: 2vh 0;
+                            width: calc(100% - 2.5vh);
+                            margin: 1.25vh;
+                            height: fit-content;
+                            border: none;
+                            border-radius: 0;
+                            background: transparent;
+                            box-shadow: 0px 0px 10px -5px rgba(255, 255, 255, 0.25);
 
-                            a {
-                                position: relative;
-                                display: block;
-                                text-decoration: none;
-                                padding-left: 7.5vh;
+                            &__content {
+                                height: fit-content;
+                                width: 100%;
 
-                                &.active {
-                                    &::before {
-                                        width: 7.5vh;
+                                ._pane {
+                                    height: fit-content;
+                                    width: 100%;
+                                    padding: 1.25vh .25vh;
+
+                                    ._calendar_content {
+                                        color: $black;
+
+                                        .icon {
+                                            font-family: 'Material Icons', serif;
+                                            font-style: normal;
+                                            display: inline-block;
+                                            vertical-align: middle;
+                                            line-height: 1;
+                                            text-transform: none;
+                                            letter-spacing: normal;
+                                            word-wrap: normal;
+                                            white-space: nowrap;
+                                            direction: ltr;
+
+                                            -webkit-font-smoothing: antialiased;
+                                            text-rendering: optimizeLegibility;
+                                            -moz-osx-font-smoothing: grayscale;
+                                            font-feature-settings: 'liga';
+                                        }
+
+                                        * {
+                                            box-sizing: border-box;
+                                        }
+
+                                        /* GRID */
+                                        .row {
+                                            margin: 0;
+                                            padding: 0;
+                                            display: flex;
+                                            flex-direction: row;
+                                            flex-wrap: wrap;
+                                            align-items: center;
+                                            width: 100%;
+                                        }
+
+                                        .row-middle {
+                                            align-items: center;
+                                        }
+
+                                        .col {
+                                            flex-grow: 1;
+                                            flex-basis: calc(100%/7);
+                                            max-width: 100%;
+                                            width: calc(100%/7);
+                                        }
+
+                                        .col-start {
+                                            display: flex;
+                                            justify-content: flex-start;
+                                            align-items: center;
+                                            text-align: left;
+                                            flex-grow: 9;
+
+                                            .calendar_icon_div {
+                                                position: relative;
+                                                float: left;
+                                                font-size: 2vh;
+                                                margin-right: 2vh;
+
+                                                .calendar_icon {
+                                                    background: #ccc;
+                                                    text-align: center;
+
+                                                    border-radius: .5vh;
+
+                                                    padding-top: .75vh;
+                                                    width: 7.5vh;
+                                                    height: 6.5vh;
+
+                                                    display: flex;
+                                                    flex-direction: column;
+
+                                                    margin: 0;
+
+                                                    .a {
+                                                        text-transform: uppercase;
+                                                        padding: .3vh .5vh 0 .5vh;
+                                                    }
+
+                                                    .b {
+                                                        background: #ccc;
+                                                        padding: 0 .5vh .3vh .5vh;
+                                                        border-radius: .5vh;
+
+                                                        &::before,
+                                                        &::after {
+                                                            content: '';
+                                                            float: left;
+                                                            position: absolute;
+                                                            top: -.6vh;
+                                                            width: .5vh;
+                                                            height: .5vh;
+                                                            background: #ccc;
+
+                                                            z-index: 2;
+
+                                                            border-radius: .5vh;
+                                                        }
+
+                                                        &:before {
+                                                            left: 1.15vh;
+                                                        }
+
+                                                        &:after {
+                                                            right: 1.15vh;
+                                                        }
+                                                    }
+
+                                                    &::before,
+                                                    &::after {
+                                                        content: '';
+                                                        float: left;
+                                                        position: absolute;
+                                                        top: .5vh;
+                                                        width: 1vh;
+                                                        height: 1vh;
+                                                        background: #f9f9f9;
+                                                        z-index: 1;
+                                                        border-radius: 100%;
+                                                        box-shadow: 0 .15vh .15vh #fff;
+                                                    }
+
+                                                    &:before {
+                                                        left: 1vh;
+                                                    }
+
+                                                    &:after {
+                                                        right: 1vh;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .col-center {
+                                            justify-content: center;
+                                            text-align: center;
+                                        }
+
+                                        .col-end {
+                                            justify-content: flex-end;
+                                            text-align: right;
+                                            z-index: 9999;
+                                        }
+
+                                        /* Calendar */
+                                        .calendar {
+                                            display: block;
+                                            position: relative;
+                                            width: 100%;
+                                            margin: auto;
+
+                                            .header {
+                                                font-weight: 500;
+                                                font-size: 1rem;
+                                                padding: 0;
+                                                margin: 0;
+
+                                                .icon {
+                                                    cursor: pointer;
+                                                    transition: all .15s ease-out;
+                                                    color: $purple;
+
+                                                    &:hover {
+                                                        transform: scale(1.05);
+                                                        transition: all .05s ease-out;
+                                                        color: $main-color;
+                                                    }
+
+                                                    &:first-of-type {
+                                                        margin-left: 1em;
+                                                    }
+
+                                                    &:last-of-type {
+                                                        margin-right: 1em;
+                                                    }
+                                                }
+                                            }
+
+                                            .days {
+                                                font-weight: 400;
+                                                color: $text-color-light;
+                                                font-size: 70%;
+                                                padding: .75em 0;
+                                                border-bottom: .15vh solid $border-color;
+                                            }
+
+                                            .body {
+                                                .cell {
+                                                    position: relative;
+                                                    height: 5vh;
+                                                    overflow: hidden;
+                                                    cursor: pointer;
+                                                    transition: all .25s ease-out;
+                                                    text-align: center;
+
+                                                    &:hover {
+                                                        background: $bg-color;
+                                                        transition: all .5s ease-out;
+
+                                                        .bg {
+                                                            opacity: .05;
+                                                            transition: all .5s ease-out;
+                                                        }
+                                                    }
+
+                                                    &:last-child {
+                                                        border-right: none;
+                                                    }
+
+                                                    .number {
+                                                        font-size: 82.5%;
+                                                        line-height: 1;
+                                                        font-weight: 700;
+                                                    }
+
+                                                    .bg {
+                                                        font-weight: 700;
+                                                        line-height: 1;
+                                                        color: $main-color;
+                                                        opacity: 0;
+                                                        font-size: 12vh;
+                                                        position: absolute;
+                                                        top: -.2em;
+                                                        right: -.05em;
+                                                        transition: all .25s ease-out;
+                                                        letter-spacing: -.07em;
+                                                    }
+                                                }
+
+                                                .selected {
+                                                    &::before {
+                                                        content: "";
+                                                        position: absolute;
+                                                        top: 50%;
+                                                        left: 50%;
+                                                        transform: translate(-50%, 100%);
+                                                        height: 1.25vh;
+                                                        width: 1.25vh;
+                                                        background-color: $main-color;
+                                                        border-radius: 50%;
+                                                        display: inline-block;
+                                                        z-index: -1;
+                                                    }
+
+                                                    .bg {
+                                                        opacity: .15;
+                                                        transition: all .5s ease-out;
+                                                    }
+                                                }
+
+                                                .notification {
+                                                    &::before {
+                                                        content: "";
+                                                        position: absolute;
+                                                        top: 100%;
+                                                        left: 50%;
+                                                        transform: translate(-50%, -120%);
+                                                        height: 1.25vh;
+                                                        width: 1.25vh;
+                                                        background-color: $green;
+                                                        border-radius: 50%;
+                                                        display: inline-block;
+                                                    }
+
+                                                    .bg {
+                                                        opacity: .15;
+                                                        transition: all .5s ease-out;
+                                                    }
+                                                }
+
+                                                .row {
+                                                    &:last-child {
+                                                        border-bottom: none;
+                                                    }
+                                                }
+
+                                                .disabled {
+                                                    color: $text-color-light;
+                                                    pointer-events: none;
+                                                }
+
+                                                .col {
+                                                    flex-grow: 0;
+                                                    flex-basis: calc(100%/7);
+                                                    width: calc(100%/7);
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    ._byPopularity_content {
+                                        position: relative;
+                                        padding: 2.5vh;
+                                        height: 100%;
+                                        width: 100%;
+
+                                        display: grid;
+                                        grid-template-rows: 30% 70%;
+
+
+                                        .canvas_header {
+                                            h6 {
+                                                color: $white;
+                                            }
+                                        }
+
+                                        canvas {
+                                            width: 40%;
+                                        }
+
+                                        .description {
+                                            position: absolute;
+                                            top: 65%;
+                                            left: 50%;
+                                            transform: translate(-50%, -50%);
+                                            font-size: 3vh;
+                                            color: $white;
+                                        }
+                                    }
+                                }
+                            }
+
+                            &._main {
+                                flex: 1;
+
+                                .latest_notifications {
+                                    .notifications_list {
+                                        li {
+                                            display: flex;
+                                            align-items: center;
+                                            margin: auto 1.25vh 1.25vh 1.25vh;
+                                            padding: 1.25vh;
+                                            background: lighten($color: $Gradient, $amount: 40);
+                                            border-radius: 0;
+                                            font-size: 2vh;
+
+                                            .New {
+                                                font-size: 1.5vh;
+                                                border: .15vh solid #ddd;
+                                                background: $main-color;
+                                                color: white;
+                                                display: inline-block;
+                                                padding: .75vh;
+                                                margin: 0 1.25vh 0 0;
+                                                border-radius: .75vh;
+                                                height: fit-content;
+                                            }
+
+                                            span {
+                                                display: flex;
+                                                flex-direction: column;
+
+                                                p {
+                                                    margin: 0;
+                                                    &.Date {
+                                                        font-weight: bold;
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
 
-                                &::before {
-                                    content: '';
-                                    position: absolute;
-                                    border-radius: .5vh;
-                                    width: 0;
-                                    height: .5vh;
-                                    left: 3.75vh;
-                                    bottom: 0;
-                                    background-color: $main-color;
-                                    transform: translate(-50%, .5vh);
-                                    transition: all .2s ease-out;
-                                }
-
-                                i {
-                                    position: absolute;
-                                    left: 3.75vh;
-                                    top: 50%;
-                                    transform: translate(-50%, -50%);
+                                .user_analytics {
+                                    margin: auto 1.25vh 1.25vh 1.25vh;
+                                    padding: 1.25vh;
+                                    background: lighten($color: $Gradient, $amount: 20);
+                                    border-radius: 0;
+        
+                                    display: grid;
+                                    grid-template-columns: repeat(3, 1fr);
+        
+                                    & > div {
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: center;
+        
+                                        span {
+        
+                                            &:first-of-type {
+                                                font-weight: bold;
+                                                font-size: 2.75vh;
+                                            }
+        
+                                            &:last-of-type {
+                                                font-weight: normal;
+                                                font-size: 1.75vh;
+                                            }
+                                        }
+                                    }
                                 }
                             }
+                            /* .timeanddatenow {
+                                position: absolute;
+                                width: 100%;
+                                right: 0;
+                                margin: 2.5vh;
+
+                                .datenow {
+                                    color: rgba(0, 0, 0, .5);
+                                    text-align: center;
+                                    line-height: 1;
+                                    font-size: 1.25em;
+                                    font-weight: bold;
+                                }
+                            } */
                         }
 
-                        li:last-of-type {
-                            margin-top: auto;
-                        }
+                        .copyright {
+                            color: $black;
+                            font-size: 1.6vh;
+                            margin: 1.25vh;
 
-                        .not_link {
-                            font-size: 2vh;
-
-                            p {
-                                margin: 3.25vh 0 0 0;
+                            i {
+                                margin-right: .75vh;
+                                margin-left: .75vh;
                             }
                         }
                     }
-
-                    &:hover {
-                        clip-path: inset(0 0 0 0);
-                    }
-                }
-
-                .after {
-                    position: absolute;
-                    width: .5vh;
-                    height: 9vh;
-                    top: calc(50vh + 2.5vh);
-                    left: 11.5vh;
-                    transform: translate(100%, -50%);
-                    background-color: white;
-                    transition: all .1s ease-out;
-                    z-index: 111;
                 }
 
                 .tab-content {
-                    width: calc(100% - 14vh);
+                    position: relative;
+                    width: calc(77.5% - 13.75vh);
                     height: 100%;
                     top: 0;
                     left: 0;
-                    margin-left: 14vh;
-                    padding: 3.25vh;
+                    margin-left: 12.5vh;
+                    padding: 0;
 
                     .tab-pane {
-                        height: fit-content;
-
-                        .top_roof {
-                            display: flex;
-                            height: fit-content;
-                            width: 100%;
-                            align-items: flex-start;
-
-                            a {
-                                margin-left: auto;
-                                margin-right: 3.25vh;
-                                color: rgba(0, 0, 0, .5);
-                                transition: all .2s ease-out;
-                                display: flex;
-                                align-items: flex-end;
-                                text-decoration: none;
-
-                                p {
-                                    margin-right: 2vh;
-                                    margin-bottom: 0;
-                                    font-size: 2vh;
-                                    line-height: 1;
-                                }
-
-                                &:hover {
-                                    color: $black;
-                                }
-                            }
-
-                            .left_roof {
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: flex-start;
-                                align-items: flex-start;
-                                margin-right: auto;
-
-                                h2 {
-                                    font-weight: bold;
-                                }
-                            }
-                        }
+                        position: relative;
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                        height: 100%;
 
                         &.dashboard_pane {
                             .cards {
                                 position: relative;
-                                display: flex;
-                                flex-wrap: wrap;
-                                list-style: none;
-                                margin: 0;
-                                padding: 0;
-                                height: auto;
+                                height: 100%;
                                 width: 100%;
+                                padding: 1.25vh;
+                                margin: 0;
 
-                                .timeanddatenow {
-                                    position: absolute;
-                                    right: 0;
-                                    margin: 2.5vh;
-                                    width: 5vw;
-
-                                    .datenow {
-                                        color: rgba(0, 0, 0, .5);
-                                        text-align: center;
-                                        line-height: 1;
-                                        font-size: .8em;
-                                        font-weight: bold;
-                                    }
-                                }
-
+                                display: grid;
+                                grid-template-columns: repeat(16, 1fr);
+                                grid-template-rows: auto 1fr 1fr;
+                                grid-template-areas: "One One One One Two Two Two Two Three Three Three Three Four Four Four Four" 
+                                                    "Five Five Five Five Five Five Five Eight Eight Eight Eight Eight Eight Eight Eight Eight" 
+                                                    "Seven Seven Seven Seven Seven Seven Seven Seven Seven Six Six Six Six Six Six Six";
+                                grid-gap: 2.5vh;
+                                
                                 &__item {
-                                    display: flex;
-                                    padding: 2.5vh;
-                                    width: fit-content;
-                                    min-width: 35vw;
-                                    max-width: 45vw;
-                                    height: fit-content;
-                                    min-height: 12vh;
+                                    position: relative;
+                                    min-width: 0;
+                                    min-height: 0;
+
+                                    &:nth-child(1) {
+                                        grid-area: One;
+                                    }
+                                    &:nth-child(2) {
+                                        grid-area: Two;
+                                    }
+                                    &:nth-child(3) {
+                                        grid-area: Three;
+                                    }
+                                    &:nth-child(4) {
+                                        grid-area: Four;
+                                    }
+                                    &:nth-child(5) {
+                                        grid-area: Five;
+                                    }
+                                    &:nth-child(6) {
+                                        grid-area: Six;
+                                    }
+                                    &:nth-child(7) {
+                                        grid-area: Seven;
+                                    }
+                                    &:nth-child(8) {
+                                        grid-area: Eight;
+                                    }
 
                                     .card {
-                                        background: white;
-                                        border-radius: .5vh;
-                                        box-shadow: 2.5vh 5vh 5vh -2.5vh rgba(0, 0, 0, .25);
-                                        display: flex;
-                                        flex-direction: column;
+                                        position: relative;
                                         overflow: hidden;
-                                        margin: 0;
                                         width: 100%;
                                         height: 100%;
+                                        border-radius: 0;
+                                        margin: 0;
+
+                                        background: $white;
+                                        box-shadow: 3px 6px 8px -5px rgba(0,0,0,0.5);
 
                                         &__content {
-                                            display: flex;
-                                            flex: 1 1 auto;
-                                            flex-direction: column;
+                                            position: relative;
+                                            width: 100%;
+                                            height: 100%;
 
                                             ._pane {
-                                                display: flex;
+                                                position: relative;
+                                                width: 100%;
                                                 height: 100%;
-                                                flex-direction: row;
 
-                                                ._articles_header {
-                                                    background: $main-color;
+                                                &._articles_pane {
+                                                    width: 100%;
+                                                    height: 100%;
+                                                    display: grid;
+                                                    grid-template-columns: 40% 60%;
+
+                                                    ._articles_header {
+                                                        background: $main-color;
+                                                        padding: 1.25vh;
+                                                        width: 100%;
+                                                    }
+
+                                                    ._articles_content {
+                                                        padding: 1.25vh;
+                                                    }
                                                 }
 
-                                                ._projects_header {
-                                                    background: $purple;
+                                                &._projects_pane {
+                                                    width: 100%;
+                                                    height: 100%;
+                                                    display: grid;
+                                                    grid-template-columns: 40% 60%;
+
+                                                    ._projects_header {
+                                                        background: $purple;
+                                                        padding: 1.25vh;
+                                                        width: 100%;
+                                                    }
+
+                                                    ._projects_content {
+                                                        padding: 1.25vh;
+                                                    }
                                                 }
 
                                                 ._testimonies_header {
@@ -6503,11 +6955,37 @@ html {
                                                 }
 
                                                 ._header {
+                                                    position: relative;
                                                     display: flex;
                                                     flex-direction: column;
-                                                    justify-content: flex-end;
+                                                    justify-content: flex-start;
                                                     padding: 2.5vh;
                                                     width: 50%;
+
+                                                    ._header_title {
+                                                        transform: rotate(-90deg) translate(100%, 100%);
+                                                        transform-origin: right bottom;
+                                                        position: absolute;
+                                                        right: 100%;
+                                                        bottom: 0;
+                                                        padding: 1.25vh;
+
+                                                        label {
+                                                            opacity: .1;
+                                                            font-size: 7.5vh;
+                                                            line-height: 7.5vh;
+                                                            font-weight: 600;
+                                                            color: $white;
+                                                            margin: 0;
+                                                            left: 0;
+                                                            transform: translateY(0);
+                                                        }
+                                                        
+                                                        .card__title {
+                                                            font-weight: 600;
+                                                            color: $white;
+                                                        }
+                                                    }
 
                                                     .title_search {
                                                         &.input-field {
@@ -6544,7 +7022,7 @@ html {
                                                                 border: none;
                                                                 border-bottom: none;
                                                                 border-radius: 0;
-                                                                height: 7.5vh;
+                                                                height: 5.25vh;
                                                                 width: 100%;
                                                                 line-height: 1;
                                                                 font-family: $roboto;
@@ -6556,20 +7034,7 @@ html {
                                                             }
 
                                                             label {
-                                                                opacity: .1;
-                                                                font-size: 7.5vh;
-                                                                line-height: 7.5vh;
-                                                                font-weight: 600;
-                                                                color: $black;
-                                                                margin: 0;
-                                                                left: 0;
-                                                                transform: translateY(0);
-
-                                                                &.active {
-                                                                    font-size: 2vh;
-                                                                    line-height: 1;
-                                                                    transform: translateY(-80%);
-                                                                }
+                                                                color: $white;
                                                             }
 
                                                             .form-group-line {
@@ -6584,10 +7049,6 @@ html {
                                                                 width: calc(100% - 3.75vh);
                                                             }
                                                         }
-                                                    }
-
-                                                    .card__title {
-                                                        font-weight: 600;
                                                     }
 
                                                     .dropdown {
@@ -6613,7 +7074,7 @@ html {
                                                             will-change: transform;
                                                             transform: unset !important;
                                                             top: unset !important;
-                                                            bottom: 100% !important;
+                                                            bottom: unset !important;
                                                             left: unset !important;
                                                             right: 0;
                                                             min-width: unset !important;
@@ -6654,16 +7115,55 @@ html {
                                                 }
 
                                                 ._content {
+                                                    position: relative;
                                                     padding: 2.5vh;
-                                                    width: 50%;
+                                                    width: 100%;
+                                                    height: 100%;
+
+                                                    &._tops {
+                                                        display: grid;
+                                                        grid-template-columns: 40% 60%;
+                                                    }
+
+                                                    &._line_chart {
+                                                        display: grid;
+                                                        grid-template-rows: auto 1fr;
+                                                    }
+
+                                                    .description {
+                                                        display: flex;
+                                                        flex-direction: column;
+                                                        justify-content: center;
+
+                                                        h5 {
+                                                            margin: 0;
+                                                        }
+                                                        p {
+                                                            font-size: 1.5vh;
+                                                            margin: 0;
+                                                        }
+                                                    }
+
+                                                    ._byViewFollow_data {
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        padding: 1.25vh;
+
+                                                        .canvas {
+                                                            position: relative;
+                                                            width: 100%;
+                                                            height: 100%;
+                                                        }
+                                                    }
 
                                                     .data-container {
                                                         position: relative;
                                                         width: 100%;
+                                                        height: 100%;
 
                                                         .swiper-container {
                                                             width: 100%;
-                                                            height: 40vh;
+                                                            height: 100%;
                                                             margin: 0 !important;
                                                             display: flex;
                                                             flex-direction: column;
@@ -6676,9 +7176,13 @@ html {
                                                                 .swiper-slide:not(.testimonies_slider_wrapper_cards_item) {
                                                                     height: 100% !important;
 
+                                                                    .card {
+                                                                        box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 1) !important;
+                                                                    }
+
                                                                     .dropdown-menu {
                                                                         top: unset !important;
-                                                                        bottom: 100% !important;
+                                                                        bottom: unset !important;
                                                                         left: unset !important;
                                                                         right: 0;
                                                                     }
@@ -6687,16 +7191,42 @@ html {
                                                                 .swiper-slide {
                                                                     min-width: 14.5vw;
 
+                                                                    &.testimonies_slider_wrapper_cards_item {
+                                                                        box-shadow: 0px 5px 10px -10px rgba(0,0,0,0.25);
+                                                                    }
+
                                                                     .swiper-slide_item {
                                                                         position: relative;
                                                                         display: flex;
-                                                                        padding: .5vh 2vh;
-                                                                        height: 100%;
+                                                                        padding: 0 1.25vh;
                                                                         margin: 0;
+                                                                        height: 100%;
                                                                         transition: all .2s ease-out;
 
                                                                         .card:not(.card_testimonies) {
-                                                                            background-color: #e2e2e5;
+                                                                            background-color: #485461;
+                                                                            background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+
+                                                                            .card-body {
+                                                                                h1,
+                                                                                h2,
+                                                                                h3,
+                                                                                h4,
+                                                                                h5,
+                                                                                h6 {
+                                                                                    color: $white
+                                                                                }
+
+                                                                                .author {
+                                                                                    color: $white !important;
+                                                                                }
+
+                                                                                .comments_up_down {
+                                                                                    p {
+                                                                                        color: $white !important;
+                                                                                    }
+                                                                                }
+                                                                            }
                                                                         }
 
                                                                         .card {
@@ -6757,76 +7287,83 @@ html {
                                                                                     position: relative;
                                                                                     z-index: 10;
                                                                                     margin: 0;
+                                                                                    margin-top: auto;
                                                                                     overflow-x: hidden;
                                                                                     white-space: nowrap;
                                                                                     text-overflow: ellipsis;
                                                                                 }
 
                                                                                 .author {
-                                                                                    text-align: -webkit-right;
+                                                                                    text-align: -webkit-left;
                                                                                     font-size: 1.5vh;
-                                                                                    margin-bottom: 2vh;
+                                                                                    margin-bottom: 0;
+                                                                                    opacity: .75;
                                                                                 }
 
-                                                                                .categorie {
-                                                                                    text-align: -webkit-right;
-                                                                                    font-size: 2vh;
-                                                                                    color: white;
-                                                                                    border: .15vh solid white;
-                                                                                    padding: .5vh 1.25vh;
-                                                                                    width: fit-content;
-                                                                                }
+                                                                                ._categorie_dropdown {
+                                                                                    margin-top: 1.25vh;
+                                                                                    display: flex;
 
-                                                                                .dropdown {
-                                                                                    text-align: right;
-                                                                                    height: fit-content;
-                                                                                    margin-top: auto;
-
-                                                                                    span {
-                                                                                        cursor: pointer;
-
-                                                                                        i {
-                                                                                            color: white;
-                                                                                        }
-
-                                                                                        &.dropdown-toggle::after {
-                                                                                            display: none;
-                                                                                        }
+                                                                                    .categorie {
+                                                                                        text-align: -webkit-right;
+                                                                                        font-size: 2vh;
+                                                                                        color: white;
+                                                                                        border: .15vh solid white;
+                                                                                        padding: .5vh 1.25vh;
+                                                                                        width: fit-content;
+                                                                                        margin-right: .75vh;
                                                                                     }
 
-                                                                                    .dropdown-menu {
-                                                                                        flex-direction: row;
-                                                                                        position: absolute;
-                                                                                        transform-origin: right;
-                                                                                        will-change: transform;
-                                                                                        transform: unset !important;
-                                                                                        min-width: unset !important;
-                                                                                        width: fit-content !important;
-                                                                                        padding: 0;
-                                                                                        margin: .5vh;
+                                                                                    .dropdown {
+                                                                                        margin-left: auto;
+                                                                                        height: fit-content;
 
-                                                                                        &.show {
-                                                                                            display: flex !important;
-                                                                                        }
+                                                                                        span {
+                                                                                            cursor: pointer;
 
-                                                                                        .dropdown-item {
-                                                                                            width: 6.5vh;
-                                                                                            height: 6.5vh;
-                                                                                            padding: .5vh;
-                                                                                            display: flex;
-                                                                                            justify-content: center;
-                                                                                            align-items: center;
-
-                                                                                            &.edit,
-                                                                                            &._view {
-                                                                                                &:hover {
-                                                                                                    color: $green;
-                                                                                                }
+                                                                                            i {
+                                                                                                color: white;
                                                                                             }
 
-                                                                                            &.delete {
-                                                                                                &:hover {
-                                                                                                    color: $calendar-red;
+                                                                                            &.dropdown-toggle::after {
+                                                                                                display: none;
+                                                                                            }
+                                                                                        }
+
+                                                                                        .dropdown-menu {
+                                                                                            flex-direction: row;
+                                                                                            position: absolute;
+                                                                                            transform-origin: right;
+                                                                                            will-change: transform;
+                                                                                            transform: unset !important;
+                                                                                            min-width: unset !important;
+                                                                                            width: fit-content !important;
+                                                                                            padding: 0;
+                                                                                            margin: .5vh;
+
+                                                                                            &.show {
+                                                                                                display: flex !important;
+                                                                                            }
+
+                                                                                            .dropdown-item {
+                                                                                                width: 6.5vh;
+                                                                                                height: 6.5vh;
+                                                                                                padding: .5vh;
+                                                                                                display: flex;
+                                                                                                justify-content: center;
+                                                                                                align-items: center;
+
+                                                                                                &.edit,
+                                                                                                &._view {
+                                                                                                    &:hover {
+                                                                                                        color: $green;
+                                                                                                    }
+                                                                                                }
+
+                                                                                                &.delete {
+                                                                                                    &:hover {
+                                                                                                        color: $calendar-red;
+                                                                                                    }
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -6901,42 +7438,10 @@ html {
                                                                     }
                                                                 }
                                                             }
-
-                                                            .swiper-pagination {
-                                                                position: relative;
-                                                                width: 100%;
-                                                                bottom: unset;
-                                                                left: 0 !important;
-                                                                transform: translateX(0) !important;
-
-                                                                .swiper-pagination-bullet {
-                                                                    width: 2vh;
-                                                                    height: 2vh;
-                                                                    display: inline-block;
-                                                                    background: $black;
-                                                                    opacity: .2;
-                                                                    margin: 0 .75vh;
-                                                                    border-radius: 3.25vh;
-                                                                    transition: opacity .5s ease-out, background-color .5s ease-out, width .5s ease-out;
-                                                                    transition-delay: .5s, .5s, 0s;
-                                                                }
-
-                                                                .swiper-pagination-bullet-active {
-                                                                    opacity: 1;
-                                                                    background: $black;
-                                                                    width: 4.5vh;
-                                                                    transition-delay: 0s;
-
-                                                                    @media screen and (max-width: 576px) {
-                                                                        width: 3.25vh;
-                                                                    }
-                                                                }
-                                                            }
                                                         }
                                                     }
 
                                                     &._testimonies_content {
-                                                        width: 100%;
 
                                                         ._testimonies_head {
                                                             display: flex;
@@ -7034,6 +7539,7 @@ html {
                                                                             &>span {
                                                                                 display: flex;
                                                                                 line-height: .5;
+                                                                                cursor: pointer;
 
                                                                                 * {
                                                                                     line-height: .5;
@@ -7041,10 +7547,45 @@ html {
                                                                             }
 
                                                                             .dropdown-menu {
+                                                                                flex-direction: row;
+                                                                                position: absolute;
+                                                                                transform-origin: right;
+                                                                                will-change: transform;
+                                                                                transform: unset !important;
+                                                                                min-width: unset !important;
+                                                                                width: fit-content !important;
+                                                                                padding: 0;
+                                                                                margin: .5vh;
                                                                                 top: 0 !important;
                                                                                 bottom: unset !important;
                                                                                 left: unset !important;
                                                                                 right: 100%;
+
+                                                                                &.show {
+                                                                                    display: flex !important;
+                                                                                }
+
+                                                                                .dropdown-item {
+                                                                                    width: 6.5vh;
+                                                                                    height: 6.5vh;
+                                                                                    padding: .5vh;
+                                                                                    display: flex;
+                                                                                    justify-content: center;
+                                                                                    align-items: center;
+
+                                                                                    &.edit,
+                                                                                    &._view {
+                                                                                        &:hover {
+                                                                                            color: $green;
+                                                                                        }
+                                                                                    }
+
+                                                                                    &.delete {
+                                                                                        &:hover {
+                                                                                            color: $calendar-red;
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
 
@@ -7052,304 +7593,6 @@ html {
                                                                             margin-top: auto;
                                                                         }
                                                                     }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                    &._calendar_content {
-                                                        width: 100%;
-
-                                                        .icon {
-                                                            font-family: 'Material Icons', serif;
-                                                            font-style: normal;
-                                                            display: inline-block;
-                                                            vertical-align: middle;
-                                                            line-height: 1;
-                                                            text-transform: none;
-                                                            letter-spacing: normal;
-                                                            word-wrap: normal;
-                                                            white-space: nowrap;
-                                                            direction: ltr;
-
-                                                            -webkit-font-smoothing: antialiased;
-                                                            text-rendering: optimizeLegibility;
-                                                            -moz-osx-font-smoothing: grayscale;
-                                                            font-feature-settings: 'liga';
-                                                        }
-
-                                                        * {
-                                                            box-sizing: border-box;
-                                                        }
-
-                                                        /* GRID */
-                                                        .row {
-                                                            margin: 0;
-                                                            padding: 0;
-                                                            display: flex;
-                                                            flex-direction: row;
-                                                            flex-wrap: wrap;
-                                                            align-items: center;
-                                                            width: 100%;
-                                                        }
-
-                                                        .row-middle {
-                                                            align-items: center;
-                                                        }
-
-                                                        .col {
-                                                            flex-grow: 1;
-                                                            flex-basis: calc(100%/7);
-                                                            max-width: 100%;
-                                                            width: calc(100%/7);
-                                                        }
-
-                                                        .col-start {
-                                                            display: flex;
-                                                            justify-content: flex-start;
-                                                            align-items: center;
-                                                            text-align: left;
-                                                            flex-grow: 9;
-
-                                                            .calendar_icon_div {
-                                                                position: relative;
-                                                                float: left;
-                                                                font-size: 2vh;
-                                                                margin-right: 2vh;
-
-                                                                .calendar_icon {
-                                                                    background: #ccc;
-                                                                    text-align: center;
-
-                                                                    border-radius: .5vh;
-
-                                                                    padding-top: .75vh;
-                                                                    width: 7.5vh;
-                                                                    height: 6.5vh;
-
-                                                                    display: flex;
-                                                                    flex-direction: column;
-
-                                                                    margin: 0;
-
-                                                                    .a {
-                                                                        text-transform: uppercase;
-                                                                        padding: .3vh .5vh 0 .5vh;
-                                                                    }
-
-                                                                    .b {
-                                                                        background: #ccc;
-                                                                        padding: 0 .5vh .3vh .5vh;
-                                                                        border-radius: .5vh;
-
-                                                                        &::before,
-                                                                        &::after {
-                                                                            content: '';
-                                                                            float: left;
-                                                                            position: absolute;
-                                                                            top: -.6vh;
-                                                                            width: .5vh;
-                                                                            height: .5vh;
-                                                                            background: #ccc;
-
-                                                                            z-index: 2;
-
-                                                                            border-radius: .5vh;
-                                                                        }
-
-                                                                        &:before {
-                                                                            left: 1.15vh;
-                                                                        }
-
-                                                                        &:after {
-                                                                            right: 1.15vh;
-                                                                        }
-                                                                    }
-
-                                                                    &::before,
-                                                                    &::after {
-                                                                        content: '';
-                                                                        float: left;
-                                                                        position: absolute;
-                                                                        top: .5vh;
-                                                                        width: 1vh;
-                                                                        height: 1vh;
-                                                                        background: #f9f9f9;
-                                                                        z-index: 1;
-                                                                        border-radius: 100%;
-                                                                        box-shadow: 0 .15vh .15vh #fff;
-                                                                    }
-
-                                                                    &:before {
-                                                                        left: 1vh;
-                                                                    }
-
-                                                                    &:after {
-                                                                        right: 1vh;
-                                                                    }
-                                                                }
-                                                            }
-
-                                                            .p {
-                                                                font-size: 4.5vh;
-                                                            }
-                                                        }
-
-                                                        .col-center {
-                                                            justify-content: center;
-                                                            text-align: center;
-                                                        }
-
-                                                        .col-end {
-                                                            justify-content: flex-end;
-                                                            text-align: right;
-                                                            z-index: 9999;
-                                                        }
-
-                                                        /* Calendar */
-                                                        .calendar {
-                                                            display: block;
-                                                            position: relative;
-                                                            width: 100%;
-                                                            margin: auto;
-
-                                                            .header {
-                                                                font-weight: normal;
-                                                                font-size: 2.5vh;
-                                                                padding: .5vh 0;
-                                                                margin: 0;
-
-                                                                .icon {
-                                                                    cursor: pointer;
-                                                                    transition: all .15s ease-out;
-
-                                                                    &:hover {
-                                                                        transform: scale(1.05);
-                                                                        transition: all .05s ease-out;
-                                                                        color: $main-color;
-                                                                    }
-
-                                                                    &:first-of-type {
-                                                                        margin-left: 1em;
-                                                                    }
-
-                                                                    &:last-of-type {
-                                                                        margin-right: 1em;
-                                                                    }
-                                                                }
-                                                            }
-
-                                                            .days {
-                                                                text-transform: uppercase;
-                                                                font-weight: 400;
-                                                                color: $text-color-light;
-                                                                font-size: 70%;
-                                                                padding: .75em 0;
-                                                                border-bottom: .15vh solid $border-color;
-                                                            }
-
-                                                            .body {
-                                                                .cell {
-                                                                    position: relative;
-                                                                    height: 5vh;
-                                                                    overflow: hidden;
-                                                                    cursor: pointer;
-                                                                    transition: all .25s ease-out;
-                                                                    text-align: center;
-
-                                                                    &:hover {
-                                                                        background: $bg-color;
-                                                                        transition: all .5s ease-out;
-
-                                                                        .bg {
-                                                                            opacity: .05;
-                                                                            transition: all .5s ease-out;
-                                                                        }
-                                                                    }
-
-                                                                    &:last-child {
-                                                                        border-right: none;
-                                                                    }
-
-                                                                    .number {
-                                                                        font-size: 82.5%;
-                                                                        line-height: 1;
-                                                                        font-weight: 700;
-                                                                    }
-
-                                                                    .bg {
-                                                                        font-weight: 700;
-                                                                        line-height: 1;
-                                                                        color: $main-color;
-                                                                        opacity: 0;
-                                                                        font-size: 12vh;
-                                                                        position: absolute;
-                                                                        top: -.2em;
-                                                                        right: -.05em;
-                                                                        transition: all .25s ease-out;
-                                                                        letter-spacing: -.07em;
-                                                                    }
-                                                                }
-
-                                                                .selected {
-                                                                    &::before {
-                                                                        content: "";
-                                                                        position: absolute;
-                                                                        top: 50%;
-                                                                        left: 50%;
-                                                                        transform: translate(-50%, 100%);
-                                                                        height: 1.25vh;
-                                                                        width: 1.25vh;
-                                                                        background-color: $main-color;
-                                                                        border-radius: 50%;
-                                                                        display: inline-block;
-                                                                        z-index: -1;
-                                                                    }
-
-                                                                    .bg {
-                                                                        opacity: .15;
-                                                                        transition: all .5s ease-out;
-                                                                    }
-                                                                }
-
-                                                                .notification {
-                                                                    &::before {
-                                                                        content: "";
-                                                                        position: absolute;
-                                                                        top: 100%;
-                                                                        left: 50%;
-                                                                        transform: translate(-50%, -120%);
-                                                                        height: 1.25vh;
-                                                                        width: 1.25vh;
-                                                                        background-color: $green;
-                                                                        border-radius: 50%;
-                                                                        display: inline-block;
-                                                                    }
-
-                                                                    .bg {
-                                                                        opacity: .15;
-                                                                        transition: all .5s ease-out;
-                                                                    }
-                                                                }
-
-                                                                .row {
-                                                                    &:last-child {
-                                                                        border-bottom: none;
-                                                                    }
-                                                                }
-
-                                                                .disabled {
-                                                                    color: $text-color-light;
-                                                                    pointer-events: none;
-                                                                }
-
-                                                                .col {
-                                                                    flex-grow: 0;
-                                                                    flex-basis: calc(100%/7);
-                                                                    width: calc(100%/7);
-                                                                    display: flex;
-                                                                    align-items: center;
-                                                                    justify-content: center;
                                                                 }
                                                             }
                                                         }
@@ -8778,7 +9021,7 @@ html {
                             width: calc(100% + 12vh);
                             display: flex;
                             flex-direction: column;
-                            background-color: $neutral-color;
+                            background-color: $white;
                             padding: 5vh 0;
                             z-index: 1;
 
@@ -9023,7 +9266,7 @@ html {
                         &::after {
                             content: '';
                             position: absolute;
-                            background-color: $neutral-color;
+                            background-color: $white;
                             width: calc(100% + 12vh);
                             height: calc(100% + 6.5vh);
                             top: 0;
@@ -9350,7 +9593,7 @@ html {
                             width: calc(100% + 12vh);
                             display: flex;
                             flex-direction: column;
-                            background-color: $neutral-color;
+                            background-color: $white;
                             padding: 5vh 0;
                             z-index: 1;
 
@@ -9595,7 +9838,7 @@ html {
                         &::after {
                             content: '';
                             position: absolute;
-                            background-color: $neutral-color;
+                            background-color: $white;
                             width: calc(100% + 12vh);
                             height: calc(100% + 6.5vh);
                             top: 0;

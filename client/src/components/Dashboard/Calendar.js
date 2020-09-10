@@ -41,7 +41,7 @@ class Calendar extends React.Component {
         for (let i = 0; i < 7; i++) {
             days.push(
                 <div className="col col-center" key={i}>
-                    { moment(moment(startDate).add(i, 'days')).format('ddd') }
+                    { moment(moment(startDate).add(i, 'days')).format('dd') }
                 </div>
             );
         }
@@ -67,7 +67,7 @@ class Calendar extends React.Component {
             for (let i = 0; i < 7; i++) {
                 formattedDate = moment(day).format('D');
                 const cloneDay = day;
-                names = _.map(_.filter(this.props.NOTIFICATIONS, (item) => { return _.isEqual(moment(item.createdAt).format('MMMM Do'), moment(day).format('MMMM Do')) }), (notification) => { return '['+notification.type+']'; });
+                names = _.map(_.filter(this.props.NOTIFICATIONS, (item) => { return _.isEqual(moment(item.createdAt).format('MMM Do'), moment(day).format('MMM Do')) }), (notification) => { return '['+notification.type+']'; });
                 
                 days.push(
                     <div
@@ -76,7 +76,7 @@ class Calendar extends React.Component {
                         ? "disabled"
                         : moment(day).isSame(selectedDate, 'day')
                         ? "selected"
-                        : _.includes(_.map(_.map(this.props.NOTIFICATIONS, 'createdAt'), (item) => { return moment(item).format('MMMM Do') }), moment(day).format('MMMM Do'))
+                        : _.includes(_.map(_.map(this.props.NOTIFICATIONS, 'createdAt'), (item) => { return moment(item).format('MMM Do') }), moment(day).format('MMM Do'))
                         ? "notification "+names
                         : ""
                     }`}
@@ -106,18 +106,17 @@ class Calendar extends React.Component {
     }
     nextMonth() {
         this.setState({
-            currentMonth: moment(this.state.currentMonth).add(1, 'M').format('MMMM YYYY')
+            currentMonth: moment(this.state.currentMonth).add(1, 'M').format('MMMM, YYYY')
         });
     }
     prevMonth() {
         this.setState({
-            currentMonth: moment(this.state.currentMonth).subtract(1, 'M').format('MMMM YYYY')
+            currentMonth: moment(this.state.currentMonth).subtract(1, 'M').format('MMMM, YYYY')
         });
     }
     render() {
         return (
             <div className="calendar">
-                <h4>Calendar.</h4>
                 {this.renderHeader()}
                 {this.renderDays()}
                 {this.renderCells()}

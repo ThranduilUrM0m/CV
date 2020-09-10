@@ -29,6 +29,7 @@
     "axios-progress-bar": "*",
     "babel-polyfill": "*",
     "bootstrap": "*",
+    "chart.js": "*",
     "fingerprintjs": "*",
     "history": "*",
     "http-proxy-middleware": "*",

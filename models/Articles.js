@@ -30,7 +30,7 @@ const ArticlesSchema = new Schema({
   }],
   view: [{
     viewer: String,
-    _yes_or_no: Boolean,
+    _createdAt: Date,
   }],
 }, { timestamps: true });
 
