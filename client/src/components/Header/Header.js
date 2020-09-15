@@ -125,9 +125,11 @@ class Header extends React.Component {
         });
 
         
-        if(_url === "/login" || _url === "/signup" || _url === "/dashboard") {
+        if(_url === "/login" || _url === "/signup")
             $('.fixedHeaderContainer').hide();
-        }
+
+        if(_url === "/dashboard")
+            $('.fixedHeaderContainer').addClass('dashboard_header');
     }
     _handleClickEvents() {
         let searchWrapper = document.querySelector('.search-wrapper'),

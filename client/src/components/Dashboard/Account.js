@@ -202,7 +202,7 @@ class Account extends React.Component {
                 <div className="_form">
                     <div className="modal-content_user">
                         <div className='row'>
-                            <div className='input-field col s3'>
+                            <div className='input-field col'>
                                 <input 
                                 className='validate form-group-input username' 
                                 type='text' 
@@ -215,7 +215,7 @@ class Account extends React.Component {
                                 <label htmlFor='username' className={_user.username ? 'active' : ''}>username</label>
                                 <div className="form-group-line"></div>
                             </div>
-                            <div className='input-field col s3'>
+                            <div className='input-field col'>
                                 <input 
                                 className='validate form-group-input email' 
                                 type='email' 
@@ -230,7 +230,7 @@ class Account extends React.Component {
                             </div>
                         </div>
                         <div className='row'>
-                            <div className='input-field col s3'>
+                            <div className='input-field col'>
                                 <input 
                                 className='validate form-group-input _current_password' 
                                 type='password' 
@@ -244,7 +244,7 @@ class Account extends React.Component {
                                 <label htmlFor='_current_password' className={_current_password ? 'active' : ''}>Current Password</label>
                                 <div className="form-group-line"></div>
                             </div>
-                            <div className='input-field col s3'>
+                            <div className='input-field col'>
                                 <input 
                                 className='validate form-group-input _new_password' 
                                 type='password' 
@@ -257,7 +257,7 @@ class Account extends React.Component {
                                 <label htmlFor='_new_password' className={_new_password ? 'active' : ''}>New Password</label>
                                 <div className="form-group-line"></div>
                             </div>
-                            <div className='input-field col s3'>
+                            <div className='input-field col'>
                                 <input 
                                 className='validate form-group-input' 
                                 type='password' 
@@ -271,7 +271,20 @@ class Account extends React.Component {
                                 <div className="form-group-line"></div>
                             </div>
                         </div>
-                        <button onClick={this.send_user} className="btn btn-primary float-right">Update.</button>
+                        <div className="row">
+                            <button 
+                                className="pull-right"
+                                onClick={this.send_user}
+                            >
+                                <span>
+                                    <span>
+                                        <span data-attr-span="Update.">
+                                            Update.
+                                        </span>
+                                    </span>
+                                </span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </>

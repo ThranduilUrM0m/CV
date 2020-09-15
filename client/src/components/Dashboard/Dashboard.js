@@ -98,7 +98,7 @@ class Dashboard extends React.Component {
                 onLoad(response.data);
 
                 self.handleChartArticles(_.filter(response.data, (_a) => { return _user.username === _a.author }));
-                
+
                 function runAfterElementExists(jquery_selector, callback) {
                     var checker = window.setInterval(function () {
                         if ($(jquery_selector).length) {
@@ -110,8 +110,6 @@ class Dashboard extends React.Component {
                 runAfterElementExists(".first_section_dashboard .articles_slider_wrapper_cards_item", function () {
                     self._handleDrag('articles_slider_wrapper');
                 });
-
-                $('.fixedHeaderContainer').addClass('blog_header');
             })
             .catch(function (error) {
                 console.log(error);
@@ -325,14 +323,14 @@ class Dashboard extends React.Component {
                     }
                 }
             },
-        
+
             afterDraw: function (chart) {
                 if (chart.config.options.elements.arc.roundedCornersFor !== undefined) {
                     var ctx = chart.chart.ctx;
                     var arc = chart.getDatasetMeta(0).data[chart.config.options.elements.arc.roundedCornersFor];
                     var startAngle = Math.PI / 2 - arc._view.startAngle;
                     var endAngle = Math.PI / 2 - arc._view.endAngle;
-        
+
                     ctx.save();
                     ctx.translate(arc.round.x, arc.round.y);
                     console.log(arc.round.startAngle)
@@ -383,7 +381,7 @@ class Dashboard extends React.Component {
             'rgba(132,197,64,0.5)',
             'rgba(195,107,133,0.5)',
         ];
-        let _categories_array = _.map(_.uniqBy(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }),'categorie'), (_a) => {
+        let _categories_array = _.map(_.uniqBy(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }), 'categorie'), (_a) => {
             return _a.categorie
         });
         let _weeks_format = _.reverse(_.map(new Array(10), (element, index) => { return moment().subtract(index, 'weeks').format('D. MMM'); }));
@@ -391,13 +389,13 @@ class Dashboard extends React.Component {
         let _views = _.orderBy(_.flatten(_.map(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }), (_a) => { return _a.view })), '_createdAt', 'asc');
         let _upvotes = _.flatten(_.map(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }), (_a) => { return _a.upvotes }));
         let _comments = _.flatten(_.map(_.filter(articles[0], (_ar) => { return _user.username === _ar.author }), (_a) => { return _a.comment }));
-        let _popularity = _.round((_.size(_comments) + _.size(_upvotes))*100/_.size(_views));
+        let _popularity = _.round((_.size(_comments) + _.size(_upvotes)) * 100 / _.size(_views));
         let _values = _.map(_weeks_univ_format, (_week, _index) => {
             return _.size(_.filter(_views, (_v) => {
-                return _.isUndefined(_weeks_univ_format[_index-1]) ? moment(_v._createdAt).isBefore(_weeks_univ_format[_index]) : moment(_v._createdAt).isBetween(_weeks_univ_format[_index-1], _weeks_univ_format[_index]);
+                return _.isUndefined(_weeks_univ_format[_index - 1]) ? moment(_v._createdAt).isBefore(_weeks_univ_format[_index]) : moment(_v._createdAt).isBetween(_weeks_univ_format[_index - 1], _weeks_univ_format[_index]);
             }));
         });
-        
+
         /* Chart By Categories */
         let chart_byCategory = new Chart(ctx_byCategory, {
             type: 'doughnut',
@@ -503,13 +501,13 @@ class Dashboard extends React.Component {
                 },
                 scales: {
                     xAxes: [{
-                        gridLines : {
-                            display : false,
+                        gridLines: {
+                            display: false,
                         }
                     }],
                     yAxes: [{
-                        gridLines : {
-                            display : false,
+                        gridLines: {
+                            display: false,
                         }
                     }]
                 }
@@ -1104,30 +1102,13 @@ class Dashboard extends React.Component {
                             </div>
                             <div className="nav nav-pills flex-column right_nav">
                                 <div className="nav_header">
-                                    <div className="header_text">
-                                        <h5>Hi {_user.username}!</h5>
-                                        <h6>{_user.email}</h6>
-                                    </div>
                                     <div className="profile_picture"></div>
                                 </div>
                                 <div className="card _main">
-                                    <div className="latest_notifications">
-                                        <h6>Notifications</h6>
-                                        <ul className="notifications_list">
-                                            {
-                                                _.take(_.orderBy(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }), ['createdAt'], ['desc']), 3).map((_notification, index) => {
-                                                    return (
-                                                        <li key={index} className={`notif_card notif_anchor`}>
-                                                            <p data-th="New" className="New">{moment(new Date(_notification.createdAt)).fromNow()}</p>
-                                                            <span className="notif_info">
-                                                                <p data-th="Type" className={`type ${_notification.type == 'User Deleted' ? 'user_deleted' : ''}`}>{_notification.type}</p>
-                                                                <p data-th="Date" className="Date">{moment(_notification.createdAt).format("dddd MMM, Do")}</p>
-                                                            </span>
-                                                        </li>
-                                                    )
-                                                })
-                                            }
-                                        </ul>
+                                    <div className="header_text">
+                                        <span>{_.isEmpty(_user.roles) ? 'Reader' : _.map(_user.roles, (r) => { return <p key={r}>{r}</p>; })}</span>
+                                        <h5>{_user.username}</h5>
+                                        <h6>{_user.email}</h6>
                                     </div>
                                     <div className="user_analytics">
                                         <div className="articles">
@@ -1155,15 +1136,34 @@ class Dashboard extends React.Component {
                                             <span>Comments</span>
                                         </div>
                                     </div>
+
+                                    <div className="latest_notifications">
+                                        <h6>Notifications</h6>
+                                        <ul className="notifications_list">
+                                            {
+                                                _.take(_.orderBy(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }), ['createdAt'], ['desc']), 4).map((_notification, index) => {
+                                                    return (
+                                                        <li key={index} className={`notif_card notif_anchor`}>
+                                                            <p data-th="New" className="New">{moment(new Date(_notification.createdAt)).fromNow()}</p>
+                                                            <span className="notif_info">
+                                                                <p data-th="Type" className={`type ${_notification.type == 'User Deleted' ? 'user_deleted' : ''}`}>{_notification.type}</p>
+                                                                <p data-th="Date" className="Date">{moment(_notification.createdAt).format("dddd MMM, Do")}</p>
+                                                            </span>
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div className="card">
+                                {/* <div className="card">
                                     <div className="card__content">
                                         <div className="_calendar_pane _pane">
                                             <div className="_calendar_content _content">
                                                 <Calendar NOTIFICATIONS={notifications}/>
                                             </div>
                                         </div>
-                                        {/* <div className="_byPopularity_pane _pane">
+                                        <div className="_byPopularity_pane _pane">
                                             <div className="_byPopularity_content">
                                                 <div className="canvas_header">
                                                     <h6>Popularity</h6>
@@ -1175,9 +1175,9 @@ class Dashboard extends React.Component {
                                                     <h5> { 100 - _.round((_.size(_comments_c) + _.size(_upvotes_c))*100/_.size(_views_c)) } % </h5>
                                                 </div>
                                             </div>
-                                        </div> */}
+                                        </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="copyright">
                                     <i className="far fa-copyright"></i>
                                     <span>{moment().format('YYYY')}</span> - With <i className="fas fa-heart"></i> from Zakariae boutaleb.
@@ -1296,7 +1296,7 @@ class Dashboard extends React.Component {
                                                                 <div className="dropdown-menu _filter_form" aria-labelledby="dropdownMenuButton">
                                                                     <button className="dropdown-item show_more _show_articles btn-primary" id='_article_modal_trigger' data-toggle="modal" data-target="#_all_article_modal_view"><i className="fas fa-expand-arrows-alt"></i></button>
                                                                     {(() => {
-                                                                        if(!_.isEmpty(_user.roles)) {
+                                                                        if (!_.isEmpty(_user.roles)) {
                                                                             return (
                                                                                 <button className="dropdown-item add _add_article btn-primary" data-toggle="modal" data-target="#_article_modal" onClick={() => this.handleAddArticle()}><i className="fas fa-plus"></i></button>
                                                                             )
@@ -1310,7 +1310,7 @@ class Dashboard extends React.Component {
                                                                     getItemValue={(item) => item}
                                                                     inputProps={{ id: 'title', className: 'form-group-input title', name: 'title' }}
                                                                     shouldItemRender={(item, title) => item.toLowerCase().indexOf(title.toLowerCase()) > -1}
-													                renderItem={(item, isHighlighted) =>
+                                                                    renderItem={(item, isHighlighted) =>
                                                                         <div className={`item ${isHighlighted ? 'item-highlighted' : ''}`}>
                                                                             {item}
                                                                         </div>
@@ -1325,35 +1325,35 @@ class Dashboard extends React.Component {
                                                         </div>
                                                         <div className="_articles_content _content">
                                                             <div className="_articles_data data-container">
-																<div className="articles_slider_wrapper swiper-container">
-																	<div className="articles_slider_wrapper_cards swiper-wrapper">
-																		{
-																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author })), function(o) { 
-                                                                                if(timeframe === 'Today')
+                                                                <div className="articles_slider_wrapper swiper-container">
+                                                                    <div className="articles_slider_wrapper_cards swiper-wrapper">
+                                                                        {
+                                                                            _.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide || _.includes(_user.roles, 'admin') || _user.username === _a.author })), function (o) {
+                                                                                if (timeframe === 'Today')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
-                                                                                if(timeframe === 'This_Past_Week')
+                                                                                if (timeframe === 'This_Past_Week')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'week');
-                                                                                if(timeframe === 'This_Past_Month')
+                                                                                if (timeframe === 'This_Past_Month')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'month');
-                                                                                if(timeframe === 'This_Past_Year')
+                                                                                if (timeframe === 'This_Past_Year')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'year');
-                                                                                if(timeframe === 'All_Time')
+                                                                                if (timeframe === 'All_Time')
                                                                                     return true;
-                                                                                }), (op) => {
-                                                                                    if(!categorie)
-                                                                                        return true;
-                                                                                    else 
-                                                                                        return op.categorie === categorie;
-                                                                                }), (op_byTitle) => {
-                                                                                    if(!title)
-                                                                                        return true;
-                                                                                    else
-                                                                                        return _.split(_.lowerCase(title), ' ').some(_t => _.lowerCase(op_byTitle.title).includes(_t));
-                                                                                }).map((article, index) => {
+                                                                            }), (op) => {
+                                                                                if (!categorie)
+                                                                                    return true;
+                                                                                else
+                                                                                    return op.categorie === categorie;
+                                                                            }), (op_byTitle) => {
+                                                                                if (!title)
+                                                                                    return true;
+                                                                                else
+                                                                                    return _.split(_.lowerCase(title), ' ').some(_t => _.lowerCase(op_byTitle.title).includes(_t));
+                                                                            }).map((article, index) => {
                                                                                 return (
-                                                                                    <div className="articles_slider_wrapper_cards_item swiper-slide" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="articles_slider_wrapper_cards_item" key={index}>
+                                                                                    <div className="articles_slider_wrapper_cards_item swiper-slide" data-name={moment(article.createdAt).format("YYYY Do MM")} id="articles_slider_wrapper_cards_item" key={index}>
                                                                                         <div className='article_item swiper-slide_item'>
-                                                                                            <div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
+                                                                                            <div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index, 1)}>
                                                                                                 <div className="card-body">
                                                                                                     <div className="comments_up_down">
                                                                                                         <p className="text-muted views"><b>{_.size(article.view)}</b><i className="fas fa-eye"></i></p>
@@ -1371,7 +1371,7 @@ class Dashboard extends React.Component {
                                                                                                             </span>
                                                                                                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                                                                 {(() => {
-                                                                                                                    if(_.includes(_user.roles, 'admin') || _user.username === article.author) {
+                                                                                                                    if (_.includes(_user.roles, 'admin') || _user.username === article.author) {
                                                                                                                         return (
                                                                                                                             <>
                                                                                                                                 <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_article_modal" onClick={() => this.handleEditArticle(article)}><i className="fas fa-edit"></i></a>
@@ -1380,7 +1380,7 @@ class Dashboard extends React.Component {
                                                                                                                         )
                                                                                                                     }
                                                                                                                 })()}
-                                                                                                                <a href="# " className="dropdown-item _view" onClick={() => { this.setState({_article : article}); }} data-id={article._id} data-toggle="modal" data-target="#_article_modal_view"><i className="fas fa-expand-alt"></i></a>
+                                                                                                                <a href="# " className="dropdown-item _view" onClick={() => { this.setState({ _article: article }); }} data-id={article._id} data-toggle="modal" data-target="#_article_modal_view"><i className="fas fa-expand-alt"></i></a>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -1393,9 +1393,9 @@ class Dashboard extends React.Component {
                                                                                     </div>
                                                                                 )
                                                                             })
-																		}
-																	</div>
-																</div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1418,9 +1418,9 @@ class Dashboard extends React.Component {
                                                                 <div className="dropdown-menu _filter_form" aria-labelledby="dropdownMenuButton_projects">
                                                                     <button className="dropdown-item show_more _show_projects btn-primary" id='_project_modal_trigger' data-toggle="modal" data-target="#_all_project_modal_view"><i className="fas fa-expand-arrows-alt"></i></button>
                                                                     {(() => {
-                                                                        if(_.includes(_user.roles, )) {
+                                                                        if (_.includes(_user.roles,)) {
                                                                             return (
-                                                                                <button className="dropdown-item add _add_project btn-primary" data-toggle="modal" data-target="#_project_modal"  onClick={() => this.handleAddProject()}><i className="fas fa-plus"></i></button>
+                                                                                <button className="dropdown-item add _add_project btn-primary" data-toggle="modal" data-target="#_project_modal" onClick={() => this.handleAddProject()}><i className="fas fa-plus"></i></button>
                                                                             )
                                                                         }
                                                                     })()}
@@ -1432,7 +1432,7 @@ class Dashboard extends React.Component {
                                                                     getItemValue={(item) => item}
                                                                     inputProps={{ id: 'title_projects', className: 'form-group-input title_projects', name: 'title_projects', autoComplete: "off" }}
                                                                     shouldItemRender={(item, title_projects) => item.toLowerCase().indexOf(title_projects.toLowerCase()) > -1}
-													                renderItem={(item, isHighlighted) =>
+                                                                    renderItem={(item, isHighlighted) =>
                                                                         <div className={`item ${isHighlighted ? 'item-highlighted' : ''}`}>
                                                                             {item}
                                                                         </div>
@@ -1447,37 +1447,37 @@ class Dashboard extends React.Component {
                                                         </div>
                                                         <div className="_projects_content _content">
                                                             <div className="_projects_data data-container">
-																<div className="projects_slider_wrapper swiper-container">
-																	<div className="projects_slider_wrapper_cards swiper-wrapper">
-																		{
-																			_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author })), function(o) { 
-                                                                                if(timeframe === 'Today')
+                                                                <div className="projects_slider_wrapper swiper-container">
+                                                                    <div className="projects_slider_wrapper_cards swiper-wrapper">
+                                                                        {
+                                                                            _.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author }), ['createdAt'], ['desc']) : _.filter(projects, (_p) => { return !_p._hide || _.includes(_user.roles, 'admin') || _user.username === _p.author })), function (o) {
+                                                                                if (timeframe === 'Today')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
-                                                                                if(timeframe === 'This_Past_Week')
+                                                                                if (timeframe === 'This_Past_Week')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'week');
-                                                                                if(timeframe === 'This_Past_Month')
+                                                                                if (timeframe === 'This_Past_Month')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'month');
-                                                                                if(timeframe === 'This_Past_Year')
+                                                                                if (timeframe === 'This_Past_Year')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'year');
-                                                                                if(timeframe === 'All_Time')
+                                                                                if (timeframe === 'All_Time')
                                                                                     return true;
-                                                                                }), (op) => {
-                                                                                    if(!categorie)
-                                                                                        return true;
-                                                                                    else 
-                                                                                        return op.categorie === categorie;
-                                                                                }), (op_byTitle) => {
-                                                                                    if(!title)
-                                                                                        return true;
-                                                                                    else
-                                                                                        return _.split(_.lowerCase(title_projects), ' ').some(_t => _.lowerCase(op_byTitle.title).includes(_t));
-                                                                                }).map((project, index) => {
+                                                                            }), (op) => {
+                                                                                if (!categorie)
+                                                                                    return true;
+                                                                                else
+                                                                                    return op.categorie === categorie;
+                                                                            }), (op_byTitle) => {
+                                                                                if (!title)
+                                                                                    return true;
+                                                                                else
+                                                                                    return _.split(_.lowerCase(title_projects), ' ').some(_t => _.lowerCase(op_byTitle.title).includes(_t));
+                                                                            }).map((project, index) => {
                                                                                 return (
-                                                                                    <div className="projects_slider_wrapper_cards_item swiper-slide" data-name={ moment(project.createdAt).format("YYYY Do MM") } id="projects_slider_wrapper_cards_item" key={index}>
+                                                                                    <div className="projects_slider_wrapper_cards_item swiper-slide" data-name={moment(project.createdAt).format("YYYY Do MM")} id="projects_slider_wrapper_cards_item" key={index}>
                                                                                         <div className='project_item swiper-slide_item'>
-                                                                                            <div className={"col card card_" + index} data-title={_.snakeCase(project.title)} data-index={_.add(index,1)}>
+                                                                                            <div className={"col card card_" + index} data-title={_.snakeCase(project.title)} data-index={_.add(index, 1)}>
                                                                                                 <div className="card-body">
-                                                                                                    
+
                                                                                                     <div className="_categorie_dropdown">
                                                                                                         <p className="categorie"><i className={project._hide ? 'far fa-eye-slash' : 'far fa-eye'}></i></p>
                                                                                                         <div className="dropdown">
@@ -1486,7 +1486,7 @@ class Dashboard extends React.Component {
                                                                                                             </span>
                                                                                                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton_project">
                                                                                                                 {(() => {
-                                                                                                                    if(_.includes(_user.roles, 'admin') || _user.username === project.author) {
+                                                                                                                    if (_.includes(_user.roles, 'admin') || _user.username === project.author) {
                                                                                                                         return (
                                                                                                                             <>
                                                                                                                                 <a href="# " className="dropdown-item edit" data-toggle="modal" data-target="#_project_modal" onClick={() => this.handleEditProject(project)}><i className="fas fa-edit"></i></a>
@@ -1508,9 +1508,9 @@ class Dashboard extends React.Component {
                                                                                     </div>
                                                                                 )
                                                                             })
-																		}
-																	</div>
-																</div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1538,7 +1538,7 @@ class Dashboard extends React.Component {
                                         <li className="cards__item testimonies__item">
                                             <div className="card">
                                                 <div className="card__content">
-                                                <div className="_testimonies_pane _pane">
+                                                    <div className="_testimonies_pane _pane">
                                                         <div className="_testimonies_content _content">
                                                             <div className="_testimonies_head">
                                                                 <h6>Testimonies</h6>
@@ -1552,25 +1552,25 @@ class Dashboard extends React.Component {
                                                                 </div>
                                                             </div>
                                                             <div className="_testimonies_data data-container">
-																<div className="testimonies_slider_wrapper swiper-container">
-																	<div className="testimonies_slider_wrapper_cards swiper-wrapper">
-																		{
-																			_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') })), function(o) { 
-                                                                                if(timeframe === 'Today')
+                                                                <div className="testimonies_slider_wrapper swiper-container">
+                                                                    <div className="testimonies_slider_wrapper_cards swiper-wrapper">
+                                                                        {
+                                                                            _.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') }), ['createdAt'], ['desc']) : _.filter(testimonies, (_t) => { return !_t.is_private || _t.author === _user.username || _.includes(_user.roles, 'admin') })), function (o) {
+                                                                                if (timeframe === 'Today')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
-                                                                                if(timeframe === 'This_Past_Week')
+                                                                                if (timeframe === 'This_Past_Week')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'week');
-                                                                                if(timeframe === 'This_Past_Month')
+                                                                                if (timeframe === 'This_Past_Month')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'month');
-                                                                                if(timeframe === 'This_Past_Year')
+                                                                                if (timeframe === 'This_Past_Year')
                                                                                     return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'year');
-                                                                                if(timeframe === 'All_Time')
+                                                                                if (timeframe === 'All_Time')
                                                                                     return true;
-                                                                                })).map((testimony, index) => {
+                                                                            })).map((testimony, index) => {
                                                                                 return (
-                                                                                    <div className="testimonies_slider_wrapper_cards_item swiper-slide" data-name={ moment(testimony.createdAt).format("YYYY Do MM") } id="testimonies_slider_wrapper_cards_item" key={index}>
+                                                                                    <div className="testimonies_slider_wrapper_cards_item swiper-slide" data-name={moment(testimony.createdAt).format("YYYY Do MM")} id="testimonies_slider_wrapper_cards_item" key={index}>
                                                                                         <div className={`testimony_item swiper-slide_item ${!testimony.is_private ? '' : 'is_private'}`}>
-                                                                                            <div className={"col card card_testimonies card_" + index} data-title={_.snakeCase(testimony.title)} data-index={_.add(index,1)}>
+                                                                                            <div className={"col card card_testimonies card_" + index} data-title={_.snakeCase(testimony.title)} data-index={_.add(index, 1)}>
                                                                                                 <div className="card-body">
                                                                                                     <div className="_heads_up">
                                                                                                         <div className="intel">
@@ -1584,13 +1584,13 @@ class Dashboard extends React.Component {
                                                                                                             </span>
                                                                                                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton_testimonies">
                                                                                                                 {(() => {
-                                                                                                                    if(_.includes(_user.roles, 'admin') || _user.username === testimony.author) {
+                                                                                                                    if (_.includes(_user.roles, 'admin') || _user.username === testimony.author) {
                                                                                                                         return (
                                                                                                                             <a href="# " className="dropdown-item delete" onClick={() => this.handleDeleteTestimony(testimony._id)}><i className="far fa-trash-alt"></i></a>
                                                                                                                         )
                                                                                                                     }
                                                                                                                 })()}
-                                                                                                                <a href="# " className="dropdown-item _view" onClick={() => { this.setState({_testimony : testimony}); }} data-id={testimony._id} data-toggle="modal" data-target="#_testimony_modal"><i className="fas fa-expand-alt"></i></a>
+                                                                                                                <a href="# " className="dropdown-item _view" onClick={() => { this.setState({ _testimony: testimony }); }} data-id={testimony._id} data-toggle="modal" data-target="#_testimony_modal"><i className="fas fa-expand-alt"></i></a>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -1599,10 +1599,10 @@ class Dashboard extends React.Component {
                                                                                                     </div>
                                                                                                     <div className="comments_up_down">
                                                                                                         <p className="text-muted views"><b>{_.size(testimony.view)}</b><i className="fas fa-eye"></i></p>
-                                                                                                        
-                                                                                                        <p className="text-muted replies"><b>{_.size(_.filter(testimonies, {'parent_id': testimony._id}))}</b><i className="fas fa-reply-all"></i></p>
-                                                                                                        <p className={`text-muted upvotes ${_.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === _user.fingerprint}) ) ? '' : 'active'}`}><b>{_.size(testimony.upvotes)}</b><i className="fas fa-thumbs-up"></i></p>
-                                                                                                        <p className={`text-muted downvotes ${_.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === _user.fingerprint}) ) ? '' : 'active'}`}><b>{_.size(testimony.downvotes)}</b><i className="fas fa-thumbs-down"></i></p>
+
+                                                                                                        <p className="text-muted replies"><b>{_.size(_.filter(testimonies, { 'parent_id': testimony._id }))}</b><i className="fas fa-reply-all"></i></p>
+                                                                                                        <p className={`text-muted upvotes ${_.isUndefined(_.find(_.get(testimony, 'upvotes'), (upvote) => { return upvote.upvoter === _user.fingerprint })) ? '' : 'active'}`}><b>{_.size(testimony.upvotes)}</b><i className="fas fa-thumbs-up"></i></p>
+                                                                                                        <p className={`text-muted downvotes ${_.isUndefined(_.find(_.get(testimony, 'downvotes'), (downvote) => { return downvote.downvoter === _user.fingerprint })) ? '' : 'active'}`}><b>{_.size(testimony.downvotes)}</b><i className="fas fa-thumbs-down"></i></p>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -1610,10 +1610,10 @@ class Dashboard extends React.Component {
                                                                                     </div>
                                                                                 )
                                                                             })
-																		}
-																	</div>
-																	<div className="testimonies_slider_scrollbar swiper-scrollbar"></div>
-																</div>
+                                                                        }
+                                                                    </div>
+                                                                    <div className="testimonies_slider_scrollbar swiper-scrollbar"></div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1688,11 +1688,11 @@ class Dashboard extends React.Component {
                                                                                                     {(() => {
                                                                                                         if (_.includes(_user.roles, 'admin')) {
                                                                                                             return (
-                                                                                                                <a className="dropdown-item" href="# " data-toggle="modal" data-target="#_user_modal" onClick={() => this.handleEditUser(_u)}>Edit User.</a>
+                                                                                                                <a className="dropdown-item" href="# " data-toggle="modal" data-target="#_user_modal" onClick={() => this.handleEditUser(_u)}><i className="fas fa-edit"></i></a>
                                                                                                             )
                                                                                                         }
                                                                                                     })()}
-                                                                                                    <a className="dropdown-item" href="# " onClick={() => this.handleDeleteUser(_u)}>Delete User.</a>
+                                                                                                    <a className="dropdown-item" href="# " onClick={() => this.handleDeleteUser(_u)}><i className="far fa-trash-alt"></i></a>
                                                                                                 </div>
                                                                                             </td>
                                                                                         </tr>
@@ -1711,11 +1711,6 @@ class Dashboard extends React.Component {
                                     </ul>
                                 </div>
                                 <div className="notifications_pane tab-pane" id="3a">
-                                    <div className="top_roof">
-                                        <div className="left_roof">
-                                            <h2>Notifications</h2>
-                                        </div>
-                                    </div>
                                     <ul className="forms">
                                         <li className="forms__item">
                                             <div className="card">
@@ -1723,39 +1718,35 @@ class Dashboard extends React.Component {
                                                     <div className="_notifs_pane _pane">
                                                         <div className="_notifs_content _content">
                                                             <div className="_notifs_head">
-                                                                <h4>Latests.</h4>
-                                                                <p className="text-muted">{_.size(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }))} Total, Last : {moment(new Date(_.get(_.head(_.orderBy(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }), ['createdAt'], ['desc'])), 'createdAt'))).fromNow()}</p>
+                                                                <h4>Notification history.</h4>
                                                             </div>
                                                             <div className="_notifs_data data_container">
-                                                                <table className="notifs_list table table-striped">
-                                                                    <thead>
-                                                                        <tr className="notifs_list_header">
-                                                                            <th>New</th>
-                                                                            <th>Time</th>
-                                                                            <th>Date</th>
-                                                                            <th>Type</th>
-                                                                            <th>Description</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        {
-                                                                            _.orderBy(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }), ['createdAt'], ['desc']).map((_notification, index) => {
-                                                                                return (
-                                                                                    <>
-                                                                                        <tr className="spacer"></tr>
-                                                                                        <tr key={index} className={`notif_card notif_anchor`}>
-                                                                                            <td data-th="New">{moment(_notification.createdAt).isSame(moment(), 'day') ? <p>today</p> : ''}</td>
-                                                                                            <td data-th="Time">{moment(_notification.createdAt).format('HH:mm')}</td>
-                                                                                            <td data-th="Date">{moment(_notification.createdAt).format("dddd, MMM Do YYYY")}</td>
-                                                                                            <td data-th="Type" className={`type ${_notification.type == 'User Deleted' ? 'user_deleted' : ''}`}>{_notification.type}</td>
-                                                                                            <td data-th="Description">{_notification.description}</td>
-                                                                                        </tr>
-                                                                                    </>
-                                                                                )
-                                                                            })
-                                                                        }
-                                                                    </tbody>
-                                                                </table>
+                                                                <ul className="notifs_list table table-striped">
+                                                                    {
+                                                                        _.orderBy(_.filter(notifications, (_n) => { return _.includes(_user.roles, 'admin') || (_n.type != 'User Deleted' && _n.type != 'User Account Created' && _n.type != 'Account verified' && _n.type != 'User Account Updated') }), ['createdAt'], ['desc']).map((_notification, index) => {
+                                                                            return (
+                                                                                <li key={index} className={`notif_card notif_anchor`}>
+                                                                                    <div className="notif_info">
+                                                                                        <div className="delete">
+                                                                                            <i className="far fa-trash-alt"></i>
+                                                                                        </div>
+                                                                                        <span>
+                                                                                            <p data-th="New" className="New">{moment(new Date(_notification.createdAt)).fromNow()}</p>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <p data-th="Type" className={`Type ${_notification.type == 'User Deleted' ? 'user_deleted' : ''}`}>{_notification.type}</p>
+                                                                                            <p data-th="Description" className="Description">{_notification.description}</p>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <p data-th="Time" className="Time">{moment(_notification.createdAt).format('HH:mm')}</p>
+                                                                                            <p data-th="Date" className="Date">{moment(_notification.createdAt).format("dddd, MMM Do")}</p>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </li>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                     </div>

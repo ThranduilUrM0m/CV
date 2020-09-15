@@ -420,7 +420,7 @@ img {
     max-width: 100%;
 }
 
-.dropdown-toggle::after{
+.dropdown-toggle::after {
     display: none;
 }
 
@@ -996,6 +996,52 @@ html {
 
                                 .form-group-line {
                                     display: initial;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.dashboard_header {
+                .wrapper {
+                    header {
+                        .navToggle {
+                            display: none;
+                        }
+
+                        .logoHolder {
+                            display: none;
+                        }
+
+                        form {
+                            margin-right: 0;
+                            margin-top: 0;
+
+                            &::before {
+                                display: none;
+                            }
+
+                            .search-wrapper {
+                                &.focused {
+                                    margin: 1vh 1.75vh 0 0;
+                                }
+
+                                .search {
+                                    border-color: rgba($color: $black, $alpha: 0.5);
+
+                                    &::after {
+                                        background: rgba($color: $black, $alpha: 0.5);
+                                    }
+
+                                    &.active {
+                                        border: none;
+
+                                        &::before,
+                                        &::after {
+                                            background: $liteBg;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4821,7 +4867,7 @@ html {
                                         outline: none;
                                         z-index: 10;
                                         box-shadow: none;
-            
+
                                         span {
                                             display: block;
                                             position: relative;
@@ -4829,16 +4875,16 @@ html {
                                             height: 100%;
                                             cursor: pointer;
                                         }
-            
+
                                         &>span {
                                             &>span {
                                                 padding-left: 0;
                                                 padding-right: 0;
-            
+
                                                 &>span {
                                                     transition: color .15s ease-out .3s;
                                                     color: transparent;
-            
+
                                                     &::after {
                                                         position: absolute;
                                                         top: 0;
@@ -4859,7 +4905,7 @@ html {
                                                         transition: all .2s ease-out;
                                                     }
                                                 }
-            
+
                                                 &::before {
                                                     content: '';
                                                     position: absolute;
@@ -4869,7 +4915,7 @@ html {
                                                     height: .5vh;
                                                     opacity: 0;
                                                 }
-            
+
                                                 &::after {
                                                     content: '';
                                                     position: absolute;
@@ -4880,7 +4926,7 @@ html {
                                                     opacity: 0;
                                                 }
                                             }
-            
+
                                             &::before {
                                                 content: '';
                                                 position: absolute;
@@ -4891,12 +4937,12 @@ html {
                                                 border: .5vh solid $main-color;
                                                 border-right: none;
                                                 border-bottom: none;
-            
+
                                                 transition-property: width, height;
                                                 transition-duration: .15s, .15s;
                                                 transition-delay: .15s, 0s;
                                             }
-            
+
                                             &::after {
                                                 content: '';
                                                 position: absolute;
@@ -4907,15 +4953,15 @@ html {
                                                 border: .5vh solid $main-color;
                                                 border-left: none;
                                                 border-bottom: none;
-            
+
                                                 transition-property: width, height;
                                                 transition-duration: .15s, .15s;
                                                 transition-delay: .15s, 0s;
                                             }
                                         }
-            
+
                                         &:hover {
-            
+
                                             &>span {
                                                 &>span {
                                                     &>span {
@@ -4938,13 +4984,13 @@ html {
                                             height: 100% !important;
                                             transition-delay: 0s, .15s !important;
                                         }
-    
+
                                         &::before {
                                             width: 50% !important;
                                             height: 100% !important;
                                             transition-delay: 0s, .15s !important;
                                         }
-    
+
                                         &>span {
                                             &::after {
                                                 opacity: 1 !important;
@@ -4953,7 +4999,7 @@ html {
                                                 height: .5vh !important;
                                                 transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                             }
-    
+
                                             &::before {
                                                 opacity: 1 !important;
                                                 border-bottom: .5vh solid $main-color !important;
@@ -4961,7 +5007,7 @@ html {
                                                 height: .5vh !important;
                                                 transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                             }
-    
+
                                             &>span {
                                                 color: $black !important;
                                             }
@@ -6255,7 +6301,7 @@ html {
                 position: relative;
                 width: 100%;
                 height: 100%;
-                background-color: darken($color: $bg-color, $amount: 10);
+                background-color: #f3f1f9;
 
                 .nav {
                     &.left_nav {
@@ -6362,21 +6408,6 @@ html {
                         .nav_header {
                             display: flex;
                             justify-content: space-between;
-
-                            .header_text {
-                                margin: 1.75vh;
-
-                                h5 {
-                                    font-size: 2.5vh;
-                                    margin: 0;
-                                    color: $black;
-                                }
-                                h6 {
-                                    font-size: 1.75vh;
-                                    margin: 0;
-                                    color: rgba($color: $black, $alpha: 0.5);
-                                }
-                            }
 
                             .profile_picture {
                                 width: 5vh;
@@ -6737,7 +6768,44 @@ html {
                             &._main {
                                 flex: 1;
 
+                                .header_text {
+                                    margin: 4vh 1.75vh 1.75vh 1.75vh;
+                                    text-align: center;
+
+                                    span {
+                                        font-size: 1.5vh;
+                                        border: .15vh solid #ddd;
+                                        background: $main-color;
+                                        color: white;
+                                        display: inline-block;
+                                        padding: .75vh;
+                                        margin: 0 1.25vh 0 0;
+                                        border-radius: .75vh;
+                                        height: fit-content;
+
+                                        p {
+                                            margin-bottom: 0;
+                                        }
+                                    }
+
+                                    h5 {
+                                        font-size: 3.75vh;
+                                        margin: 0;
+                                        margin-top: 1.25vh;
+                                        color: $black;
+                                    }
+
+                                    h6 {
+                                        font-size: 1.75vh;
+                                        margin: 0;
+                                        color: rgba($color: $black, $alpha: 0.5);
+                                    }
+                                }
+
                                 .latest_notifications {
+                                    position: relative;
+                                    margin-top: auto;
+
                                     .notifications_list {
                                         li {
                                             display: flex;
@@ -6766,6 +6834,7 @@ html {
 
                                                 p {
                                                     margin: 0;
+
                                                     &.Date {
                                                         font-weight: bold;
                                                     }
@@ -6776,26 +6845,35 @@ html {
                                 }
 
                                 .user_analytics {
-                                    margin: auto 1.25vh 1.25vh 1.25vh;
-                                    padding: 1.25vh;
-                                    background: lighten($color: $Gradient, $amount: 20);
+                                    position: relative;
+                                    margin: 2.5vh 1.25vh 0 1.25vh;
+                                    padding: 1.25vh 1.25vh 5vh 1.25vh;
                                     border-radius: 0;
-        
+
                                     display: grid;
                                     grid-template-columns: repeat(3, 1fr);
-        
-                                    & > div {
+
+                                    &::after {
+                                        position: absolute;
+                                        content: '';
+                                        width: 100%;
+                                        height: 1px;
+                                        bottom: 0;
+                                        background: rgba($color: $black, $alpha: 0.2);
+                                    }
+
+                                    &>div {
                                         display: flex;
                                         flex-direction: column;
                                         align-items: center;
-        
+
                                         span {
-        
+
                                             &:first-of-type {
                                                 font-weight: bold;
                                                 font-size: 2.75vh;
                                             }
-        
+
                                             &:last-of-type {
                                                 font-weight: normal;
                                                 font-size: 1.75vh;
@@ -6804,6 +6882,7 @@ html {
                                     }
                                 }
                             }
+
                             /* .timeanddatenow {
                                 position: absolute;
                                 width: 100%;
@@ -6860,11 +6939,11 @@ html {
                                 display: grid;
                                 grid-template-columns: repeat(16, 1fr);
                                 grid-template-rows: auto 1fr 1fr;
-                                grid-template-areas: "One One One One Two Two Two Two Three Three Three Three Four Four Four Four" 
-                                                    "Five Five Five Five Five Five Five Eight Eight Eight Eight Eight Eight Eight Eight Eight" 
-                                                    "Seven Seven Seven Seven Seven Seven Seven Seven Seven Six Six Six Six Six Six Six";
+                                grid-template-areas: "One One One One Two Two Two Two Three Three Three Three Four Four Four Four"
+                                    "Five Five Five Five Five Five Five Eight Eight Eight Eight Eight Eight Eight Eight Eight"
+                                    "Seven Seven Seven Seven Seven Seven Seven Seven Seven Six Six Six Six Six Six Six";
                                 grid-gap: 2.5vh;
-                                
+
                                 &__item {
                                     position: relative;
                                     min-width: 0;
@@ -6873,24 +6952,31 @@ html {
                                     &:nth-child(1) {
                                         grid-area: One;
                                     }
+
                                     &:nth-child(2) {
                                         grid-area: Two;
                                     }
+
                                     &:nth-child(3) {
                                         grid-area: Three;
                                     }
+
                                     &:nth-child(4) {
                                         grid-area: Four;
                                     }
+
                                     &:nth-child(5) {
                                         grid-area: Five;
                                     }
+
                                     &:nth-child(6) {
                                         grid-area: Six;
                                     }
+
                                     &:nth-child(7) {
                                         grid-area: Seven;
                                     }
+
                                     &:nth-child(8) {
                                         grid-area: Eight;
                                     }
@@ -6904,7 +6990,7 @@ html {
                                         margin: 0;
 
                                         background: $white;
-                                        box-shadow: 3px 6px 8px -5px rgba(0,0,0,0.5);
+                                        box-shadow: 3px 6px 8px -5px rgba(0, 0, 0, 0.5);
 
                                         &__content {
                                             position: relative;
@@ -6980,7 +7066,7 @@ html {
                                                             left: 0;
                                                             transform: translateY(0);
                                                         }
-                                                        
+
                                                         .card__title {
                                                             font-weight: 600;
                                                             color: $white;
@@ -7138,6 +7224,7 @@ html {
                                                         h5 {
                                                             margin: 0;
                                                         }
+
                                                         p {
                                                             font-size: 1.5vh;
                                                             margin: 0;
@@ -7192,7 +7279,7 @@ html {
                                                                     min-width: 14.5vw;
 
                                                                     &.testimonies_slider_wrapper_cards_item {
-                                                                        box-shadow: 0px 5px 10px -10px rgba(0,0,0,0.25);
+                                                                        box-shadow: 0px 5px 10px -10px rgba(0, 0, 0, 0.25);
                                                                     }
 
                                                                     .swiper-slide_item {
@@ -7208,6 +7295,7 @@ html {
                                                                             background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
 
                                                                             .card-body {
+
                                                                                 h1,
                                                                                 h2,
                                                                                 h3,
@@ -7605,8 +7693,170 @@ html {
                             }
                         }
 
-                        &.settings_pane,
                         &.notifications_pane {
+                            .forms {
+                                display: flex;
+                                flex-wrap: wrap;
+                                list-style: none;
+                                margin: 0;
+                                padding: 0;
+                                height: 100%;
+                                width: 100%;
+
+                                &__item {
+                                    display: flex;
+                                    padding: 1.25vh;
+                                    width: 100%;
+                                    height: 100%;
+
+                                    .card {
+                                        background: $white;
+                                        border-radius: 0;
+                                        display: flex;
+                                        flex-direction: column;
+                                        margin: 0;
+                                        width: 100%;
+                                        height: 100%;
+                                        box-shadow: none;
+                                        border: none;
+
+                                        &__content {
+                                            display: flex;
+                                            flex: 1 1 auto;
+                                            flex-direction: column;
+
+                                            ._pane {
+                                                display: flex;
+                                                height: 100%;
+                                                flex-direction: row;
+
+                                                ._content {
+                                                    padding: 1.25vh;
+                                                    width: 100%;
+
+                                                    ._notifs_head {
+                                                        h4 {
+                                                            font-size: 2.25vh;
+                                                            margin: 1.25vh 0;
+                                                            color: rgba($color: $black, $alpha: .75);
+                                                        }
+                                                    }
+
+                                                    .data_container {
+                                                        position: relative;
+                                                        width: 100%;
+                                                        margin-top: 2.5vh;
+
+                                                        ul {
+                                                            border-radius: 0;
+                                                            border-collapse: collapse;
+
+                                                            li {
+                                                                position: relative;
+                                                                display: flex;
+                                                                align-items: center;
+                                                                margin: 1.75vh 0;
+                                                                padding: 1.25vh;
+                                                                border-radius: 0;
+                                                                font-size: 2vh;
+                                                                box-shadow: 0px 0px 10px -2.5px rgba(0, 0, 0, 0.25);
+
+                                                                .notif_info {
+                                                                    display: grid;
+                                                                    grid-template-columns: auto auto 1fr auto;
+                                                                    width: 100%;
+
+                                                                    .delete {
+                                                                        align-items: center;
+                                                                        position: relative;
+                                                                        font-weight: normal;
+                                                                        font-style: normal;
+                                                                        text-decoration: inherit;
+                                                                        -webkit-font-smoothing: antialiased;
+                                                                        display: inline-block;
+                                                                        text-align: center;
+                                                                        -webkit-user-select: none;
+                                                                        user-select: none;
+                                                                        font-size: 3.25vh;
+                                                                        width: 6.5vh;
+                                                                        height: 6.5vh;
+                                                                        line-height: 6.5vh;
+                                                                        padding-right: 2.5vh;
+                                                                        margin: 0 1.25vh;
+                                                                        border-right: 0.25px solid rgba($color: $black, $alpha: 0.2);
+
+                                                                        i {
+                                                                            color: $calendar-red;
+                                                                        }
+                                                                    }
+
+                                                                    span {
+                                                                        display: flex;
+
+                                                                        p {
+                                                                            margin: 0 .75vh 0 0;
+
+                                                                            &.Time,
+                                                                            &.Date {
+                                                                                font-size: 1.75vh;
+                                                                                color: rgba($color: $black, $alpha: .5);
+                                                                            }
+
+                                                                            &.Date {
+                                                                                font-weight: bold;
+                                                                            }
+
+                                                                            &.Type {
+                                                                                margin: 0 0 .25vh 0;
+                                                                                font-size: 2vh;
+                                                                                font-weight: bold;
+                                                                            }
+
+                                                                            &.Description {
+                                                                                margin: .25vh 0 0 0;
+                                                                                font-size: 1.75vh;
+                                                                            }
+
+                                                                            &.New {
+                                                                                font-size: 1.5vh;
+                                                                                border: .15vh solid #ddd;
+                                                                                background: $main-color;
+                                                                                color: white;
+                                                                                display: inline-block;
+                                                                                padding: .75vh;
+                                                                                margin: 0 1.25vh 0 0;
+                                                                                border-radius: .75vh;
+                                                                                height: fit-content;
+                                                                                width: fit-content;
+                                                                            }
+                                                                        }
+
+                                                                        &:first-of-type {
+                                                                            align-items: center;
+                                                                            margin: 0 1.25vh;
+                                                                        }
+
+                                                                        &:nth-of-type(2) {
+                                                                            flex-direction: column;
+                                                                        }
+
+                                                                        &:last-of-type {
+                                                                            align-items: flex-end;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &.settings_pane {
                             .forms {
                                 display: flex;
                                 flex-wrap: wrap;
@@ -7624,7 +7874,6 @@ html {
                                     min-height: 12vh;
 
                                     .card {
-                                        background: transparent;
                                         border: .1vh solid lighten(#34495E, 10%);
                                         border-radius: 0;
                                         box-shadow: 2.5vh 5vh 5vh -2.5vh rgba(0, 0, 0, .25);
@@ -7645,10 +7894,10 @@ html {
                                                 flex-direction: row;
 
                                                 ._content {
-                                                    padding: 2.5vh;
+                                                    padding: 1.25vh;
                                                     width: 100%;
 
-                                                    ._account_head {
+                                                    ._account_head, ._accounts_head {
                                                         display: flex;
                                                         flex-direction: column;
                                                         width: calc(100% - 3.75vh);
@@ -7662,102 +7911,184 @@ html {
 
                                                     .data_container {
                                                         position: relative;
-                                                        width: 100%;
+                                                        width: calc(100% - 3.75vh);
+                                                        margin: 0 auto;
 
                                                         ._form {
                                                             height: 100%;
 
                                                             .modal-content_user {
-                                                                padding: 2.5vh 0;
+                                                                padding: 1.25vh 0;
                                                                 margin: 0;
+                                                                display: grid;
+                                                                grid-template-rows: 7.5vh 7.5vh 7.5vh;
 
                                                                 .row {
                                                                     margin-right: 0;
                                                                     margin-left: 0;
-                                                                    margin-bottom: 2.5vh;
+                                                                    margin-bottom: 0;
+                                                                    &:last-of-type {
+                                                                        justify-content: flex-end;
 
-                                                                    .input-field {
-                                                                        position: relative;
-                                                                        margin: 0 0 1.25vh 0;
-
-                                                                        &.s12,
-                                                                        &.s6,
-                                                                        &.s3 {
-                                                                            input {
-                                                                                color: $black;
-                                                                                height: 5vh;
-                                                                                padding: 0;
-                                                                                margin: 0;
+                                                                        button {
+                                                                            position: relative;
+                                                                            -webkit-appearance: none;
+                                                                            border: none;
+                                                                            background: none;
+                                                                            color: $black;
+                                                                            width: 38.5vh;
+                                                                            height: 7.5vh;
+                                                                            font-size: 2.25vh;
+                                                                            margin-bottom: 2.5vh;
+                                                                            padding: 0;
+                                                                            outline: none;
+                                                                            z-index: 10;
+                                
+                                                                            span {
+                                                                                display: block;
+                                                                                position: relative;
+                                                                                line-height: 7.5vh;
+                                                                                height: 100%;
+                                                                                cursor: pointer;
                                                                             }
-
-                                                                            .form-group-line {
-                                                                                bottom: 0 !important;
+                                
+                                                                            &>span {
+                                                                                &>span {
+                                                                                    padding-left: 0;
+                                                                                    padding-right: 0;
+                                
+                                                                                    &>span {
+                                                                                        transition: color .15s ease-out .3s;
+                                                                                        color: transparent;
+                                
+                                                                                        &::after {
+                                                                                            position: absolute;
+                                                                                            top: 0;
+                                                                                            left: 0;
+                                                                                            right: 0;
+                                                                                            bottom: 0;
+                                                                                            color: white;
+                                                                                            content: attr(data-attr-span);
+                                                                                            width: 0;
+                                                                                            height: 100%;
+                                                                                            background: $main-color;
+                                                                                            white-space: nowrap;
+                                                                                            text-align: center;
+                                                                                            margin: auto;
+                                                                                            overflow: hidden;
+                                                                                            display: flex;
+                                                                                            justify-content: center;
+                                                                                            transition: all .2s ease-out;
+                                                                                        }
+                                                                                    }
+                                
+                                                                                    &::before {
+                                                                                        content: '';
+                                                                                        position: absolute;
+                                                                                        bottom: 0;
+                                                                                        right: 0;
+                                                                                        width: .5vh;
+                                                                                        height: .5vh;
+                                                                                        opacity: 0;
+                                                                                    }
+                                
+                                                                                    &::after {
+                                                                                        content: '';
+                                                                                        position: absolute;
+                                                                                        bottom: 0;
+                                                                                        left: 0;
+                                                                                        width: .5vh;
+                                                                                        height: .5vh;
+                                                                                        opacity: 0;
+                                                                                    }
+                                                                                }
+                                
+                                                                                &::before {
+                                                                                    content: '';
+                                                                                    position: absolute;
+                                                                                    top: 0;
+                                                                                    right: 50%;
+                                                                                    width: 3.25vh;
+                                                                                    height: 0;
+                                                                                    border: .5vh solid $main-color;
+                                                                                    border-right: none;
+                                                                                    border-bottom: none;
+                                
+                                                                                    transition-property: width, height;
+                                                                                    transition-duration: .15s, .15s;
+                                                                                    transition-delay: .15s, 0s;
+                                                                                }
+                                
+                                                                                &::after {
+                                                                                    content: '';
+                                                                                    position: absolute;
+                                                                                    top: 0;
+                                                                                    left: 50%;
+                                                                                    width: 3.25vh;
+                                                                                    height: 0;
+                                                                                    border: .5vh solid $main-color;
+                                                                                    border-left: none;
+                                                                                    border-bottom: none;
+                                
+                                                                                    transition-property: width, height;
+                                                                                    transition-duration: .15s, .15s;
+                                                                                    transition-delay: .15s, 0s;
+                                                                                }
                                                                             }
-                                                                        }
-
-                                                                        label {
-                                                                            font-weight: 400;
-                                                                            top: 50%;
-                                                                            transform: translateY(-50%);
-
-                                                                            &.active {
-                                                                                top: 0;
+                                
+                                                                            &:hover {
+                                
+                                                                                &>span {
+                                                                                    &>span {
+                                                                                        &>span {
+                                                                                            &::after {
+                                                                                                width: 100%;
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
-                                                                        }
-
-                                                                        .form-group-line {
-                                                                            position: absolute;
-                                                                            bottom: 1.25vh;
-                                                                            left: 2vh;
-                                                                        }
-
-                                                                        .form-group-input:focus~.form-group-line,
-                                                                        .form-group-input:valid~.form-group-line {
-                                                                            animation: input3 .5s 1 ease-out;
-                                                                            width: calc(100% - 3.75vh);
                                                                         }
                                                                     }
                                                                 }
-
-                                                                button {
-                                                                    color: $black;
-                                                                    background: none;
-                                                                    border: solid .15vh $black;
-                                                                    display: inline-block;
-                                                                    position: relative;
-                                                                    border-radius: 0;
-                                                                    position: relative;
-                                                                    overflow: hidden;
-
-                                                                    &.focus,
-                                                                    &:focus {
-                                                                        outline: none;
-
-                                                                        &:before {
-                                                                            transition: all .7s ease-out;
-                                                                            content: "";
-                                                                            position: absolute;
-                                                                            background: rgba(255, 255, 255, .2);
-                                                                            z-index: 99;
-                                                                            left: 15%;
-                                                                            right: 15%;
-                                                                            top: -50%;
-                                                                            bottom: -50%;
-                                                                            border-radius: 200%;
-                                                                            animation: pulse ease-out 1.4s infinite;
+                                
+                                                                &:hover {
+                                                                    button {
+                                                                        &>span {
+                                                                            &::after {
+                                                                                width: 50% !important;
+                                                                                height: 100% !important;
+                                                                                transition-delay: 0s, .15s !important;
+                                                                            }
+                                
+                                                                            &::before {
+                                                                                width: 50% !important;
+                                                                                height: 100% !important;
+                                                                                transition-delay: 0s, .15s !important;
+                                                                            }
+                                
+                                                                            &>span {
+                                                                                &::after {
+                                                                                    opacity: 1 !important;
+                                                                                    border-bottom: .5vh solid $main-color !important;
+                                                                                    width: calc(50%) !important;
+                                                                                    height: .5vh !important;
+                                                                                    transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                                                }
+                                
+                                                                                &::before {
+                                                                                    opacity: 1 !important;
+                                                                                    border-bottom: .5vh solid $main-color !important;
+                                                                                    width: calc(50%) !important;
+                                                                                    height: .5vh !important;
+                                                                                    transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
+                                                                                }
+                                
+                                                                                &>span {
+                                                                                    color: $black !important;
+                                                                                }
+                                                                            }
                                                                         }
-                                                                    }
-
-                                                                    svg {
-                                                                        position: absolute;
-                                                                        top: 0;
-                                                                        left: 0;
-                                                                        width: 100%;
-                                                                        height: 100%;
-                                                                    }
-
-                                                                    circle {
-                                                                        fill: rgba(255, 255, 255, .2);
                                                                     }
                                                                 }
                                                             }
@@ -7822,9 +8153,6 @@ html {
                                                                     margin: 0;
                                                                     height: 11.5vh;
                                                                     border: none;
-                                                                    overflow-x: hidden;
-                                                                    white-space: nowrap;
-                                                                    text-overflow: ellipsis;
 
                                                                     &:first-of-type {
                                                                         padding-left: 3.75vh;
@@ -7887,7 +8215,7 @@ html {
                                                             tbody {
                                                                 tr.active {
                                                                     td {
-                                                                        background-color: rgba($color: $main-color, $alpha: .5);
+                                                                        background-color: rgba($color: $purple, $alpha: .25);
                                                                     }
                                                                 }
 
@@ -7904,12 +8232,28 @@ html {
 
                                                                     .dropdown-menu {
                                                                         position: absolute;
+                                                                        display: flex !important;
                                                                         transform-origin: right;
                                                                         will-change: transform;
                                                                         transform: unset !important;
                                                                         top: 100% !important;
                                                                         left: unset !important;
                                                                         right: 0;
+                                                                        min-width: unset;
+                                                                        padding: 0;
+
+                                                                        .dropdown-item {
+                                                                            width: 6.5vh;
+                                                                            height: 6.5vh;
+                                                                            padding: .5vh;
+                                                                            display: flex;
+                                                                            justify-content: center;
+                                                                            align-items: center;
+                                                                        }
+                                                                    }
+
+                                                                    &.show {
+                                                                        display: table-cell !important;
                                                                     }
                                                                 }
                                                             }
