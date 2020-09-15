@@ -8232,7 +8232,6 @@ html {
 
                                                                     .dropdown-menu {
                                                                         position: absolute;
-                                                                        display: flex !important;
                                                                         transform-origin: right;
                                                                         will-change: transform;
                                                                         transform: unset !important;
@@ -8241,6 +8240,10 @@ html {
                                                                         right: 0;
                                                                         min-width: unset;
                                                                         padding: 0;
+
+                                                                        &.show {
+                                                                            display: flex !important;
+                                                                        }
 
                                                                         .dropdown-item {
                                                                             width: 6.5vh;
