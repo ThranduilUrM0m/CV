@@ -52,48 +52,8 @@ class Header extends React.Component {
 
         this._handleClickEvents();
         this.handleSearch();
-        const self = this;
 
-        let _links = $('.menu .nav-link');
-        let _url = window.location.pathname;
-        _links.map((_link, index) => {
-            switch (index.id) {
-                case "_home_link":
-                    if(_url === '/'){
-                        $('#'+index.id).addClass('active');
-                        $('.nav-link').not('#'+index.id).removeClass('active');
-                    }
-                    break;
-                case "_blog_link":
-                    var regex = RegExp('/blog*');
-                    if(regex.test(_url)){
-                        $('#'+index.id).addClass('active');
-                        $('.nav-link').not('#'+index.id).removeClass('active');
-                    }
-                    break;
-                case "_about_link":
-                    if(_url === '/about'){
-                        $('#'+index.id).addClass('active');
-                        $('.nav-link').not('#'+index.id).removeClass('active');
-                    }
-                    break;
-                case "_minttea_link":
-                    if(_url === '/minttea'){
-                        $('#'+index.id).addClass('active');
-                        $('.nav-link').not('#'+index.id).removeClass('active');
-                    }
-                    break;
-                case "_contact_link":
-                    if(_url === '/contact'){
-                        $('#'+index.id).addClass('active');
-                        $('.nav-link').not('#'+index.id).removeClass('active');
-                    }
-                    break;
-                default:
-                    console.log("Désolé, nous n'avons plus.");
-            }
-            return;
-        });
+        const self = this;
         
         function displayWindowSize(){
             if ($(window).width() <= 425) {
@@ -125,6 +85,7 @@ class Header extends React.Component {
         });
 
         
+        let _url = window.location.pathname;
         if(_url === "/login" || _url === "/signup")
             $('.fixedHeaderContainer').hide();
 
@@ -413,11 +374,11 @@ class Header extends React.Component {
                 </div>
                 <ul className="menu menu--is-closed">
                     <li><span className="item item-0"></span></li>
-                    <li><span className="item item-1"><Link to='/' className="nav-link" id="_home_link"> Home. </Link></span></li>
-                    <li><span className="item item-2"><Link to='/blog' className="nav-link" id="_blog_link"> Blog. </Link></span></li>
-                    <li><span className="item item-4"><Link to='/minttea' className="nav-link" id="_minttea_link"> Mint Tea. </Link></span></li>
-                    <li><span className="item item-3"><Link to='/about' className="nav-link" id="_about_link"> About Me. </Link></span></li>
-                    <li><span className="item item-5"><Link to='/contact' className="nav-link" id="_contact_link"> Contact Me. </Link></span></li>
+                    <li><span className="item item-1"><Link to='/' activeClassName='active' className="nav-link" id="_home_link"> Home. </Link></span></li>
+                    <li><span className="item item-2"><Link to='/blog' activeClassName='active' className="nav-link" id="_blog_link"> Blog. </Link></span></li>
+                    <li><span className="item item-4"><Link to='/minttea' activeClassName='active' className="nav-link" id="_minttea_link"> Mint Tea. </Link></span></li>
+                    <li><span className="item item-3"><Link to='/about' activeClassName='active' className="nav-link" id="_about_link"> About Me. </Link></span></li>
+                    <li><span className="item item-5"><Link to='/contact' activeClassName='active' className="nav-link" id="_contact_link"> Contact Me. </Link></span></li>
                 </ul>
             </>
         );
