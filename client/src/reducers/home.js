@@ -1,4 +1,31 @@
-import { HOME_PAGE_LOADED, SUBMIT_ARTICLE, DELETE_ARTICLE, SET_EDIT, EDIT_ARTICLE, NOTIFICATION_PAGE_LOADED, SUBMIT_NOTIFICATION, PROJECT_PAGE_LOADED, SUBMIT_PROJECT, DELETE_PROJECT, SET_EDIT_PROJECT, EDIT_PROJECT, TESTIMONY_PAGE_LOADED, SUBMIT_TESTIMONY, DELETE_TESTIMONY, SET_EDIT_TESTIMONY, EDIT_TESTIMONY, USER_PAGE_LOADED, SUBMIT_USER, DELETE_USER, SET_EDIT_USER, EDIT_USER } from '../actions/types';
+import { 
+    HOME_PAGE_LOADED, 
+    SUBMIT_ARTICLE, 
+    DELETE_ARTICLE, 
+    SET_EDIT, 
+    EDIT_ARTICLE, 
+
+    NOTIFICATION_PAGE_LOADED, 
+    SUBMIT_NOTIFICATION, 
+
+    PROJECT_PAGE_LOADED, 
+    SUBMIT_PROJECT, 
+    DELETE_PROJECT, 
+    SET_EDIT_PROJECT, 
+    EDIT_PROJECT, 
+
+    TESTIMONY_PAGE_LOADED, 
+    SUBMIT_TESTIMONY, 
+    DELETE_TESTIMONY, 
+    SET_EDIT_TESTIMONY, 
+    EDIT_TESTIMONY, 
+    
+    USER_PAGE_LOADED, 
+    SUBMIT_USER, 
+    DELETE_USER, 
+    SET_EDIT_USER, 
+    EDIT_USER 
+} from '../actions/types';
 
 const initialState = {
     articles: [],
@@ -9,7 +36,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         //ARTICLE
         case HOME_PAGE_LOADED:
             return {
@@ -35,7 +62,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 articles: state.articles.map((article) => {
-                    if(article._id === action.data.article._id) {
+                    if (article._id === action.data.article._id) {
                         return {
                             ...action.data.article,
                         }
@@ -82,7 +109,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 projects: state.projects.map((project) => {
-                    if(project._id === action.data.project._id) {
+                    if (project._id === action.data.project._id) {
                         return {
                             ...action.data.project,
                         }
@@ -117,7 +144,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 testimonies: state.testimonies.map((testimony) => {
-                    if(testimony._id === action.data.testimony._id) {
+                    if (testimony._id === action.data.testimony._id) {
                         return {
                             ...action.data.testimony,
                         }
@@ -151,7 +178,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 users: state.users.map((user) => {
-                    if(user._id === action.data.user._id) {
+                    if (user._id === action.data.user._id) {
                         return {
                             ...action.data.user,
                         }

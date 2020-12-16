@@ -6,7 +6,7 @@ const Notifications = mongoose.model('Notifications');
 router.post('/', (req, res, next) => {
     const { body } = req;
 
-    if(!body.body) {
+    if (!body.body) {
         return res.status(422).json({
             errors: {
                 body: 'is required',
@@ -14,7 +14,7 @@ router.post('/', (req, res, next) => {
         });
     }
 
-    if(!body.author) {
+    if (!body.author) {
         return res.status(422).json({
             errors: {
                 author: 'is required',
@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
         });
     }
 
-    if(!body.fingerprint) {
+    if (!body.fingerprint) {
         return res.status(422).json({
             errors: {
                 fingerprint: 'is required',
@@ -47,9 +47,9 @@ router.get('/', (req, res, next) => {
 
 router.param('id', (req, res, next, id) => {
     return Testimonies.findById(id, (err, testimony) => {
-        if(err) {
+        if (err) {
             return res.sendStatus(404);
-        } else if(testimony) {
+        } else if (testimony) {
             req.testimony = testimony;
             return next();
         }
@@ -65,31 +65,31 @@ router.get('/:id', (req, res, next) => {
 router.patch('/:id', (req, res, next) => {
     const { body } = req;
 
-    if(typeof body.parent_id !== 'undefined') {
+    if (typeof body.parent_id !== 'undefined') {
         req.testimony.parent_id = body.parent_id;
     }
 
-    if(typeof body.author !== 'undefined') {
+    if (typeof body.author !== 'undefined') {
         req.testimony.author = body.author;
     }
 
-    if(typeof body.body !== 'undefined') {
+    if (typeof body.body !== 'undefined') {
         req.testimony.body = body.body;
     }
 
-    if(typeof body.is_private !== 'undefined') {
+    if (typeof body.is_private !== 'undefined') {
         req.testimony.is_private = body.is_private;
     }
 
-    if(typeof body.fingerprint !== 'undefined') {
+    if (typeof body.fingerprint !== 'undefined') {
         req.testimony.fingerprint = body.fingerprint;
     }
 
-    if(typeof body.upvotes !== 'undefined') {
+    if (typeof body.upvotes !== 'undefined') {
         req.testimony.upvotes = body.upvotes;
     }
 
-    if(typeof body.downvotes !== 'undefined') {
+    if (typeof body.downvotes !== 'undefined') {
         req.testimony.downvotes = body.downvotes;
     }
 

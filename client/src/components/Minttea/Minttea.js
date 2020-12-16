@@ -11,7 +11,7 @@ import 'bootstrap';
 var _ = require('lodash');
 
 class Minttea extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         var f = new Fingerprint().get();
@@ -36,19 +36,19 @@ class Minttea extends React.Component {
     componentWillMount() {
         const { onLoadTestimony } = this.props;
         axios('/api/testimonies')
-        .then((response) => {
-            onLoadTestimony(response.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then((response) => {
+                onLoadTestimony(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
     componentDidMount() {
         document.getElementsByClassName('first_section_coffee')[0].parentElement.style.height = 'initial';
         document.getElementsByClassName('first_section_coffee')[0].parentElement.style.minHeight = '100%';
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
-        if(nextProps.testimonyToEdit) {
+        if (nextProps.testimonyToEdit) {
             this.setState({
                 parent_id: nextProps.testimonyToEdit.parent_id,
                 body: nextProps.testimonyToEdit.body,
@@ -60,15 +60,15 @@ class Minttea extends React.Component {
             });
         }
     }
-	handleSubmitupvotesTestimony(testimony, event) {
+    handleSubmitupvotesTestimony(testimony, event) {
         const { onSubmitNotification } = this.props;
         var f = new Fingerprint().get();
         let self = this;
         let target = event.target;
-        if( _.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
+        if (_.isUndefined(_.find(_.get(testimony, 'upvotes'), (upvote) => { return upvote.upvoter === f.toString() }))) {
             function setEditFunction() {
                 return new Promise((resolve, reject) => {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         self.handleEdit(testimony);
                         true ? resolve('Success') : reject('Error');
                     }, 2000);
@@ -77,40 +77,40 @@ class Minttea extends React.Component {
             setEditFunction()
                 .then(() => {
                     self.setState(state => ({
-                        upvotes: [...state.upvotes, {upvoter: f.toString()}],
+                        upvotes: [...state.upvotes, { upvoter: f.toString() }],
                     }), () => {
-                        if( !_.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
-                            let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
+                        if (!_.isUndefined(_.find(_.get(testimony, 'downvotes'), (downvote) => { return downvote.downvoter === f.toString() }))) {
+                            let _downvotes = _.takeWhile(self.state.downvotes, function (o) { return o.downvoter != f.toString(); });
                             self.setState({
                                 downvotes: _downvotes,
                             }, () => {
                                 self.handleSubmit()
-                                .then(() => {
-                                    return axios.post('/api/notifications', {
-                                        type: 'Testimony upvoted',
-                                        description: '\''+f.toString()+'\' upvoted \''+testimony._id+'\'',
-                                        author: f.toString()
-                                    })
-                                    .then((res_n) => onSubmitNotification(res_n.data))
-                                    .catch(error => {
-                                        console.log(error)
+                                    .then(() => {
+                                        return axios.post('/api/notifications', {
+                                            type: 'Testimony upvoted',
+                                            description: '\'' + f.toString() + '\' upvoted \'' + testimony._id + '\'',
+                                            author: f.toString()
+                                        })
+                                            .then((res_n) => onSubmitNotification(res_n.data))
+                                            .catch(error => {
+                                                console.log(error)
+                                            });
                                     });
-                                });
                             });
                             $(target).closest("div").parent().find('div.downvotes').removeClass('active');
                         } else {
                             self.handleSubmit()
-                            .then(() => {
-                                return axios.post('/api/notifications', {
-                                    type: 'Testimony upvoted',
-                                    description: '\''+f.toString()+'\' upvoted \''+testimony._id+'\'',
-                                    author: f.toString()
-                                })
-                                .then((res_n) => onSubmitNotification(res_n.data))
-                                .catch(error => {
-                                    console.log(error)
+                                .then(() => {
+                                    return axios.post('/api/notifications', {
+                                        type: 'Testimony upvoted',
+                                        description: '\'' + f.toString() + '\' upvoted \'' + testimony._id + '\'',
+                                        author: f.toString()
+                                    })
+                                        .then((res_n) => onSubmitNotification(res_n.data))
+                                        .catch(error => {
+                                            console.log(error)
+                                        });
                                 });
-                            });
                         }
                         $(target).closest("div").addClass('active');
                     });
@@ -120,7 +120,7 @@ class Minttea extends React.Component {
         } else {
             function setEditFunction() {
                 return new Promise((resolve, reject) => {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         self.handleEdit(testimony);
                         true ? resolve('Success') : reject('Error');
                     }, 2000);
@@ -128,38 +128,38 @@ class Minttea extends React.Component {
             }
             setEditFunction()
                 .then(() => {
-                    let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
+                    let _upvotes = _.takeWhile(self.state.upvotes, function (o) { return o.upvoter != f.toString(); });
                     self.setState(state => ({
                         upvotes: _upvotes,
                     }), () => {
                         self.handleSubmit()
-                        .then(() => {
-                            return axios.post('/api/notifications', {
-                                type: 'Testimony negative upvoted',
-                                description: '\''+f.toString()+'\' negative upvoted \''+testimony._id+'\'',
-                                author: f.toString()
-                            })
-                            .then((res_n) => onSubmitNotification(res_n.data))
-                            .catch(error => {
-                                console.log(error)
+                            .then(() => {
+                                return axios.post('/api/notifications', {
+                                    type: 'Testimony negative upvoted',
+                                    description: '\'' + f.toString() + '\' negative upvoted \'' + testimony._id + '\'',
+                                    author: f.toString()
+                                })
+                                    .then((res_n) => onSubmitNotification(res_n.data))
+                                    .catch(error => {
+                                        console.log(error)
+                                    });
                             });
-                        });
                         $(target).closest("div").removeClass('active');
                     });
                     return true;
                 })
                 .catch(err => console.log('There was an error:' + err));
         }
-	}
-	handleSubmitdownvotesTestimony(testimony, event) {
+    }
+    handleSubmitdownvotesTestimony(testimony, event) {
         const { onSubmitNotification } = this.props;
         var f = new Fingerprint().get();
         let self = this;
         let target = event.target;
-        if( _.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === f.toString()}) ) ) {
+        if (_.isUndefined(_.find(_.get(testimony, 'downvotes'), (downvote) => { return downvote.downvoter === f.toString() }))) {
             function setEditFunction() {
                 return new Promise((resolve, reject) => {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         self.handleEdit(testimony);
                         true ? resolve('Success') : reject('Error');
                     }, 2000);
@@ -168,40 +168,40 @@ class Minttea extends React.Component {
             setEditFunction()
                 .then(() => {
                     self.setState(state => ({
-                        downvotes: [...state.downvotes, {downvoter: f.toString()}],
+                        downvotes: [...state.downvotes, { downvoter: f.toString() }],
                     }), () => {
-                        if( !_.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === f.toString()}) ) ) {
-                            let _upvotes = _.takeWhile(self.state.upvotes, function(o) { return o.upvoter != f.toString(); });
+                        if (!_.isUndefined(_.find(_.get(testimony, 'upvotes'), (upvote) => { return upvote.upvoter === f.toString() }))) {
+                            let _upvotes = _.takeWhile(self.state.upvotes, function (o) { return o.upvoter != f.toString(); });
                             self.setState({
                                 upvotes: _upvotes,
                             }, () => {
                                 self.handleSubmit()
-                                .then(() => {
-                                    return axios.post('/api/notifications', {
-                                        type: 'Testimony downvoted',
-                                        description: '\''+f.toString()+'\' downvoted \''+testimony._id+'\'',
-                                        author: f.toString()
-                                    })
-                                    .then((res_n) => onSubmitNotification(res_n.data))
-                                    .catch(error => {
-                                        console.log(error)
+                                    .then(() => {
+                                        return axios.post('/api/notifications', {
+                                            type: 'Testimony downvoted',
+                                            description: '\'' + f.toString() + '\' downvoted \'' + testimony._id + '\'',
+                                            author: f.toString()
+                                        })
+                                            .then((res_n) => onSubmitNotification(res_n.data))
+                                            .catch(error => {
+                                                console.log(error)
+                                            });
                                     });
-                                });
                             });
                             $(target).closest("div").parent().find('div.upvotes').removeClass('active');
                         } else {
                             self.handleSubmit()
-                            .then(() => {
-                                return axios.post('/api/notifications', {
-                                    type: 'Testimony downvoted',
-                                    description: '\''+f.toString()+'\' downvoted \''+testimony._id+'\'',
-                                    author: f.toString()
+                                .then(() => {
+                                    return axios.post('/api/notifications', {
+                                        type: 'Testimony downvoted',
+                                        description: '\'' + f.toString() + '\' downvoted \'' + testimony._id + '\'',
+                                        author: f.toString()
+                                    })
+                                        .then((res_n) => onSubmitNotification(res_n.data))
+                                        .catch(error => {
+                                            console.log(error)
+                                        });
                                 })
-                                .then((res_n) => onSubmitNotification(res_n.data))
-                                .catch(error => {
-                                    console.log(error)
-                                });
-                            })
                         }
                         $(target).closest("div").addClass('active');
                     });
@@ -211,7 +211,7 @@ class Minttea extends React.Component {
         } else {
             function setEditFunction() {
                 return new Promise((resolve, reject) => {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         self.handleEdit(testimony);
                         true ? resolve('Success') : reject('Error');
                     }, 2000);
@@ -219,22 +219,22 @@ class Minttea extends React.Component {
             }
             setEditFunction()
                 .then(() => {
-                    let _downvotes = _.takeWhile(self.state.downvotes, function(o) { return o.downvoter != f.toString(); });
+                    let _downvotes = _.takeWhile(self.state.downvotes, function (o) { return o.downvoter != f.toString(); });
                     self.setState(state => ({
                         downvotes: _downvotes,
                     }), () => {
                         self.handleSubmit()
-                        .then(() => {
-                            return axios.post('/api/notifications', {
-                                type: 'Testimony negative downvoted',
-                                description: '\''+f.toString()+'\' negative downvoted \''+testimony._id+'\'',
-                                author: f.toString()
-                            })
-                            .then((res_n) => onSubmitNotification(res_n.data))
-                            .catch(error => {
-                                console.log(error)
+                            .then(() => {
+                                return axios.post('/api/notifications', {
+                                    type: 'Testimony negative downvoted',
+                                    description: '\'' + f.toString() + '\' negative downvoted \'' + testimony._id + '\'',
+                                    author: f.toString()
+                                })
+                                    .then((res_n) => onSubmitNotification(res_n.data))
+                                    .catch(error => {
+                                        console.log(error)
+                                    });
                             });
-                        });
                         $(target).closest("div").removeClass('active');
                     });
                     return true;
@@ -250,13 +250,13 @@ class Minttea extends React.Component {
                 onDeleteTestimony(id);
                 return axios.post('/api/notifications', {
                     type: 'Testimony Deleted',
-                    description: 'Testimony \''+id+'\' Deleted.',
+                    description: 'Testimony \'' + id + '\' Deleted.',
                     author: fingerprint
                 })
-                .then((res_n) => onSubmitNotification(res_n.data))
-                .catch(error => {
-                    console.log(error)
-                });
+                    .then((res_n) => onSubmitNotification(res_n.data))
+                    .catch(error => {
+                        console.log(error)
+                    });
             });
     }
     handleEdit(testimony) {
@@ -271,11 +271,11 @@ class Minttea extends React.Component {
             $('input.author').focus();
         });
     }
-    handleSubmit(){
+    handleSubmit() {
         const { onSubmitTestimony, testimonyToEdit, onEditTestimony, onSubmitNotification } = this.props;
         const { parent_id, body, author, is_private, fingerprint, upvotes, downvotes } = this.state;
 
-        if(!testimonyToEdit) {
+        if (!testimonyToEdit) {
             return axios.post('/api/testimonies', {
                 parent_id,
                 body,
@@ -287,30 +287,30 @@ class Minttea extends React.Component {
             })
                 .then((res) => {
                     onSubmitTestimony(res.data);
-                    if(parent_id != null) {
+                    if (parent_id != null) {
                         return axios.post('/api/notifications', {
                             type: 'Testimony Replied To',
-                            description: '\''+fingerprint+'\' replied to \''+parent_id+'\'',
+                            description: '\'' + fingerprint + '\' replied to \'' + parent_id + '\'',
                             author: fingerprint
                         })
-                        .then((res_n) => onSubmitNotification(res_n.data))
-                        .catch(error => {
-                            console.log(error)
-                        });
+                            .then((res_n) => onSubmitNotification(res_n.data))
+                            .catch(error => {
+                                console.log(error)
+                            });
                     } else {
                         return axios.post('/api/notifications', {
                             type: 'Testimony Created',
-                            description: '\''+fingerprint+'\' created \''+res.data.testimony._id+'\'',
+                            description: '\'' + fingerprint + '\' created \'' + res.data.testimony._id + '\'',
                             author: fingerprint
                         })
-                        .then((res_n) => onSubmitNotification(res_n.data))
-                        .catch(error => {
-                            console.log(error)
-                        });
+                            .then((res_n) => onSubmitNotification(res_n.data))
+                            .catch(error => {
+                                console.log(error)
+                            });
                     }
                 })
                 .then(() => {
-                    this.setState({ 
+                    this.setState({
                         parent_id: null,
                         author: '',
                         body: '',
@@ -333,7 +333,7 @@ class Minttea extends React.Component {
                     onEditTestimony(res.data);
                 })
                 .then(() => {
-                    this.setState({ 
+                    this.setState({
                         parent_id: null,
                         author: '',
                         body: '',
@@ -348,7 +348,7 @@ class Minttea extends React.Component {
         this.setState({
             [key]: event.target.value,
         });
-        if(key === 'is_private') {
+        if (key === 'is_private') {
             this.setState({
                 [key]: event.target.checked,
             })
@@ -357,10 +357,10 @@ class Minttea extends React.Component {
     render() {
         const { testimonyToEdit, testimonies } = this.props;
         const { body, author, is_private, fingerprint } = this.state;
-        return(
+        return (
             <FullPage scrollMode={'normal'}>
-				<Slide>
-					<section className="active first_section_coffee">
+                <Slide>
+                    <section className="active first_section_coffee">
                         <div className="wrapper_full">
                             <div id="social_media">
                                 <div className="icons_gatherer">
@@ -370,7 +370,7 @@ class Minttea extends React.Component {
                                     <a href="https://www.instagram.com/boutaleblcoder/" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
                                     <a href="https://fb.me/boutaleblcoder" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
                                     <a href="# " className="icon-button scroll">
-                                        
+
                                     </a>
                                 </div>
                             </div>
@@ -382,10 +382,10 @@ class Minttea extends React.Component {
                                         <div className="row">
                                             <div className="input-field col s12">
                                                 <input
-                                                    className="validate form-group-input author" 
-                                                    id="author" 
-                                                    type="text" 
-                                                    name="author" 
+                                                    className="validate form-group-input author"
+                                                    id="author"
+                                                    type="text"
+                                                    name="author"
                                                     required="required"
                                                     value={author}
                                                     onChange={(ev) => this.handleChange('author', ev)}
@@ -396,12 +396,12 @@ class Minttea extends React.Component {
                                         </div>
                                         <div className="row">
                                             <div className="input-field col s12">
-                                                <textarea 
-                                                    className="validate form-group-input materialize-textarea body" 
-                                                    id="body" 
-                                                    name="body" 
+                                                <textarea
+                                                    className="validate form-group-input materialize-textarea body"
+                                                    id="body"
+                                                    name="body"
                                                     required="required"
-                                                    value={body} 
+                                                    value={body}
                                                     onChange={(ev) => this.handleChange('body', ev)}
                                                 />
                                                 <label htmlFor='body' className={body ? 'active' : ''}>Baby Don't hurt me ...</label>
@@ -412,23 +412,23 @@ class Minttea extends React.Component {
                                             <div className="input-field col">
                                                 <p>
                                                     <label>
-                                                        <input 
-                                                        className="validate form-group-input is_private" 
-                                                        id="is_private" 
-                                                        type="checkbox"
-                                                        name="is_private" 
-                                                        required="required"
-                                                        value={is_private}
-                                                        checked={is_private}
-                                                        onChange={(ev) => this.handleChange('is_private', ev)}
+                                                        <input
+                                                            className="validate form-group-input is_private"
+                                                            id="is_private"
+                                                            type="checkbox"
+                                                            name="is_private"
+                                                            required="required"
+                                                            value={is_private}
+                                                            checked={is_private}
+                                                            onChange={(ev) => this.handleChange('is_private', ev)}
                                                         />
                                                         <span>Private Message ?</span>
                                                     </label>
                                                 </p>
-                                                <button 
-                                                    className="pull-right" 
+                                                <button
+                                                    className="pull-right"
                                                     type="submit"
-                                                    name='btn_login' 
+                                                    name='btn_login'
                                                     onClick={this.handleSubmit}
                                                 >
                                                     <span>
@@ -449,98 +449,98 @@ class Minttea extends React.Component {
                                     <div id="testimonies-modal" className="testimonies-modal">
                                         <div className="modal-inner">
                                             <div className="modal-content">
-                                            {
-                                                _.orderBy(_.filter(testimonies, { 'is_private': false, parent_id: null }), ['upvotes', 'createdAt'], ['desc', 'desc']).map((testimony, index) => {
-                                                    return (
-                                                        <div className={"card card_" + index} data-index={index+1}>
-                                                            <div className="shadow_title">{_.head(_.words(testimony.body))}</div>
-                                                            <div className="card-body">
-                                                                <div className="top_row">
-                                                                    <h6 className="author">by <b>{testimony.author}</b></h6>
-                                                                    <p className="text-muted fromNow">{moment(new Date(testimony.createdAt)).fromNow()}</p>
-                                                                    <div className="up_down">
-                                                                        <p className="text-muted replies"><b>{_.size(_.filter(testimonies, {'parent_id': testimony._id}))}</b><i className="fas fa-reply-all"></i></p>
-                                                                        <div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(testimony, 'upvotes'), (upvote) => {return upvote.upvoter === fingerprint}) ) ? '' : 'active'}`}>
-                                                                            <b>{_.size(_.get(testimony, 'upvotes'))}</b> 
-                                                                            <button onClick={(ev) => this.handleSubmitupvotesTestimony(testimony, ev)}>
-                                                                                <i className="fas fa-thumbs-up"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div className={`text-muted downvotes ${_.isUndefined( _.find(_.get(testimony, 'downvotes'), (downvote) => {return downvote.downvoter === fingerprint}) ) ? '' : 'active'}`}>
-                                                                            <b>{_.size(_.get(testimony, 'downvotes'))}</b>
-                                                                            <button onClick={(ev) => this.handleSubmitdownvotesTestimony(testimony, ev)}>
-                                                                                <i className="fas fa-thumbs-down"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="middle_row">
-                                                                    <h5>{testimony.body}</h5>
-                                                                </div>
-                                                                <div className="bottom_row">
-                                                                    <div className="crud">
-                                                                        <i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
-                                                                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                                            <button onClick={() => this.handleReply(testimony._id)} className="dropdown-item" type="button">Reply</button>
-                                                                            {
-                                                                                testimony.fingerprint === fingerprint 
-                                                                                ? <><button onClick={() => this.handleEdit(testimony)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(testimony._id)} className="dropdown-item">Delete</button></>
-                                                                                : ''
-                                                                            }
+                                                {
+                                                    _.orderBy(_.filter(testimonies, { 'is_private': false, parent_id: null }), ['upvotes', 'createdAt'], ['desc', 'desc']).map((testimony, index) => {
+                                                        return (
+                                                            <div className={"card card_" + index} data-index={index + 1}>
+                                                                <div className="shadow_title">{_.head(_.words(testimony.body))}</div>
+                                                                <div className="card-body">
+                                                                    <div className="top_row">
+                                                                        <h6 className="author">by <b>{testimony.author}</b></h6>
+                                                                        <p className="text-muted fromNow">{moment(new Date(testimony.createdAt)).fromNow()}</p>
+                                                                        <div className="up_down">
+                                                                            <p className="text-muted replies"><b>{_.size(_.filter(testimonies, { 'parent_id': testimony._id }))}</b><i className="fas fa-reply-all"></i></p>
+                                                                            <div className={`text-muted upvotes ${_.isUndefined(_.find(_.get(testimony, 'upvotes'), (upvote) => { return upvote.upvoter === fingerprint })) ? '' : 'active'}`}>
+                                                                                <b>{_.size(_.get(testimony, 'upvotes'))}</b>
+                                                                                <button onClick={(ev) => this.handleSubmitupvotesTestimony(testimony, ev)}>
+                                                                                    <i className="fas fa-thumbs-up"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div className={`text-muted downvotes ${_.isUndefined(_.find(_.get(testimony, 'downvotes'), (downvote) => { return downvote.downvoter === fingerprint })) ? '' : 'active'}`}>
+                                                                                <b>{_.size(_.get(testimony, 'downvotes'))}</b>
+                                                                                <button onClick={(ev) => this.handleSubmitdownvotesTestimony(testimony, ev)}>
+                                                                                    <i className="fas fa-thumbs-down"></i>
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                {
-                                                                    _.orderBy(_.reject(testimonies, { 'is_private': false, parent_id: null }), ['view'], ['desc']).map((testimony_reply, index_reply) => {
-                                                                        if(testimony_reply.parent_id === testimony._id)
-                                                                            return (
-                                                                                <div className={"card card_" + index_reply} data-index={index_reply+1}>
-                                                                                    <div className="shadow_title">{_.head(_.words(testimony_reply.body))}</div>
-                                                                                    <div className="card-body">
-                                                                                        <div className="top_row">
-                                                                                            <h6 className="author">by <b>{testimony_reply.author}</b></h6>
-                                                                                            <p className="text-muted fromNow">{moment(new Date(testimony_reply.createdAt)).fromNow()}</p>
-                                                                                            <div className="up_down">
-                                                                                                <div className={`text-muted upvotes ${_.isUndefined( _.find(_.get(testimony_reply, 'upvotes'), (upvote) => {return upvote.upvoter === fingerprint}) ) ? '' : 'active'}`}>
-                                                                                                    <b>{_.size(_.get(testimony_reply, 'upvotes'))}</b> 
-                                                                                                    <button onClick={(ev) => this.handleSubmitupvotesTestimony(testimony_reply, ev)}>
-                                                                                                        <i className="fas fa-thumbs-up"></i>
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                                <div className={`text-muted downvotes ${_.isUndefined( _.find(_.get(testimony_reply, 'downvotes'), (downvote) => {return downvote.downvoter === fingerprint}) ) ? '' : 'active'}`}>
-                                                                                                    <b>{_.size(_.get(testimony_reply, 'downvotes'))}</b>
-                                                                                                    <button onClick={(ev) => this.handleSubmitdownvotesTestimony(testimony_reply, ev)}>
-                                                                                                        <i className="fas fa-thumbs-down"></i>
-                                                                                                    </button>
+                                                                    <div className="middle_row">
+                                                                        <h5>{testimony.body}</h5>
+                                                                    </div>
+                                                                    <div className="bottom_row">
+                                                                        <div className="crud">
+                                                                            <i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
+                                                                            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                                                <button onClick={() => this.handleReply(testimony._id)} className="dropdown-item" type="button">Reply</button>
+                                                                                {
+                                                                                    testimony.fingerprint === fingerprint
+                                                                                        ? <><button onClick={() => this.handleEdit(testimony)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(testimony._id)} className="dropdown-item">Delete</button></>
+                                                                                        : ''
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    {
+                                                                        _.orderBy(_.reject(testimonies, { 'is_private': false, parent_id: null }), ['view'], ['desc']).map((testimony_reply, index_reply) => {
+                                                                            if (testimony_reply.parent_id === testimony._id)
+                                                                                return (
+                                                                                    <div className={"card card_" + index_reply} data-index={index_reply + 1}>
+                                                                                        <div className="shadow_title">{_.head(_.words(testimony_reply.body))}</div>
+                                                                                        <div className="card-body">
+                                                                                            <div className="top_row">
+                                                                                                <h6 className="author">by <b>{testimony_reply.author}</b></h6>
+                                                                                                <p className="text-muted fromNow">{moment(new Date(testimony_reply.createdAt)).fromNow()}</p>
+                                                                                                <div className="up_down">
+                                                                                                    <div className={`text-muted upvotes ${_.isUndefined(_.find(_.get(testimony_reply, 'upvotes'), (upvote) => { return upvote.upvoter === fingerprint })) ? '' : 'active'}`}>
+                                                                                                        <b>{_.size(_.get(testimony_reply, 'upvotes'))}</b>
+                                                                                                        <button onClick={(ev) => this.handleSubmitupvotesTestimony(testimony_reply, ev)}>
+                                                                                                            <i className="fas fa-thumbs-up"></i>
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                    <div className={`text-muted downvotes ${_.isUndefined(_.find(_.get(testimony_reply, 'downvotes'), (downvote) => { return downvote.downvoter === fingerprint })) ? '' : 'active'}`}>
+                                                                                                        <b>{_.size(_.get(testimony_reply, 'downvotes'))}</b>
+                                                                                                        <button onClick={(ev) => this.handleSubmitdownvotesTestimony(testimony_reply, ev)}>
+                                                                                                            <i className="fas fa-thumbs-down"></i>
+                                                                                                        </button>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </div>
-                                                                                        <div className="middle_row">
-                                                                                            <h5>{testimony_reply.body}</h5>
-                                                                                        </div>
-                                                                                        <div className="bottom_row">
-                                                                                            <div className="crud">
-                                                                                                <i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
-                                                                                                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                                                                    {
-                                                                                                        testimony_reply.fingerprint === fingerprint 
-                                                                                                        ? <><button onClick={() => this.handleEdit(testimony_reply)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(testimony_reply._id)} className="dropdown-item">Delete</button></>
-                                                                                                        : ''
-                                                                                                    }
+                                                                                            <div className="middle_row">
+                                                                                                <h5>{testimony_reply.body}</h5>
+                                                                                            </div>
+                                                                                            <div className="bottom_row">
+                                                                                                <div className="crud">
+                                                                                                    <i className="fas fa-ellipsis-v dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></i>
+                                                                                                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                                                                        {
+                                                                                                            testimony_reply.fingerprint === fingerprint
+                                                                                                                ? <><button onClick={() => this.handleEdit(testimony_reply)} className="dropdown-item">Edit</button><div className="dropdown-divider"></div><button onClick={() => this.handleDelete(testimony_reply._id)} className="dropdown-item">Delete</button></>
+                                                                                                                : ''
+                                                                                                        }
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            )
-                                                                        return true;
-                                                                    })
-                                                                }
+                                                                                )
+                                                                            return true;
+                                                                        })
+                                                                    }
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    )
-                                                })
-                                            }
+                                                        )
+                                                    })
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -548,10 +548,10 @@ class Minttea extends React.Component {
                             </div>
                         </div>
                     </section>
-				</Slide>
-				<Slide>
-					<Footer/>
-				</Slide>
+                </Slide>
+                <Slide>
+                    <Footer />
+                </Slide>
             </FullPage>
         )
     }
@@ -568,8 +568,8 @@ const mapDispatchToProps = dispatch => ({
     onSubmitTestimony: data => dispatch({ type: 'SUBMIT_TESTIMONY', data }),
     onEditTestimony: data => dispatch({ type: 'EDIT_TESTIMONY', data }),
     onLoadTestimony: data => dispatch({ type: 'TESTIMONY_PAGE_LOADED', data }),
-	onDeleteTestimony: id => dispatch({ type: 'DELETE_TESTIMONY', id }),
-	setEditTestimony: testimony => dispatch({ type: 'SET_EDIT_TESTIMONY', testimony }),
+    onDeleteTestimony: id => dispatch({ type: 'DELETE_TESTIMONY', id }),
+    setEditTestimony: testimony => dispatch({ type: 'SET_EDIT_TESTIMONY', testimony }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Minttea) 
