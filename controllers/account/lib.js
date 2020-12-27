@@ -1,32 +1,24 @@
 const User = require('../../models/Users.js');
 const Token = require('../../models/Tokens.js');
 const passwordHash = require("password-hash");
-const nodemailer = require('nodemailer');
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
 const crypto = require('crypto');
-require('dotenv').config()
+require('dotenv').config();
+const nodemailer = require('nodemailer');
 
-const myOAuth2Client = new OAuth2(
-    process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
-    'https://developers.google.com/oauthplayground'
-);
-myOAuth2Client.setCredentials({
-    refresh_token: process.env.REFRESH_TOKEN
-});
-const myAccessToken = myOAuth2Client.getAccessToken();
 
+/* The Two Sendin Mail functions */
 async function verification_email(user_email, text) {
     let transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
             type: "OAuth2",
             user: process.env.EMAIL, //your gmail account you used to set the project up in google cloud console"
             clientId: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
             refreshToken: process.env.REFRESH_TOKEN,
-            accessToken: myAccessToken //access token variable we defined earlier
+            accessToken: process.env.ACCESS_TOKEN //access token variable we defined earlier
         }
     });
     let info = await transporter.sendMail({
@@ -39,25 +31,44 @@ async function verification_email(user_email, text) {
 }
 async function main(mail_username, mail_location, mail_email, mail_phone, mail_content) {
     let transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
             type: "OAuth2",
             user: process.env.EMAIL, //your gmail account you used to set the project up in google cloud console"
             clientId: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
             refreshToken: process.env.REFRESH_TOKEN,
-            accessToken: myAccessToken //access token variable we defined earlier
+            accessToken: process.env.ACCESS_TOKEN //access token variable we defined earlier
         }
     });
     // send mail with defined transport object
     let info = await transporter.sendMail({
         from: mail_email, // sender address
         to: 'zakariaeboutaleb@gmail.com', // list of receivers
-        subject: 'username : '+mail_username+' location : '+mail_location+' phone : '+mail_phone, // Subject line
+        subject: 'username : ' + mail_username + ' location : ' + mail_location + ' phone : ' + mail_phone, // Subject line
         text: mail_content, // plain text body
     });
     console.log('Message sent: %s', info.messageId);
 }
+/* The Two Sendin Mail functions */
+
+async function send_mail(req, res) {
+    const { mail_username, mail_location, mail_email, mail_phone, mail_content } = req.body;
+    if (!mail_username || !mail_email || !mail_content) {
+        return res.status(400).json({
+            text: "Requête invalide"
+        });
+    }
+    try {
+        main(mail_username, mail_location, mail_email, mail_phone, mail_content).catch(console.error);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error });
+    }
+}
+
 async function signup(req, res) {
     const { username, email, password, _fingerprint, _role } = req.body;
     try {
@@ -89,7 +100,7 @@ async function signup(req, res) {
                 text: "This Username exists already can u, please submit another Username."
             });
         }
-        
+
         // Sauvegarde de l'utilisateur en base
         const userData = new User(user);
         const userObject = await userData.save();
@@ -105,20 +116,6 @@ async function signup(req, res) {
         return res.status(500).json({ error });
     }
 }
-async function send_mail(req, res) {
-    const { mail_username, mail_location, mail_email, mail_phone, mail_content } = req.body;
-    if(!mail_username || !mail_email || !mail_content) {
-        return res.status(400).json({
-            text: "Requête invalide"
-        });
-    }
-    try {
-        main(mail_username, mail_location, mail_email, mail_phone, mail_content).catch(console.error);
-    }catch (error) {
-        console.log(error);
-        return res.status(500).json({ error });
-    }
-}
 async function update(req, res) {
     const { _user, _old_username, _old_email, _current_password, _new_password } = req.body;
     try {
@@ -128,7 +125,7 @@ async function update(req, res) {
                 text: "It looks like some information about u, wasn't correctly submitted, please retry."
             });
         }
-        if(!passwordHash.verify(_current_password, _user.password)) {
+        if (!passwordHash.verify(_current_password, _user.password)) {
             return res.status(400).json({
                 text: "Password Invalid"
             });
@@ -141,12 +138,12 @@ async function update(req, res) {
         };
         // Sauvegarde de l'utilisateur en base
         const findUser = await User.findOneAndUpdate(
-            { email : _old_email },
+            { email: _old_email },
             {
-                $set : {
-                    username : user.username,
-                    email : user.email, 
-                    password : user.password
+                $set: {
+                    username: user.username,
+                    email: user.email,
+                    password: user.password
                 }
             },
             { upsert: true }
@@ -167,9 +164,9 @@ async function update_roles(req, res) {
     try {
         // Sauvegarde de l'utilisateur en base
         const findUser = await User.findOneAndUpdate(
-            { username : _user_toEdit_username },
+            { username: _user_toEdit_username },
             {
-                $set : {
+                $set: {
                     roles: _user_toEdit_roles,
                 }
             },
@@ -185,7 +182,7 @@ async function update_roles(req, res) {
 }
 async function login(req, res) {
     const { password, email } = req.body;
-    
+
     try {
         if (!email || !password) {
             //Le cas où l'email ou bien le password ne serait pas soumit ou nul
@@ -194,8 +191,8 @@ async function login(req, res) {
             });
         }
         // On check si l'utilisateur existe en base
-        const findUser = await User.findOne({ 
-            email 
+        const findUser = await User.findOne({
+            email
         });
         if (!findUser)
             return res.status(401).json({
@@ -205,22 +202,22 @@ async function login(req, res) {
             return res.status(401).json({
                 text: "Incorrect Password."
             });
-        if(!findUser.isVerified)
+        if (!findUser.isVerified)
             return res.status(401).json({
                 text: "Your account has not been verified. Please check your inbox for a verification email that was sent to you."
             });
-        if((findUser.roles).includes('Deleted')) {
+        if ((findUser.roles).includes('Deleted')) {
             // Sauvegarde de l'utilisateur en base
             await User.findOneAndUpdate(
-                { email : email },
+                { email: email },
                 {
-                    $set : {
-                        roles: findUser.roles.filter(function(value, index, arr){ return value != 'Deleted';}),
+                    $set: {
+                        roles: findUser.roles.filter(function (value, index, arr) { return value != 'Deleted'; }),
                     }
                 },
                 { upsert: true }
             );
-        } 
+        }
         return res.status(200).json({
             token: findUser.getToken(),
             email: findUser.email,
@@ -243,8 +240,8 @@ async function get_user(req, res) {
     }
     try {
         // On check si l'utilisateur existe en base
-        const findUser = await User.findOne({ 
-            email 
+        const findUser = await User.findOne({
+            email
         });
         if (!findUser)
             return res.status(401).json({
@@ -280,34 +277,34 @@ async function confirmationPost(req, res, next) {
     // Find a matching token
     Token.findOne({ token: req.body.token }, function (err, token) {
         if (!token) return res.status(400).json({ text: 'We were unable to find a valid token. Your token my have expired.' });
- 
+
         // If we found a token, find a matching user
         User.findOne({ _id: token._userId }, function (err, user) {
             if (!user) return res.status(400).json({ text: 'We were unable to find a user for this token.' });
             if (user.isVerified) return res.status(400).json({ text: 'This user has already been verified.' });
- 
+
             // Verify and save the user
             user.isVerified = true;
             user.save(function (err) {
                 if (err) { return res.status(500).json({ text: err.message }); }
-                res.status(200).json({text: "The account has been verified. Please log in."});
+                res.status(200).json({ text: "The account has been verified. Please log in." });
             });
         });
     });
 }
 async function resendTokenPost(req, res, next) {
- 
+
     User.findOne({ email: req.body.email }, function (err, user) {
         if (!user) return res.status(400).send({ msg: 'We were unable to find a user with that email.' });
         if (user.isVerified) return res.status(400).send({ msg: 'This account has already been verified. Please log in.' });
- 
+
         // Create a verification token, save it, and send email
         var token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
- 
+
         // Save the token
         token.save(function (err) {
             if (err) { return res.status(500).send({ msg: err.message }); }
- 
+
             // Send the email
             var transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
             var mailOptions = { from: 'no-reply@codemoto.io', to: user.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
@@ -316,7 +313,7 @@ async function resendTokenPost(req, res, next) {
                 res.status(200).send('A verification email has been sent to ' + user.email + '.');
             });
         });
- 
+
     });
 }
 
