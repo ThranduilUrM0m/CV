@@ -18,7 +18,7 @@ class Blog extends React.Component {
 		super(props);
 		this.state = {
 			currentPage: 1,
-          	todosPerPage: 6,
+			todosPerPage: 6,
 			currentCard: 0,
 			position: 0,
 			width: 0,
@@ -29,46 +29,47 @@ class Blog extends React.Component {
 		};
 		this.handleJSONTOHTMLIMAGE = this.handleJSONTOHTMLIMAGE.bind(this);
 		this._FormatNumberLength = this._FormatNumberLength.bind(this);
-        this.handleClickPage = this.handleClickPage.bind(this);
-        this._handleMouseMove = this._handleMouseMove.bind(this);
-        this._handleModal = this._handleModal.bind(this);
-        this.handleChangeField = this.handleChangeField.bind(this);
-        this.handleShowFilter = this.handleShowFilter.bind(this);
-        this._handleDrag = this._handleDrag.bind(this);
+		this.handleClickPage = this.handleClickPage.bind(this);
+		this._handleMouseMove = this._handleMouseMove.bind(this);
+		this._handleModal = this._handleModal.bind(this);
+		this.handleChangeField = this.handleChangeField.bind(this);
+		this.handleShowFilter = this.handleShowFilter.bind(this);
+		this._handleDrag = this._handleDrag.bind(this);
 	}
 	componentWillMount() {
-        const { onLoad } = this.props;
+		const { onLoad } = this.props;
 		const self = this;
 		axios('/api/articles')
-        .then(function (response) {
-			onLoad(response.data);
-			function runAfterElementExists(jquery_selector, callback){
-                var checker = window.setInterval(function() {
-                if ($(jquery_selector).length) {
-                    clearInterval(checker);
-                    callback();
-                }}, 200);
-            }
-            runAfterElementExists(".second_section_blog .articles_slider_wrapper_cards_item", function() {
-				self._handleDrag();
+			.then(function (response) {
+				onLoad(response.data);
+				function runAfterElementExists(jquery_selector, callback) {
+					var checker = window.setInterval(function () {
+						if ($(jquery_selector).length) {
+							clearInterval(checker);
+							callback();
+						}
+					}, 200);
+				}
+				runAfterElementExists(".second_section_blog .articles_slider_wrapper_cards_item", function () {
+					self._handleDrag();
+				});
+				$('.fixedHeaderContainer').addClass('blog_header');
+			})
+			.catch(function (error) {
+				console.log(error);
 			});
-			$('.fixedHeaderContainer').addClass('blog_header');
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
 	}
 	componentDidMount() {
 		this._handleMouseMove();
 		this._handleModal();
-		if(window.innerHeight > window.innerWidth){
-			if($(window).width() <= 640) {
+		if (window.innerHeight > window.innerWidth) {
+			if ($(window).width() <= 640) {
 				this.setState({
 					todosPerPage: 2
 				});
 			}
 		} else {
-			if($(window).width() <= 640) {
+			if ($(window).width() <= 640) {
 				this.setState({
 					todosPerPage: 4
 				});
@@ -78,8 +79,8 @@ class Blog extends React.Component {
 	_handleDrag() {
 		// configure Swiper to use modules
 		Swiper.use([Navigation, Pagination]);
-		
-		var mySwiper = new Swiper ('.swiper-container', {
+
+		var mySwiper = new Swiper('.swiper-container', {
 			effect: 'coverflow',
 			direction: 'horizontal',
 			grabCursor: true,
@@ -90,9 +91,9 @@ class Blog extends React.Component {
 			centerInsufficientSlides: false,
 			spaceBetween: 0,
 			autoResize: false,
-            observer: true,
+			observer: true,
 			watchOverflow: true,
-			variableWidth : true,
+			variableWidth: true,
 			coverflowEffect: {
 				rotate: 0,
 				stretch: 0,
@@ -106,18 +107,18 @@ class Blog extends React.Component {
 				prevEl: '.swiper-button-prev',
 			}
 		});
-		$(window).resize(function() {
-			if(window.innerHeight > window.innerWidth){
-				if($(window).width() <= 640) {
+		$(window).resize(function () {
+			if (window.innerHeight > window.innerWidth) {
+				if ($(window).width() <= 640) {
 					mySwiper.params.slidesPerView = 1.25;
 					mySwiper.update();
 				}
-				if($(window).width() <= 768) {
+				if ($(window).width() <= 768) {
 					mySwiper.params.slidesPerView = 2.25;
 					mySwiper.update();
 				}
 			} else {
-				if($(window).width() <= 768) {
+				if ($(window).width() <= 768) {
 					mySwiper.params.slidesPerView = 2.25;
 					mySwiper.update();
 				}
@@ -125,35 +126,35 @@ class Blog extends React.Component {
 		});
 		$(window).trigger('resize');
 	}
-    _handleMouseMove() {
-		function Parallax(options){
+	_handleMouseMove() {
+		function Parallax(options) {
 			options = options || {};
 			this.nameSpaces = {
 				wrapper: options.wrapper || '.first_section_blog',
 				layers: options.layers || '.parallax-layer',
 				deep: options.deep || 'data-parallax-deep'
 			};
-			this.init = function() {
+			this.init = function () {
 				var self = this,
-				parallaxWrappers = document.querySelectorAll(this.nameSpaces.wrapper);
-				for(var i = 0; i < parallaxWrappers.length; i++){
-					(function(i){
-						parallaxWrappers[i].addEventListener('mousemove', function(e){
+					parallaxWrappers = document.querySelectorAll(this.nameSpaces.wrapper);
+				for (var i = 0; i < parallaxWrappers.length; i++) {
+					(function (i) {
+						parallaxWrappers[i].addEventListener('mousemove', function (e) {
 							var x = e.clientX,
 								y = e.clientY,
 								layers = parallaxWrappers[i].querySelectorAll(self.nameSpaces.layers);
-							for(var j = 0; j < layers.length; j++){
-					(function(j){
-					var deep = layers[j].getAttribute(self.nameSpaces.deep),
-						disallow = layers[j].getAttribute('data-parallax-disallow'),
-						direction = layers[j].getAttribute('data-parallax-direction'),
-						itemX = (disallow && disallow === 'x') ? 0 : x / deep,
-						itemY = (disallow && disallow === 'y') ? 0 : y / deep;
-						itemX = (direction && direction === 'minus') ? -itemX : itemX;
-						itemY = (direction && direction === 'plus') ? -itemY : itemY;
-						if(disallow && disallow === 'both') return;
-						layers[j].style.transform = 'translateX(' + itemX + '%) translateY(' + itemY + '%)';
-					})(j);  
+							for (var j = 0; j < layers.length; j++) {
+								(function (j) {
+									var deep = layers[j].getAttribute(self.nameSpaces.deep),
+										disallow = layers[j].getAttribute('data-parallax-disallow'),
+										direction = layers[j].getAttribute('data-parallax-direction'),
+										itemX = (disallow && disallow === 'x') ? 0 : x / deep,
+										itemY = (disallow && disallow === 'y') ? 0 : y / deep;
+									itemX = (direction && direction === 'minus') ? -itemX : itemX;
+									itemY = (direction && direction === 'plus') ? -itemY : itemY;
+									if (disallow && disallow === 'both') return;
+									layers[j].style.transform = 'translateX(' + itemX + '%) translateY(' + itemY + '%)';
+								})(j);
 							}
 						})
 					})(i);
@@ -163,7 +164,7 @@ class Blog extends React.Component {
 			return this;
 		}
 		new Parallax();
-		
+
 		let items = document.querySelectorAll(".socials-item-icon");
 		items.forEach((item, index) => {
 			item.addEventListener("mousemove", mouseMove);
@@ -180,13 +181,13 @@ class Blog extends React.Component {
 			target.style.transform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
 			target.style.webkitTransform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
 			document.querySelectorAll(".socials-item-icon").forEach((e) => {
-			if (e != target) {
-				e.style.transform = "translate(" + offset.x / 2 + "px, " + offset.y / 2 + "px) scale(" + 0.9 + ")";
-				e.style.webkitTransform = "translate(" + offset.x / 2 + "px, " + offset.y / 2 + "px) scale(" + 0.9 + ")";
-			}
-		  });
-		  targetIcon.style.transform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
-		  targetIcon.style.webkitTransform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
+				if (e != target) {
+					e.style.transform = "translate(" + offset.x / 2 + "px, " + offset.y / 2 + "px) scale(" + 0.9 + ")";
+					e.style.webkitTransform = "translate(" + offset.x / 2 + "px, " + offset.y / 2 + "px) scale(" + 0.9 + ")";
+				}
+			});
+			targetIcon.style.transform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
+			targetIcon.style.webkitTransform = "translate(" + offset.x + "px," + offset.y + "px) scale(" + 1.1 + ")";
 		}
 		function mouseLeave(e) {
 			document.querySelectorAll(".socials-item-icon").forEach((target) => {
@@ -197,7 +198,7 @@ class Blog extends React.Component {
 				targetIcon.style.webkitTransform = "translate(0px,0px) scale(1)";
 			});
 		}
-    }
+	}
 	_FormatNumberLength(num, length) {
 		var r = "" + num;
 		while (r.length < length) {
@@ -206,30 +207,31 @@ class Blog extends React.Component {
 		return r;
 	}
 	handleJSONTOHTMLIMAGE(inputDelta, index) {
-		function runAfterElementExists(jquery_selector, callback){
-			var checker = window.setInterval(function() {
-			if (jquery_selector) {
-				clearInterval(checker);
-				callback();
-			}}, 200);
+		function runAfterElementExists(jquery_selector, callback) {
+			var checker = window.setInterval(function () {
+				if (jquery_selector) {
+					clearInterval(checker);
+					callback();
+				}
+			}, 200);
 		}
-		runAfterElementExists(inputDelta, function() {
+		runAfterElementExists(inputDelta, function () {
 			const html = $.parseHTML(inputDelta);
-			$('.card_'+index+' figure').html($(html).find('img').first());
+			$('.card_' + index + ' figure').html($(html).find('img').first());
 		});
 	}
 	handleClickPage(event) {
 		$([document.documentElement, document.body]).animate({
 			scrollTop: $("#second_section_blog").offset().top
 		}, 500);
-        this.setState({
-          	currentPage: Number(event.target.id)
-        });
+		this.setState({
+			currentPage: Number(event.target.id)
+		});
 	}
 	handleShowFilter(event) {
 		var wrapper = $('.modal-top-filter'),
 			buttonF = $('#myModal .filter');
-		if ( ! wrapper.hasClass('expand') ){
+		if (!wrapper.hasClass('expand')) {
 			wrapper.addClass('expand', 500);
 			buttonF.addClass('expand', 500);
 		} else {
@@ -239,21 +241,21 @@ class Blog extends React.Component {
 	}
 	_handleModal() {
 		const self = this;
-		var Boxlayout = function() {
+		var Boxlayout = function () {
 			var wrapper = document.getElementById('second_section_blog'),
 				element = $('#modal_trigger'),
 				modal = $('#myModal'),
 				closeButton = $('.modal-close'),
 				expandedClass = 'is-expanded',
 				hasExpandedClass = 'has-expanded-item';
-		  
-			return { init : init };
+
+			return { init: init };
 			function init() {
-			  	_initEvents();
+				_initEvents();
 			}
 			function _initEvents() {
-				element.click(function() {
-					if ( ! modal.hasClass(expandedClass) ) {
+				element.click(function () {
+					if (!modal.hasClass(expandedClass)) {
 						modal.addClass(expandedClass, 500);
 						wrapper.classList.add(hasExpandedClass);
 						document.getElementById('second_section_blog').parentElement.style.height = 'initial';
@@ -263,13 +265,13 @@ class Blog extends React.Component {
 							$('.modal-top-filter label#tags_label').toggleClass('active');
 						});
 						$('.modal-top-filter input.tags').blur(() => {
-							if(!self.state.tags)
+							if (!self.state.tags)
 								$('.modal-top-filter label#tags_label').toggleClass('active');
 						});
 					}
 				});
-				closeButton.click(function(event) {
-					if ( modal.hasClass(expandedClass) ) {
+				closeButton.click(function (event) {
+					if (modal.hasClass(expandedClass)) {
 						modal.removeClass(expandedClass);
 						wrapper.classList.remove(hasExpandedClass);
 						document.getElementById('second_section_blog').parentElement.style.height = '100%';
@@ -280,35 +282,35 @@ class Blog extends React.Component {
 		}();
 		Boxlayout.init();
 	}
-    handleChangeField(key, event) {
-        this.setState({ [key]: event.target.value });
-    }
+	handleChangeField(key, event) {
+		this.setState({ [key]: event.target.value });
+	}
 	render() {
 		const { articles, match } = this.props;
 		const { currentPage, todosPerPage, sort, timeframe, categorie, tags } = this.state;
-		
+
 		return (
 			<FullPage scrollMode={'normal'}>
 				<Slide>
 					<section className="active first_section_blog">
 						<span className="parallax-layer parallax-layer__1 l_name" data-parallax-direction="plus" data-parallax-deep="1000">Boutaleb<span className="outlined">Boutaleb</span>BoutalebBoutaleb</span>
 						<span className="parallax-layer parallax-layer__2 f_name" data-parallax-direction="minus" data-parallax-deep="1000">Zakariae<span className="outlined">Zakariae</span>ZakariaeZakariae</span>
+						<div id="social_media">
+							<div className="icons_gatherer">
+								<a href="https://dribbble.com/boutaleblcoder" className="icon-button dribbble"><i className="fab fa-dribbble"></i><span></span></a>
+								<a href="https://www.behance.net/boutaleblcoder/" className="icon-button behance"><i className="fab fa-behance"></i><span></span></a>
+								<a href="https://www.linkedin.com/in/zakariae-bou-taleb-657953122/" className="icon-button linkedin"><i className="fab fa-linkedin-in"></i><span></span></a>
+								<a href="https://www.instagram.com/boutaleblcoder/" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
+								<a href="https://fb.me/boutaleblcoder" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
+								<a href="# " className="icon-button scroll">
+
+								</a>
+							</div>
+						</div>
 						<div className="wrapper left_part">
 							<div className="caption">
 								<p><b>The teacher</b></p>
 								<p>My father was an educator, My grandfather was an educator, i was born to educate, and my sons will also educate.</p>
-							</div>
-							<div id="social_media">
-								<div className="icons_gatherer">
-									<a href="https://dribbble.com/boutaleblcoder" className="icon-button dribbble"><i className="fab fa-dribbble"></i><span></span></a>
-									<a href="https://www.behance.net/boutaleblcoder/" className="icon-button behance"><i className="fab fa-behance"></i><span></span></a>
-									<a href="https://www.linkedin.com/in/zakariae-bou-taleb-657953122/" className="icon-button linkedin"><i className="fab fa-linkedin-in"></i><span></span></a>
-									<a href="https://www.instagram.com/boutaleblcoder/" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
-									<a href="https://fb.me/boutaleblcoder" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
-									<a href="# " className="icon-button scroll">
-										
-									</a>
-								</div>
 							</div>
 						</div>
 						<div className="wrapper right_part">
@@ -329,54 +331,54 @@ class Blog extends React.Component {
 										<div className="modal-top">
 											<h5 className="modal-title" id="exampleModalLabel">
 												Showing&nbsp;
-												<strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>  
+												<strong>{((currentPage * todosPerPage) - todosPerPage) + 1}</strong>
 												&nbsp;to&nbsp;
-												<strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(articles, (_a) => { return !_a._hide })), function(o) { 
-													if(timeframe === 'Today') 
-														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
-													if(timeframe === 'This_Past_Week')
-														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'week');
-													if(timeframe === 'This_Past_Month')
-														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'month');
-													if(timeframe === 'This_Past_Year')
-														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'year');
-													if(timeframe === 'All_Time')
-														return true;
-													}), (op) => {
-														if(!categorie)
-															return true;
-														else 
-															return op.categorie === categorie;
-													}), (op_bytag) => {
-														if(!tags)
-															return true;
-														else 
-															return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
-													}) ))}</strong>
+												<strong>{((currentPage * todosPerPage) - todosPerPage) + _.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']).slice(((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)) : _.filter(articles, (_a) => { return !_a._hide })), function (o) {
+												if (timeframe === 'Today')
+													return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
+												if (timeframe === 'This_Past_Week')
+													return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'week');
+												if (timeframe === 'This_Past_Month')
+													return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'month');
+												if (timeframe === 'This_Past_Year')
+													return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'year');
+												if (timeframe === 'All_Time')
+													return true;
+											}), (op) => {
+												if (!categorie)
+													return true;
+												else
+													return op.categorie === categorie;
+											}), (op_bytag) => {
+												if (!tags)
+													return true;
+												else
+													return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
+											})))}</strong>
 												&nbsp;of&nbsp;
-												<strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function(o) { 
-													if(timeframe === 'Today') 
-														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
-													if(timeframe === 'This_Past_Week')
-														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'week');
-													if(timeframe === 'This_Past_Month')
-														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'month');
-													if(timeframe === 'This_Past_Year')
-														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'year');
-													if(timeframe === 'All_Time')
-														return true;
-													}), (op) => {
-														if(!categorie)
-															return true;
-														else 
-															return op.categorie === categorie;
-													}), (op_bytag) => {
-														if(!tags)
-															return true;
-														else 
-															return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
-													})))}
-												</strong> 
+												<strong>{_.toNumber(_.size(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function (o) {
+												if (timeframe === 'Today')
+													return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
+												if (timeframe === 'This_Past_Week')
+													return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'week');
+												if (timeframe === 'This_Past_Month')
+													return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'month');
+												if (timeframe === 'This_Past_Year')
+													return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'year');
+												if (timeframe === 'All_Time')
+													return true;
+											}), (op) => {
+												if (!categorie)
+													return true;
+												else
+													return op.categorie === categorie;
+											}), (op_bytag) => {
+												if (!tags)
+													return true;
+												else
+													return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
+											})))}
+												</strong>
 												&nbsp;articles.
 											</h5>
 											<div>
@@ -386,11 +388,11 @@ class Blog extends React.Component {
 										</div>
 										<div className="modal-top-filter">
 											<div className="input-field">
-												<select 
+												<select
 													value={sort}
 													onChange={(ev) => this.handleChangeField('sort', ev)}
-													className="form-group-input sort" 
-													id="sort" 
+													className="form-group-input sort"
+													id="sort"
 													name="sort"
 												>
 													<option value="Trending">Trending</option>
@@ -402,11 +404,11 @@ class Blog extends React.Component {
 												<div className="form-group-line"></div>
 											</div>
 											<div className="input-field">
-												<select 
+												<select
 													value={timeframe}
 													onChange={(ev) => this.handleChangeField('timeframe', ev)}
-													className="form-group-input timeframe" 
-													id="timeframe" 
+													className="form-group-input timeframe"
+													id="timeframe"
 													name="timeframe"
 												>
 													<option value="Today">Today</option>
@@ -419,11 +421,11 @@ class Blog extends React.Component {
 												<div className="form-group-line"></div>
 											</div>
 											<div className="input-field">
-												<select 
+												<select
 													value={categorie}
 													onChange={(ev) => this.handleChangeField('categorie', ev)}
-													className="form-group-input categorie" 
-													id="categorie" 
+													className="form-group-input categorie"
+													id="categorie"
 													name="categorie"
 												>
 													<option value=''></option>
@@ -456,31 +458,31 @@ class Blog extends React.Component {
 										</div>
 										<ul id="page">
 											{
-												_.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function(o) { 
-													if(timeframe === 'Today')
+												_.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function (o) {
+													if (timeframe === 'Today')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'd');
-													if(timeframe === 'This_Past_Week')
+													if (timeframe === 'This_Past_Week')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'week');
-													if(timeframe === 'This_Past_Month')
+													if (timeframe === 'This_Past_Month')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'month');
-													if(timeframe === 'This_Past_Year')
+													if (timeframe === 'This_Past_Year')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'year');
-													if(timeframe === 'All_Time')
+													if (timeframe === 'All_Time')
 														return true;
-													}), (op) => {
-														if(!categorie)
-															return true;
-														else 
-															return op.categorie === categorie;
-													}), (op_bytag) => {
-														if(!tags)
-															return true;
-														else
-															return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
-													}), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((article, index) => {
+												}), (op) => {
+													if (!categorie)
+														return true;
+													else
+														return op.categorie === categorie;
+												}), (op_bytag) => {
+													if (!tags)
+														return true;
+													else
+														return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
+												}), ((currentPage * todosPerPage) - todosPerPage), (currentPage * todosPerPage)).map((article, index) => {
 													return (
-														<li className="article_card article_anchor" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="article_card" key={index}>
-															<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
+														<li className="article_card article_anchor" data-name={moment(article.createdAt).format("YYYY Do MM")} id="article_card" key={index}>
+															<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index, 1)}>
 																<div className="card-body">
 																	<figure>{this.handleJSONTOHTMLIMAGE(article.body, index)}</figure>
 																	<div className="text">
@@ -515,41 +517,41 @@ class Blog extends React.Component {
 															</div>
 														</li>
 													)
-											  	})
+												})
 											}
 										</ul>
 										<ul id="page-numbers">
 											{
-												([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function(o) { 
-													if(timeframe === 'Today') 
+												([...Array(Math.ceil(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function (o) {
+													if (timeframe === 'Today')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'day');
-													if(timeframe === 'This_Past_Week')
+													if (timeframe === 'This_Past_Week')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'week');
-													if(timeframe === 'This_Past_Month')
+													if (timeframe === 'This_Past_Month')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'month');
-													if(timeframe === 'This_Past_Year')
+													if (timeframe === 'This_Past_Year')
 														return moment(new Date(o.createdAt)).isSame(moment(new Date()), 'year');
-													if(timeframe === 'All_Time')
+													if (timeframe === 'All_Time')
 														return true;
-													}), (op) => {
-														if(!categorie)
-															return true;
-														else 
-															return op.categorie === categorie;
-													}), (op_bytag) => {
-														if(!tags)
-															return true;
-														else 
-															return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
-													}).length / todosPerPage)).keys()]).map(number => {
+												}), (op) => {
+													if (!categorie)
+														return true;
+													else
+														return op.categorie === categorie;
+												}), (op_bytag) => {
+													if (!tags)
+														return true;
+													else
+														return op_bytag.tag.some(x => _.split(_.lowerCase(tags), ' ').some(_s_v => _.lowerCase(x).includes(_s_v)));
+												}).length / todosPerPage)).keys()]).map(number => {
 													return (
 														<li
-															key={number+1}
-															id={number+1}
+															key={number + 1}
+															id={number + 1}
 															onClick={this.handleClickPage}
-															className={currentPage === number+1 ? 'current' : ''}
-															>
-																<p className="shadow_page">.{this._FormatNumberLength(number+1,2)}</p>
+															className={currentPage === number + 1 ? 'current' : ''}
+														>
+															<p className="shadow_page">.{this._FormatNumberLength(number + 1, 2)}</p>
 														</li>
 													);
 												})
@@ -567,7 +569,7 @@ class Blog extends React.Component {
 							</div>
 							<div className="articles_slider">
 								<div className="articles_caption">
-									<h1>Youth to Speek <br/> <strong>Louder.</strong></h1>
+									<h1>Youth to Speek <br /> <strong>Louder.</strong></h1>
 									<button id='modal_trigger' type="button">
 										<span>
 											<span>
@@ -583,9 +585,9 @@ class Blog extends React.Component {
 										{
 											_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).map((article, index) => {
 												return (
-													<div className="articles_slider_wrapper_cards_item swiper-slide" data-name={ moment(article.createdAt).format("YYYY Do MM") } id="articles_slider_wrapper_cards_item" key={index}>
+													<div className="articles_slider_wrapper_cards_item swiper-slide" data-name={moment(article.createdAt).format("YYYY Do MM")} id="articles_slider_wrapper_cards_item" key={index}>
 														<div className='article_item'>
-															<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index,1)}>
+															<div className={"col card card_" + index} data-title={_.snakeCase(article.title)} data-index={_.add(index, 1)}>
 																<div className="shadow_title">{_.head(_.words(article.title))}</div>
 																<div className="shadow_letter">{_.head(_.head(_.words(article.title)))}</div>
 																<div className="card-body">
@@ -624,7 +626,7 @@ class Blog extends React.Component {
 					</section>
 				</Slide>
 				<Slide>
-					<Footer/>
+					<Footer />
 				</Slide>
 			</FullPage>
 		)
@@ -632,7 +634,7 @@ class Blog extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  	articles: state.home.articles,
+	articles: state.home.articles,
 });
 
 const mapDispatchToProps = dispatch => ({

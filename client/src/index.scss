@@ -1048,80 +1048,6 @@ html {
                     }
                 }
             }
-
-            &.dark_mode {
-                .wrapper {
-                    header {
-                        .navToggle:not(.active) {
-                            fill: white;
-                            stroke: white;
-                            color: white;
-
-                            svg {
-                                filter: drop-shadow(.33vh .33vh 1.5vh rgba(255, 255, 255, .2));
-                            }
-
-                            &:hover {
-                                box-shadow: 2.5vh 2.5vh 1.25vh -3.25vh rgba(255, 255, 255, .6);
-                            }
-                        }
-
-                        form {
-                            &::before {
-                                background: white;
-                            }
-
-                            .search-wrapper {
-                                input {
-                                    background: white;
-                                    color: $black;
-
-                                    &::placeholder {
-                                        color: $black;
-                                    }
-                                }
-
-                                label {
-                                    color: $black;
-                                }
-
-                                .search {
-                                    color: $black;
-                                    border: .5vh solid white;
-
-                                    &:after {
-                                        background: white;
-                                    }
-
-                                    &.active {
-                                        border-color: $black;
-                                    }
-
-                                    &.active:before {
-                                        background: $black;
-                                    }
-
-                                    &.active:after {
-                                        background: $black;
-                                    }
-                                }
-
-                                .hover_effect {
-                                    background-color: white;
-                                }
-
-                                &:hover .search {
-                                    border-color: $black;
-                                }
-
-                                &:hover .search:after {
-                                    background: $black;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         #search-modal {
@@ -6018,8 +5944,6 @@ html {
                 background: $black;
 
                 #social_media {
-                    height: 100%;
-
                     .icons_gatherer {
                         .icon-button {
 
@@ -7895,7 +7819,8 @@ html {
                                                     padding: 1.25vh;
                                                     width: 100%;
 
-                                                    ._account_head, ._accounts_head {
+                                                    ._account_head,
+                                                    ._accounts_head {
                                                         display: flex;
                                                         flex-direction: column;
                                                         width: calc(100% - 3.75vh);
@@ -7925,6 +7850,7 @@ html {
                                                                     margin-right: 0;
                                                                     margin-left: 0;
                                                                     margin-bottom: 0;
+
                                                                     &:last-of-type {
                                                                         justify-content: flex-end;
 
@@ -7941,7 +7867,7 @@ html {
                                                                             padding: 0;
                                                                             outline: none;
                                                                             z-index: 10;
-                                
+
                                                                             span {
                                                                                 display: block;
                                                                                 position: relative;
@@ -7949,16 +7875,16 @@ html {
                                                                                 height: 100%;
                                                                                 cursor: pointer;
                                                                             }
-                                
+
                                                                             &>span {
                                                                                 &>span {
                                                                                     padding-left: 0;
                                                                                     padding-right: 0;
-                                
+
                                                                                     &>span {
                                                                                         transition: color .15s ease-out .3s;
                                                                                         color: transparent;
-                                
+
                                                                                         &::after {
                                                                                             position: absolute;
                                                                                             top: 0;
@@ -7979,7 +7905,7 @@ html {
                                                                                             transition: all .2s ease-out;
                                                                                         }
                                                                                     }
-                                
+
                                                                                     &::before {
                                                                                         content: '';
                                                                                         position: absolute;
@@ -7989,7 +7915,7 @@ html {
                                                                                         height: .5vh;
                                                                                         opacity: 0;
                                                                                     }
-                                
+
                                                                                     &::after {
                                                                                         content: '';
                                                                                         position: absolute;
@@ -8000,7 +7926,7 @@ html {
                                                                                         opacity: 0;
                                                                                     }
                                                                                 }
-                                
+
                                                                                 &::before {
                                                                                     content: '';
                                                                                     position: absolute;
@@ -8011,12 +7937,12 @@ html {
                                                                                     border: .5vh solid $main-color;
                                                                                     border-right: none;
                                                                                     border-bottom: none;
-                                
+
                                                                                     transition-property: width, height;
                                                                                     transition-duration: .15s, .15s;
                                                                                     transition-delay: .15s, 0s;
                                                                                 }
-                                
+
                                                                                 &::after {
                                                                                     content: '';
                                                                                     position: absolute;
@@ -8027,15 +7953,15 @@ html {
                                                                                     border: .5vh solid $main-color;
                                                                                     border-left: none;
                                                                                     border-bottom: none;
-                                
+
                                                                                     transition-property: width, height;
                                                                                     transition-duration: .15s, .15s;
                                                                                     transition-delay: .15s, 0s;
                                                                                 }
                                                                             }
-                                
+
                                                                             &:hover {
-                                
+
                                                                                 &>span {
                                                                                     &>span {
                                                                                         &>span {
@@ -8049,7 +7975,7 @@ html {
                                                                         }
                                                                     }
                                                                 }
-                                
+
                                                                 &:hover {
                                                                     button {
                                                                         &>span {
@@ -8058,13 +7984,13 @@ html {
                                                                                 height: 100% !important;
                                                                                 transition-delay: 0s, .15s !important;
                                                                             }
-                                
+
                                                                             &::before {
                                                                                 width: 50% !important;
                                                                                 height: 100% !important;
                                                                                 transition-delay: 0s, .15s !important;
                                                                             }
-                                
+
                                                                             &>span {
                                                                                 &::after {
                                                                                     opacity: 1 !important;
@@ -8073,7 +7999,7 @@ html {
                                                                                     height: .5vh !important;
                                                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                                                 }
-                                
+
                                                                                 &::before {
                                                                                     opacity: 1 !important;
                                                                                     border-bottom: .5vh solid $main-color !important;
@@ -8081,7 +8007,7 @@ html {
                                                                                     height: .5vh !important;
                                                                                     transition: opacity 0s ease-out .29s, width .15s ease-out .3s !important;
                                                                                 }
-                                
+
                                                                                 &>span {
                                                                                     color: $black !important;
                                                                                 }
@@ -10836,10 +10762,11 @@ html {
                         height: 100%;
 
                         .modal-left {
+                            position: relative;
                             box-shadow: -2.5vh 0 5vh -2.5vh rgba(0, 0, 0, .5);
                             background: darken($color: $main-color, $amount: 20);
                             color: #fff;
-                            padding: 5vh 7.5vh;
+                            padding: 3vh 6vh;
                             display: flex;
                             flex-direction: column;
                             align-items: flex-start;
@@ -10849,10 +10776,10 @@ html {
                                 font-weight: 200;
                                 display: flex;
                                 align-items: center;
-                                margin-bottom: 2.5vh;
+                                margin-bottom: 1.25vh;
 
                                 &:first-of-type {
-                                    margin-bottom: 6.5vh;
+                                    margin-bottom: 3.5vh;
                                 }
 
                                 i {
@@ -10868,6 +10795,19 @@ html {
                                         transform: translate(0, -50%);
                                     }
                                 }
+                            }
+
+                            &::before {
+                                content: '';
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                top: 0;
+                                left: 0;
+                                background: url('undraw_Code_typing_re_p8b9.svg');
+                                background-position: bottom right;
+                                background-repeat: no-repeat;
+                                background-size: 75%;
                             }
                         }
 
@@ -11824,6 +11764,10 @@ html {
 
             .menu {
                 width: 100%;
+
+                li {
+                    width: 60%;
+                }
             }
 
             .fixedHeaderContainer {
@@ -12786,9 +12730,17 @@ html {
                         .articles_caption {
                             grid-column: 1 / 2;
                             grid-template-rows: 8vh auto;
+                            align-self: flex-end;
 
                             h1 {
-                                display: none;
+                                margin: 0 auto;
+                                align-self: flex-end;
+                                width: 75%;
+                                text-align: left;
+
+                                br {
+                                    display: none;
+                                }
                             }
 
                             button {
@@ -12798,6 +12750,7 @@ html {
                                 margin: 1.25vw 0;
 
                                 justify-self: center;
+                                z-index: 999999999;
 
                                 span {
                                     line-height: 7.5vw;
@@ -13160,9 +13113,9 @@ html {
 
             .footer {
                 .wrapper {
-                    font-size: 1.5vw;
+                    font-size: 2vw;
                     padding: 12vw 0 0 0;
-                    grid-template-rows: auto 1fr 5%;
+                    grid-template-rows: 35% 1fr 5%;
 
                     .top_shelf {
                         grid-template-columns: repeat(2, 1fr);
@@ -13203,8 +13156,8 @@ html {
                     }
 
                     .mail-modal {
-                        width: calc(100% - 1.25vw);
-                        margin: 1.25vw;
+                        width: calc(100% - 2.5vw);
+                        margin: 2.5vw;
 
                         .modal-inner {
                             .modal-left {
@@ -13229,6 +13182,13 @@ html {
                                         padding-left: .5vw;
                                         padding-right: .5vw;
                                     }
+                                }
+
+                                &::before {
+                                    background: url('undraw_voice_interface_eckp.svg');
+                                    background-position: bottom;
+                                    background-repeat: no-repeat;
+                                    background-size: 150%;
                                 }
                             }
 
@@ -13265,8 +13225,11 @@ html {
                                                 width: 50%;
                                                 height: 7.5vw;
                                                 font-size: 3vw;
+                                                margin-bottom: 0;
 
                                                 &>span {
+                                                    padding-left: 0;
+                                                    padding-right: 0;
 
                                                     &>span {
                                                         &>span {
@@ -13943,6 +13906,27 @@ html {
                                                 &>span {
                                                     color: $black !important;
                                                 }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .first_section_contact {
+                .wrapper_full {
+                    .text {
+                        .email_me {
+                            button {
+                                &>span {
+                                    &>span {
+                                        &>span {
+                                            &::after {
+                                                width: 100%;
+                                                height: 100%;
                                             }
                                         }
                                     }
