@@ -14,7 +14,6 @@ class ContactMe extends React.Component {
     }
     componentDidMount() {
         //this.handleGradient();
-        $('.fixedHeaderContainer').addClass('dark_mode');
     }
     handleClick(href) {
         $('html,body').animate({scrollTop: $('#'+href).offset().top}, 200, function() {

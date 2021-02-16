@@ -91,6 +91,11 @@ class Header extends React.Component {
 
         if(_url === "/dashboard")
             $('.fixedHeaderContainer').addClass('dashboard_header');
+
+        if(_url === "/contact")
+            $('.fixedHeaderContainer').addClass('dark_mode');
+        else
+            $('.fixedHeaderContainer').removeClass('dark_mode');
     }
     _handleClickEvents() {
         let searchWrapper = document.querySelector('.search-wrapper'),
