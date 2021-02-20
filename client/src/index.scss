@@ -8470,8 +8470,9 @@ html {
 
                                                 .form-group-line {
                                                     position: absolute;
+                                                    top: unset !important;
                                                     bottom: 1.25vh;
-                                                    left: 2vh;
+                                                    left: 0;
                                                 }
 
                                                 .form-group-input:focus~.form-group-line,

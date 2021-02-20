@@ -37,14 +37,6 @@ router.post('/', (req, res, next) => {
       },
     });
   }
-  
-  if(!body._hide) {
-    return res.status(422).json({
-      errors: {
-        _hide: 'is required',
-      },
-    });
-  }
 
   const finalProject = new Projects(body);
   return finalProject.save()
