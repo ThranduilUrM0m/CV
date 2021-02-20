@@ -17,7 +17,7 @@ class Home extends React.Component {
         super(props);
         this._handleSlider = this._handleSlider.bind(this);
         this._handleMouseMove = this._handleMouseMove.bind(this);
-		this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
+        this.handleJSONTOHTML = this.handleJSONTOHTML.bind(this);
         this._handleScroll = this._handleScroll.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
@@ -25,57 +25,59 @@ class Home extends React.Component {
         const { onLoad, onLoadProject } = this.props;
         const self = this;
         axios('/api/articles')
-        .then(function (response) {
-            onLoad(response.data);
-            function runAfterElementExists(jquery_selector, callback){
-                var checker = window.setInterval(function() {
-                if ($(jquery_selector).length) {
-                    clearInterval(checker);
-                    callback();
-                }}, 200);
-            }
-            runAfterElementExists(".first_section .card_"+(_.size(_.filter(response.data.articles, { '_hide': false }))), function() {
-                self._handleSlider('slider');
+            .then(function (response) {
+                onLoad(response.data);
+                function runAfterElementExists(jquery_selector, callback) {
+                    var checker = window.setInterval(function () {
+                        if ($(jquery_selector).length) {
+                            clearInterval(checker);
+                            callback();
+                        }
+                    }, 200);
+                }
+                runAfterElementExists(".first_section .card_" + (_.size(_.filter(response.data.articles, { '_hide': false }))), function () {
+                    self._handleSlider('slider');
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
             });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
 
         axios('/api/projects')
-        .then(function (response) {
-            onLoadProject(response.data);
-            function runAfterElementExists(jquery_selector, callback){
-                var checker = window.setInterval(function() {
-                if ($(jquery_selector).length) {
-                    clearInterval(checker);
-                    callback();
-                }}, 200);
-            }
-            runAfterElementExists(".second_section .card_"+(_.size(_.filter(response.data.projects, { '_hide': false }))), function() {
-                self._handleSlider('slider_projects');
+            .then(function (response) {
+                onLoadProject(response.data);
+                function runAfterElementExists(jquery_selector, callback) {
+                    var checker = window.setInterval(function () {
+                        if ($(jquery_selector).length) {
+                            clearInterval(checker);
+                            callback();
+                        }
+                    }, 200);
+                }
+                runAfterElementExists(".second_section .card_" + (_.size(_.filter(response.data.projects, { '_hide': false }))), function () {
+                    self._handleSlider('slider_projects');
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
             });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
     }
     componentDidMount() {
         this._handleScroll();
         this._handleMouseMove();
         $('.fixedHeaderContainer').removeClass('blog_header');
 
-        setTimeout(function() {
-            $('svg.word').each(function() {
+        setTimeout(function () {
+            $('svg.word').each(function () {
                 var svg = $(this);
                 var text = svg.find('text');
-                var bbox = text.get(0).getBBox(); 
+                var bbox = text.get(0).getBBox();
 
-                svg.get(0).setAttribute('viewBox', 
-                                        [bbox.x,
-                                        bbox.y,
-                                        bbox.width,
-                                        bbox.height].join(' '));
+                svg.get(0).setAttribute('viewBox',
+                    [bbox.x,
+                    bbox.y,
+                    bbox.width,
+                    bbox.height].join(' '));
             });
         }, 100);
     }
@@ -87,8 +89,8 @@ class Home extends React.Component {
             }
             return r;
         }
-        (function($) {
-            $.fn.jooSlider = function(options) {
+        (function ($) {
+            $.fn.jooSlider = function (options) {
                 var opt = {
                     auto: true,
                     speed: 2000
@@ -97,7 +99,7 @@ class Home extends React.Component {
                     $.extend(opt, options);
                 }
                 var container = $(this);
-                var Slider = function() {
+                var Slider = function () {
                     //===========
                     // Variables
                     //===========
@@ -107,56 +109,56 @@ class Home extends React.Component {
                     this.imgs = container.find('.img-wrap');
                     this.imgCount = (this.imgs.length) - 1;
                     /* Caption */
-                    this.imgs.each(function(){
+                    this.imgs.each(function () {
                         var caption = $(this).find('.card').data('index');
                         caption = FormatNumberLength(JSON.parse(caption), 2);
-                        $(this).append('<p class="index_card">'+caption+'.</p>');
-                        if(source === 'slider_projects')
-                            $(this).append('<p class="index_card_shadow">'+caption+'</p>');
+                        $(this).append('<p class="index_card">' + caption + '.</p>');
+                        if (source === 'slider_projects')
+                            $(this).append('<p class="index_card_shadow">' + caption + '</p>');
                     });
                     /* Controls */
                     container.append('<div id="controls"><a id="prev">prev.</a><a id="curr">curr.</a><a id="next">next.</a></div>');
                     this.navNext = container.find('#next');
                     this.navPrev = container.find('#prev');
                     /* Navigation */
-                    container.after('<ol class="nav carousel-indicators'+container.attr('id')+'"></ol>');
-                    var nav = $(".nav.carousel-indicators"+container.attr('id'));
-                    this.imgs.each(function(){
+                    container.after('<ol class="nav carousel-indicators' + container.attr('id') + '"></ol>');
+                    var nav = $(".nav.carousel-indicators" + container.attr('id'));
+                    this.imgs.each(function () {
                         nav.append('<li></li>');
                     });
                     this.bullets = nav.find("li");
-                    
+
                     //==========
                     // Méthodes
                     //==========
                     /*
                      *   Méthode qui retourne l'index de la div.current
                      */
-                    this.getCurrentIndex = function() {
+                    this.getCurrentIndex = function () {
                         return this.imgs.filter('.current').index();
                     };
                     /*
                      *   Méthode qui anime le slide de haut en bas ou de bas en haut
                      */
-                    this.goNext = function(index) {
+                    this.goNext = function (index) {
                         /* Images */
                         this.imgs.filter(".current").stop().animate({ // Monte l'image current
                             "top": -height + "px"
-                        }, function() {
+                        }, function () {
                             $(this).hide();
                         });
                         this.imgs.removeClass("current"); // Supprime classe current
                         container.find('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
 
                         //if the index one is the last one, u need to go to the first one again, sinn just +1
-                        if(this.imgs.last().index() != index)
-                            container.find('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
+                        if (this.imgs.last().index() != index)
+                            container.find('#next').text(this.imgs.eq(index + 1).find('.shadow_title').text());
                         else
                             container.find('#next').text(this.imgs.first().find('.shadow_title').text());
 
                         //if the index one is the first one, u need to go to the last one again, sinn just -1
-                        if(index != 0) 
-                            container.find('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
+                        if (index != 0)
+                            container.find('#prev').text(this.imgs.eq(index - 1).find('.shadow_title').text());
                         else
                             container.find('#prev').text(this.imgs.last().find('.shadow_title').text());
 
@@ -164,17 +166,17 @@ class Home extends React.Component {
                             "top": height + "px"
                         }).show().stop().animate({
                             "top": "0px"
-                        }, function() {
+                        }, function () {
                             block = false;
                         }).addClass("current");
                         /* Bullets */
                         this.bullets.removeClass("current").eq(index).addClass("current");
                     }; //////////////////////// END GO NEXT
-                    this.goPrev = function(index) {
+                    this.goPrev = function (index) {
                         /* Images */
                         this.imgs.filter(".current").stop().animate({
                             "top": height + "px"
-                        }, function() {
+                        }, function () {
                             $(this).hide();
                             block = false;
                         });
@@ -182,26 +184,26 @@ class Home extends React.Component {
                         container.find('#curr').text(this.imgs.eq(index).find('.shadow_title').text());
 
                         //if the index one is the last one, u need to go to the first one again, sinn just +1
-                        if(this.imgs.last().index() != index)
-                            container.find('#next').text(this.imgs.eq(index+1).find('.shadow_title').text());
+                        if (this.imgs.last().index() != index)
+                            container.find('#next').text(this.imgs.eq(index + 1).find('.shadow_title').text());
                         else
                             container.find('#next').text(this.imgs.first().find('.shadow_title').text());
 
                         //if the index one is the first one, u need to go to the last one again, sinn just -1
-                        if(index != 0) 
-                            container.find('#prev').text(this.imgs.eq(index-1).find('.shadow_title').text());
+                        if (index != 0)
+                            container.find('#prev').text(this.imgs.eq(index - 1).find('.shadow_title').text());
                         else
                             container.find('#prev').text(this.imgs.last().find('.shadow_title').text());
                         this.imgs.eq(index).css({
                             "top": -height + "px"
                         }).show().stop().animate({
                             "top": "0px"
-                        }, function() {
+                        }, function () {
                         }).addClass("current");
                         /* Bullets */
                         this.bullets.removeClass("current").eq(index).addClass("current");
                     }; //////////////////////// END GO PREV
-                    this.next = function() {
+                    this.next = function () {
                         var index = this.getCurrentIndex();
                         if (index < this.imgCount) {
                             if (block != true) {
@@ -214,7 +216,7 @@ class Home extends React.Component {
                         }
                         block = true;
                     }; //////////////////////// END NEXT
-                    this.prev = function() {
+                    this.prev = function () {
                         var index = this.getCurrentIndex();
                         if (index > 0) {
                             if (block != true) {
@@ -230,7 +232,7 @@ class Home extends React.Component {
                     /*
                      *   Méthode qui initialise l'objet
                      */
-                    this.init = function() {
+                    this.init = function () {
                         this.imgs.hide().first().addClass('current').show();
                         container.find('#curr').text(this.imgs.first().find('.shadow_title').text());
                         container.find('#next').text(this.imgs.first().next().find('.shadow_title').text());
@@ -244,19 +246,19 @@ class Home extends React.Component {
                 //  EVENTS
                 //==========
                 /* Click */
-                slider.navNext.click(function(e) { // Click next button
+                slider.navNext.click(function (e) { // Click next button
                     e.preventDefault();
                     clearInterval(interval);
                     interval = setInterval(timer, opt.speed);
                     slider.next();
                 });
-                slider.navPrev.click(function(e) { // Click previous button
+                slider.navPrev.click(function (e) { // Click previous button
                     e.preventDefault();
                     slider.prev();
                     clearInterval(interval);
                     interval = setInterval(timer, opt.speed);
                 });
-                slider.bullets.click(function(e) { // Click numbered bullet
+                slider.bullets.click(function (e) { // Click numbered bullet
                     e.preventDefault();
                     var imgIndex = slider.getCurrentIndex();
                     var bulletIndex = $(this).index();
@@ -271,70 +273,76 @@ class Home extends React.Component {
                 /* Interval */
                 var interval = setInterval(timer, opt.speed);
                 if (opt.auto === true) {
-                    var timer = function() {
+                    var timer = function () {
                         slider.next();
                     };
                 }
-                container.hover(function() {
+                container.hover(function () {
                     clearInterval(interval);
-                }, function() {
+                }, function () {
                     clearInterval(interval);
                     interval = setInterval(timer, opt.speed);
                 });
                 return this;
             };
         })(jQuery);
-        $("#"+source).jooSlider({
+        $("#" + source).jooSlider({
             auto: false,
             speed: 4000
         });
     }
     _handleMouseMove() {
-        $('.first_section').mousemove(function(e) {
+        $('.first_section').mousemove(function (e) {
             var width = $(this).width() / 2;
             var height = $(this).height() / 2;
             var amountMovedX = ((width - e.pageX) * -1 / 12);
             var amountMovedY = ((height - e.pageY) * -1 / 12);
-        
+
             $('.luna').css('marginLeft', amountMovedX);
             $('.luna').css('marginTop', amountMovedY);
         });
-        $('.second_section').mousemove(function(e) {
+        $('.second_section').mousemove(function (e) {
             var width = $(this).width() / 2;
             var height = $(this).height() / 2;
             var amountMovedX = ((width - e.pageX) * -1 / 12);
             var amountMovedY = ((height - e.pageY) * -1 / 12);
-        
+
             $('.second_section .display-1').css('marginLeft', amountMovedX);
             $('.second_section .display-1').css('marginTop', amountMovedY);
         });
-        $('.third_section').mousemove(function(e) {
+        $('.third_section').mousemove(function (e) {
             var width = $(this).width() / 2;
             var height = $(this).height() / 2;
             var amountMovedX = ((width - e.pageX) * -1 / 12);
             var amountMovedY = ((height - e.pageY) * -1 / 12);
-        
+
             $('.third_section .display-1').css('marginLeft', amountMovedX);
             $('.third_section .display-1').css('marginTop', amountMovedY);
         });
     }
     handleJSONTOHTML(inputDelta, index) {
-        console.log(inputDelta);
-		function runAfterElementExists(jquery_selector, callback){
-			var checker = window.setInterval(function() {
-			if (jquery_selector) {
-				clearInterval(checker);
-				callback();
-			}}, 200);
-		}
-		runAfterElementExists(inputDelta, function() {
-            const html = $.parseHTML(inputDelta);
-            $('.second_section .some_text .card_'+index+' .image').html(html);
-            $('.second_section .some_text .card_'+index+' .image').append("<div class='border_effect'></div>")
-		});
-	}
-    _handleScroll(){
-        $(window).scroll(function() {
+        axios('/api/projects')
+            .then((response) => {
+                function runAfterElementExists(jquery_selector, callback) {
+                    var checker = window.setInterval(function () {
+                        if ($(jquery_selector).length) {
+                            clearInterval(checker);
+                            callback();
+                        }
+                    }, 200);
+                }
+                runAfterElementExists(".second_section .card_" + (_.size(_.filter(response.data.projects, { '_hide': false }))), () => {
+                    const html = $.parseHTML(inputDelta);
+                    $('.second_section .card_' + index + ' .image').html(html);
+                    $('.second_section .card_' + index + ' .image').append("<div class='border_effect'></div>");
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    _handleScroll() {
+        $(window).scroll(function () {
             if ($(document).height() - $(window).height() - $(window).scrollTop() < 100) {
                 $('.fixedHeaderContainer').addClass('blog_header');
             }
@@ -344,7 +352,7 @@ class Home extends React.Component {
         });
     }
     handleClick(href) {
-        $('html,body').animate({scrollTop: $('#'+href).offset().top}, 200, function() {
+        $('html,body').animate({ scrollTop: $('#' + href).offset().top }, 200, function () {
             $('#mail_content').focus();
         });
     }
@@ -379,7 +387,7 @@ class Home extends React.Component {
                                 <a href="https://www.instagram.com/boutaleblcoder/" className="icon-button instagram"><i className="fab fa-instagram"></i><span></span></a>
                                 <a href="https://fb.me/boutaleblcoder" className="icon-button facebook"><i className="icon-facebook"></i><span></span></a>
                                 <a href="# " className="icon-button scroll">
-                                    
+
                                 </a>
                             </div>
                         </div>
@@ -417,11 +425,11 @@ class Home extends React.Component {
                                 {
                                     (_.orderBy(_.filter(projects, (_p) => { return !_p._hide }), ['view'], ['desc']).slice(0, 10)).map((project, index) => {
                                         return (
-                                            <div className={"card card_" + (index+1)} data-title={project.title} data-index={index+1}>
+                                            <div className={"card card_" + (index + 1)} data-title={project.title} data-index={index + 1}>
                                                 <div className="card-body">
                                                     <a href={project.link_to} target="_blank" rel="noopener noreferrer">
                                                         <div className='image'>
-                                                            { this.handleJSONTOHTML(project.image, index+1) }
+                                                            {this.handleJSONTOHTML(project.image, index + 1)}
                                                         </div>
                                                     </a>
                                                     <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
@@ -438,7 +446,7 @@ class Home extends React.Component {
                 <Slide>
                     <section className="first_section">
                         <div className="wrapper left_part">
-                            
+
                         </div>
                         <div className="wrapper right_part">
                             <div className="luna"></div>
@@ -451,8 +459,8 @@ class Home extends React.Component {
                                 {
                                     (_.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']).slice(0, 10)).map((article, index) => {
                                         return (
-                                            <div className={"card card_" + (index+1)} data-title={_.head( article.title.split(" ") )} data-index={index+1}>
-                                                <div className="shadow_title">{(_.head( article.title.split(/[\s.]+/) ).length <= 2 ) ? _.head( article.title.split(/[\s.]+/) )+" "+_.nth(article.title.split(/[\s.]+/), 1) : _.head( article.title.split(/[\s.]+/) )}.</div>
+                                            <div className={"card card_" + (index + 1)} data-title={_.head(article.title.split(" "))} data-index={index + 1}>
+                                                <div className="shadow_title">{(_.head(article.title.split(/[\s.]+/)).length <= 2) ? _.head(article.title.split(/[\s.]+/)) + " " + _.nth(article.title.split(/[\s.]+/), 1) : _.head(article.title.split(/[\s.]+/))}.</div>
                                                 <div className="card-body">
                                                     <h2>{article.title}</h2>
                                                     <Link to={`/blog/${article._id}`}>
@@ -559,7 +567,7 @@ class Home extends React.Component {
                     </section>
                 </Slide>
                 <Slide>
-                    <Footer/>
+                    <Footer />
                 </Slide>
             </FullPage>
         )

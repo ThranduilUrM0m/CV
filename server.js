@@ -62,7 +62,7 @@ const setUpExpress = () => {
     mongoose.Promise = global.Promise;
     mongoose.set('useFindAndModify', false);
     mongoose
-        .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/db", { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
+        .connect(process.env.MONGODB_URI || "mongodb+srv://thranduilUrMom:ThranduilUrM0m@db.v9erl.mongodb.net/heroku_8s7j6dkn?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
         .then(() => {
             console.log("Connected to mongoDB");
         })
