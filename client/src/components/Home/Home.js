@@ -318,7 +318,7 @@ class Home extends React.Component {
             $('.third_section .display-1').css('marginTop', amountMovedY);
         });
     }
-    handleJSONTOHTML(inputDelta) {
+    handleJSONTOHTML(inputDelta, index) {
         console.log(inputDelta);
 		function runAfterElementExists(jquery_selector, callback){
 			var checker = window.setInterval(function() {
@@ -329,8 +329,8 @@ class Home extends React.Component {
 		}
 		runAfterElementExists(inputDelta, function() {
             const html = $.parseHTML(inputDelta);
-            $('.second_section .image').html(html);
-            $('.second_section .image').append("<div class='border_effect'></div>")
+            $('.second_section .some_text card_'+(index+1)+' .image').html(html);
+            $('.second_section .some_text card_'+(index+1)+' .image').append("<div class='border_effect'></div>")
 		});
 	}
     _handleScroll(){
@@ -421,7 +421,7 @@ class Home extends React.Component {
                                                 <div className="card-body">
                                                     <a href={project.link_to} target="_blank" rel="noopener noreferrer">
                                                         <div className='image'>
-                                                            { this.handleJSONTOHTML(project.image) }
+                                                            { this.handleJSONTOHTML(project.image, index+1) }
                                                         </div>
                                                     </a>
                                                     <p className="text-muted author">by <b>{project.author}</b>, {moment(new Date(project.createdAt)).fromNow()}</p>
