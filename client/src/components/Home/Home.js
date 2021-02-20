@@ -329,8 +329,8 @@ class Home extends React.Component {
 		}
 		runAfterElementExists(inputDelta, function() {
             const html = $.parseHTML(inputDelta);
-            $('.second_section .some_text card_'+(index+1)+' .image').html(html);
-            $('.second_section .some_text card_'+(index+1)+' .image').append("<div class='border_effect'></div>")
+            $('.second_section .some_text .card_'+index+' .image').html(html);
+            $('.second_section .some_text .card_'+index+' .image').append("<div class='border_effect'></div>")
 		});
 	}
     _handleScroll(){
