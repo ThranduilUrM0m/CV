@@ -1418,7 +1418,7 @@ class Dashboard extends React.Component {
                                                                 <div className="dropdown-menu _filter_form" aria-labelledby="dropdownMenuButton_projects">
                                                                     <button className="dropdown-item show_more _show_projects btn-primary" id='_project_modal_trigger' data-toggle="modal" data-target="#_all_project_modal_view"><i className="fas fa-expand-arrows-alt"></i></button>
                                                                     {(() => {
-                                                                        if (_.includes(_user.roles,)) {
+                                                                        if (!_.isEmpty(_user.roles)) {
                                                                             return (
                                                                                 <button className="dropdown-item add _add_project btn-primary" data-toggle="modal" data-target="#_project_modal" onClick={() => this.handleAddProject()}><i className="fas fa-plus"></i></button>
                                                                             )
