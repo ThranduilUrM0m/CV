@@ -319,6 +319,7 @@ class Home extends React.Component {
         });
     }
     handleJSONTOHTML(inputDelta) {
+        console.log(inputDelta);
 		function runAfterElementExists(jquery_selector, callback){
 			var checker = window.setInterval(function() {
 			if (jquery_selector) {

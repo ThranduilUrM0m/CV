@@ -348,7 +348,7 @@ class FormProject extends React.Component {
                             value={link_to}
                             onChange={(ev) => this.handleChangeField('link_to', ev)}
                         />
-                        <label htmlFor='link_to_project' className={link_to ? 'active' : ''}>Author</label>
+                        <label htmlFor='link_to_project' className={link_to ? 'active' : ''}>Link</label>
                         <div className="form-group-line"></div>
                     </div>
                 </div>
