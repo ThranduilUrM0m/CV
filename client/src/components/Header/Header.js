@@ -78,13 +78,12 @@ class Header extends React.Component {
         window.addEventListener("resize", displayWindowSize);
         displayWindowSize();
 
-
-        if ($(window).scrollTop() > 100 || _url === '/contact') {
+        if ($(window).scrollTop() > 100 || _url === '/contact' || _url === '/about') {
             $('.fixedHeaderContainer').css("background-color", "rgba(255, 255, 255, 0.75)");
         } else {
             $('.fixedHeaderContainer').css("background-color", "rgba(255, 255, 255, 0)");
         }
-        
+
         $(window).scroll(function () {
             if ($(window).scrollTop() > 100 || _url === '/contact') {
                 $('.fixedHeaderContainer').css("background-color", "rgba(255, 255, 255, 0.75)");
@@ -376,11 +375,11 @@ class Header extends React.Component {
                 </div>
                 <ul className="menu menu--is-closed">
                     <li><span className="item item-0"></span></li>
-                    <li><span className="item item-1"><Link to='/' activeClassName='active' className="nav-link" id="_home_link"> Home. </Link></span></li>
-                    <li><span className="item item-2"><Link to='/blog' activeClassName='active' className="nav-link" id="_blog_link"> Blog. </Link></span></li>
-                    <li><span className="item item-4"><Link to='/minttea' activeClassName='active' className="nav-link" id="_minttea_link"> Mint Tea. </Link></span></li>
-                    <li><span className="item item-3"><Link to='/about' activeClassName='active' className="nav-link" id="_about_link"> About Me. </Link></span></li>
-                    <li><span className="item item-5"><Link to='/contact' activeClassName='active' className="nav-link" id="_contact_link"> Contact Me. </Link></span></li>
+                    <li><span className="item item-1"><Link to='/' activeClassName='active' className="nav-link" id="_home_link"> Home<b className="pink_dot">.</b> </Link></span></li>
+                    <li><span className="item item-2"><Link to='/blog' activeClassName='active' className="nav-link" id="_blog_link"> Blog<b className="pink_dot">.</b> </Link></span></li>
+                    <li><span className="item item-4"><Link to='/minttea' activeClassName='active' className="nav-link" id="_minttea_link"> Mint Tea<b className="pink_dot">.</b> </Link></span></li>
+                    <li><span className="item item-3"><Link to='/about' activeClassName='active' className="nav-link" id="_about_link"> About Me<b className="pink_dot">.</b> </Link></span></li>
+                    <li><span className="item item-5"><Link to='/contact' activeClassName='active' className="nav-link" id="_contact_link"> Contact Me<b className="pink_dot">.</b> </Link></span></li>
                 </ul>
             </>
         );

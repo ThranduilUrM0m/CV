@@ -112,9 +112,9 @@ class Home extends React.Component {
                     this.imgs.each(function () {
                         var caption = $(this).find('.card').data('index');
                         caption = FormatNumberLength(JSON.parse(caption), 2);
-                        $(this).append('<p class="index_card">' + caption + '.</p>');
+                        $(this).append('<p class="index_card">' + caption + '<b class="pink_dot">.</b></p>');
                         if (source === 'slider_projects')
-                            $(this).append('<p class="index_card_shadow">' + caption + '</p>');
+                            $(this).append('<p class="index_card_shadow">' + caption + '<b class="pink_dot">.</b></p>');
                     });
                     /* Controls */
                     container.append('<div id="controls"><a id="prev">prev.</a><a id="curr">curr.</a><a id="next">next.</a></div>');
@@ -402,10 +402,10 @@ class Home extends React.Component {
                                     <p>ZAKARIAE</p><p>BOUTALEB</p>
                                 </div>
                                 <div>
-                                    <p>Full-Stack Developer & a Graphic Designer.</p>
-                                    <p>Based in <b className='web'>Morocco.</b></p>
+                                    <p>Full-Stack Developer & a Graphic Designer<b className="pink_dot">.</b></p>
+                                    <p>Based in <b className='web'>Morocco<b className="pink_dot">.</b></b></p>
                                 </div>
-                                <p className="text">So no one told you life was gonna be this way. When it hasn't been your day, your week, your month...</p>
+                                <p className="text">So no one told you life was gonna be this way. When it hasn't been your day, your week, your month<b className="pink_dot">.</b><b className="pink_dot">.</b><b className="pink_dot">.</b></p>
                                 <button id="reach_out_button" onClick={() => this.handleClick('footer_to')} type="button">
                                     <span>
                                         <span>
@@ -492,7 +492,7 @@ class Home extends React.Component {
                                     <div className="column column_1">
                                         <div className="head">
                                             <i className="fab fa-js"></i>
-                                            <span>Full-Stack Developer.</span>
+                                            <span>Full-Stack Developer<b class="pink_dot">.</b></span>
                                         </div>
                                         <div className="content">
                                             <h6>Languages i'm fluent at</h6>
@@ -526,17 +526,44 @@ class Home extends React.Component {
                                     </div>
                                     <div className="column column_2">
                                         <div className="head">
-                                            <i className="fas fa-icons"></i>
-                                            <span></span>
+                                            <i className="fas fa-hands"></i>
+                                            <span>Services<b class="pink_dot">.</b></span>
                                         </div>
                                         <div className="content">
-                                            <div></div>
+                                            <div>
+                                                <a href='#'>
+                                                    <i className="fas fa-print"></i>
+                                                    <h6>Print<b class="pink_dot">.</b></h6>
+                                                    <p>Creation & Remake of graphoc identity, all aspects of printing : brochures, posters, advertisements, wrapping...</p>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href='#'>
+                                                    <i className="fas fa-layer-group"></i>
+                                                    <h6>Web<b class="pink_dot">.</b></h6>
+                                                    <p>Creating websites "Javascript, NodeJS/ReactJS"</p>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href='#'>
+                                                    <i className="fas fa-brain"></i>
+                                                    <h6>Advice<b class="pink_dot">.</b></h6>
+                                                    <p>Analysis of the reputation of your entity, Materialization of ideas, Marketing Consulting, Project management</p>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href='#'>
+                                                    <i className="fas fa-ad"></i>
+                                                    <h6>Content<b class="pink_dot">.</b></h6>
+                                                    <p>Production for advertising campaign, advertising photo, luxury photo, marketing</p>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="column column_3">
                                         <div className="head">
                                             <i className="fas fa-swatchbook"></i>
-                                            <span>Graphic Designer.</span>
+                                            <span>Graphic Designer<b class="pink_dot">.</b></span>
                                         </div>
                                         <div className="content">
                                             <h6>What I Make</h6>
