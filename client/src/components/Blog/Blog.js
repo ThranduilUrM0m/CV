@@ -456,6 +456,7 @@ class Blog extends React.Component {
 												<div className='form-group-line'></div>
 											</div>
 										</div>
+										<h1>Journal</h1>
 										<ul id="page">
 											{
 												_.slice(_.filter(_.filter(_.filter((sort === 'Relevant' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['comment'], ['desc']) : sort === 'Trending' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['view'], ['desc']) : sort === 'Most_Likes' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['upvotes'], ['desc']) : sort === 'Recent' ? _.orderBy(_.filter(articles, (_a) => { return !_a._hide }), ['createdAt'], ['desc']) : _.filter(articles, (_a) => { return !_a._hide })), function (o) {

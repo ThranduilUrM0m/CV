@@ -3427,7 +3427,7 @@ html {
 
                         .modal-body {
                             display: grid;
-                            grid-template-rows: 7.5vh auto minmax(60vh, 120vh) auto;
+                            grid-template-rows: 7.5vh auto auto minmax(60vh, 120vh) auto;
                             place-items: stretch;
                             place-content: stretch;
 
@@ -3535,6 +3535,14 @@ html {
                                 }
                             }
 
+                            h1 {
+                                font-family: 'Abril Fatface', cursive;
+                                font-size: 4rem;
+                                color: $black;
+                                white-space: nowrap;
+                                text-align: center;
+                            }
+
                             ul#page {
                                 width: 75.5%;
                                 padding-top: 1.25vh;
@@ -3562,6 +3570,7 @@ html {
                                         margin: 0;
                                         height: 100%;
                                         width: 100%;
+                                        border-radius: 0;
                                         transition: all .6s ease-out 0s;
 
                                         * {
@@ -4636,10 +4645,11 @@ html {
                     position: absolute;
                     right: 0;
                     top: 0;
+                    font-family: 'Abril Fatface', cursive;
                 }
 
                 #box {
-                    width: 80vw;
+                    width: 60vw;
                     border: 1.25vh solid lighten($color: $liteBg_gray, $amount: 1);
                     margin: 50vh auto 5vh auto;
                     padding: 6.5vh;
@@ -4649,6 +4659,10 @@ html {
                     align-items: flex-end;
                     z-index: 1;
 
+                    &>h1 {
+                        font-family: 'Abril Fatface', cursive;
+                    }
+
                     h1,
                     h2,
                     h3,
@@ -4657,9 +4671,11 @@ html {
                     h6 {
                         text-align: -webkit-left;
                         margin-bottom: 0;
+                        font-weight: 400;
                     }
 
                     .author {
+                        font-family: 'Abril Fatface', cursive;
                         text-align: -webkit-left;
                         font-size: 1.5vh;
                     }
@@ -4797,6 +4813,15 @@ html {
                 position: relative;
                 width: 100%;
                 height: 100%;
+
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                    font-weight: 400;
+                }
 
                 .comment-modal {
                     width: 80%;
