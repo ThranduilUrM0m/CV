@@ -410,7 +410,7 @@ class Home extends React.Component {
                                     <span>
                                         <span>
                                             <span data-attr-span="Reach Out.">
-                                                Reach Out.
+                                                Reach Out<b className='pink_dot'>.</b>
                                             </span>
                                         </span>
                                     </span>

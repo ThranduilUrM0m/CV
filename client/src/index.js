@@ -16,6 +16,7 @@ import Post from './components/Post/Post';
 import About from './components/About/About';
 import Minttea from './components/Minttea/Minttea';
 import ContactMe from './components/ContactMe/ContactMe';
+import Process from './components/Process/Process';
 import Login from "./components/Login/Login.js";
 import Signup from "./components/Signup/Signup.js";
 import Dashboard from './components/Dashboard/Dashboard';
@@ -37,6 +38,7 @@ ReactDOM.render(
                     <Route exact path='/about' component={About} />
                     <Route exact path='/minttea' component={Minttea} />
                     <Route exact path='/contact' component={ContactMe} />
+                    <Route exact path='/process' component={Process} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />
                     <Route path={`/confirmation/:token_id`} component={Confirmation} />

@@ -378,8 +378,9 @@ class Header extends React.Component {
                     <li><span className="item item-1"><Link to='/' activeClassName='active' className="nav-link" id="_home_link"> Home<b className="pink_dot">.</b> </Link></span></li>
                     <li><span className="item item-2"><Link to='/blog' activeClassName='active' className="nav-link" id="_blog_link"> Blog<b className="pink_dot">.</b> </Link></span></li>
                     <li><span className="item item-4"><Link to='/minttea' activeClassName='active' className="nav-link" id="_minttea_link"> Mint Tea<b className="pink_dot">.</b> </Link></span></li>
+                    <li><span className="item item-4"><Link to='/process' activeClassName='active' className="nav-link" id="_process_link"> Process<b className="pink_dot">.</b> </Link></span></li>
                     <li><span className="item item-3"><Link to='/about' activeClassName='active' className="nav-link" id="_about_link"> About Me<b className="pink_dot">.</b> </Link></span></li>
-                    <li><span className="item item-5"><Link to='/contact' activeClassName='active' className="nav-link" id="_contact_link"> Contact Me<b className="pink_dot">.</b> </Link></span></li>
+                    {/* <li><span className="item item-5"><Link to='/contact' activeClassName='active' className="nav-link" id="_contact_link"> Contact Me<b className="pink_dot">.</b> </Link></span></li> */}
                 </ul>
             </>
         );
